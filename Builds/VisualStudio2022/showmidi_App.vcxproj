@@ -1741,6 +1741,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\CommandIDs.h"/>
     <ClInclude Include="..\..\Source\ChannelState.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MainWindow.h"/>

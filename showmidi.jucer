@@ -9,6 +9,7 @@
       <FILE id="otStf3" name="appicon.png" compile="0" resource="1" file="Assets/appicon.png"/>
     </GROUP>
     <GROUP id="{AE4D7D9E-28DD-8B3A-3BD5-46499F82F581}" name="Source">
+      <FILE id="QU13MJ" name="CommandIDs.h" compile="0" resource="0" file="Source/CommandIDs.h"/>
       <FILE id="kgTt7X" name="ChannelState.h" compile="0" resource="0" file="Source/ChannelState.h"/>
       <FILE id="Ett8IA" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="PSyaZb" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
@@ -47,9 +48,9 @@
                appSandbox="1" hardenedRuntime="1" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;&#9;&lt;key&gt;ITSAppUsesNonExemptEncryption&lt;/key&gt;&#10;&#9;&lt;false/&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;&#10;"
                applicationCategory="public.app-category.music">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="showmidi" fastMath="1" macOSDeploymentTarget="11"
+        <CONFIGURATION isDebug="1" name="Debug" targetName="ShowMIDI" fastMath="1" macOSDeploymentTarget="11"
                        osxCompatibility="11 SDK"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="showmidi" fastMath="1"
+        <CONFIGURATION isDebug="0" name="Release" targetName="ShowMIDI" fastMath="1"
                        macOSDeploymentTarget="11" osxCompatibility="11 SDK"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

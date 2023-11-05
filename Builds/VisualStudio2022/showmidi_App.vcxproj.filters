@@ -2019,6 +2019,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\CommandIDs.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ChannelState.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>

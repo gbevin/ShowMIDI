@@ -15,25 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <JuceHeader.h>
+#pragma once
 
-namespace showmidi
+namespace CommandIDs
 {
-    class MainWindow : public juce::DocumentWindow, public juce::MenuBarModel
-    {
-    public:
-        MainWindow(juce::String name);
-        ~MainWindow();
+    static const int version    = 0x10001;
+    static const int uwyn       = 0x10002;
+    static const int quit       = 0x10003;
+}
 
-        void closeButtonPressed() override;
-        
-        StringArray getMenuBarNames() override;
-        PopupMenu getMenuForIndex(int, const String &) override;
-        void menuItemSelected(int, int) override;
-
-    private:
-        PopupMenu extraMenu_;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
-    };
+namespace CommandCategories
+{
+    static const char* const help    = "Help";
 }

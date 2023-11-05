@@ -17,8 +17,10 @@
  */
 #include "MainWindow.h"
 
+#include "CommandIDs.h"
 #include "MainComponent.h"
 #include "MidiDeviceComponent.h"
+#include "ShowMidiApplication.h"
 
 using namespace showmidi;
 
@@ -28,6 +30,14 @@ MainWindow::MainWindow (juce::String name)
                         .findColour (juce::ResizableWindow::backgroundColourId),
                       DocumentWindow::allButtons)
 {
+#if JUCE_MAC
+    extraMenu_.addCommandItem(commandManager, CommandIDs::version);
+    extraMenu_.addCommandItem(commandManager, CommandIDs::uwyn);
+    setMacMainMenu(this, &extraMenu_);
+#elif JUCE_WINDOWS
+    setMenuBar(this);
+#endif
+
     setUsingNativeTitleBar(true);
     
     auto viewport = new Viewport();
@@ -49,7 +59,49 @@ MainWindow::MainWindow (juce::String name)
     setVisible(true);
 }
 
+MainWindow::~MainWindow()
+{
+#if JUCE_MAC
+    setMacMainMenu(0, 0);
+#elif JUCE_WINDOWS
+    setMenuBar(0);
+#endif
+    
+    clearContentComponent();
+}
+
 void MainWindow::closeButtonPressed()
 {
     JUCEApplication::getInstance()->systemRequestedQuit();
+}
+
+StringArray MainWindow::getMenuBarNames()
+{
+#ifdef JUCE_MAC
+    return StringArray();
+#else
+    const char* const names[] = { CommandCategories::help, 0 };
+    return StringArray(names);
+#endif
+}
+
+PopupMenu MainWindow::getMenuForIndex(int topLevelMenuIndex, const String &)
+{
+    PopupMenu menu;
+    
+    if (topLevelMenuIndex == 0)
+    {
+        // "Help" menu
+        
+#ifndef JUCE_MAC
+        menu.addCommandItem(commandManager, CommandIDs::version);
+        menu.addCommandItem(commandManager, CommandIDs::uwyn);
+#endif
+    }
+    
+    return menu;
+}
+
+void MainWindow::menuItemSelected(int, int)
+{
 }

@@ -19,4 +19,6 @@
 
 #include "ShowMidiApplication.h"
 
+ApplicationCommandManager* commandManager = 0;
+
 START_JUCE_APPLICATION (showmidi::ShowMidiApplication)

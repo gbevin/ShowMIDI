@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BED11850BE10D6B175ACFAE0"
-               BuildableName = "showmidi.app"
+               BuildableName = "ShowMIDI.app"
                BlueprintName = "ShowMIDI - App"
                ReferencedContainer = "container:showmidi.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BED11850BE10D6B175ACFAE0"
-            BuildableName = "showmidi.app"
+            BuildableName = "ShowMIDI.app"
             BlueprintName = "ShowMIDI - App"
             ReferencedContainer = "container:showmidi.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BED11850BE10D6B175ACFAE0"
-            BuildableName = "showmidi.app"
+            BuildableName = "ShowMIDI.app"
             BlueprintName = "ShowMIDI - App"
             ReferencedContainer = "container:showmidi.xcodeproj">
          </BuildableReference>

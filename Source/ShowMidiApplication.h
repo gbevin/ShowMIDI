@@ -15,17 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#pragma once
+
 #include <JuceHeader.h>
 
 #include "UwynLookAndFeel.h"
 
 #define SMApp ShowMidiApplication::getInstance()
 
+extern ApplicationCommandManager* commandManager;
+
 namespace showmidi
 {
     class MainWindow;
     
-    class ShowMidiApplication : public juce::JUCEApplication
+    class ShowMidiApplication : public juce::JUCEApplication, public juce::ApplicationCommandManagerListener
     {
     public:
         ShowMidiApplication();
@@ -45,9 +49,15 @@ namespace showmidi
         void initialise(const juce::String& commandLine) override;
         void shutdown() override;
         void systemRequestedQuit() override;
-        
         void anotherInstanceStarted(const juce::String& commandLine) override;
-        
+
+        ApplicationCommandTarget* getNextCommandTarget() override;
+        void getAllCommands(Array <CommandID> &) override;
+        void getCommandInfo(CommandID, ApplicationCommandInfo &) override;
+        bool perform(const InvocationInfo &) override;
+        void applicationCommandInvoked(const ApplicationCommandTarget::InvocationInfo &) override;
+        void applicationCommandListChanged() override;
+
         void setWindowTitle(const String&);
         void setWindowSize(int, int);
         int getWindowHeight();
