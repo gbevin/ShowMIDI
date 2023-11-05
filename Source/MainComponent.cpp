@@ -95,12 +95,12 @@ namespace showmidi
         
         void setPaused(bool paused)
         {
+            SMApp.setWindowTitle(String("ShowMIDI") + (paused ? " (paused)" : ""));
+            
             ScopedLock g(midiDevicesLock_);
             for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
             {
                 paused_ = paused;
-                
-                SMApp.setWindowTitle(String("ShowMIDI") + (paused ? " (paused)" : ""));
                 
                 i.getValue()->setPaused(paused);
             }
