@@ -67,5 +67,8 @@ void ShowMidiApplication::anotherInstanceStarted(const juce::String& commandLine
 
 void ShowMidiApplication::setWindowTitle(const String& title)
 {
-    mainWindow_->setName(title);
+    if (mainWindow_ != nullptr)
+    {
+        mainWindow_->setName(title);
+    }
 }
