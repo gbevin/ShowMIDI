@@ -50,7 +50,7 @@ cd Builds/LinuxMakeFile
 and build the binary by typing `make`
 
 ```
-make
+make CONFIG=Release
 ```
 
 The resulting binary will be in the `Build/LinuxMakeFile/build` directory and can be moved anywhere appropriate on your system, for instance into `/usr/local/bin`:

@@ -34,7 +34,7 @@ MainWindow::MainWindow (juce::String name)
     extraMenu_.addCommandItem(commandManager, CommandIDs::version);
     extraMenu_.addCommandItem(commandManager, CommandIDs::uwyn);
     setMacMainMenu(this, &extraMenu_);
-#elif JUCE_WINDOWS
+#elif JUCE_WINDOWS | JUCE_LINUX
     setMenuBar(this);
 #endif
 
@@ -63,7 +63,7 @@ MainWindow::~MainWindow()
 {
 #if JUCE_MAC
     setMacMainMenu(0, 0);
-#elif JUCE_WINDOWS
+#elif JUCE_WINDOWS | JUCE_LINUX
     setMenuBar(0);
 #endif
     
