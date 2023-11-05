@@ -25,11 +25,6 @@ https://github.com/gbevin/ShowMIDI/releases
 
 Since ShowMIDI is free and open-source, you can also easily build it yourself. Just take a look into the Builds directory when you download the sources.
 
-If you're using the macOS Homebrew package manager, you can install ShowMIDI with:
-```
-brew install gbevin/tools/showmidi
-```
-
 ## Usage
 To use it, simply double-click the application to launch it.
 
