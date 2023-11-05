@@ -46,7 +46,10 @@ namespace showmidi
         {
             refreshMidiDevices();
             
-            startTimer(RenderDevices, 1000 / 60);
+            // 30Hz
+            startTimer(RenderDevices, 1000 / 30);
+            
+            // 5Hz
             startTimer(RefreshMidiDevices, 1000 / 5);
         }
         
