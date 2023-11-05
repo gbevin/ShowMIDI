@@ -32,3 +32,29 @@ brew install gbevin/tools/showmidi
 
 ## Usage
 To use it, simply double-click the application to launch it.
+
+## Building on Linux
+
+To build ShowMIDI on Linux you need a minimal set of packages installed beforehand, on Ubuntu this can be done with:
+
+```
+sudo apt install build-essential pkg-config libasound2-dev libfreetype6-dev libcurl4-openssl-dev libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev
+```
+
+After that, go to the `LinuxMakeFile` directory
+
+```
+cd Builds/LinuxMakeFile
+```
+
+and build the binary by typing `make`
+
+```
+make
+```
+
+The resulting binary will be in the `Build/LinuxMakeFile/build` directory and can be moved anywhere appropriate on your system, for instance into `/usr/local/bin`:
+
+```
+sudo mv build/showmidi /usr/local/bin
+```
