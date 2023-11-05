@@ -15,32 +15,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
-
 #include <JuceHeader.h>
 
-namespace showmidi
-{
-    class MidiDeviceComponent : public juce::Component
-    {
-    public:
-        MidiDeviceComponent(const MidiDeviceInfo& info);
-        ~MidiDeviceComponent() override;
+#include "ShowMidiApplication.h"
 
-        static int getStandardWidth();
-        
-        void render();
-        void paint(juce::Graphics&) override;
-        void resized() override;
-        
-        void setPaused(bool);
-        
-        int getVisibleHeight() const;
-        
-        class Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
-        
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MidiDeviceComponent)
-    };
-}
+START_JUCE_APPLICATION (showmidi::ShowMidiApplication)

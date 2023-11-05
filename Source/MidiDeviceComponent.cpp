@@ -17,92 +17,12 @@
  */
 #include "MidiDeviceComponent.h"
 
+#include "ChannelState.h"
+
 namespace showmidi
 {
     static constexpr int DEFAULT_OCTAVE_MIDDLE_C = 2;
-
-    struct ChannelMessage
-    {
-        Time time_;
-        int value_ { 0 };
-    };
     
-    struct Note : public ChannelMessage
-    {
-        bool on_ { false };
-        int number_ { -1 };
-        int polyPressure_ { 0 };
-    };
-    
-    struct Notes
-    {
-        Notes()
-        {
-            for (int i = 0; i < 128; ++i)
-            {
-                note_[i].number_ = i;
-            }
-        }
-        
-        Time time_;
-        Note note_[128];
-    };
-    
-    struct ControlChange : public ChannelMessage
-    {
-        int number_ { -1 };
-    };
-    
-    struct ControlChanges
-    {
-        ControlChanges()
-        {
-            for (int i = 0; i < 128; ++i)
-            {
-                controlChange_[i].number_ = i;
-            }
-        }
-        
-        Time time_;
-        ControlChange controlChange_[128];
-    };
-
-    struct ProgramChange : public ChannelMessage
-    {
-    };
-    
-    struct ChannelPressure : public ChannelMessage
-    {
-    };
-
-    struct PitchBend : public ChannelMessage
-    {
-    };
-    
-    struct ActiveChannel
-    {
-        int number_ { -1 };
-        Time time_;
-        Notes notes_;
-        ControlChanges controlChanges_;
-        ProgramChange programChange_;
-        ChannelPressure channelPressure_;
-        PitchBend pitchBend_;
-    };
-    
-    struct ActiveChannels
-    {
-        ActiveChannels()
-        {
-            for (int i = 0; i < 16; ++i)
-            {
-                channel_[i].number_ = i;
-            }
-        }
-        
-        ActiveChannel channel_[16];
-    };
-
     struct MidiDeviceComponent::Pimpl : public juce::MidiInputCallback
     {
         Pimpl(MidiDeviceComponent* owner, const MidiDeviceInfo info) : owner_(owner), deviceInfo_(info)
@@ -163,7 +83,7 @@ namespace showmidi
             {
                 ControlChanges& control_changes = channel.controlChanges_;
                 control_changes.time_ = t;
-
+                
                 channel_message = &control_changes.controlChange_[msg.getControllerNumber()];
                 channel_message->value_ = msg.getControllerValue();
             }
@@ -194,7 +114,7 @@ namespace showmidi
         void render()
         {
             const auto t = Time::getCurrentTime();
-
+            
             bool expected = true;
             if (dirty_.compare_exchange_strong(expected, false) || (t - lastRender_).inMilliseconds() > 200)
             {
@@ -212,18 +132,18 @@ namespace showmidi
         static constexpr int VALUE_WIDTH = 30;
         static constexpr int INDICATOR_HEIGHT = 4;
         static constexpr int NOTE_COLUMN_WIDTH =
-            COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING +
-            COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
+        COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING +
+        COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
         static constexpr int CC_COLUMN_WIDTH =
-            COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING +
-            COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
+        COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING +
+        COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
         static constexpr int STANDARD_WIDTH = NOTE_COLUMN_WIDTH + COLUMN_MARGIN + CC_COLUMN_WIDTH;
-
+        
         static int getStandardWidth()
         {
             return STANDARD_WIDTH;
         }
-
+        
         struct ChannelPaintState
         {
             Time time_;
@@ -233,15 +153,21 @@ namespace showmidi
         
         void paint(juce::Graphics& g)
         {
-            const auto t = Time::getCurrentTime();
-            
-            g.setColour(Colours::white);
+            auto t = Time::getCurrentTime();
+            ActiveChannels* channels = &channels_;
+            if (paused_)
+            {
+                t = pausedTime_;
+                channels = &pausedChannels_;
+            }
 
+            g.setColour(Colours::white);
+            
             ChannelPaintState state = { t, HEADER_HEIGHT, false };
             
             for (int channel_index = 0; channel_index < 16; ++channel_index)
             {
-                auto& channel_messages = channels_.channel_[channel_index];
+                auto& channel_messages = channels->channel_[channel_index];
                 if (!isExpired(t, channel_messages.time_))
                 {
                     state.header_ = false;
@@ -279,31 +205,31 @@ namespace showmidi
             state.offset_ += ROW_HEIGHT;
         }
         
-         void paintProgramChange(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
-         {
-             int y_offset = -1;
-
-             auto& program_change = channel.programChange_;
-             if (!isExpired(state.time_, program_change.time_))
-             {
-                 ensurePaintedChannelHeader(g, state, channel);
-                 
-                 // write the texts
-                 
-                 g.setColour(Colours::white);
-                 g.setFont(Font(14, Font::bold));
-                 int pc_x = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN;
-                 int pc_width = getStandardWidth() - pc_x;
-                 g.drawText(String("PC ") + String(program_change.value_), pc_x, state.offset_ - ROW_HEIGHT, pc_width, ROW_HEIGHT, Justification::centredRight);
-                 
-                 y_offset += ROW_HEIGHT;
-             }
-         }
-
+        void paintProgramChange(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
+        {
+            int y_offset = -1;
+            
+            auto& program_change = channel.programChange_;
+            if (!isExpired(state.time_, program_change.time_))
+            {
+                ensurePaintedChannelHeader(g, state, channel);
+                
+                // write the texts
+                
+                g.setColour(Colours::white);
+                g.setFont(Font(14, Font::bold));
+                int pc_x = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN;
+                int pc_width = getStandardWidth() - pc_x;
+                g.drawText(String("PC ") + String(program_change.value_), pc_x, state.offset_ - ROW_HEIGHT, pc_width, ROW_HEIGHT, Justification::centredRight);
+                
+                y_offset += ROW_HEIGHT;
+            }
+        }
+        
         int paintPitchBend(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             int y_offset = state.offset_;
-
+            
             auto& pitch_bend = channel.pitchBend_;
             if (!isExpired(state.time_, pitch_bend.time_))
             {
@@ -322,14 +248,14 @@ namespace showmidi
                 {
                     fill = Colours::red.brighter().withAlpha(0.4f);
                 }
-
+                
                 g.setColour(fill.withAlpha(0.2f));
                 int pb_bg_width = STANDARD_WIDTH;
                 int pb_bg_height = ROW_HEIGHT - ROW_SPACING * 2 - INDICATOR_HEIGHT;
                 g.fillRect(0, y_offset + ROW_SPACING, pb_bg_width, pb_bg_height);
                 
                 // draw the pitch bend indicator
-
+                
                 g.setColour(fill);
                 int value_indicator_range = STANDARD_WIDTH / 2;
                 int value_indicator_x = value_indicator_range + 1;
@@ -353,7 +279,7 @@ namespace showmidi
                     int indicator_fill_x = value_indicator_x + abs(value_indicator_width);
                     g.fillRect(indicator_fill_x, value_indicator_y, STANDARD_WIDTH - indicator_fill_x, INDICATOR_HEIGHT);
                 }
-
+                
                 // write the texts
                 
                 g.setColour(Colours::white.withAlpha(0.8f));
@@ -365,11 +291,11 @@ namespace showmidi
             
             return y_offset;
         }
-
+        
         int paintNotes(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             int y_offset = -1;
-
+            
             auto& notes = channel.notes_;
             if (!isExpired(state.time_, notes.time_))
             {
@@ -414,7 +340,7 @@ namespace showmidi
                         // draw the velocity indicator
                         
                         int vel_bg_width = COLUMN_MARGIN + VALUE_WIDTH;
-
+                        
                         g.setColour(fill);
                         int value_indicator_y = y_offset + ROW_SPACING + value_bg_height;
                         int vel_indicator_width = (vel_bg_width * note.value_) / 127;
@@ -429,14 +355,14 @@ namespace showmidi
                         int pp_bg_x = value_bg_x + COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
                         
                         g.fillRect(pp_bg_x - COLUMN_MARGIN, value_indicator_y, COLUMN_MARGIN, INDICATOR_HEIGHT);
-
+                        
                         g.setColour(fill);
                         int pp_indicator_width = (pp_bg_width * note.polyPressure_) / 127;
                         g.fillRect(pp_bg_x, value_indicator_y, pp_indicator_width, INDICATOR_HEIGHT);
                         
                         g.setColour(fill.withAlpha(0.2f));
                         g.fillRect(pp_bg_x + pp_indicator_width, value_indicator_y, pp_bg_width - pp_indicator_width, INDICATOR_HEIGHT);
-
+                        
                         // write the texts
                         
                         g.setColour(Colours::white);
@@ -457,11 +383,11 @@ namespace showmidi
             
             return y_offset;
         }
-       
+        
         int paintControlChanges(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             int y_offset = -1;
-
+            
             if (!isExpired(state.time_, channel.channelPressure_.time_))
             {
                 paintControlChangeEntry(g, state, channel, y_offset, String("CP"), channel.channelPressure_.value_);
@@ -518,7 +444,7 @@ namespace showmidi
             
             g.setColour(fill.withAlpha(0.2f));
             g.fillRect(value_bg_x + value_indicator_width, value_indicator_y, value_bg_width - value_indicator_width, INDICATOR_HEIGHT);
-
+            
             // write the texts
             
             g.setColour(Colours::white);
@@ -542,7 +468,7 @@ namespace showmidi
         {
             return MidiMessage::getMidiNoteName(noteNumber, true, true, DEFAULT_OCTAVE_MIDDLE_C);
         }
-
+        
         void resized()
         {
             dirty_ = true;
@@ -551,15 +477,31 @@ namespace showmidi
             nameLabel_.setBounds(area.removeFromTop(HEADER_HEIGHT));
         }
         
+        void setPaused(bool paused)
+        {
+            if (paused)
+            {
+                pausedTime_ = Time::getCurrentTime();
+                pausedChannels_ = channels_;
+            }
+            
+            paused_ = paused;
+        }
+        
         MidiDeviceComponent* const owner_;
         const MidiDeviceInfo deviceInfo_;
         std::unique_ptr<juce::MidiInput> midiIn_;
         std::atomic_bool dirty_ { true };
         Time lastRender_;
+        bool paused_ { false };
         
         juce::Label nameLabel_;
         
         ActiveChannels channels_;
+        
+        Time pausedTime_;
+        ActiveChannels pausedChannels_;
+        
         int lastHeight_ { 0 };
         
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
@@ -575,4 +517,6 @@ namespace showmidi
     void MidiDeviceComponent::resized()                 { pimpl_->resized(); }
     
     int MidiDeviceComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }
+    
+    void MidiDeviceComponent::setPaused(bool p)         { pimpl_->setPaused(p); }
 }

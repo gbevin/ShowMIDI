@@ -9,6 +9,8 @@
       <FILE id="otStf3" name="appicon.png" compile="0" resource="1" file="Assets/appicon.png"/>
     </GROUP>
     <GROUP id="{AE4D7D9E-28DD-8B3A-3BD5-46499F82F581}" name="Source">
+      <FILE id="kgTt7X" name="ChannelState.h" compile="0" resource="0" file="Source/ChannelState.h"/>
+      <FILE id="Ett8IA" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="PSyaZb" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="nrPDqh" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>

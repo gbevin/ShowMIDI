@@ -48,10 +48,10 @@ namespace showmidi
         
         void anotherInstanceStarted(const juce::String& commandLine) override;
         
+        void setWindowTitle(const String&);
+
     private:
         UwynLookAndFeel lookAndFeel_;
-        std::unique_ptr<MainWindow> mainWindow;
+        std::unique_ptr<MainWindow> mainWindow_;
     };
-    
-    START_JUCE_APPLICATION (ShowMidiApplication)
 }

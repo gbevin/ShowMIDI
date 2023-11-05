@@ -48,12 +48,12 @@ UwynLookAndFeel& ShowMidiApplication::getLookAndFeel()
 
 void ShowMidiApplication::initialise(const juce::String& commandLine)
 {
-    mainWindow.reset(new MainWindow(getApplicationName()));
+    mainWindow_.reset(new MainWindow(getApplicationName()));
 }
 
 void ShowMidiApplication::shutdown()
 {
-    mainWindow = nullptr;
+    mainWindow_ = nullptr;
 }
 
 void ShowMidiApplication::systemRequestedQuit()
@@ -63,4 +63,9 @@ void ShowMidiApplication::systemRequestedQuit()
 
 void ShowMidiApplication::anotherInstanceStarted(const juce::String& commandLine)
 {
+}
+
+void ShowMidiApplication::setWindowTitle(const String& title)
+{
+    mainWindow_->setName(title);
 }

@@ -18,6 +18,7 @@
 #include "MainComponent.h"
 
 #include "MidiDeviceComponent.h"
+#include "ShowMidiApplication.h"
 
 namespace showmidi
 {
@@ -30,7 +31,7 @@ namespace showmidi
         }
     };
 
-    struct MainComponent::Pimpl : public MultiTimer
+    struct MainComponent::Pimpl : public MultiTimer, public KeyListener
     {
         static constexpr int MIN_MIDI_DEVICES_AUTO_SHOWN = 1;
         static constexpr int MAX_MIDI_DEVICES_AUTO_SHOWN = 6;
@@ -39,11 +40,15 @@ namespace showmidi
         enum Timers
         {
             RenderDevices = 1,
-            RefreshMidiDevices
+            RefreshMidiDevices,
+            GrabKeyboardFocus
         };
         
         Pimpl(MainComponent* owner) : owner_(owner)
         {
+            owner_->setWantsKeyboardFocus(true);
+            owner_->addKeyListener(this);
+            
             refreshMidiDevices();
             
             // 30Hz
@@ -51,17 +56,24 @@ namespace showmidi
             
             // 5Hz
             startTimer(RefreshMidiDevices, 1000 / 5);
+            
+            startTimer(GrabKeyboardFocus, 100);
         }
         
         ~Pimpl()
         {
+            owner_->removeKeyListener(this);
+            
             stopTimer(RenderDevices);
             stopTimer(RefreshMidiDevices);
             
-            for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
             {
-                owner_->removeChildComponent(i.getValue());
-                delete i.getValue();
+                ScopedLock g(midiDevicesLock_);
+                for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
+                {
+                    owner_->removeChildComponent(i.getValue());
+                    delete i.getValue();
+                }
             }
         }
         
@@ -70,7 +82,31 @@ namespace showmidi
             g.fillAll(owner_->getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
         }
         
-        void timerCallback(int timerID)
+        bool keyPressed(const KeyPress& key, Component* originatingComponent) override
+        {
+            if (key.getKeyCode() == KeyPress::spaceKey)
+            {
+                setPaused(!paused_);
+                return true;
+            }
+            
+            return false;
+        }
+        
+        void setPaused(bool paused)
+        {
+            ScopedLock g(midiDevicesLock_);
+            for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
+            {
+                paused_ = paused;
+                
+                SMApp.setWindowTitle(String("ShowMIDI") + (paused ? " (paused)" : ""));
+                
+                i.getValue()->setPaused(paused);
+            }
+        }
+        
+        void timerCallback(int timerID) override
         {
             switch (timerID)
             {
@@ -85,11 +121,23 @@ namespace showmidi
                     refreshMidiDevices();
                     break;
                 }
+                    
+                case GrabKeyboardFocus:
+                {
+                    if (owner_->isVisible())
+                    {
+                        owner_->grabKeyboardFocus();
+                        stopTimer(GrabKeyboardFocus);
+                    }
+                    break;
+                }
             }
         }
         
         void renderDevices()
         {
+            ScopedLock g(midiDevicesLock_);
+
             auto height = owner_->getParentHeight();
             for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
             {
@@ -109,6 +157,8 @@ namespace showmidi
         
         void refreshMidiDevices()
         {
+            ScopedLock g(midiDevicesLock_);
+            
             auto devices = MidiInput::getAvailableDevices();
             
             MidiDeviceInfoComparator comparator;
@@ -148,6 +198,8 @@ namespace showmidi
             
             if (devices_to_remove.size() > 0 || new_devices_preset)
             {
+                setPaused(false);
+                
                 owner_->removeAllChildren();
                 
                 // remove the devices that disappeared
@@ -198,12 +250,14 @@ namespace showmidi
         
         MainComponent* const owner_;
         HashMap<const String, MidiDeviceComponent*> midiDevices_;
-        
+        CriticalSection midiDevicesLock_;
+        bool paused_ { false };
+
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
     MainComponent::MainComponent() : pimpl_(new Pimpl(this)) {}
     MainComponent::~MainComponent() = default;
     
-    void MainComponent::paint(juce::Graphics& g) { pimpl_->paint(g); }
+    void MainComponent::paint(juce::Graphics& g)                    { pimpl_->paint(g); }
 }
