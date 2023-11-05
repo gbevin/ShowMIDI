@@ -232,22 +232,24 @@ namespace showmidi
                     }
                 }
                 
-                MessageManager::callAsync([this] () {
-                    // resize the window in order to display the MIDI devices
-                    auto viewport = owner_->getParentComponent();
-                    if (viewport != nullptr)
-                    {
-                        auto window = viewport->getParentComponent();
-                        if (window != nullptr)
-                        {
-                            auto window_width = (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING) * std::max(MIN_MIDI_DEVICES_AUTO_SHOWN, std::min(MAX_MIDI_DEVICES_AUTO_SHOWN, midiDevices_.size())) + MIDI_DEVICE_SPACING;
-                            window->setSize(window_width, window->getHeight());
-                        }
-                    }
-                });
+                updateWindowSize();
             }
         }
         
+        void updateWindowSize()
+        {
+            MessageManager::callAsync([this] () {
+                // resize the window in order to display the MIDI devices
+                auto window_width = (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING) * std::max(MIN_MIDI_DEVICES_AUTO_SHOWN, std::min(MAX_MIDI_DEVICES_AUTO_SHOWN, midiDevices_.size())) + MIDI_DEVICE_SPACING;
+                auto window_height = SMApp.getWindowHeight();
+#if JUCE_IOS
+                window_height = Desktop::getInstance().getDisplays().getPrimaryDisplay()->totalArea.getHeight();
+#else
+                SMApp.setWindowSize(window_width, window_height);
+#endif
+            });
+        }
+
         MainComponent* const owner_;
         HashMap<const String, MidiDeviceComponent*> midiDevices_;
         CriticalSection midiDevicesLock_;
@@ -259,5 +261,5 @@ namespace showmidi
     MainComponent::MainComponent() : pimpl_(new Pimpl(this)) {}
     MainComponent::~MainComponent() = default;
     
-    void MainComponent::paint(juce::Graphics& g)                    { pimpl_->paint(g); }
+    void MainComponent::paint(juce::Graphics& g) { pimpl_->paint(g); }
 }

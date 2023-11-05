@@ -92,7 +92,7 @@
         <MODULEPATH id="juce_gui_basics" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
-    <XCODE_IPHONE targetFolder="Builds/iOS" extraDefs="JUCE_SILENCE_XCODE_15_LINKER_WARNING=1&#10;JUCE_COREGRAPHICS_RENDER_WITH_MULTIPLE_PAINT_CALLS=1"
+    <XCODE_IPHONE targetFolder="Builds/iOS" extraDefs="JUCE_SILENCE_XCODE_15_LINKER_WARNING=1"
                   buildNumber="1" smallIcon="otStf3" bigIcon="otStf3" iosScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
                   iPadScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
                   UIStatusBarHidden="1" iosDevelopmentTeamID="AGZT8GVS7G">

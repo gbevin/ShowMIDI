@@ -72,3 +72,25 @@ void ShowMidiApplication::setWindowTitle(const String& title)
         mainWindow_->setName(title);
     }
 }
+
+void ShowMidiApplication::setWindowSize(int width, int height)
+{
+    if (mainWindow_ != nullptr)
+    {
+#if JUCE_IOS
+        mainWindow_->setBounds(0, 0, width, height);
+#else
+        mainWindow_->setSize(width, height);
+#endif
+    }
+}
+
+int ShowMidiApplication::getWindowHeight()
+{
+    if (mainWindow_ != nullptr)
+    {
+        return mainWindow_->getHeight();
+    }
+    
+    return 0;
+}

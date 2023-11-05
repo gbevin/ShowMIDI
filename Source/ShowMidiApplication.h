@@ -49,6 +49,8 @@ namespace showmidi
         void anotherInstanceStarted(const juce::String& commandLine) override;
         
         void setWindowTitle(const String&);
+        void setWindowSize(int, int);
+        int getWindowHeight();
 
     private:
         UwynLookAndFeel lookAndFeel_;

@@ -39,8 +39,7 @@ MainWindow::MainWindow (juce::String name)
     viewport->setSize((MidiDeviceComponent::getStandardWidth() + 2) + 2, 600);
     
     setContentOwned(viewport, true);
-    
-#if JUCE_IOS || JUCE_ANDROID
+#if JUCE_IOS
     setFullScreen(true);
 #else
     setResizable(true, true);
