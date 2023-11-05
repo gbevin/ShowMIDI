@@ -37,7 +37,7 @@ namespace showmidi
         
         int getVisibleHeight() const;
         
-        class Pimpl;
+        struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_;
         

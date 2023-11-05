@@ -29,7 +29,7 @@ namespace showmidi
         
         void paint(juce::Graphics&) override;
         
-        class Pimpl;
+        struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_;
 

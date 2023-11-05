@@ -48,7 +48,7 @@ namespace showmidi
             midiIn_ = nullptr;
         }
         
-        void handleIncomingMidiMessage(MidiInput* source, const MidiMessage& msg)
+        void handleIncomingMidiMessage(MidiInput*, const MidiMessage& msg)
         {
             if (msg.getChannel() <= 0)
             {

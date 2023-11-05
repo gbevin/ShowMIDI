@@ -46,7 +46,7 @@ UwynLookAndFeel& ShowMidiApplication::getLookAndFeel()
     return lookAndFeel_;
 }
 
-void ShowMidiApplication::initialise(const juce::String& commandLine)
+void ShowMidiApplication::initialise(const juce::String&)
 {
     mainWindow_.reset(new MainWindow(getApplicationName()));
 }
@@ -61,7 +61,7 @@ void ShowMidiApplication::systemRequestedQuit()
     quit();
 }
 
-void ShowMidiApplication::anotherInstanceStarted(const juce::String& commandLine)
+void ShowMidiApplication::anotherInstanceStarted(const juce::String&)
 {
 }
 

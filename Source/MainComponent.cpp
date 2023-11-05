@@ -82,7 +82,7 @@ namespace showmidi
             g.fillAll(owner_->getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
         }
         
-        bool keyPressed(const KeyPress& key, Component* originatingComponent) override
+        bool keyPressed(const KeyPress& key, Component*) override
         {
             if (key.getKeyCode() == KeyPress::spaceKey)
             {
@@ -166,9 +166,9 @@ namespace showmidi
             
             // detect the previous devices that have now disappeared
             Array<String> devices_to_remove;
-            for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
+            for (HashMap<const String, MidiDeviceComponent*>::Iterator it(midiDevices_); it.next();)
             {
-                auto identifier = i.getKey();
+                auto identifier = it.getKey();
                 bool found = false;
                 for (int i = 0; i < devices.size(); ++i)
                 {
