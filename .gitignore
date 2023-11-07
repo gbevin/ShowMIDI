@@ -6,3 +6,4 @@ Builds/VisualStudio2022/x64/
 Builds/VisualStudio2022/ShowMIDI_App.vcxproj.user
 Builds/iOS/ShowMIDI.xcodeproj/project.xcworkspace/xcuserdata
 Builds/iOS/ShowMIDI.xcodeproj/xcuserdata
+Plugin/Builds/MacOSX/ShowMIDIPlugin.xcodeproj/project.xcworkspace/xcuserdata

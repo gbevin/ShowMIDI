@@ -25,6 +25,11 @@ namespace showmidi
     
     struct MidiDeviceComponent::Pimpl : public juce::MidiInputCallback
     {
+        Pimpl(MidiDeviceComponent* owner, const String& name) : owner_(owner), deviceInfo_({ name, ""})
+        {
+            initialize();
+        }
+        
         Pimpl(MidiDeviceComponent* owner, const MidiDeviceInfo info) : owner_(owner), deviceInfo_(info)
         {
             auto midi_input = MidiInput::openDevice(info.identifier, this);
@@ -34,6 +39,11 @@ namespace showmidi
                 midiIn_.swap(midi_input);
             }
             
+            initialize();
+        }
+        
+        void initialize()
+        {
             nameLabel_.setText(deviceInfo_.name, dontSendNotification);
             nameLabel_.setFont(juce::Font(16.0f));
             nameLabel_.setColour(Label::backgroundColourId, juce::Colours::black);
@@ -485,12 +495,17 @@ namespace showmidi
                 pausedChannels_ = channels_;
             }
             
+            if (midiIn_.get() == nullptr)
+            {
+                nameLabel_.setText(deviceInfo_.name + (paused ? " (paused)": ""), dontSendNotification);
+            }
+            
             paused_ = paused;
         }
         
         MidiDeviceComponent* const owner_;
         const MidiDeviceInfo deviceInfo_;
-        std::unique_ptr<juce::MidiInput> midiIn_;
+        std::unique_ptr<juce::MidiInput> midiIn_ { nullptr };
         std::atomic_bool dirty_ { true };
         Time lastRender_;
         bool paused_ { false };
@@ -507,6 +522,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
+    MidiDeviceComponent::MidiDeviceComponent(const String& name) : pimpl_(new Pimpl(this, name)) {}
     MidiDeviceComponent::MidiDeviceComponent(const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, info)) {}
     MidiDeviceComponent::~MidiDeviceComponent() = default;
     
@@ -516,7 +532,9 @@ namespace showmidi
     void MidiDeviceComponent::paint(juce::Graphics& g)  { pimpl_->paint(g); }
     void MidiDeviceComponent::resized()                 { pimpl_->resized(); }
     
-    int MidiDeviceComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }
+    void MidiDeviceComponent::handleIncomingMidiMessage(const MidiMessage& m)   { pimpl_->handleIncomingMidiMessage(nullptr, m); };
     
     void MidiDeviceComponent::setPaused(bool p)         { pimpl_->setPaused(p); }
+
+    int MidiDeviceComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }
 }

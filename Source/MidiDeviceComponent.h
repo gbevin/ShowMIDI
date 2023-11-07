@@ -24,7 +24,8 @@ namespace showmidi
     class MidiDeviceComponent : public juce::Component
     {
     public:
-        MidiDeviceComponent(const MidiDeviceInfo& info);
+        MidiDeviceComponent(const String&);
+        MidiDeviceComponent(const MidiDeviceInfo&);
         ~MidiDeviceComponent() override;
 
         static int getStandardWidth();
@@ -33,10 +34,12 @@ namespace showmidi
         void paint(juce::Graphics&) override;
         void resized() override;
         
+        void handleIncomingMidiMessage(const MidiMessage&);
+
         void setPaused(bool);
         
         int getVisibleHeight() const;
-        
+
         struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_;
