@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
+    <key>CFBundleExecutable</key>
+    <string>${EXECUTABLE_NAME}</string>
+    <key>CFBundleIconFile</key>
+    <string>Icon.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.uwyn.showmidi</string>
+    <key>CFBundleName</key>
+    <string>ShowMIDI</string>
+    <key>CFBundleDisplayName</key>
+    <string>ShowMIDI</string>
+    <key>CFBundlePackageType</key>
+    <string>BNDL</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.2.0</string>
+    <key>CFBundleVersion</key>
+    <string>2</string>
+    <key>NSHumanReadableCopyright</key>
+    <string></string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.music</string>
+    <key>AudioComponents</key>
+    <array>
+      <dict>
+        <key>name</key>
+        <string>Uwyn: ShowMIDI</string>
+        <key>description</key>
+        <string>Visualize MIDI activity</string>
+        <key>factoryFunction</key>
+        <string>ShowMIDIAUFactory</string>
+        <key>manufacturer</key>
+        <string>Uwyn</string>
+        <key>type</key>
+        <string>aumi</string>
+        <key>subtype</key>
+        <string>shmi</string>
+        <key>version</key>
+        <integer>512</integer>
+        <key>sandboxSafe</key>
+        <true/>
+      </dict>
+    </array>
+  </dict>
+</plist>
