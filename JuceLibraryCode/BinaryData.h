@@ -11,8 +11,14 @@ namespace BinaryData
     extern const char*   appicon_png;
     const int            appicon_pngSize = 62644;
 
+    extern const char*   JetBrainsMonoBold_ttf;
+    const int            JetBrainsMonoBold_ttfSize = 138692;
+
+    extern const char*   JetBrainsMonoMedium_ttf;
+    const int            JetBrainsMonoMedium_ttfSize = 138276;
+
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 1;
+    const int namedResourceListSize = 3;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

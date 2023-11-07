@@ -97,6 +97,7 @@
 		2343ECC7F67FA6AD9E72214D /* PluginProcessor.cpp */ /* PluginProcessor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginProcessor.cpp; path = ../../Source/PluginProcessor.cpp; sourceTree = SOURCE_ROOT; };
 		26B32E7A0B7D819DE0C5E48C /* BinaryData.h */ /* BinaryData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BinaryData.h; path = ../../JuceLibraryCode/BinaryData.h; sourceTree = SOURCE_ROOT; };
 		27ECFCD7203995ED4729E23E /* CoreAudio.framework */ /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		29C8F7404D8F21192BF9A8E5 /* JetBrainsMono-Bold.ttf */ /* JetBrainsMono-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; name = "JetBrainsMono-Bold.ttf"; path = "../../Fonts/JetBrainsMono-Bold.ttf"; sourceTree = SOURCE_ROOT; };
 		2BAD118D5E37BE0B29056893 /* Info-AUv3_AppExtension.plist */ /* Info-AUv3_AppExtension.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-AUv3_AppExtension.plist"; path = "Info-AUv3_AppExtension.plist"; sourceTree = SOURCE_ROOT; };
 		2BD7EF3C51FB57E568B6C282 /* juce_audio_plugin_client */ /* juce_audio_plugin_client */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_plugin_client; path = ../../JuceLibraryCode/modules/juce_audio_plugin_client; sourceTree = SOURCE_ROOT; };
 		2C4A1E8364601AAA7BEC47D3 /* include_juce_core.mm */ /* include_juce_core.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_core.mm; path = ../../JuceLibraryCode/include_juce_core.mm; sourceTree = SOURCE_ROOT; };
@@ -140,6 +141,7 @@
 		A7D51DA4FAC7916144DC9C37 /* PluginEditor.h */ /* PluginEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginEditor.h; path = ../../Source/PluginEditor.h; sourceTree = SOURCE_ROOT; };
 		A9A1766E8BB177B79C50AE1F /* UwynLookAndFeel.h */ /* UwynLookAndFeel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UwynLookAndFeel.h; path = ../../Source/UwynLookAndFeel.h; sourceTree = SOURCE_ROOT; };
 		A9B7C49820B6A87EA4DDB498 /* include_juce_audio_utils.mm */ /* include_juce_audio_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_utils.mm; path = ../../JuceLibraryCode/include_juce_audio_utils.mm; sourceTree = SOURCE_ROOT; };
+		ADAFCF7F00684C51B7470E23 /* JetBrainsMono-Medium.ttf */ /* JetBrainsMono-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; name = "JetBrainsMono-Medium.ttf"; path = "../../Fonts/JetBrainsMono-Medium.ttf"; sourceTree = SOURCE_ROOT; };
 		ADFC4D4C01DA373375788BEB /* Icon.icns */ /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = file.icns; name = Icon.icns; path = Icon.icns; sourceTree = SOURCE_ROOT; };
 		AEC15CFC452928D6467CBE0A /* UserNotifications.framework */ /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		B14489F06D2BD531D0FFF376 /* MetalKit.framework */ /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
@@ -224,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				EB21C47AF1DF9D221BA31E3F,
+				82812218DE15F11217A16E58,
 				D2B48182DCDC4E3CAFC2C24A,
 			);
 			name = ShowMIDI;
@@ -262,6 +265,15 @@
 				ADFC4D4C01DA373375788BEB,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		82812218DE15F11217A16E58 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				29C8F7404D8F21192BF9A8E5,
+				ADAFCF7F00684C51B7470E23,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		94DF986EF8145CE746CB9233 /* Frameworks */ = {

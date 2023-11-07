@@ -7,6 +7,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShowMIDI - Standalone Plugi
 		{A34E9471-D4CC-86F7-7BFE-6B029AD9E991} = {A34E9471-D4CC-86F7-7BFE-6B029AD9E991}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShowMIDI - VST", "ShowMIDI_VST.vcxproj", "{1FC1894E-F35C-AC8A-08E3-3017498ED029}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A34E9471-D4CC-86F7-7BFE-6B029AD9E991} = {A34E9471-D4CC-86F7-7BFE-6B029AD9E991}
+	EndProjectSection
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShowMIDI - VST3", "ShowMIDI_VST3.vcxproj", "{4DDDB4C1-B624-AEE2-D2A5-B7B55FF21687}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A34E9471-D4CC-86F7-7BFE-6B029AD9E991} = {A34E9471-D4CC-86F7-7BFE-6B029AD9E991}
@@ -31,6 +36,10 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1FC1894E-F35C-AC8A-08E3-3017498ED029}.Debug|x64.ActiveCfg = Debug|x64
+		{1FC1894E-F35C-AC8A-08E3-3017498ED029}.Debug|x64.Build.0 = Debug|x64
+		{1FC1894E-F35C-AC8A-08E3-3017498ED029}.Release|x64.ActiveCfg = Release|x64
+		{1FC1894E-F35C-AC8A-08E3-3017498ED029}.Release|x64.Build.0 = Release|x64
 		{4DDDB4C1-B624-AEE2-D2A5-B7B55FF21687}.Debug|x64.ActiveCfg = Debug|x64
 		{4DDDB4C1-B624-AEE2-D2A5-B7B55FF21687}.Debug|x64.Build.0 = Debug|x64
 		{4DDDB4C1-B624-AEE2-D2A5-B7B55FF21687}.Release|x64.ActiveCfg = Release|x64

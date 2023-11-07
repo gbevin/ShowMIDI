@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8D4550665620D436C7E8B433"
-               BuildableName = "ShowMIDI - All"
-               BlueprintName = "ShowMIDI - All"
+               BlueprintIdentifier = "B1674EA761AEEB2463BD5C43"
+               BuildableName = "juce_lv2_helper"
+               BlueprintName = "ShowMIDI - LV2 Manifest Helper"
                ReferencedContainer = "container:ShowMIDI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -38,7 +38,18 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES">
+      allowLocationSimulation = "YES"
+      viewDebuggingEnabled = "No">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "B1674EA761AEEB2463BD5C43"
+            BuildableName = "juce_lv2_helper"
+            BlueprintName = "ShowMIDI - LV2 Manifest Helper"
+            ReferencedContainer = "container:ShowMIDI.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -46,15 +57,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8D4550665620D436C7E8B433"
-            BuildableName = "ShowMIDI - All"
-            BlueprintName = "ShowMIDI - All"
+            BlueprintIdentifier = "B1674EA761AEEB2463BD5C43"
+            BuildableName = "juce_lv2_helper"
+            BlueprintName = "ShowMIDI - LV2 Manifest Helper"
             ReferencedContainer = "container:ShowMIDI.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

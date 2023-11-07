@@ -19,7 +19,29 @@
 
 using namespace showmidi;
 
-UwynLookAndFeel::UwynLookAndFeel()
+struct UwynLookAndFeel::Pimpl
+{
+    Pimpl() :
+        jetbrainMonoMedium_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoMedium_ttf, BinaryData::JetBrainsMonoMedium_ttfSize)),
+        jetbrainMonoBold_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoBold_ttf, BinaryData::JetBrainsMonoBold_ttfSize))
+    {
+    }
+
+    Typeface::Ptr getTypefaceForFont(const Font& font)
+    {
+        if (font.getTypefaceStyle() == "Bold")
+        {
+            return jetbrainMonoBold_;
+        }
+
+        return jetbrainMonoMedium_;
+    }
+
+    Typeface::Ptr jetbrainMonoMedium_;
+    Typeface::Ptr jetbrainMonoBold_;
+};
+
+UwynLookAndFeel::UwynLookAndFeel() : pimpl_(new Pimpl())
 {
     setColourScheme(getDarkColourScheme());
     
@@ -34,8 +56,16 @@ UwynLookAndFeel::UwynLookAndFeel()
     setColour(AlertWindow::outlineColourId, juce::Colour(0xff2e2e2e));
 }
 
-UwynLookAndFeel::~UwynLookAndFeel()
+UwynLookAndFeel::~UwynLookAndFeel() = default;
+
+Typeface::Ptr UwynLookAndFeel::getTypefaceForFont(const Font& font)
 {
+    Typeface::Ptr r = pimpl_->getTypefaceForFont(font);
+    if (r)
+    {
+        return r;
+    }
+    return LookAndFeel::getTypefaceForFont(font);
 }
 
 LookAndFeel_V4::ColourScheme UwynLookAndFeel::getDarkColourScheme()

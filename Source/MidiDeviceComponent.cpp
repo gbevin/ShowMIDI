@@ -21,7 +21,7 @@
 
 namespace showmidi
 {
-    static constexpr int DEFAULT_OCTAVE_MIDDLE_C = 2;
+    static constexpr int DEFAULT_OCTAVE_MIDDLE_C = 3;
     
     struct MidiDeviceComponent::Pimpl : public juce::MidiInputCallback
     {
@@ -41,11 +41,26 @@ namespace showmidi
             
             initialize();
         }
+
+        static Font getHeaderFont()
+        {
+            return Font(16, Font::plain);
+        }
+        
+        static Font getDataTitleFont()
+        {
+            return Font(16, Font::bold);
+        }
+        
+        static Font getDataFont()
+        {
+            return Font(16, Font::plain);
+        }
         
         void initialize()
         {
             nameLabel_.setText(deviceInfo_.name, dontSendNotification);
-            nameLabel_.setFont(juce::Font(16.0f));
+            nameLabel_.setFont(getHeaderFont());
             nameLabel_.setColour(Label::backgroundColourId, juce::Colours::black);
             nameLabel_.setColour(Label::textColourId, juce::Colours::white);
             nameLabel_.setJustificationType(Justification::centred);
@@ -211,6 +226,8 @@ namespace showmidi
         {
             state.header_ = true;
             
+            g.setColour(Colours::white);
+            g.setFont(getDataTitleFont());
             g.drawText(String("CH ") + String(channel.number_ + 1), COLUMN_MARGIN, state.offset_, NOTE_COLUMN_WIDTH, ROW_HEIGHT, Justification::centredLeft);
             state.offset_ += ROW_HEIGHT;
         }
@@ -227,7 +244,7 @@ namespace showmidi
                 // write the texts
                 
                 g.setColour(Colours::white);
-                g.setFont(Font(14, Font::bold));
+                g.setFont(getDataFont());
                 int pc_x = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN;
                 int pc_width = getStandardWidth() - pc_x;
                 g.drawText(String("PC ") + String(program_change.value_), pc_x, state.offset_ - ROW_HEIGHT, pc_width, ROW_HEIGHT, Justification::centredRight);
@@ -293,7 +310,7 @@ namespace showmidi
                 // write the texts
                 
                 g.setColour(Colours::white.withAlpha(0.8f));
-                g.setFont(Font(14, Font::plain));
+                g.setFont(getDataFont());
                 g.drawText(String(pitch_bend.value_), 0, y_offset, STANDARD_WIDTH, ROW_HEIGHT, Justification::centred);
                 
                 y_offset += ROW_HEIGHT;
@@ -376,11 +393,11 @@ namespace showmidi
                         // write the texts
                         
                         g.setColour(Colours::white);
-                        g.setFont(Font(14, Font::bold));
+                        g.setFont(getDataTitleFont());
                         g.drawText(outputNote(i), COLUMN_MARGIN, y_offset, NOTE_WIDTH, ROW_HEIGHT, Justification::centred);
                         
                         g.setColour(Colours::white.withAlpha(0.8f));
-                        g.setFont(Font(14, Font::plain));
+                        g.setFont(getDataFont());
                         int value_x = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING + COLUMN_MARGIN;
                         g.drawText(String(note.value_), value_x, y_offset, VALUE_WIDTH, ROW_HEIGHT, Justification::centred);
                         int polypressure_x = value_x + VALUE_WIDTH + COLUMN_MARGIN;
@@ -458,11 +475,11 @@ namespace showmidi
             // write the texts
             
             g.setColour(Colours::white);
-            g.setFont(Font(14, Font::bold));
+            g.setFont(getDataTitleFont());
             g.drawText(label, x_offset + COLUMN_MARGIN, yOffset, NOTE_WIDTH, ROW_HEIGHT, Justification::centred);
             
             g.setColour(Colours::white.withAlpha(0.8f));
-            g.setFont(Font(14, Font::plain));
+            g.setFont(getDataFont());
             int value_x = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING + COLUMN_MARGIN;
             g.drawText(String(value), x_offset + value_x, yOffset, VALUE_WIDTH, ROW_HEIGHT, Justification::centred);
             

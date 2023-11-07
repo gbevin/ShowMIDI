@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="E79Oop" name="ShowMIDI" projectType="audioplug" useAppConfig="1"
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="0" jucerFormatVersion="1"
-              pluginFormats="buildAU,buildAUv3,buildLV2,buildStandalone,buildVST3"
+              pluginFormats="buildAU,buildAUv3,buildLV2,buildStandalone,buildVST,buildVST3"
               pluginCharacteristicsValue="pluginIsMidiEffectPlugin,pluginProducesMidiOut,pluginWantsMidiIn"
               version="0.2.0" companyName="Uwyn" companyWebsite="https://www.uwyn.com"
               companyEmail="info@uwyn.com" bundleIdentifier="com.uwyn.showmidi"
@@ -13,6 +13,12 @@
   <MAINGROUP id="BsIwV1" name="ShowMIDI">
     <GROUP id="{8CB228DE-9289-566C-FA68-A725D7D623F1}" name="Assets">
       <FILE id="eY2NXn" name="appicon.png" compile="0" resource="1" file="Assets/appicon.png"/>
+    </GROUP>
+    <GROUP id="{FDC783C1-48B0-1666-420B-62D58481C8C8}" name="Fonts">
+      <FILE id="xWEI2P" name="JetBrainsMono-Bold.ttf" compile="0" resource="1"
+            file="Fonts/JetBrainsMono-Bold.ttf"/>
+      <FILE id="hSWkxZ" name="JetBrainsMono-Medium.ttf" compile="0" resource="1"
+            file="Fonts/JetBrainsMono-Medium.ttf"/>
     </GROUP>
     <GROUP id="{F117A351-3888-0956-93E5-0CAFC88EFFAE}" name="Source">
       <FILE id="xPnPHy" name="ChannelState.h" compile="0" resource="0" file="Source/ChannelState.h"/>

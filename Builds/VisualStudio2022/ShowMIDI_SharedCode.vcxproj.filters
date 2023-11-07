@@ -5,6 +5,9 @@
     <Filter Include="ShowMIDI\Assets">
       <UniqueIdentifier>{81353229-2FE3-764D-0FC2-E87FD032AC13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ShowMIDI\Fonts">
+      <UniqueIdentifier>{CB430A14-2C9C-A550-ADBA-B4474AD01A79}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ShowMIDI\Source">
       <UniqueIdentifier>{81CED444-0A5A-ADF8-6DFC-89886C65934E}</UniqueIdentifier>
     </Filter>
@@ -5938,6 +5941,12 @@
   <ItemGroup>
     <None Include="..\..\Assets\appicon.png">
       <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Fonts\JetBrainsMono-Bold.ttf">
+      <Filter>ShowMIDI\Fonts</Filter>
+    </None>
+    <None Include="..\..\Fonts\JetBrainsMono-Medium.ttf">
+      <Filter>ShowMIDI\Fonts</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\native\oboe\CMakeLists.txt">
       <Filter>JUCE Modules\juce_audio_devices\native\oboe</Filter>

@@ -27,13 +27,18 @@ namespace showmidi
         UwynLookAndFeel();
         virtual ~UwynLookAndFeel();
         
+        Typeface::Ptr getTypefaceForFont(const Font& font) override;
+
         LookAndFeel_V4::ColourScheme getDarkColourScheme();
         void drawPopupMenuBackground(Graphics &, int, int);
         void drawButtonBackground(Graphics &, Button &, const Colour &, bool, bool);
         void drawButtonText(Graphics &, TextButton &, bool, bool);
         Font getNarrowFont(float);
         
+        class Pimpl;
     private:
+        std::unique_ptr<Pimpl> pimpl_;
+        
         UwynLookAndFeel(const UwynLookAndFeel &);
         const UwynLookAndFeel& operator= (const UwynLookAndFeel &);
     };

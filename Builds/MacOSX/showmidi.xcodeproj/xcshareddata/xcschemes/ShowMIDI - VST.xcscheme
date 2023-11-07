@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8D4550665620D436C7E8B433"
-               BuildableName = "ShowMIDI - All"
-               BlueprintName = "ShowMIDI - All"
+               BlueprintIdentifier = "7DE490DCA326A9C328B067A1"
+               BuildableName = "ShowMIDI.vst"
+               BlueprintName = "ShowMIDI - VST"
                ReferencedContainer = "container:ShowMIDI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -49,9 +49,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8D4550665620D436C7E8B433"
-            BuildableName = "ShowMIDI - All"
-            BlueprintName = "ShowMIDI - All"
+            BlueprintIdentifier = "7DE490DCA326A9C328B067A1"
+            BuildableName = "ShowMIDI.vst"
+            BlueprintName = "ShowMIDI - VST"
             ReferencedContainer = "container:ShowMIDI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
