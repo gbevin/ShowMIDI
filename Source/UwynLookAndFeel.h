@@ -30,9 +30,9 @@ namespace showmidi
         Typeface::Ptr getTypefaceForFont(const Font& font) override;
 
         LookAndFeel_V4::ColourScheme getDarkColourScheme();
-        void drawPopupMenuBackground(Graphics &, int, int);
-        void drawButtonBackground(Graphics &, Button &, const Colour &, bool, bool);
-        void drawButtonText(Graphics &, TextButton &, bool, bool);
+        void drawPopupMenuBackground(Graphics &, int, int) override;
+        void drawButtonBackground(Graphics &, Button &, const Colour &, bool, bool) override;
+        void drawButtonText(Graphics &, TextButton &, bool, bool) override;
         Font getNarrowFont(float);
         
         class Pimpl;
