@@ -45,6 +45,10 @@ sudo apt install build-essential pkg-config libasound2-dev \
   libxrandr-dev libxinerama-dev libxcursor-dev
 ```
 
+You'll also need to find a version of the VST2 SDK and put it in a location that the compiler can find.
+Searching online for `vst2.x/aeffect.h` should give you some options for download.
+Sadly it's not allowed to distribute this SDK, so it has not been included.
+
 After that, go to the `LinuxMakeFile` directory
 
 ```
@@ -60,5 +64,5 @@ make CONFIG=Release
 The resulting binary will be in the `Build/LinuxMakeFile/build` directory and can be moved anywhere appropriate on your system, for instance into `/usr/local/bin`:
 
 ```
-sudo mv build/showmidi /usr/local/bin
+sudo mv build/ShowMIDI /usr/local/bin
 ```
