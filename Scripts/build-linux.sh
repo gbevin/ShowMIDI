@@ -13,7 +13,7 @@ rm -rfv Builds/LinuxMakefile/build/
 PROJECT_DIR=$PWD
 
 pushd Builds/LinuxMakefile
-make Config=Release
+make CONFIG=Release
 popd
 
 cmake -BBuilds/LinuxMakefile/build/clap -DCMAKE_BUILD_TYPE=Release
