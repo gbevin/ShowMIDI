@@ -20,16 +20,20 @@ cmake -BBuilds/LinuxMakefile/build/clap -DCMAKE_BUILD_TYPE=Release
 pushd Builds/LinuxMakefile
 cmake --build build/clap --config Release
 
-STAGE_DIR="build/ShowMIDI-$RELEASE_VERSION"
-mkdir -p $STAGE_DIR/vst $STAGE_DIR/vst3 $STAGE_DIR/clap
-mv build/ShowMIDI $STAGE_DIR
-mv build/ShowMIDI.so $STAGE_DIR/vst
-mv build/ShowMIDI.vst3 $STAGE_DIR/vst3
-mv build/clap/ShowMIDI_artefacts/Release/ShowMIDI.clap $STAGE_DIR/clap
+pushd build
+STAGE_DIR="ShowMIDI-$RELEASE_VERSION"
+mkdir -p $STAGE_DIR/vst $STAGE_DIR/vst3 $STAGE_DIR/clap $STAGE_DIR/lv2
+mv ShowMIDI $STAGE_DIR
+mv ShowMIDI.so $STAGE_DIR/vst
+mv ShowMIDI.vst3 $STAGE_DIR/vst3
+mv clap/ShowMIDI_artefacts/Release/ShowMIDI.clap $STAGE_DIR/clap
+mv ShowMIDI.lv2 $STAGE_DIR/lv2
 cp $PROJECT_DIR/*.md $STAGE_DIR
 
-ARCHIVE_FILE="build/ShowMIDI-Linux-Ubuntu-x64-$RELEASE_VERSION.tar.bz2"
+ARCHIVE_FILE="ShowMIDI-Linux-Ubuntu-x64-$RELEASE_VERSION.tar.bz2"
 tar cvp $STAGE_DIR | bzip2 > $ARCHIVE_FILE
 echo "Finished building `realpath $ARCHIVE_FILE`"
+
+popd
 
 popd
