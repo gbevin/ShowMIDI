@@ -1,0 +1,3 @@
+[submodule "libs/clap-juce-extensions"]
+	path = libs/clap-juce-extensions
+	url = git@github.com:free-audio/clap-juce-extensions.git
