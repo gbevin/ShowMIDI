@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="E79Oop" name="ShowMIDI" projectType="audioplug" useAppConfig="1"
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="0" jucerFormatVersion="1"
-              pluginFormats="buildAU,buildAUv3,buildStandalone,buildVST,buildVST3"
+              pluginFormats="buildAU,buildAUv3,buildLV2,buildStandalone,buildVST,buildVST3"
               pluginCharacteristicsValue="pluginIsMidiEffectPlugin,pluginProducesMidiOut,pluginWantsMidiIn"
               version="0.2.0" companyName="Uwyn" companyWebsite="https://www.uwyn.com"
               companyEmail="info@uwyn.com" bundleIdentifier="com.uwyn.showmidi"

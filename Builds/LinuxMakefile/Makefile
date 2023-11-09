@@ -39,7 +39,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.2.0" "-DJUCE_APP_VERSION_HEX=0x200" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK -I/home/gbevin/vst2 -I../../JuceLibraryCode -I../../JuceLibraryCode/modules $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.2.0" "-DJUCE_APP_VERSION_HEX=0x200" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK -I/home/gbevin/vst2 -I../../JuceLibraryCode -I../../JuceLibraryCode/modules $(CPPFLAGS)
 
   JUCE_CPPFLAGS_VST :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_CFLAGS_VST := -fPIC -fvisibility=hidden
@@ -57,9 +57,19 @@ ifeq ($(CONFIG),Debug)
   JUCE_CPPFLAGS_STANDALONE_PLUGIN :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=1" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_STANDALONE_PLUGIN := ShowMIDI
 
-  JUCE_CPPFLAGS_SHARED_CODE :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=1" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=1" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0" "-DJUCE_SHARED_CODE=1"
+  JUCE_CPPFLAGS_LV2_PLUGIN :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=1"
+  JUCE_CFLAGS_LV2_PLUGIN := -fPIC -fvisibility=hidden
+  JUCE_LDFLAGS_LV2_PLUGIN := -shared -Wl,--no-undefined
+  JUCE_LV2DIR := ShowMIDI.lv2
+  JUCE_TARGET_LV2_PLUGIN := $(JUCE_LV2DIR)/ShowMIDI.so
+  JUCE_LV2_FULL_PATH := $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_PLUGIN)
+
+  JUCE_CPPFLAGS_SHARED_CODE :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=1" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=1" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=1" "-DJUCE_SHARED_CODE=1"
   JUCE_CFLAGS_SHARED_CODE := -fPIC -fvisibility=hidden
   JUCE_TARGET_SHARED_CODE := ShowMIDI.a
+
+  JUCE_CPPFLAGS_LV2_MANIFEST_HELPER :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
+  JUCE_TARGET_LV2_MANIFEST_HELPER := juce_lv2_helper
 
   JUCE_CPPFLAGS_VST3_MANIFEST_HELPER :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_VST3_MANIFEST_HELPER := juce_vst3_helper
@@ -81,7 +91,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.2.0" "-DJUCE_APP_VERSION_HEX=0x200" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK -I/home/gbevin/vst2 -I../../JuceLibraryCode -I../../JuceLibraryCode/modules $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.2.0" "-DJUCE_APP_VERSION_HEX=0x200" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK -I/home/gbevin/vst2 -I../../JuceLibraryCode -I../../JuceLibraryCode/modules $(CPPFLAGS)
 
   JUCE_CPPFLAGS_VST :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_CFLAGS_VST := -fPIC -fvisibility=hidden
@@ -99,9 +109,19 @@ ifeq ($(CONFIG),Release)
   JUCE_CPPFLAGS_STANDALONE_PLUGIN :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=1" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_STANDALONE_PLUGIN := ShowMIDI
 
-  JUCE_CPPFLAGS_SHARED_CODE :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=1" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=1" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0" "-DJUCE_SHARED_CODE=1"
+  JUCE_CPPFLAGS_LV2_PLUGIN :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=1"
+  JUCE_CFLAGS_LV2_PLUGIN := -fPIC -fvisibility=hidden
+  JUCE_LDFLAGS_LV2_PLUGIN := -shared -Wl,--no-undefined
+  JUCE_LV2DIR := ShowMIDI.lv2
+  JUCE_TARGET_LV2_PLUGIN := $(JUCE_LV2DIR)/ShowMIDI.so
+  JUCE_LV2_FULL_PATH := $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_PLUGIN)
+
+  JUCE_CPPFLAGS_SHARED_CODE :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=1" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=1" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=1" "-DJUCE_SHARED_CODE=1"
   JUCE_CFLAGS_SHARED_CODE := -fPIC -fvisibility=hidden
   JUCE_TARGET_SHARED_CODE := ShowMIDI.a
+
+  JUCE_CPPFLAGS_LV2_MANIFEST_HELPER :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
+  JUCE_TARGET_LV2_MANIFEST_HELPER := juce_lv2_helper
 
   JUCE_CPPFLAGS_VST3_MANIFEST_HELPER :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_VST3_MANIFEST_HELPER := juce_vst3_helper
@@ -123,6 +143,9 @@ OBJECTS_VST3 := \
 
 OBJECTS_STANDALONE_PLUGIN := \
   $(JUCE_OBJDIR)/include_juce_audio_plugin_client_Standalone_1a871192.o \
+
+OBJECTS_LV2_PLUGIN := \
+  $(JUCE_OBJDIR)/include_juce_audio_plugin_client_LV2_7d84e0a5.o \
 
 OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/Main_90ebc5c2.o \
@@ -149,16 +172,21 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/include_juce_gui_basics_e3f79785.o \
   $(JUCE_OBJDIR)/include_juce_gui_extra_6dee1c1a.o \
 
+OBJECTS_LV2_MANIFEST_HELPER := \
+  $(JUCE_OBJDIR)/juce_LV2ManifestHelper_ddbf2086.o \
+
 OBJECTS_VST3_MANIFEST_HELPER := \
   $(JUCE_OBJDIR)/juce_VST3ManifestHelper_32018e4.o \
 
-.PHONY: clean all strip VST VST3 Standalone VST3_MANIFEST_HELPER
+.PHONY: clean all strip VST VST3 Standalone LV2 LV2_MANIFEST_HELPER VST3_MANIFEST_HELPER
 
-all : VST VST3 Standalone VST3_MANIFEST_HELPER
+all : VST VST3 Standalone LV2 LV2_MANIFEST_HELPER VST3_MANIFEST_HELPER
 
 VST : $(JUCE_OUTDIR)/$(JUCE_TARGET_VST)
 VST3 : $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3)
 Standalone : $(JUCE_OUTDIR)/$(JUCE_TARGET_STANDALONE_PLUGIN)
+LV2 : $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_PLUGIN)
+LV2_MANIFEST_HELPER : $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_MANIFEST_HELPER)
 VST3_MANIFEST_HELPER : $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3_MANIFEST_HELPER)
 
 
@@ -195,6 +223,18 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_STANDALONE_PLUGIN) : $(OBJECTS_STANDALONE_PLUGIN) $
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_STANDALONE_PLUGIN) $(OBJECTS_STANDALONE_PLUGIN) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) $(JUCE_LDFLAGS) $(shell cat $(JUCE_OBJDIR)/execinfo.cmd) $(JUCE_LDFLAGS_STANDALONE_PLUGIN) $(RESOURCES) $(TARGET_ARCH)
 
+$(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_PLUGIN) : $(OBJECTS_LV2_PLUGIN) $(JUCE_OBJDIR)/execinfo.cmd $(RESOURCES) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_MANIFEST_HELPER)
+	@command -v $(PKG_CONFIG) >/dev/null 2>&1 || { echo >&2 "pkg-config not installed. Please, install it."; exit 1; }
+	@$(PKG_CONFIG) --print-errors alsa freetype2
+	@echo Linking "ShowMIDI - LV2 Plugin"
+	-$(V_AT)mkdir -p $(JUCE_BINDIR)
+	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
+	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
+	-$(V_AT)mkdir -p $(JUCE_OUTDIR)/$(JUCE_LV2DIR)
+	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_PLUGIN) $(OBJECTS_LV2_PLUGIN) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) $(JUCE_LDFLAGS) $(shell cat $(JUCE_OBJDIR)/execinfo.cmd) $(JUCE_LDFLAGS_LV2_PLUGIN) $(RESOURCES) $(TARGET_ARCH)
+	$(V_AT) $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_MANIFEST_HELPER) $(JUCE_LV2_FULL_PATH)
+	-$(V_AT)[ ! "$(JUCE_LV2DESTDIR)" ] || (mkdir -p $(JUCE_LV2DESTDIR) && cp -R $(JUCE_COPYCMD_LV2_PLUGIN))
+
 $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) : $(OBJECTS_SHARED_CODE) $(JUCE_OBJDIR)/execinfo.cmd $(RESOURCES)
 	@command -v $(PKG_CONFIG) >/dev/null 2>&1 || { echo >&2 "pkg-config not installed. Please, install it."; exit 1; }
 	@$(PKG_CONFIG) --print-errors alsa freetype2
@@ -203,6 +243,15 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) : $(OBJECTS_SHARED_CODE) $(JUCE_OBJDIR
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(AR) -rcs $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) $(OBJECTS_SHARED_CODE)
+
+$(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_MANIFEST_HELPER) : $(OBJECTS_LV2_MANIFEST_HELPER) $(JUCE_OBJDIR)/execinfo.cmd $(RESOURCES) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE)
+	@command -v $(PKG_CONFIG) >/dev/null 2>&1 || { echo >&2 "pkg-config not installed. Please, install it."; exit 1; }
+	@$(PKG_CONFIG) --print-errors alsa freetype2
+	@echo Linking "ShowMIDI - LV2 Manifest Helper"
+	-$(V_AT)mkdir -p $(JUCE_BINDIR)
+	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
+	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
+	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_MANIFEST_HELPER) $(OBJECTS_LV2_MANIFEST_HELPER) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) $(JUCE_LDFLAGS) $(shell cat $(JUCE_OBJDIR)/execinfo.cmd) $(RESOURCES) $(TARGET_ARCH)
 
 $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3_MANIFEST_HELPER) : $(OBJECTS_VST3_MANIFEST_HELPER) $(JUCE_OBJDIR)/execinfo.cmd $(RESOURCES) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) $(JUCE_OBJDIR)/cxxfs.cmd
 	@command -v $(PKG_CONFIG) >/dev/null 2>&1 || { echo >&2 "pkg-config not installed. Please, install it."; exit 1; }
@@ -227,6 +276,11 @@ $(JUCE_OBJDIR)/include_juce_audio_plugin_client_Standalone_1a871192.o: ../../Juc
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling include_juce_audio_plugin_client_Standalone.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_STANDALONE_PLUGIN) $(JUCE_CFLAGS_STANDALONE_PLUGIN) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_audio_plugin_client_LV2_7d84e0a5.o: ../../JuceLibraryCode/include_juce_audio_plugin_client_LV2.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_audio_plugin_client_LV2.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_LV2_PLUGIN) $(JUCE_CFLAGS_LV2_PLUGIN) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Main_90ebc5c2.o: ../../Source/Main.cpp
 	-$(V_AT)mkdir -p $(@D)
@@ -343,6 +397,11 @@ $(JUCE_OBJDIR)/include_juce_gui_extra_6dee1c1a.o: ../../JuceLibraryCode/include_
 	@echo "Compiling include_juce_gui_extra.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/juce_LV2ManifestHelper_ddbf2086.o: ../../JuceLibraryCode/modules/juce_audio_plugin_client/LV2/juce_LV2ManifestHelper.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling juce_LV2ManifestHelper.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_LV2_MANIFEST_HELPER) $(JUCE_CFLAGS_LV2_MANIFEST_HELPER) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/juce_VST3ManifestHelper_32018e4.o: ../../JuceLibraryCode/modules/juce_audio_plugin_client/VST3/juce_VST3ManifestHelper.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling juce_VST3ManifestHelper.cpp"
@@ -369,5 +428,7 @@ strip:
 -include $(OBJECTS_VST:%.o=%.d)
 -include $(OBJECTS_VST3:%.o=%.d)
 -include $(OBJECTS_STANDALONE_PLUGIN:%.o=%.d)
+-include $(OBJECTS_LV2_PLUGIN:%.o=%.d)
 -include $(OBJECTS_SHARED_CODE:%.o=%.d)
+-include $(OBJECTS_LV2_MANIFEST_HELPER:%.o=%.d)
 -include $(OBJECTS_VST3_MANIFEST_HELPER:%.o=%.d)
