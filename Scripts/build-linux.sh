@@ -6,6 +6,7 @@ if [ $# -eq 0 ]; then
 fi
 
 export RELEASE_VERSION="$1"
+export PATH_TO_JUCE=/home/gbevin/JUCE
 
 rm -rfv Builds/LinuxMakefile/build/
 
@@ -27,7 +28,7 @@ mv build/ShowMIDI.vst3 $STAGE_DIR/vst3
 mv build/clap/ShowMIDI_artefacts/Release/ShowMIDI.clap $STAGE_DIR/clap
 cp $PROJECT_DIR/*.md $STAGE_DIR
 
-ARCHIVE_FILE="build/showmidi-linux-ubuntu-x64-$RELEASE_VERSION.tar.bz2"
+ARCHIVE_FILE="build/ShowMIDI-Linux-Ubuntu-x64-$RELEASE_VERSION.tar.bz2"
 tar cvp $STAGE_DIR | bzip2 > $ARCHIVE_FILE
 echo "Finished building `realpath $ARCHIVE_FILE`"
 

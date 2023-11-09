@@ -11,7 +11,7 @@ cmake_minimum_required(VERSION 3.15)
 # For this to work a couple of things need to be configured
 
 # Next adjust these paths to point to your JUCE and the current checkout of ClapJuce Extensions
-set(PATH_TO_JUCE /home/gbevin/JUCE)
+set(PATH_TO_JUCE "$ENV{PATH_TO_JUCE}")
 set(PATH_TO_CLAP_EXTENSIONS libs/clap-juce-extensions)
 
 # Make sure to set the same C++ version as you have set in the Projucer
