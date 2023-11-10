@@ -179,7 +179,8 @@ namespace showmidi
         static constexpr int Y_PORT = 12;
         
         static constexpr int X_CHANNEL = 23;
-        static constexpr int Y_CHANNEL = 10;
+        static constexpr int Y_CHANNEL = 12;
+        static constexpr int Y_CHANNEL_MARGIN = 8;
         
         static constexpr int X_SEPERATOR = 1;
         static constexpr int Y_SEPERATOR = 2;
@@ -187,7 +188,7 @@ namespace showmidi
         static constexpr int HEIGHT_SEPERATOR = 1;
         
         static constexpr int X_PRGM = 24;
-        static constexpr int Y_CHANNEL_PADDING = 12;
+        static constexpr int Y_CHANNEL_PADDING = 8;
         
         static constexpr int HEIGHT_INDICATOR = 1;
         
@@ -263,6 +264,8 @@ namespace showmidi
                     int control_changes_bottom = paintControlChanges(g, state, channel_messages);
                     
                     state.offset_ = std::max(state.offset_, std::max(notes_bottom, control_changes_bottom));
+                    
+                    state.offset_ += Y_CHANNEL_MARGIN;
                 }
             }
             
