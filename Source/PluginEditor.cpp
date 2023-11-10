@@ -26,7 +26,6 @@ namespace showmidi
     struct ShowMIDIPluginAudioProcessorEditor::Pimpl : public MultiTimer, public KeyListener
     {
         static constexpr int DEFAULT_EDITOR_HEIGHT = 600;
-        static constexpr int MIDI_DEVICE_SPACING = 4;
         
         enum Timers
         {
@@ -34,7 +33,7 @@ namespace showmidi
             GrabKeyboardFocus
         };
         
-        Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor& p) : owner_(owner), audioProcessor_(p), midiDevice_("ShowMIDI")
+        Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor& p) : owner_(owner), audioProcessor_(p), midiDevice_(THEME_DARK, "ShowMIDI")
         {
             juce::Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             

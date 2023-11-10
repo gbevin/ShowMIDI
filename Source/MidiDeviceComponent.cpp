@@ -25,12 +25,11 @@ namespace showmidi
     
     struct MidiDeviceComponent::Pimpl : public juce::MidiInputCallback
     {
-        Pimpl(MidiDeviceComponent* owner, const String& name) : owner_(owner), deviceInfo_({ name, ""})
+        Pimpl(MidiDeviceComponent* owner, const Theme& theme, const String& name) : owner_(owner), theme_(theme), deviceInfo_({ name, ""})
         {
-            initialize();
         }
         
-        Pimpl(MidiDeviceComponent* owner, const MidiDeviceInfo info) : owner_(owner), deviceInfo_(info)
+        Pimpl(MidiDeviceComponent* owner, const Theme& theme, const MidiDeviceInfo info) : owner_(owner), theme_(theme), deviceInfo_(info)
         {
             auto midi_input = MidiInput::openDevice(info.identifier, this);
             if (midi_input != nullptr)
@@ -39,35 +38,60 @@ namespace showmidi
                 midiIn_.swap(midi_input);
             }
             
-            initialize();
+//            showTestData();
+        }
+        
+        void showTestData()
+        {
+            const auto t = Time::getCurrentTime();
+            
+            deviceInfo_ = {"MIDI Instrument Name", deviceInfo_.identifier};
+            
+            auto& channel1 = channels_.channel_[0];
+            channel1.time_ = t;
+            channel1.programChange_.value_ = 0;
+            channel1.programChange_.time_ = t;
+            channel1.pitchBend_.value_ = 9256;
+            channel1.pitchBend_.time_ = t;
+            channel1.notes_.time_ = t;
+            channel1.notes_.note_[61].on_ = true;
+            channel1.notes_.note_[61].value_ = 127;
+            channel1.notes_.note_[61].polyPressure_ = 0;
+            channel1.notes_.note_[61].time_ = t;
+            channel1.notes_.note_[79].on_ = true;
+            channel1.notes_.note_[79].value_ = 38;
+            channel1.notes_.note_[79].polyPressure_ = 0;
+            channel1.notes_.note_[79].time_ = t;
+            channel1.channelPressure_.value_ = 76;
+            channel1.channelPressure_.time_ = t;
+            channel1.controlChanges_.time_ = t;
+            channel1.controlChanges_.controlChange_[74].value_ = 127;
+            channel1.controlChanges_.controlChange_[74].time_ = t;
+
+            auto& channel16 = channels_.channel_[15];
+            channel16.time_ = t;
+            channel16.programChange_.value_ = 127;
+            channel16.programChange_.time_ = t;
+            channel16.pitchBend_.value_ = 0;
+            channel16.pitchBend_.time_ = t;
+            channel16.notes_.time_ = t;
+            channel16.notes_.note_[61].on_ = true;
+            channel16.notes_.note_[61].value_ = 127;
+            channel16.notes_.note_[61].polyPressure_ = 0;
+            channel16.notes_.note_[61].time_ = t;
+            channel16.notes_.note_[79].on_ = false;
+            channel16.notes_.note_[79].value_ = 127;
+            channel16.notes_.note_[79].polyPressure_ = 0;
+            channel16.notes_.note_[79].time_ = t;
+            channel16.channelPressure_.value_ = 76;
+            channel16.channelPressure_.time_ = t;
+            channel16.controlChanges_.time_ = t;
+            channel16.controlChanges_.controlChange_[127].value_ = 100;
+            channel16.controlChanges_.controlChange_[127].time_ = t;
+
+            setPaused(true);
         }
 
-        static Font getHeaderFont()
-        {
-            return Font(16, Font::plain);
-        }
-        
-        static Font getDataTitleFont()
-        {
-            return Font(16, Font::bold);
-        }
-        
-        static Font getDataFont()
-        {
-            return Font(16, Font::plain);
-        }
-        
-        void initialize()
-        {
-            nameLabel_.setText(deviceInfo_.name, dontSendNotification);
-            nameLabel_.setFont(getHeaderFont());
-            nameLabel_.setColour(Label::backgroundColourId, juce::Colours::black);
-            nameLabel_.setColour(Label::textColourId, juce::Colours::white);
-            nameLabel_.setJustificationType(Justification::centred);
-            
-            owner_->addAndMakeVisible(nameLabel_);
-        }
-        
         ~Pimpl()
         {
             midiIn_ = nullptr;
@@ -102,6 +126,7 @@ namespace showmidi
                 
                 Note& note = notes.note_[msg.getNoteNumber()];
                 note.polyPressure_ = msg.getAfterTouchValue();
+                note.polyPressureTime_ = t;
                 channel_message = &note;
             }
             else if (msg.isController())
@@ -148,22 +173,41 @@ namespace showmidi
             }
         }
         
-        static constexpr int HEADER_HEIGHT = 30;
-        static constexpr int ROW_SPACING = 1;
-        static constexpr int ROW_HEIGHT = 30;
-        static constexpr int COLUMN_MARGIN = 4;
-        static constexpr int COLUMN_SPACING = 2;
-        static constexpr int NOTE_WIDTH = 36;
-        static constexpr int VALUE_WIDTH = 30;
-        static constexpr int INDICATOR_HEIGHT = 4;
-        static constexpr int NOTE_COLUMN_WIDTH =
-        COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING +
-        COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
-        static constexpr int CC_COLUMN_WIDTH =
-        COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING +
-        COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
-        static constexpr int STANDARD_WIDTH = NOTE_COLUMN_WIDTH + COLUMN_MARGIN + CC_COLUMN_WIDTH;
+        static constexpr int STANDARD_WIDTH = 252;
         
+        static constexpr int X_PORT = 48;
+        static constexpr int Y_PORT = 12;
+        
+        static constexpr int X_CHANNEL = 23;
+        static constexpr int Y_CHANNEL = 10;
+        
+        static constexpr int X_SEPERATOR = 1;
+        static constexpr int Y_SEPERATOR = 2;
+        static constexpr int WIDTH_SEPERATOR = 204;
+        static constexpr int HEIGHT_SEPERATOR = 1;
+        
+        static constexpr int X_PRGM = 24;
+        static constexpr int Y_CHANNEL_PADDING = 12;
+        
+        static constexpr int HEIGHT_INDICATOR = 1;
+        
+        static constexpr int X_PB = 84;
+        static constexpr int Y_PB = 7;
+        static constexpr int X_PB_DATA = 24;
+
+        static constexpr int X_NOTE = 48;
+        static constexpr int Y_NOTE = 7;
+        static constexpr int X_ON_OFF = 84;
+        static constexpr int X_NOTE_DATA = 108;
+        
+        static constexpr int X_PP = 84;
+        static constexpr int Y_PP = 7;
+        static constexpr int X_PP_DATA = 108;
+        
+        static constexpr int X_CC = 156;
+        static constexpr int Y_CC = 7;
+        static constexpr int X_CC_DATA = 24;
+
         static int getStandardWidth()
         {
             return STANDARD_WIDTH;
@@ -175,20 +219,36 @@ namespace showmidi
             int offset_ { 0 };
             bool header_ { false };
         };
-        
+
         void paint(juce::Graphics& g)
         {
+            g.fillAll(theme_.colorBackground);
+            
             auto t = Time::getCurrentTime();
-            ActiveChannels* channels = &channels_;
+            auto channels = &channels_;
             if (paused_)
             {
                 t = pausedTime_;
                 channels = &pausedChannels_;
             }
 
-            g.setColour(Colours::white);
+            // draw the data for each channel
+            ChannelPaintState state = { t, 0, false };
             
-            ChannelPaintState state = { t, HEADER_HEIGHT, false };
+            // draw MIDI port name
+            auto port_name = deviceInfo_.name;
+            if (midiIn_.get() == nullptr)
+            {
+                port_name = port_name + String(paused_ ? " (paused)": "");
+            }
+            g.setFont(theme_.fontLabel);
+            g.setColour(theme_.colorData);
+            g.drawText(port_name,
+                       X_PORT, Y_PORT,
+                       owner_->getWidth(), theme_.fontLabel.getHeight(),
+                       Justification::centredLeft);
+
+            state.offset_ = Y_PORT + theme_.fontLabel.getHeight();
             
             for (int channel_index = 0; channel_index < 16; ++channel_index)
             {
@@ -226,16 +286,24 @@ namespace showmidi
         {
             state.header_ = true;
             
-            g.setColour(Colours::white);
-            g.setFont(getDataTitleFont());
-            g.drawText(String("CH ") + String(channel.number_ + 1), COLUMN_MARGIN, state.offset_, NOTE_COLUMN_WIDTH, ROW_HEIGHT, Justification::centredLeft);
-            state.offset_ += ROW_HEIGHT;
+            g.setColour(theme_.colorData);
+            g.setFont(theme_.fontLabel);
+            state.offset_ += Y_CHANNEL;
+            g.drawText(String("CH ") + String(channel.number_ + 1),
+                       X_CHANNEL, state.offset_,
+                       getStandardWidth() - X_CHANNEL, theme_.fontLabel.getHeight(),
+                       Justification::centredLeft);
+            state.offset_ += theme_.fontLabel.getHeight();
+            
+            g.setColour(theme_.colorSeperator);
+            state.offset_ += Y_SEPERATOR;
+            g.drawRect(X_CHANNEL + X_SEPERATOR, state.offset_,
+                       WIDTH_SEPERATOR, HEIGHT_SEPERATOR);
+            state.offset_ += HEIGHT_SEPERATOR + Y_CHANNEL_PADDING;
         }
         
         void paintProgramChange(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
-            int y_offset = -1;
-            
             auto& program_change = channel.programChange_;
             if (!isExpired(state.time_, program_change.time_))
             {
@@ -243,13 +311,12 @@ namespace showmidi
                 
                 // write the texts
                 
-                g.setColour(Colours::white);
-                g.setFont(getDataFont());
-                int pc_x = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN;
-                int pc_width = getStandardWidth() - pc_x;
-                g.drawText(String("PC ") + String(program_change.value_), pc_x, state.offset_ - ROW_HEIGHT, pc_width, ROW_HEIGHT, Justification::centredRight);
-                
-                y_offset += ROW_HEIGHT;
+                g.setColour(theme_.colorLabel);
+                g.setFont(theme_.fontLabel);
+                g.drawText(String("PRGM ") + String(program_change.value_),
+                           0, state.offset_ - Y_CHANNEL_PADDING - Y_SEPERATOR - HEIGHT_SEPERATOR - theme_.fontLabel.getHeight(),
+                           getStandardWidth() - X_PRGM, theme_.fontLabel.getHeight(),
+                           Justification::centredRight);
             }
         }
         
@@ -264,56 +331,55 @@ namespace showmidi
                 
                 y_offset = state.offset_;
                 
-                // draw the backgrounds
-                
-                Colour fill;
-                if (pitch_bend.value_ >= 0x2000)
+                y_offset += Y_PB;
+
+                Colour pb_color = theme_.colorLabel;
+
+                int pb_width = getStandardWidth() - X_PB - X_PB_DATA;
+                int pb_range = pb_width / 2;
+
+                int indicator_x = X_PB + pb_range + 1;
+                int indicator_width = (pb_range * (pitch_bend.value_ - 0x2000)) / 0x2000;
+                if (pitch_bend.value_ > 0x2000)
                 {
-                    fill = Colours::green.brighter().withAlpha(0.5f);
+                    pb_color = theme_.colorPositive;
                 }
-                else
+                else if (pitch_bend.value_ < 0x2000)
                 {
-                    fill = Colours::red.brighter().withAlpha(0.4f);
-                }
-                
-                g.setColour(fill.withAlpha(0.2f));
-                int pb_bg_width = STANDARD_WIDTH;
-                int pb_bg_height = ROW_HEIGHT - ROW_SPACING * 2 - INDICATOR_HEIGHT;
-                g.fillRect(0, y_offset + ROW_SPACING, pb_bg_width, pb_bg_height);
-                
-                // draw the pitch bend indicator
-                
-                g.setColour(fill);
-                int value_indicator_range = STANDARD_WIDTH / 2;
-                int value_indicator_x = value_indicator_range + 1;
-                int value_indicator_y = y_offset + ROW_SPACING + pb_bg_height;
-                int value_indicator_width = (value_indicator_range * (pitch_bend.value_ - 0x2000)) / 0x2000;
-                if (value_indicator_width < 0)
-                {
-                    value_indicator_x = value_indicator_range + value_indicator_width;
-                }
-                g.fillRect(value_indicator_x, value_indicator_y, abs(value_indicator_width), INDICATOR_HEIGHT);
-                
-                g.setColour(fill.withAlpha(0.2f));
-                if (value_indicator_width < 0)
-                {
-                    g.fillRect(0, value_indicator_y, value_indicator_x, INDICATOR_HEIGHT);
-                    g.fillRect(value_indicator_range, value_indicator_y, value_indicator_range + 1, INDICATOR_HEIGHT);
-                }
-                else
-                {
-                    g.fillRect(0, value_indicator_y, value_indicator_range + 1, INDICATOR_HEIGHT);
-                    int indicator_fill_x = value_indicator_x + abs(value_indicator_width);
-                    g.fillRect(indicator_fill_x, value_indicator_y, STANDARD_WIDTH - indicator_fill_x, INDICATOR_HEIGHT);
+                    pb_color = theme_.colorNegative;
+                    indicator_x = X_PB + pb_range + indicator_width;
+                    indicator_width = abs(indicator_width);
                 }
                 
-                // write the texts
+                // draw the pitch bend text
                 
-                g.setColour(Colours::white.withAlpha(0.8f));
-                g.setFont(getDataFont());
-                g.drawText(String(pitch_bend.value_), 0, y_offset, STANDARD_WIDTH, ROW_HEIGHT, Justification::centred);
+                g.setColour(pb_color);
+                g.setFont(theme_.fontLabel);
+                g.drawText("PB",
+                           X_PB, y_offset,
+                           pb_width, theme_.fontLabel.getHeight(),
+                           Justification::centredLeft);
                 
-                y_offset += ROW_HEIGHT;
+                g.setColour(theme_.colorData);
+                g.setFont(theme_.fontData);
+                g.drawText(String(pitch_bend.value_),
+                           X_PB, y_offset,
+                           pb_width, theme_.fontData.getHeight(),
+                           Justification::centredRight);
+                
+                y_offset += theme_.fontLabel.getHeight();
+                
+                // draw pitchbend indicator
+
+                g.setColour(theme_.colorTrack);
+                g.fillRect(X_PB, y_offset,
+                           pb_width, HEIGHT_INDICATOR);
+
+                g.setColour(pb_color);
+                g.fillRect(indicator_x, y_offset,
+                           indicator_width, HEIGHT_INDICATOR);
+
+                y_offset += HEIGHT_INDICATOR;
             }
             
             return y_offset;
@@ -331,6 +397,13 @@ namespace showmidi
                     auto& note = notes.note_[i];
                     if (!isExpired(state.time_, note.time_))
                     {
+                        if (note.on_)
+                        {
+                            channel.time_ = state.time_;
+                            note.time_ = state.time_;
+                            notes.time_ = state.time_;
+                        }
+
                         ensurePaintedChannelHeader(g, state, channel);
                         
                         if (y_offset == -1)
@@ -338,72 +411,82 @@ namespace showmidi
                             y_offset = state.offset_;
                         }
                         
-                        // draw the backgrounds
+                        y_offset += Y_NOTE;
                         
-                        Colour fill;
-                        if (note.on_)
+                        // draw note text
+                        
+                        auto note_color = note.on_ ? theme_.colorPositive : theme_.colorNegative;
+                        g.setColour(note_color);
+                        g.setFont(theme_.fontLabel);
+                        g.drawText(outputNote(i),
+                                   X_NOTE, y_offset,
+                                   getStandardWidth() - X_NOTE - X_NOTE_DATA, theme_.fontLabel.getHeight(),
+                                   Justification::centredLeft);
+                        
+                        int note_width = getStandardWidth() - X_ON_OFF - X_NOTE_DATA;
+                        g.setColour(theme_.colorLabel);
+                        g.setFont(theme_.fontLabel);
+                        g.drawText(note.on_ ? "ON" : "OFF",
+                                   X_ON_OFF, y_offset,
+                                   note_width, theme_.fontLabel.getHeight(),
+                                   Justification::centredLeft);
+                        
+                        g.setColour(theme_.colorData);
+                        g.setFont(theme_.fontData);
+                        g.drawText(String(note.value_),
+                                   X_ON_OFF, y_offset,
+                                   note_width, theme_.fontData.getHeight(),
+                                   Justification::centredRight);
+                        
+                        y_offset += theme_.fontLabel.getHeight();
+                        
+                        // draw velocity indicator
+
+                        g.setColour(theme_.colorTrack);
+                        g.fillRect(X_ON_OFF, y_offset,
+                                   note_width, HEIGHT_INDICATOR);
+
+                        g.setColour(note_color);
+                        g.fillRect(X_ON_OFF, y_offset,
+                                   (note_width * note.value_) / 127, HEIGHT_INDICATOR);
+                        
+                        y_offset += HEIGHT_INDICATOR;
+                        
+                        if (!isExpired(state.time_, note.polyPressureTime_))
                         {
-                            fill = Colours::green.brighter().withAlpha(0.5f);
-                            channel.time_ = state.time_;
-                            note.time_ = state.time_;
-                            notes.time_ = state.time_;
+                            // draw polypressure text
+                            
+                            y_offset += Y_PP;
+                            
+                            int pp_width = getStandardWidth() - X_PP - X_PP_DATA;
+                            g.setColour(theme_.colorLabel);
+                            g.setFont(theme_.fontLabel);
+                            g.drawText("PP",
+                                       X_PP, y_offset,
+                                       pp_width, theme_.fontLabel.getHeight(),
+                                       Justification::centredLeft);
+                            
+                            g.setColour(theme_.colorData);
+                            g.setFont(theme_.fontData);
+                            g.drawText(String(note.polyPressure_),
+                                       X_PP, y_offset,
+                                       pp_width, theme_.fontData.getHeight(),
+                                       Justification::centredRight);
+                            
+                            y_offset += theme_.fontLabel.getHeight();
+                            
+                            // draw velocity indicator
+                            
+                            g.setColour(theme_.colorTrack);
+                            g.fillRect(X_PP, y_offset,
+                                       pp_width, HEIGHT_INDICATOR);
+                            
+                            g.setColour(note_color);
+                            g.fillRect(X_PP, y_offset,
+                                       (pp_width * note.polyPressure_) / 127, HEIGHT_INDICATOR);
+                            
+                            y_offset += HEIGHT_INDICATOR;
                         }
-                        else
-                        {
-                            fill = Colours::red.brighter().withAlpha(0.4f);
-                        }
-                        
-                        g.setColour(fill);
-                        int note_bg_width = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN;
-                        int note_bg_height = ROW_HEIGHT - ROW_SPACING * 2;
-                        g.fillRect(0, y_offset + ROW_SPACING, note_bg_width, note_bg_height);
-                        
-                        int value_bg_x = note_bg_width + COLUMN_SPACING;
-                        int value_bg_width = COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
-                        int value_bg_height = note_bg_height - INDICATOR_HEIGHT;
-                        g.setColour(fill.withAlpha(0.2f));
-                        g.fillRect(value_bg_x, y_offset + ROW_SPACING, value_bg_width, value_bg_height);
-                        
-                        // draw the velocity indicator
-                        
-                        int vel_bg_width = COLUMN_MARGIN + VALUE_WIDTH;
-                        
-                        g.setColour(fill);
-                        int value_indicator_y = y_offset + ROW_SPACING + value_bg_height;
-                        int vel_indicator_width = (vel_bg_width * note.value_) / 127;
-                        g.fillRect(value_bg_x, value_indicator_y, vel_indicator_width, INDICATOR_HEIGHT);
-                        
-                        g.setColour(fill.withAlpha(0.2f));
-                        g.fillRect(value_bg_x + vel_indicator_width, value_indicator_y, vel_bg_width - vel_indicator_width, INDICATOR_HEIGHT);
-                        
-                        // draw the poly pressure indicator
-                        
-                        int pp_bg_width = COLUMN_MARGIN + VALUE_WIDTH;
-                        int pp_bg_x = value_bg_x + COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
-                        
-                        g.fillRect(pp_bg_x - COLUMN_MARGIN, value_indicator_y, COLUMN_MARGIN, INDICATOR_HEIGHT);
-                        
-                        g.setColour(fill);
-                        int pp_indicator_width = (pp_bg_width * note.polyPressure_) / 127;
-                        g.fillRect(pp_bg_x, value_indicator_y, pp_indicator_width, INDICATOR_HEIGHT);
-                        
-                        g.setColour(fill.withAlpha(0.2f));
-                        g.fillRect(pp_bg_x + pp_indicator_width, value_indicator_y, pp_bg_width - pp_indicator_width, INDICATOR_HEIGHT);
-                        
-                        // write the texts
-                        
-                        g.setColour(Colours::white);
-                        g.setFont(getDataTitleFont());
-                        g.drawText(outputNote(i), COLUMN_MARGIN, y_offset, NOTE_WIDTH, ROW_HEIGHT, Justification::centred);
-                        
-                        g.setColour(Colours::white.withAlpha(0.8f));
-                        g.setFont(getDataFont());
-                        int value_x = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING + COLUMN_MARGIN;
-                        g.drawText(String(note.value_), value_x, y_offset, VALUE_WIDTH, ROW_HEIGHT, Justification::centred);
-                        int polypressure_x = value_x + VALUE_WIDTH + COLUMN_MARGIN;
-                        g.drawText(String(note.polyPressure_), polypressure_x, y_offset, VALUE_WIDTH, ROW_HEIGHT, Justification::centred);
-                        
-                        y_offset += ROW_HEIGHT;
                     }
                 }
             }
@@ -428,7 +511,7 @@ namespace showmidi
                     auto& cc = control_changes.controlChange_[i];
                     if (!isExpired(state.time_, cc.time_))
                     {
-                        paintControlChangeEntry(g, state, channel, y_offset, String(cc.number_), cc.value_);
+                        paintControlChangeEntry(g, state, channel, y_offset, String("CC ") + String(cc.number_), cc.value_);
                     }
                 }
             }
@@ -445,45 +528,38 @@ namespace showmidi
                 yOffset = state.offset_;
             }
             
-            Colour fill = Colours::blue.brighter().withAlpha(0.5f);
+            yOffset += Y_CC;
             
-            int x_offset = NOTE_COLUMN_WIDTH + COLUMN_MARGIN;
+            // write label text
             
-            // draw the backgrounds
+            int cc_width = getStandardWidth() - X_CC - X_CC_DATA;
+            g.setColour(theme_.colorController);
+            g.setFont(theme_.fontLabel);
+            g.drawText(label,
+                       X_CC, yOffset,
+                       cc_width, theme_.fontLabel.getHeight(),
+                       Justification::centredLeft);
             
-            int cc_bg_width = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN;
-            int cc_bg_height = ROW_HEIGHT - ROW_SPACING * 2;
-            g.setColour(fill);
-            g.fillRect(x_offset + 0, yOffset + ROW_SPACING, cc_bg_width, cc_bg_height);
+            g.setColour(theme_.colorData);
+            g.setFont(theme_.fontData);
+            g.drawText(String(value),
+                       X_CC, yOffset,
+                       cc_width, theme_.fontData.getHeight(),
+                       Justification::centredRight);
+
+            yOffset += theme_.fontLabel.getHeight();
             
-            int value_bg_x = x_offset + cc_bg_width + COLUMN_SPACING;
-            int value_bg_width = COLUMN_MARGIN + VALUE_WIDTH + COLUMN_MARGIN;
-            int value_bg_height = cc_bg_height - INDICATOR_HEIGHT;
-            g.setColour(fill.withAlpha(0.2f));
-            g.fillRect(value_bg_x, yOffset + ROW_SPACING, value_bg_width, value_bg_height);
+            // draw value indicator
+
+            g.setColour(theme_.colorTrack);
+            g.fillRect(X_CC, yOffset,
+                       cc_width, HEIGHT_INDICATOR);
+
+            g.setColour(theme_.colorController);
+            g.fillRect(X_CC, yOffset,
+                       (cc_width * value) / 127, HEIGHT_INDICATOR);
             
-            // draw the value indicator
-            
-            g.setColour(fill);
-            int value_indicator_y = yOffset + ROW_SPACING + value_bg_height;
-            int value_indicator_width = (value_bg_width * value) / 127;
-            g.fillRect(value_bg_x, value_indicator_y, value_indicator_width, INDICATOR_HEIGHT);
-            
-            g.setColour(fill.withAlpha(0.2f));
-            g.fillRect(value_bg_x + value_indicator_width, value_indicator_y, value_bg_width - value_indicator_width, INDICATOR_HEIGHT);
-            
-            // write the texts
-            
-            g.setColour(Colours::white);
-            g.setFont(getDataTitleFont());
-            g.drawText(label, x_offset + COLUMN_MARGIN, yOffset, NOTE_WIDTH, ROW_HEIGHT, Justification::centred);
-            
-            g.setColour(Colours::white.withAlpha(0.8f));
-            g.setFont(getDataFont());
-            int value_x = COLUMN_MARGIN + NOTE_WIDTH + COLUMN_MARGIN + COLUMN_SPACING + COLUMN_MARGIN;
-            g.drawText(String(value), x_offset + value_x, yOffset, VALUE_WIDTH, ROW_HEIGHT, Justification::centred);
-            
-            yOffset += ROW_HEIGHT;
+            yOffset += HEIGHT_INDICATOR;
         }
         
         static bool isExpired(const Time& currentTime, Time& messageTime)
@@ -499,9 +575,6 @@ namespace showmidi
         void resized()
         {
             dirty_ = true;
-            
-            auto area = owner_->getLocalBounds();
-            nameLabel_.setBounds(area.removeFromTop(HEADER_HEIGHT));
         }
         
         void setPaused(bool paused)
@@ -512,22 +585,18 @@ namespace showmidi
                 pausedChannels_ = channels_;
             }
             
-            if (midiIn_.get() == nullptr)
-            {
-                nameLabel_.setText(deviceInfo_.name + (paused ? " (paused)": ""), dontSendNotification);
-            }
-            
+            dirty_ = true;
             paused_ = paused;
         }
         
         MidiDeviceComponent* const owner_;
-        const MidiDeviceInfo deviceInfo_;
+
+        Theme theme_;
+        MidiDeviceInfo deviceInfo_;
         std::unique_ptr<juce::MidiInput> midiIn_ { nullptr };
         std::atomic_bool dirty_ { true };
         Time lastRender_;
         bool paused_ { false };
-        
-        juce::Label nameLabel_;
         
         ActiveChannels channels_;
         
@@ -539,8 +608,8 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MidiDeviceComponent::MidiDeviceComponent(const String& name) : pimpl_(new Pimpl(this, name)) {}
-    MidiDeviceComponent::MidiDeviceComponent(const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, info)) {}
+    MidiDeviceComponent::MidiDeviceComponent(const Theme& theme, const String& name) : pimpl_(new Pimpl(this, theme, name)) {}
+    MidiDeviceComponent::MidiDeviceComponent(const Theme& theme, const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, theme, info)) {}
     MidiDeviceComponent::~MidiDeviceComponent() = default;
     
     int MidiDeviceComponent::getStandardWidth()         { return Pimpl::getStandardWidth(); }

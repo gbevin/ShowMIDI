@@ -22,23 +22,43 @@ using namespace showmidi;
 struct UwynLookAndFeel::Pimpl
 {
     Pimpl() :
-        jetbrainMonoMedium_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoMedium_ttf, BinaryData::JetBrainsMonoMedium_ttfSize)),
-        jetbrainMonoBold_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoBold_ttf, BinaryData::JetBrainsMonoBold_ttfSize))
+        jetbrainMono_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoRegular_ttf, BinaryData::JetBrainsMonoRegular_ttfSize)),
+        jetbrainMonoItalic_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoItalic_ttf, BinaryData::JetBrainsMonoItalic_ttfSize)),
+        jetbrainMonoBold_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoSemiBold_ttf, BinaryData::JetBrainsMonoSemiBold_ttfSize)),
+        jetbrainMonoBoldItalic_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoSemiBoldItalic_ttf, BinaryData::JetBrainsMonoSemiBoldItalic_ttfSize))
     {
     }
 
     Typeface::Ptr getTypefaceForFont(const Font& font)
     {
-        if (font.getTypefaceStyle() == "Bold")
+        bool bold = font.getTypefaceStyle().toLowerCase().contains("bold") || font.isBold();
+        bool italic = font.getTypefaceStyle().toLowerCase().contains("italic") || font.isItalic();
+        if (bold)
         {
-            return jetbrainMonoBold_;
+            if (italic)
+            {
+                return jetbrainMonoBoldItalic_;
+            }
+            else
+            {
+                return jetbrainMonoBold_;
+            }
         }
 
-        return jetbrainMonoMedium_;
+        if (italic)
+        {
+            return jetbrainMonoItalic_;
+        }
+        else
+        {
+            return jetbrainMono_;
+        }
     }
 
-    Typeface::Ptr jetbrainMonoMedium_;
+    Typeface::Ptr jetbrainMono_;
+    Typeface::Ptr jetbrainMonoItalic_;
     Typeface::Ptr jetbrainMonoBold_;
+    Typeface::Ptr jetbrainMonoBoldItalic_;
 };
 
 UwynLookAndFeel::UwynLookAndFeel() : pimpl_(new Pimpl())

@@ -4,7 +4,7 @@
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="0" jucerFormatVersion="1"
               pluginFormats="buildAU,buildAUv3,buildLV2,buildStandalone,buildVST,buildVST3"
               pluginCharacteristicsValue="pluginIsMidiEffectPlugin,pluginProducesMidiOut,pluginWantsMidiIn"
-              version="0.2.0" companyName="Uwyn" companyWebsite="https://www.uwyn.com"
+              version="0.5.0" companyName="Uwyn" companyWebsite="https://www.uwyn.com"
               companyEmail="info@uwyn.com" bundleIdentifier="com.uwyn.showmidi"
               pluginName="ShowMIDI" pluginManufacturer="Uwyn" pluginManufacturerCode="Uwyn"
               pluginCode="shmi" pluginAUIsSandboxSafe="1" pluginVSTNumMidiInputs="1"
@@ -15,39 +15,48 @@
       <FILE id="eY2NXn" name="appicon.png" compile="0" resource="1" file="Assets/appicon.png"/>
     </GROUP>
     <GROUP id="{FDC783C1-48B0-1666-420B-62D58481C8C8}" name="Fonts">
-      <FILE id="xWEI2P" name="JetBrainsMono-Bold.ttf" compile="0" resource="1"
-            file="Fonts/JetBrainsMono-Bold.ttf"/>
-      <FILE id="hSWkxZ" name="JetBrainsMono-Medium.ttf" compile="0" resource="1"
+      <FILE id="Y0q1SY" name="JetBrainsMono-Italic.ttf" compile="0" resource="1"
+            file="Fonts/JetBrainsMono-Italic.ttf"/>
+      <FILE id="NL1ujN" name="JetBrainsMono-Medium.ttf" compile="0" resource="1"
             file="Fonts/JetBrainsMono-Medium.ttf"/>
+      <FILE id="dg7rfF" name="JetBrainsMono-MediumItalic.ttf" compile="0"
+            resource="1" file="Fonts/JetBrainsMono-MediumItalic.ttf"/>
+      <FILE id="Y9loOg" name="JetBrainsMono-Regular.ttf" compile="0" resource="1"
+            file="Fonts/JetBrainsMono-Regular.ttf"/>
+      <FILE id="fai0HY" name="JetBrainsMono-SemiBold.ttf" compile="0" resource="1"
+            file="Fonts/JetBrainsMono-SemiBold.ttf"/>
+      <FILE id="LNU0O9" name="JetBrainsMono-SemiBoldItalic.ttf" compile="0"
+            resource="1" file="Fonts/JetBrainsMono-SemiBoldItalic.ttf"/>
     </GROUP>
     <GROUP id="{F117A351-3888-0956-93E5-0CAFC88EFFAE}" name="Source">
       <FILE id="xPnPHy" name="ChannelState.h" compile="0" resource="0" file="Source/ChannelState.h"/>
       <FILE id="zCuylx" name="CommandIDs.h" compile="0" resource="0" file="Source/CommandIDs.h"/>
       <FILE id="S4SSUV" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
-      <FILE id="suV7Rc" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="kos11p" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
-      <FILE id="EM3kKt" name="MainWindow.h" compile="0" resource="0" file="Source/MainWindow.h"/>
+      <FILE id="suV7Rc" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="LnBH3K" name="MainWindow.cpp" compile="1" resource="0" file="Source/MainWindow.cpp"/>
-      <FILE id="EdT8SZ" name="MidiDeviceComponent.h" compile="0" resource="0"
-            file="Source/MidiDeviceComponent.h"/>
+      <FILE id="EM3kKt" name="MainWindow.h" compile="0" resource="0" file="Source/MainWindow.h"/>
       <FILE id="gBe2aa" name="MidiDeviceComponent.cpp" compile="1" resource="0"
             file="Source/MidiDeviceComponent.cpp"/>
-      <FILE id="pbOkrz" name="PluginProcessor.h" compile="0" resource="0"
-            file="Source/PluginProcessor.h"/>
-      <FILE id="l4Lxmf" name="PluginProcessor.cpp" compile="1" resource="0"
-            file="Source/PluginProcessor.cpp"/>
-      <FILE id="BZ2So7" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="EdT8SZ" name="MidiDeviceComponent.h" compile="0" resource="0"
+            file="Source/MidiDeviceComponent.h"/>
       <FILE id="mgqWKI" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="sfMjhZ" name="ShowMidiApplication.h" compile="0" resource="0"
-            file="Source/ShowMidiApplication.h"/>
+      <FILE id="BZ2So7" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="l4Lxmf" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="pbOkrz" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
       <FILE id="SMuCMV" name="ShowMidiApplication.cpp" compile="1" resource="0"
             file="Source/ShowMidiApplication.cpp"/>
-      <FILE id="O8RQq4" name="UwynLookAndFeel.h" compile="0" resource="0"
-            file="Source/UwynLookAndFeel.h"/>
+      <FILE id="sfMjhZ" name="ShowMidiApplication.h" compile="0" resource="0"
+            file="Source/ShowMidiApplication.h"/>
+      <FILE id="YqVJfs" name="Theme.h" compile="0" resource="0" file="Source/Theme.h"/>
       <FILE id="Bl5ZcR" name="UwynLookAndFeel.cpp" compile="1" resource="0"
             file="Source/UwynLookAndFeel.cpp"/>
+      <FILE id="O8RQq4" name="UwynLookAndFeel.h" compile="0" resource="0"
+            file="Source/UwynLookAndFeel.h"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>

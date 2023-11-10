@@ -19,13 +19,15 @@
 
 #include <JuceHeader.h>
 
+#include "Theme.h"
+
 namespace showmidi
 {
     class MidiDeviceComponent : public juce::Component
     {
     public:
-        MidiDeviceComponent(const String&);
-        MidiDeviceComponent(const MidiDeviceInfo&);
+        MidiDeviceComponent(const Theme& theme, const String&);
+        MidiDeviceComponent(const Theme& theme, const MidiDeviceInfo&);
         ~MidiDeviceComponent() override;
 
         static int getStandardWidth();

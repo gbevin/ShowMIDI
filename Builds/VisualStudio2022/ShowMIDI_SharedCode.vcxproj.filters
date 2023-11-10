@@ -613,10 +613,10 @@
     <ClCompile Include="..\..\Source\MidiDeviceComponent.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\PluginProcessor.cpp">
+    <ClCompile Include="..\..\Source\PluginEditor.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\PluginEditor.cpp">
+    <ClCompile Include="..\..\Source\PluginProcessor.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp">
@@ -3069,13 +3069,16 @@
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\PluginProcessor.h">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\PluginEditor.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\PluginProcessor.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ShowMidiApplication.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Theme.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\UwynLookAndFeel.h">
@@ -5942,10 +5945,22 @@
     <None Include="..\..\Assets\appicon.png">
       <Filter>ShowMIDI\Assets</Filter>
     </None>
-    <None Include="..\..\Fonts\JetBrainsMono-Bold.ttf">
+    <None Include="..\..\Fonts\JetBrainsMono-Italic.ttf">
       <Filter>ShowMIDI\Fonts</Filter>
     </None>
     <None Include="..\..\Fonts\JetBrainsMono-Medium.ttf">
+      <Filter>ShowMIDI\Fonts</Filter>
+    </None>
+    <None Include="..\..\Fonts\JetBrainsMono-MediumItalic.ttf">
+      <Filter>ShowMIDI\Fonts</Filter>
+    </None>
+    <None Include="..\..\Fonts\JetBrainsMono-Regular.ttf">
+      <Filter>ShowMIDI\Fonts</Filter>
+    </None>
+    <None Include="..\..\Fonts\JetBrainsMono-SemiBold.ttf">
+      <Filter>ShowMIDI\Fonts</Filter>
+    </None>
+    <None Include="..\..\Fonts\JetBrainsMono-SemiBoldItalic.ttf">
       <Filter>ShowMIDI\Fonts</Filter>
     </None>
     <None Include="..\..\JuceLibraryCode\modules\juce_audio_devices\native\oboe\CMakeLists.txt">

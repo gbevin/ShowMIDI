@@ -30,6 +30,7 @@ namespace showmidi
         bool on_ { false };
         int number_ { -1 };
         int polyPressure_ { 0 };
+        Time polyPressureTime_;
     };
     
     struct Notes
