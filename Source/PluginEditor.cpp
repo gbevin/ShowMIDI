@@ -38,10 +38,12 @@ namespace showmidi
         {
             juce::Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
+#if JUCE_MAC
             owner_->setResizable(true, true);
             owner_->getConstrainer()->setMinimumWidth(MidiDeviceComponent::getStandardWidth());
             owner_->getConstrainer()->setMaximumWidth(MidiDeviceComponent::getStandardWidth());
             owner_->getConstrainer()->setMinimumHeight(120);
+#endif
             
             midiDevice_.setBounds(0, 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
 
@@ -130,10 +132,12 @@ namespace showmidi
         
         void resized()
         {
-            if (owner_ != nullptr && initialized_)
+#if JUCE_MAC
+            if (owner_ != nullptr && initialized_ && owner_->getWidth() > 0 && owner_->getHeight() > 0)
             {
                 viewPort_.setBounds(0, 0, owner_->getWidth(), owner_->getHeight());
             }
+#endif
         }
         
         UwynLookAndFeel lookAndFeel_;
