@@ -251,7 +251,7 @@ namespace showmidi
         }
 
         MainComponent* const owner_;
-        Theme theme_ = THEME_DARK;
+        Theme theme_ = Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT;
         HashMap<const String, MidiDeviceComponent*> midiDevices_;
         CriticalSection midiDevicesLock_;
         bool paused_ { false };

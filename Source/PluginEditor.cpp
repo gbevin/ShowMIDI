@@ -33,7 +33,7 @@ namespace showmidi
             GrabKeyboardFocus
         };
         
-        Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor& p) : owner_(owner), audioProcessor_(p), midiDevice_(THEME_DARK, "ShowMIDI")
+        Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor& p) : owner_(owner), audioProcessor_(p), midiDevice_(Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT, "ShowMIDI")
         {
             juce::Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
