@@ -6,6 +6,7 @@
 #define VSTFolder "{commoncf64}\VST\"
 #define VST3Folder "{commoncf64}\VST3\"
 #define CLAPFolder "{commoncf64}\CLAP\"
+#define LV2Folder "{commoncf64}\LV2\"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -44,12 +45,14 @@ Name: "Standalone"; Description: "Standalone application"; Types: custom;
 Name: "VST"; Description: "VST"; Types: custom;
 Name: "VST3"; Description: "VST3"; Types: custom;
 Name: "CLAP"; Description: "CLAP"; Types: custom;
+Name: "LV2"; Description: "LV2"; Types: custom;
 
 [Files]
 Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\Standalone Plugin\ShowMIDI.exe"; DestDir: "{app}"; Components: "Standalone"; Flags: ignoreversion
 Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST\ShowMIDI.dll"; DestDir: "{#VSTFolder}"; Components: "VST"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST3\ShowMIDI.vst3"; DestDir: "{#VST3Folder}"; Components: "VST3"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST3\ShowMIDI.vst3\*"; DestDir: "{#VST3Folder}"; Components: "VST3"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#PWD}\Builds\VisualStudio2022\x64\clap\ShowMIDI_artefacts\Release\ShowMIDI.clap"; DestDir: "{#CLAPFolder}"; Components: "CLAP"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\LV2 Plugin\ShowMIDI.lv2\*"; DestDir: "{#LV2Folder}"; Components: "LV2"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\ShowMIDI"; Filename: "{app}\ShowMIDI.exe"; WorkingDir: "{app}"
