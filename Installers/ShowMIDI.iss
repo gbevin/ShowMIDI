@@ -14,7 +14,7 @@
 AppId={{CF5E95CF-E92F-4C46-913D-A78713153914}
 AppName={#MyAppName}
 AppVersion={#VERSION}
-AppVerName={#MyAppName} v{#VERSION}
+AppVerName={#MyAppName}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -50,9 +50,9 @@ Name: "LV2"; Description: "LV2"; Types: custom;
 [Files]
 Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\Standalone Plugin\ShowMIDI.exe"; DestDir: "{app}"; Components: "Standalone"; Flags: ignoreversion
 Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST\ShowMIDI.dll"; DestDir: "{#VSTFolder}"; Components: "VST"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST3\ShowMIDI.vst3\*"; DestDir: "{#VST3Folder}"; Components: "VST3"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST3\ShowMIDI.vst3\*"; DestDir: "{#VST3Folder}\ShowMIDI.vst3"; Components: "VST3"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "{#PWD}\Builds\VisualStudio2022\x64\clap\ShowMIDI_artefacts\Release\ShowMIDI.clap"; DestDir: "{#CLAPFolder}"; Components: "CLAP"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\LV2 Plugin\ShowMIDI.lv2\*"; DestDir: "{#LV2Folder}"; Components: "LV2"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\LV2 Plugin\ShowMIDI.lv2\*"; DestDir: "{#LV2Folder}\ShowMIDI.lv2"; Components: "LV2"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\ShowMIDI"; Filename: "{app}\ShowMIDI.exe"; WorkingDir: "{app}"
