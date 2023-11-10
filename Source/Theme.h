@@ -43,40 +43,40 @@ namespace showmidi
             return (int)fontData().getHeight();
         }
         
-        Colour colorSidebar;
         Colour colorBackground;
+        Colour colorSidebar;
+        Colour colorSeperator;
+        Colour colorTrack;
         Colour colorLabel;
         Colour colorData;
-        Colour colorSeperator;
         Colour colorPositive;
         Colour colorNegative;
         Colour colorController;
-        Colour colorTrack;
     };
     
     static const Theme THEME_DARK =
     {
-        Colour(0xff201e21), // colorSidebar
         Colour(0xff29272b), // colorBackground
+        Colour(0xff201e21), // colorSidebar
+        Colour(0xff66606b), // colorSeperator
+        Colour(0xff201e21), // colorTrack
         Colour(0xff66606b), // colorLabel
         Colour(0xffffffff), // colorData
-        Colour(0xff66606b), // colorSeperator
         Colour(0xff66adf3), // colorPositive
         Colour(0xffd8414e), // colorNegative
-        Colour(0xffffab2b), // colorController
-        Colour(0xff201e21)  // colorTrack
+        Colour(0xffffab2b)  // colorController
     };
     
     static const Theme THEME_LIGHT =
     {
-        Colour(0xffffffff), // colorSidebar
         Colour(0xfff2f2f2), // colorBackground
+        Colour(0xffffffff), // colorSidebar
+        Colour(0xffa0a0a0), // colorSeperator
+        Colour(0xffffffff), // colorTrack
         Colour(0xffa0a0a0), // colorLabel
         Colour(0xff222222), // colorData
-        Colour(0xffa0a0a0), // colorSeperator
         Colour(0xff66adf3), // colorPositive
         Colour(0xffd8414e), // colorNegative
-        Colour(0xffffab2b), // colorController
-        Colour(0xffffffff)  // colorTrack
+        Colour(0xffffab2b)  // colorController
     };
 }
