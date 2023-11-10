@@ -36,7 +36,7 @@ namespace showmidi
         struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_ { nullptr };
-        
+
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ShowMIDIPluginAudioProcessorEditor)
     };
 }

@@ -38,12 +38,10 @@ namespace showmidi
         {
             juce::Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
-#if JUCE_MAC
             owner_->setResizable(true, true);
             owner_->getConstrainer()->setMinimumWidth(MidiDeviceComponent::getStandardWidth());
             owner_->getConstrainer()->setMaximumWidth(MidiDeviceComponent::getStandardWidth());
             owner_->getConstrainer()->setMinimumHeight(120);
-#endif
             
             midiDevice_.setBounds(0, 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
 
@@ -51,7 +49,7 @@ namespace showmidi
             viewPort_.setScrollBarsShown(true, false);
             viewPort_.setScrollBarThickness(4);
             viewPort_.setViewedComponent(&midiDevice_, false);
-            viewPort_.setSize(MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
+            viewPort_.setBounds(0, 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
             
             owner_->addAndMakeVisible(viewPort_);
 
@@ -63,8 +61,6 @@ namespace showmidi
             startTimer(RenderDevices, 1000 / 30);
             
             startTimer(GrabKeyboardFocus, 100);
-            
-            initialized_ = true;
         }
         
         ~Pimpl()
@@ -73,7 +69,7 @@ namespace showmidi
             
             stopTimer(RenderDevices);
         }
-        
+
         void handleIncomingMidiMessage(const MidiMessage& msg)
         {
             midiDevice_.handleIncomingMidiMessage(msg);
@@ -130,18 +126,12 @@ namespace showmidi
             g.fillAll(lookAndFeel_.findColour(juce::ResizableWindow::backgroundColourId));
         }
         
-        void resized()
+        void resized(int height)
         {
-#if JUCE_MAC
-            if (owner_ != nullptr && initialized_ && owner_->getWidth() > 0 && owner_->getHeight() > 0)
-            {
-                viewPort_.setBounds(0, 0, owner_->getWidth(), owner_->getHeight());
-            }
-#endif
+            viewPort_.setBounds(0, 0, viewPort_.getWidth(), height);
         }
         
         UwynLookAndFeel lookAndFeel_;
-        bool initialized_ { false };
         ShowMIDIPluginAudioProcessorEditor* const owner_;
         ShowMIDIPluginAudioProcessor& audioProcessor_;
         Viewport viewPort_;
@@ -151,11 +141,19 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    ShowMIDIPluginAudioProcessorEditor::ShowMIDIPluginAudioProcessorEditor(ShowMIDIPluginAudioProcessor& p) : AudioProcessorEditor(&p), pimpl_(new Pimpl(this, p)) {}
+    ShowMIDIPluginAudioProcessorEditor::ShowMIDIPluginAudioProcessorEditor(ShowMIDIPluginAudioProcessor& p) : AudioProcessorEditor(&p), pimpl_(new Pimpl(this, p)) {
+    }
+
     ShowMIDIPluginAudioProcessorEditor::~ShowMIDIPluginAudioProcessorEditor() = default;
     
     void ShowMIDIPluginAudioProcessorEditor::handleIncomingMidiMessage(const MidiMessage& m)   { pimpl_->handleIncomingMidiMessage(m); };
 
     void ShowMIDIPluginAudioProcessorEditor::paint(juce::Graphics& g)   { if (pimpl_.get()) pimpl_->paint(g); }
-    void ShowMIDIPluginAudioProcessorEditor::resized()                  { if (pimpl_.get()) pimpl_->resized(); }
+    void ShowMIDIPluginAudioProcessorEditor::resized()
+    {
+        if (pimpl_.get() && isVisible() && getHeight() > 0)
+        {
+            pimpl_->resized(getHeight());
+        }
+    }
 }
