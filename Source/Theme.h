@@ -23,8 +23,15 @@ namespace showmidi
 {
     struct Theme
     {
-        Font fontLabel;
-        Font fontData;
+        Font fontLabel()
+        {
+            return Font(16, Font::bold);
+        }
+        
+        Font fontData()
+        {
+            return Font(16, Font::italic);
+        }
         
         Colour colorSidebar;
         Colour colorBackground;
@@ -39,9 +46,6 @@ namespace showmidi
     
     static const Theme THEME_DARK =
     {
-        Font(16, Font::bold),   // fontLabel
-        Font(16, Font::italic), // fontData
-
         Colour(0xff201e21), // colorSidebar
         Colour(0xff29272b), // colorBackground
         Colour(0xff66606b), // colorLabel
@@ -55,9 +59,6 @@ namespace showmidi
     
     static const Theme THEME_LIGHT =
     {
-        Font(16, Font::bold),   // fontLabel
-        Font(16, Font::italic), // fontData
-
         Colour(0xffffffff), // colorSidebar
         Colour(0xfff2f2f2), // colorBackground
         Colour(0xffa0a0a0), // colorLabel
