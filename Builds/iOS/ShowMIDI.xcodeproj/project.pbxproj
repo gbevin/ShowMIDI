@@ -135,6 +135,7 @@
 		8D2448D40030D125D995FF67 /* Metal.framework */ /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		8EB9B0CFCF903E0A2D914B1E /* juce_audio_formats */ /* juce_audio_formats */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_formats; path = ../../JuceLibraryCode/modules/juce_audio_formats; sourceTree = SOURCE_ROOT; };
 		93EC26DF26EC04C721919336 /* juce_gui_extra */ /* juce_gui_extra */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_extra; path = ../../JuceLibraryCode/modules/juce_gui_extra; sourceTree = SOURCE_ROOT; };
+		9A2BC4DA5BB07ED9989A954E /* JuceLV2Defines.h */ /* JuceLV2Defines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceLV2Defines.h; path = ../../JuceLibraryCode/JuceLV2Defines.h; sourceTree = SOURCE_ROOT; };
 		9C19881D8BF4AD54F23350A1 /* include_juce_audio_processors.mm */ /* include_juce_audio_processors.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_processors.mm; path = ../../JuceLibraryCode/include_juce_audio_processors.mm; sourceTree = SOURCE_ROOT; };
 		A6EC2BC2B40C837D93B251BB /* MidiDeviceComponent.h */ /* MidiDeviceComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MidiDeviceComponent.h; path = ../../Source/MidiDeviceComponent.h; sourceTree = SOURCE_ROOT; };
 		A7D51DA4FAC7916144DC9C37 /* PluginEditor.h */ /* PluginEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginEditor.h; path = ../../Source/PluginEditor.h; sourceTree = SOURCE_ROOT; };
@@ -322,6 +323,7 @@
 				E9709AF951C28033427F76C6,
 				4F7F78F0807149D173DA0F17,
 				EB50501ACBFD373CF21296E5,
+				9A2BC4DA5BB07ED9989A954E,
 				1152C1391B39202DBB86C3B9,
 			);
 			name = "JUCE Library Code";

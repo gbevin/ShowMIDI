@@ -14,12 +14,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2B4F9D8C-0172-A8B9-CE6A-A38A58226832}</ProjectGuid>
+    <ProjectGuid>{D992E02F-C650-25EF-7465-C0912FE66ECF}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"
                  Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
@@ -27,7 +27,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"
                  Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
@@ -42,14 +42,14 @@
   </ImportGroup>
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <TargetExt>.exe</TargetExt>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Platform)\$(Configuration)\Standalone Plugin\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\Standalone Plugin\</IntDir>
+    <TargetExt>.dll</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Platform)\$(Configuration)\LV2 Plugin\ShowMIDI.lv2\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\LV2 Plugin\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ShowMIDI</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath);$(SolutionDir)$(Platform)\$(Configuration)\Shared Code</LibraryPath>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Platform)\$(Configuration)\Standalone Plugin\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\Standalone Plugin\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Platform)\$(Configuration)\LV2 Plugin\ShowMIDI.lv2\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\LV2 Plugin\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ShowMIDI</TargetName>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath);$(SolutionDir)$(Platform)\$(Configuration)\Shared Code</LibraryPath>
@@ -66,7 +66,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lilv\src;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lilv;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sratom;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sord\src;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sord;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\serd;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lv2;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\VST3_SDK;\Users\gbevin\vst2;..\..\JuceLibraryCode;..\..\JuceLibraryCode\modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.2.0;JUCE_APP_VERSION_HEX=0x200;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=1;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.2.0;JUCE_APP_VERSION_HEX=0x200;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -80,10 +80,10 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lilv\src;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lilv;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sratom;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sord\src;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sord;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\serd;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lv2;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\VST3_SDK;\Users\gbevin\vst2;..\..\JuceLibraryCode;..\..\JuceLibraryCode\modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.2.0;JUCE_APP_VERSION_HEX=0x200;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=1;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.2.0;JUCE_APP_VERSION_HEX=0x200;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\ShowMIDI.exe</OutputFile>
+      <OutputFile>$(OutDir)\ShowMIDI.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>libcmt.lib; msvcrt.lib;;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -99,6 +99,10 @@
     <Lib>
       <AdditionalDependencies>ShowMIDI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>&quot;$(SolutionDir)$(Platform)\$(Configuration)\LV2 Manifest Helper\juce_lv2_helper.exe&quot; &quot;$(OutDir)$(TargetFileName)&quot;
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -111,7 +115,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lilv\src;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lilv;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sratom;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sord\src;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sord;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\serd;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lv2;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\VST3_SDK;\Users\gbevin\vst2;..\..\JuceLibraryCode;..\..\JuceLibraryCode\modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.2.0;JUCE_APP_VERSION_HEX=0x200;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=1;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.2.0;JUCE_APP_VERSION_HEX=0x200;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -125,10 +129,10 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lilv\src;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lilv;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sratom;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sord\src;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\sord;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\serd;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK\lv2;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\LV2_SDK;..\..\JuceLibraryCode\modules\juce_audio_processors\format_types\VST3_SDK;\Users\gbevin\vst2;..\..\JuceLibraryCode;..\..\JuceLibraryCode\modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.2.0;JUCE_APP_VERSION_HEX=0x200;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=1;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.2.0;JUCE_APP_VERSION_HEX=0x200;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\ShowMIDI.exe</OutputFile>
+      <OutputFile>$(OutDir)\ShowMIDI.dll</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -147,16 +151,21 @@
     <Lib>
       <AdditionalDependencies>ShowMIDI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>&quot;$(SolutionDir)$(Platform)\$(Configuration)\LV2 Manifest Helper\juce_lv2_helper.exe&quot; &quot;$(OutDir)$(TargetFileName)&quot;
+</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_plugin_client\juce_audio_plugin_client_Standalone.cpp">
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_plugin_client\LV2\juce_LV2ManifestHelper.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_plugin_client_Standalone.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_plugin_client\juce_audio_plugin_client_LV2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_plugin_client_LV2.cpp"/>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_plugin_client\Standalone\juce_StandaloneFilterWindow.h"/>
-  </ItemGroup>
+  <ItemGroup/>
   <ItemGroup>
     <None Include=".\icon.ico"/>
   </ItemGroup>
