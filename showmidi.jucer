@@ -13,6 +13,11 @@
   <MAINGROUP id="BsIwV1" name="ShowMIDI">
     <GROUP id="{8CB228DE-9289-566C-FA68-A725D7D623F1}" name="Assets">
       <FILE id="eY2NXn" name="appicon.png" compile="0" resource="1" file="Assets/appicon.png"/>
+      <FILE id="ubQN3v" name="expanded.svg" compile="0" resource="1" file="Assets/expanded.svg"/>
+      <FILE id="lTbJOc" name="help.svg" compile="0" resource="1" file="Assets/help.svg"/>
+      <FILE id="PqCEx8" name="hidden.svg" compile="0" resource="1" file="Assets/hidden.svg"/>
+      <FILE id="TUbRHp" name="settings.svg" compile="0" resource="1" file="Assets/settings.svg"/>
+      <FILE id="ulYhep" name="visible.svg" compile="0" resource="1" file="Assets/visible.svg"/>
     </GROUP>
     <GROUP id="{FDC783C1-48B0-1666-420B-62D58481C8C8}" name="Fonts">
       <FILE id="Y0q1SY" name="JetBrainsMono-Italic.ttf" compile="0" resource="1"
@@ -25,8 +30,11 @@
             resource="1" file="Fonts/JetBrainsMono-SemiBoldItalic.ttf"/>
     </GROUP>
     <GROUP id="{F117A351-3888-0956-93E5-0CAFC88EFFAE}" name="Source">
+      <FILE id="crM5X0" name="AboutComponent.cpp" compile="1" resource="0"
+            file="Source/AboutComponent.cpp"/>
+      <FILE id="LVHKOA" name="AboutComponent.h" compile="0" resource="0"
+            file="Source/AboutComponent.h"/>
       <FILE id="xPnPHy" name="ChannelState.h" compile="0" resource="0" file="Source/ChannelState.h"/>
-      <FILE id="zCuylx" name="CommandIDs.h" compile="0" resource="0" file="Source/CommandIDs.h"/>
       <FILE id="S4SSUV" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="kos11p" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
@@ -50,10 +58,13 @@
             file="Source/ShowMidiApplication.cpp"/>
       <FILE id="sfMjhZ" name="ShowMidiApplication.h" compile="0" resource="0"
             file="Source/ShowMidiApplication.h"/>
+      <FILE id="BaGxbw" name="Sidebar.cpp" compile="1" resource="0" file="Source/Sidebar.cpp"/>
+      <FILE id="Re6kWf" name="Sidebar.h" compile="0" resource="0" file="Source/Sidebar.h"/>
       <FILE id="BkirUR" name="StoredSettings.cpp" compile="1" resource="0"
             file="Source/StoredSettings.cpp"/>
       <FILE id="dZfZXo" name="StoredSettings.h" compile="0" resource="0"
             file="Source/StoredSettings.h"/>
+      <FILE id="fBV1fH" name="Theme.cpp" compile="1" resource="0" file="Source/Theme.cpp"/>
       <FILE id="YqVJfs" name="Theme.h" compile="0" resource="0" file="Source/Theme.h"/>
       <FILE id="Bl5ZcR" name="UwynLookAndFeel.cpp" compile="1" resource="0"
             file="Source/UwynLookAndFeel.cpp"/>

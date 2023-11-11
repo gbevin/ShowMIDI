@@ -148,6 +148,7 @@ OBJECTS_LV2_PLUGIN := \
   $(JUCE_OBJDIR)/include_juce_audio_plugin_client_LV2_7d84e0a5.o \
 
 OBJECTS_SHARED_CODE := \
+  $(JUCE_OBJDIR)/AboutComponent_ebbe5b79.o \
   $(JUCE_OBJDIR)/Main_90ebc5c2.o \
   $(JUCE_OBJDIR)/MainComponent_a6ffb4a5.o \
   $(JUCE_OBJDIR)/MainWindow_499ac812.o \
@@ -155,7 +156,9 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
   $(JUCE_OBJDIR)/ShowMidiApplication_31576413.o \
+  $(JUCE_OBJDIR)/Sidebar_ebdb4dbd.o \
   $(JUCE_OBJDIR)/StoredSettings_dfdf196f.o \
+  $(JUCE_OBJDIR)/Theme_9f3534aa.o \
   $(JUCE_OBJDIR)/UwynLookAndFeel_d5d63ba8.o \
   $(JUCE_OBJDIR)/BinaryData_ce4232d4.o \
   $(JUCE_OBJDIR)/include_juce_audio_basics_8a4e984a.o \
@@ -283,6 +286,11 @@ $(JUCE_OBJDIR)/include_juce_audio_plugin_client_LV2_7d84e0a5.o: ../../JuceLibrar
 	@echo "Compiling include_juce_audio_plugin_client_LV2.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_LV2_PLUGIN) $(JUCE_CFLAGS_LV2_PLUGIN) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/AboutComponent_ebbe5b79.o: ../../Source/AboutComponent.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling AboutComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/Main_90ebc5c2.o: ../../Source/Main.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling Main.cpp"
@@ -318,9 +326,19 @@ $(JUCE_OBJDIR)/ShowMidiApplication_31576413.o: ../../Source/ShowMidiApplication.
 	@echo "Compiling ShowMidiApplication.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/Sidebar_ebdb4dbd.o: ../../Source/Sidebar.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling Sidebar.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/StoredSettings_dfdf196f.o: ../../Source/StoredSettings.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling StoredSettings.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Theme_9f3534aa.o: ../../Source/Theme.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling Theme.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/UwynLookAndFeel_d5d63ba8.o: ../../Source/UwynLookAndFeel.cpp

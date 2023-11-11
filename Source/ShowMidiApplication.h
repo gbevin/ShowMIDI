@@ -19,17 +19,17 @@
 
 #include <JuceHeader.h>
 
+#include "SettingsManager.h"
+#include "StoredSettings.h"
 #include "UwynLookAndFeel.h"
 
 #define SMApp ShowMidiApplication::getInstance()
-
-extern ApplicationCommandManager* commandManager;
 
 namespace showmidi
 {
     class MainWindow;
     
-    class ShowMidiApplication : public juce::JUCEApplication, public juce::ApplicationCommandManagerListener
+    class ShowMidiApplication : public juce::JUCEApplication, public SettingsManager
     {
     public:
         ShowMidiApplication();
@@ -51,19 +51,17 @@ namespace showmidi
         void systemRequestedQuit() override;
         void anotherInstanceStarted(const juce::String& commandLine) override;
 
-        ApplicationCommandTarget* getNextCommandTarget() override;
-        void getAllCommands(Array <CommandID> &) override;
-        void getCommandInfo(CommandID, ApplicationCommandInfo &) override;
-        bool perform(const InvocationInfo &) override;
-        void applicationCommandInvoked(const ApplicationCommandTarget::InvocationInfo &) override;
-        void applicationCommandListChanged() override;
-
         void setWindowTitle(const String&);
         void setWindowSize(int, int);
         int getWindowHeight();
+        
+        void storeSettings() override;
+        Theme& getTheme();
 
     private:
         UwynLookAndFeel lookAndFeel_;
         std::unique_ptr<MainWindow> mainWindow_;
+        StoredSettings settings_;
+        Theme theme_ = settings_.loadTheme();
     };
 }

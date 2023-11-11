@@ -139,6 +139,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\AboutComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainWindow.cpp"/>
@@ -146,7 +147,9 @@
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp"/>
+    <ClCompile Include="..\..\Source\Sidebar.cpp"/>
     <ClCompile Include="..\..\Source\StoredSettings.cpp"/>
+    <ClCompile Include="..\..\Source\Theme.cpp"/>
     <ClCompile Include="..\..\Source\UwynLookAndFeel.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -2412,8 +2415,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\AboutComponent.h"/>
     <ClInclude Include="..\..\Source\ChannelState.h"/>
-    <ClInclude Include="..\..\Source\CommandIDs.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MainWindow.h"/>
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h"/>
@@ -2421,6 +2424,7 @@
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\SettingsManager.h"/>
     <ClInclude Include="..\..\Source\ShowMidiApplication.h"/>
+    <ClInclude Include="..\..\Source\Sidebar.h"/>
     <ClInclude Include="..\..\Source\StoredSettings.h"/>
     <ClInclude Include="..\..\Source\Theme.h"/>
     <ClInclude Include="..\..\Source\UwynLookAndFeel.h"/>
@@ -3379,6 +3383,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Assets\appicon.png"/>
+    <None Include="..\..\Assets\expanded.svg"/>
+    <None Include="..\..\Assets\help.svg"/>
+    <None Include="..\..\Assets\hidden.svg"/>
+    <None Include="..\..\Assets\settings.svg"/>
+    <None Include="..\..\Assets\visible.svg"/>
     <None Include="..\..\Fonts\JetBrainsMono-Italic.ttf"/>
     <None Include="..\..\Fonts\JetBrainsMono-Regular.ttf"/>
     <None Include="..\..\Fonts\JetBrainsMono-SemiBold.ttf"/>

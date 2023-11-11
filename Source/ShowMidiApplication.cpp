@@ -17,7 +17,6 @@
  */
 #include "ShowMidiApplication.h"
 
-#include "CommandIDs.h"
 #include "MainWindow.h"
 
 using namespace showmidi;
@@ -49,20 +48,12 @@ UwynLookAndFeel& ShowMidiApplication::getLookAndFeel()
 
 void ShowMidiApplication::initialise(const juce::String&)
 {
-    commandManager = new ApplicationCommandManager();
-    commandManager->addListener(this);
-    commandManager->registerAllCommandsForTarget(this);
-
     mainWindow_.reset(new MainWindow(getApplicationName()));
 }
 
 void ShowMidiApplication::shutdown()
 {
-    commandManager->removeListener(this);
-    
     mainWindow_ = nullptr;
-    
-    deleteAndZero(commandManager);
 }
 
 void ShowMidiApplication::systemRequestedQuit()
@@ -71,91 +62,6 @@ void ShowMidiApplication::systemRequestedQuit()
 }
 
 void ShowMidiApplication::anotherInstanceStarted(const juce::String&)
-{
-}
-
-ApplicationCommandTarget* ShowMidiApplication::getNextCommandTarget()
-{
-    return nullptr;
-}
-
-void ShowMidiApplication::getAllCommands(Array <CommandID> &commands)
-{
-    const CommandID ids[] = {
-        CommandIDs::version,
-        CommandIDs::uwyn,
-        CommandIDs::quit
-    };
-    commands.addArray(ids, numElementsInArray(ids));
-}
-
-void ShowMidiApplication::getCommandInfo(const CommandID commandID, ApplicationCommandInfo &result)
-{
-    const int cmd = ModifierKeys::commandModifier;
-    
-    switch (commandID)
-    {
-        case CommandIDs::version:
-            result.setInfo(getApplicationName() + " v" + String(ProjectInfo::versionString),
-                           "The version of the " + getApplicationName() + ".",
-                           CommandCategories::help, 0);
-            result.setActive(true);
-            break;
-            
-        case CommandIDs::uwyn:
-            result.setInfo("About Uwyn",
-                           "About Uwyn",
-                           CommandCategories::help, 0);
-            result.setActive(true);
-            break;
-            
-        case CommandIDs::quit:
-            result.setInfo("Exit",
-                           "Exit " + getApplicationName() + ".",
-                           CommandCategories::help, 0);
-            result.setActive(true);
-            result.defaultKeypresses.add(KeyPress('q', cmd, 0));
-            break;
-            
-        default:
-            break;
-    }
-}
-
-bool ShowMidiApplication::perform(const InvocationInfo &info)
-{
-    switch (info.commandID)
-    {
-        case CommandIDs::version:
-        {
-            URL("https://github.com/gbevin/ShowMIDI").launchInDefaultBrowser();
-            break;
-        }
-            
-        case CommandIDs::uwyn:
-        {
-            URL("https://uwyn.com").launchInDefaultBrowser();
-            break;
-        }
-            
-        case CommandIDs::quit:
-        {
-            this->systemRequestedQuit();
-            break;
-        }
-        
-        default:
-            return false;
-    }
-    
-    return true;
-}
-
-void ShowMidiApplication::applicationCommandInvoked(const ApplicationCommandTarget::InvocationInfo &)
-{
-}
-
-void ShowMidiApplication::applicationCommandListChanged()
 {
 }
 
@@ -171,6 +77,7 @@ void ShowMidiApplication::setWindowSize(int width, int height)
 {
     if (mainWindow_ != nullptr)
     {
+        width += mainWindow_->getSizebarWidth();
 #if JUCE_IOS
         mainWindow_->setBounds(0, 0, width, height);
 #else
@@ -187,4 +94,17 @@ int ShowMidiApplication::getWindowHeight()
     }
     
     return 0;
+}
+
+void ShowMidiApplication::storeSettings()
+{
+    settings_.storeTheme(theme_);
+    settings_.flush();
+    
+    mainWindow_->repaint();
+}
+
+Theme& ShowMidiApplication::getTheme()
+{
+    return theme_;
 }

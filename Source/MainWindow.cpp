@@ -17,91 +17,118 @@
  */
 #include "MainWindow.h"
 
-#include "CommandIDs.h"
 #include "MainComponent.h"
 #include "MidiDeviceComponent.h"
+#include "Sidebar.h"
 #include "ShowMidiApplication.h"
 
-using namespace showmidi;
-
-MainWindow::MainWindow (juce::String name)
-    : DocumentWindow(name,
-                      juce::Desktop::getInstance().getDefaultLookAndFeel()
-                        .findColour (juce::ResizableWindow::backgroundColourId),
-                      DocumentWindow::allButtons)
+namespace showmidi
 {
-#if JUCE_MAC
-    extraMenu_.addCommandItem(commandManager, CommandIDs::version);
-    extraMenu_.addCommandItem(commandManager, CommandIDs::uwyn);
-    setMacMainMenu(this, &extraMenu_);
-#elif JUCE_WINDOWS | JUCE_LINUX
-    setMenuBar(this);
-#endif
-
-    setUsingNativeTitleBar(true);
-    
-    auto viewport = new Viewport();
-    
-    viewport->setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
-    viewport->setScrollBarsShown(true, true);
-    viewport->setScrollBarThickness(4);
-    viewport->setViewedComponent(new MainComponent(), true);
-    viewport->setSize((MidiDeviceComponent::getStandardWidth() + 2) + 2, 600);
-    
-    setContentOwned(viewport, true);
-#if JUCE_IOS
-    setFullScreen(true);
-#else
-    setResizable(true, true);
-    centreWithSize(getWidth(), getHeight());
-#endif
-    
-    setVisible(true);
-}
-
-MainWindow::~MainWindow()
-{
-#if JUCE_MAC
-    setMacMainMenu(0, 0);
-#elif JUCE_WINDOWS | JUCE_LINUX
-    setMenuBar(0);
-#endif
-    
-    clearContentComponent();
-}
-
-void MainWindow::closeButtonPressed()
-{
-    JUCEApplication::getInstance()->systemRequestedQuit();
-}
-
-StringArray MainWindow::getMenuBarNames()
-{
-#ifdef JUCE_MAC
-    return StringArray();
-#else
-    const char* const names[] = { CommandCategories::help, 0 };
-    return StringArray(names);
-#endif
-}
-
-PopupMenu MainWindow::getMenuForIndex(int topLevelMenuIndex, const String &)
-{
-    PopupMenu menu;
-    
-    if (topLevelMenuIndex == 0)
+    class LayoutComponent : public Component, public juce::FileDragAndDropTarget
     {
-        // "Help" menu
+    public:
+        LayoutComponent() {}
+        virtual ~LayoutComponent() = default;
         
-#ifndef JUCE_MAC
-        menu.addCommandItem(commandManager, CommandIDs::version);
-        menu.addCommandItem(commandManager, CommandIDs::uwyn);
-#endif
-    }
-    
-    return menu;
-}
+        bool isInterestedInFileDrag(const StringArray& files)
+        {
+            for (auto file : files)
+            {
+                if (file.endsWith(".svg"))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        void filesDropped(const StringArray& files, int, int)
+        {
+            for (auto file : files)
+            {
+                SMApp.getTheme().parseXml(File(file).loadFileAsString());
+            }
+            
+            repaint();
+            
+            SMApp.storeSettings();
+        }
 
-void MainWindow::menuItemSelected(int, int)
-{
+    private:
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LayoutComponent)
+    };
+    
+    struct MainWindow::Pimpl
+    {
+        static constexpr int SIDEBAR_WIDTH = 36;
+
+        Pimpl(MainWindow* owner) : owner_(owner)
+        {
+            owner_->setUsingNativeTitleBar(true);
+            
+            auto layout = new LayoutComponent();
+            
+            sidebar_.setBounds(0, 0, SIDEBAR_WIDTH, 600);
+            layout->addAndMakeVisible(sidebar_);
+
+            viewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
+            viewport_.setScrollBarsShown(true, true);
+            viewport_.setScrollBarThickness(4);
+            viewport_.setViewedComponent(new MainComponent(), true);
+            viewport_.setBounds(sidebar_.getWidth(), 0, (MidiDeviceComponent::getStandardWidth() + 2) + 2, 600);
+            layout->addAndMakeVisible(viewport_);
+
+            layout->setSize(sidebar_.getWidth() + viewport_.getWidth(), 600);
+            
+            owner_->setContentOwned(layout, true);
+#if JUCE_IOS
+            owner_->setFullScreen(true);
+#else
+            owner_->setResizable(true, true);
+            owner_->centreWithSize(owner_->getWidth(), owner_->getHeight());
+#endif
+            
+            owner_->setVisible(true);
+        }
+        
+        ~Pimpl()
+        {
+            owner_->clearContentComponent();
+        }
+        
+        void closeButtonPressed()
+        {
+            JUCEApplication::getInstance()->systemRequestedQuit();
+        }
+        
+        int getSidebarWidth()
+        {
+            return SIDEBAR_WIDTH;
+        }
+        
+        MainWindow* const owner_;
+        Sidebar sidebar_;
+        Viewport viewport_;
+
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
+    };
+    
+    MainWindow::MainWindow(juce::String name) :
+        DocumentWindow(name, juce::Desktop::getInstance().getDefaultLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId), DocumentWindow::allButtons),
+        pimpl_(new Pimpl(this)) {}
+    MainWindow::~MainWindow() = default;
+    
+    void MainWindow::resized()
+    {
+        if (pimpl_.get() && isVisible())
+        {
+            getContentComponent()->setBounds(0, 0, getWidth(), getHeight());
+            pimpl_->sidebar_.setBounds(0, 0, pimpl_->getSidebarWidth(), getHeight());
+            pimpl_->viewport_.setBounds(pimpl_->getSidebarWidth(), 0, getWidth() - pimpl_->getSidebarWidth(), getHeight());
+        }
+    };
+    
+    void MainWindow::closeButtonPressed() { pimpl_->closeButtonPressed(); }
+    int MainWindow::getSizebarWidth()     { return pimpl_->getSidebarWidth(); }
 }

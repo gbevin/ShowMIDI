@@ -96,92 +96,26 @@ LookAndFeel_V4::ColourScheme UwynLookAndFeel::getDarkColourScheme()
         0xffffffff, 0xff4f4f4f, 0xffffffff };
 }
 
+// we're stubbing out all button drawing routines since we'll be doing this ourselves
+// in paint calls, so that we can always change based on the active theme, without
+// having to propagate and update the theme colours
+
 void UwynLookAndFeel::drawPopupMenuBackground(Graphics& g, int, int)
 {
-    const Colour background(findColour(PopupMenu::backgroundColourId));
-    g.fillAll(background);
 }
 
 void UwynLookAndFeel::drawButtonBackground(Graphics &g, Button &button, const Colour &backgroundColour, bool isMouseOverButton, bool isButtonDown)
 {
-    if (!button.getClickingTogglesState())
-    {
-        LookAndFeel_V4::drawButtonBackground(g, button, backgroundColour, isMouseOverButton, isButtonDown);
-        return;
-    }
-    
-    const float outlineThickness = 1.5f;
-    const float halfThickness = outlineThickness*0.5f;
-    
-    const float indentL = halfThickness;
-    const float indentR = halfThickness;
-    const float indentT = halfThickness;
-    const float indentB = halfThickness;
-    
-    const float x = indentL;
-    const float y = indentT;
-    const float width = button.getWidth() - indentL - indentR;
-    const float height = button.getHeight() - indentT - indentB;
-    
-    const Colour colour(button.getToggleState() ? juce::Colour(0xaaffffff) : juce::Colour(0x88ffffff));
-    
-    if (width <= outlineThickness || height <= outlineThickness)
-    {
-        return;
-    }
-    
-    if (button.getToggleState())
-    {
-        Path outline;
-        const float cornerSize = jmin(width*0.25f, height*0.25f);
-        outline.addRoundedRectangle(x, y, width, height, cornerSize, cornerSize);
-        
-        g.setColour(colour.withAlpha(0.3f));
-        g.fillPath(outline);
-        
-        if (button.isEnabled())
-        {
-            g.setColour(colour);
-            g.strokePath(outline, PathStrokeType(outlineThickness));
-        }
-    }
 }
 
 void UwynLookAndFeel::drawButtonText(Graphics &g, TextButton &button, bool isMouseOverButton, bool isButtonDown)
 {
-    if (!button.getClickingTogglesState())
-    {
-        LookAndFeel_V4::drawButtonText(g, button, isMouseOverButton, isButtonDown);
-        return;
-    }
-    
-    if (button.isEnabled())
-    {
-        g.setColour(button.getToggleState() ? juce::Colour(0x88ffffff) : juce::Colour(0x66ffffff));
-    }
-    else
-    {
-        g.setColour(juce::Colour(0xff333333));
-    }
-    
-    const float width = float(button.getWidth());
-    const float height = float(button.getHeight());
-    const float hspace  = width/8.f;
-    const float vspace = height/8.f;
-    
-    float fontHeight = button.getHeight()-vspace*2.f;
-    g.setFont(getNarrowFont(fontHeight));
-    g.drawFittedText(button.getButtonText(),
-                     int(hspace), int(vspace),
-                     button.getWidth()-int(hspace*2.f), int(fontHeight),
-                     Justification::centred, 1);
 }
 
-Font UwynLookAndFeel::getNarrowFont(float height)
+void UwynLookAndFeel::drawToggleButton(Graphics&, ToggleButton&, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
 {
-#if JUCE_MAC
-    return Font("Arial Narrow", height, Font::plain);
-#else
-    return Font("Tahoma", height, Font::plain).withHorizontalScale(0.88f);
-#endif
+}
+
+void UwynLookAndFeel::drawTickBox(Graphics&, Component&, float x, float y, float w, float h, bool ticked, bool isEnabled, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+{
 }

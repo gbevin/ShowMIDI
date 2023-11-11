@@ -19,7 +19,6 @@
 
 #include "MidiDeviceComponent.h"
 #include "ShowMidiApplication.h"
-#include "StoredSettings.h"
 
 namespace showmidi
 {
@@ -32,7 +31,7 @@ namespace showmidi
         }
     };
 
-    struct MainComponent::Pimpl : public MultiTimer, public KeyListener, public SettingsManager
+    struct MainComponent::Pimpl : public MultiTimer, public KeyListener
     {
         static constexpr int MIN_MIDI_DEVICES_AUTO_SHOWN = 1;
         static constexpr int MAX_MIDI_DEVICES_AUTO_SHOWN = 6;
@@ -80,13 +79,7 @@ namespace showmidi
         
         void paint(juce::Graphics& g)
         {
-            g.fillAll(theme_.colorSidebar);
-        }
-        
-        void storeSettings() override
-        {
-            settings_.storeTheme(theme_);
-            settings_.flush();
+            g.fillAll(SMApp.getTheme().colorSidebar);
         }
         
         bool keyPressed(const KeyPress& key, Component*) override
@@ -229,12 +222,13 @@ namespace showmidi
                         MidiDeviceComponent* component = midiDevices_.getReference(info.identifier);
                         if (component == nullptr)
                         {
-                            component = new MidiDeviceComponent(theme_, info);
-                            component->setSettingsManager(this);
+                            component = new MidiDeviceComponent(SMApp.getTheme(), info);
+                            component->setSettingsManager(&SMApp);
                             midiDevices_.set(info.identifier, component);
                         }
                         
-                        component->setBounds(MIDI_DEVICE_SPACING + i * (component->getStandardWidth() + MIDI_DEVICE_SPACING), 0, component->getStandardWidth(), owner_->getParentHeight());
+                        component->setBounds(MIDI_DEVICE_SPACING + i * (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING), 0,
+                                             component->getStandardWidth(), owner_->getParentHeight());
                         
                         owner_->addAndMakeVisible(component);
                     }
@@ -259,8 +253,6 @@ namespace showmidi
         }
 
         MainComponent* const owner_;
-        StoredSettings settings_;
-        Theme theme_ = settings_.loadTheme();
         HashMap<const String, MidiDeviceComponent*> midiDevices_;
         CriticalSection midiDevicesLock_;
         bool paused_ { false };

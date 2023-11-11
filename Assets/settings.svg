@@ -1,0 +1,13 @@
+<svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 23">
+<line id="Line 1" y1="2.5" x2="4" y2="2.5" stroke="black"/>
+<line id="Line 4" x1="7" y1="2.5" x2="12" y2="2.5" stroke="black"/>
+<line id="Line 2" y1="7.5" x2="8" y2="7.5" stroke="black"/>
+<line id="Line 5" x1="11" y1="7.5" x2="12" y2="7.5" stroke="black"/>
+<line id="Line 3" y1="12.5" x2="2" y2="12.5" stroke="black"/>
+<line id="Line 6" x1="5" y1="12.5" x2="12" y2="12.5" stroke="black"/>
+<rect id="Rectangle 332" x="4.5" y="0.5" width="2" height="4" rx="1" stroke="black"/>
+<rect id="Rectangle 333" x="8.5" y="5.5" width="2" height="4" rx="1" stroke="black"/>
+<rect id="Rectangle 334" x="2.5" y="10.5" width="2" height="4" rx="1" stroke="black"/>
+</g>
+</svg>

@@ -601,6 +601,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\AboutComponent.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
@@ -622,7 +625,13 @@
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Sidebar.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\StoredSettings.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Theme.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\UwynLookAndFeel.cpp">
@@ -3057,10 +3066,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\ChannelState.h">
+    <ClInclude Include="..\..\Source\AboutComponent.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\CommandIDs.h">
+    <ClInclude Include="..\..\Source\ChannelState.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
@@ -3082,6 +3091,9 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\ShowMidiApplication.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Sidebar.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StoredSettings.h">
@@ -5952,6 +5964,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Assets\appicon.png">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\expanded.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\help.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\hidden.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\settings.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\visible.svg">
       <Filter>ShowMIDI\Assets</Filter>
     </None>
     <None Include="..\..\Fonts\JetBrainsMono-Italic.ttf">

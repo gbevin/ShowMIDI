@@ -17,14 +17,24 @@
  */
 #pragma once
 
-namespace CommandIDs
-{
-    static const int version    = 0x10001;
-    static const int uwyn       = 0x10002;
-    static const int quit       = 0x10003;
-}
+#include "JuceHeader.h"
 
-namespace CommandCategories
+namespace showmidi
 {
-    static const char* const help    = "Help";
+    class AboutComponent : public Component, public Button::Listener
+    {
+    public:
+        AboutComponent();
+        
+        void paint(Graphics& g) override;
+        void setVisible(bool shouldBeVisible) override;
+        
+        void buttonClicked(Button* buttonThatWasClicked) override;
+        
+    private:
+        TextButton websiteButton_;
+        TextButton closeButton_;
+        
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AboutComponent)
+    };
 }

@@ -33,8 +33,13 @@ namespace showmidi
         void drawPopupMenuBackground(Graphics &, int, int) override;
         void drawButtonBackground(Graphics &, Button &, const Colour &, bool, bool) override;
         void drawButtonText(Graphics &, TextButton &, bool, bool) override;
-        Font getNarrowFont(float);
-        
+        void drawToggleButton(Graphics&, ToggleButton&,
+                              bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
+        void drawTickBox(Graphics&, Component&,
+                         float x, float y, float w, float h,
+                         bool ticked, bool isEnabled,
+                         bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
+
         struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_;

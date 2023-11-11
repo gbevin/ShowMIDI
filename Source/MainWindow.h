@@ -19,20 +19,20 @@
 
 namespace showmidi
 {
-    class MainWindow : public juce::DocumentWindow, public juce::MenuBarModel
+    class MainWindow : public juce::DocumentWindow
     {
     public:
         MainWindow(juce::String name);
         ~MainWindow();
 
+        void resized() override;
         void closeButtonPressed() override;
         
-        StringArray getMenuBarNames() override;
-        PopupMenu getMenuForIndex(int, const String &) override;
-        void menuItemSelected(int, int) override;
-
+        int getSizebarWidth();
+        
+        struct Pimpl;
     private:
-        PopupMenu extraMenu_;
+        std::unique_ptr<Pimpl> pimpl_ { nullptr };
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };
