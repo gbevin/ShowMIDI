@@ -19,22 +19,31 @@
 
 #include <JuceHeader.h>
 
-#include "SettingsManager.h"
+#include "Theme.h"
 
 namespace showmidi
 {
-    class MainComponent : public juce::Component
+    class StoredSettings
     {
     public:
-        MainComponent();
-        ~MainComponent() override;
-        
-        void paint(juce::Graphics&) override;
-        
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
+        static const String THEME;
 
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+        StoredSettings();
+        ~StoredSettings();
+        
+        Theme loadTheme();
+        void storeTheme(Theme&);
+        
+        PropertiesFile &getGlobalProperties();
+        
+        void flush();
+        void reload();
+        
+    private:
+        std::unique_ptr<PropertiesFile> propertyFile_;
+        
+        void updateGlobalProps();
+        
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StoredSettings)
     };
 }

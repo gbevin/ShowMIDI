@@ -146,6 +146,7 @@
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp"/>
+    <ClCompile Include="..\..\Source\StoredSettings.cpp"/>
     <ClCompile Include="..\..\Source\UwynLookAndFeel.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -2418,7 +2419,9 @@
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
+    <ClInclude Include="..\..\Source\SettingsManager.h"/>
     <ClInclude Include="..\..\Source\ShowMidiApplication.h"/>
+    <ClInclude Include="..\..\Source\StoredSettings.h"/>
     <ClInclude Include="..\..\Source\Theme.h"/>
     <ClInclude Include="..\..\Source\UwynLookAndFeel.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
@@ -3377,8 +3380,6 @@
   <ItemGroup>
     <None Include="..\..\Assets\appicon.png"/>
     <None Include="..\..\Fonts\JetBrainsMono-Italic.ttf"/>
-    <None Include="..\..\Fonts\JetBrainsMono-Medium.ttf"/>
-    <None Include="..\..\Fonts\JetBrainsMono-MediumItalic.ttf"/>
     <None Include="..\..\Fonts\JetBrainsMono-Regular.ttf"/>
     <None Include="..\..\Fonts\JetBrainsMono-SemiBold.ttf"/>
     <None Include="..\..\Fonts\JetBrainsMono-SemiBoldItalic.ttf"/>

@@ -19,6 +19,7 @@
 
 #include "MidiDeviceComponent.h"
 #include "ShowMidiApplication.h"
+#include "StoredSettings.h"
 
 namespace showmidi
 {
@@ -31,7 +32,7 @@ namespace showmidi
         }
     };
 
-    struct MainComponent::Pimpl : public MultiTimer, public KeyListener
+    struct MainComponent::Pimpl : public MultiTimer, public KeyListener, public SettingsManager
     {
         static constexpr int MIN_MIDI_DEVICES_AUTO_SHOWN = 1;
         static constexpr int MAX_MIDI_DEVICES_AUTO_SHOWN = 6;
@@ -80,6 +81,12 @@ namespace showmidi
         void paint(juce::Graphics& g)
         {
             g.fillAll(theme_.colorSidebar);
+        }
+        
+        void storeSettings() override
+        {
+            settings_.storeTheme(theme_);
+            settings_.flush();
         }
         
         bool keyPressed(const KeyPress& key, Component*) override
@@ -223,6 +230,7 @@ namespace showmidi
                         if (component == nullptr)
                         {
                             component = new MidiDeviceComponent(theme_, info);
+                            component->setSettingsManager(this);
                             midiDevices_.set(info.identifier, component);
                         }
                         
@@ -251,7 +259,8 @@ namespace showmidi
         }
 
         MainComponent* const owner_;
-        Theme theme_ = Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT;
+        StoredSettings settings_;
+        Theme theme_ = settings_.loadTheme();
         HashMap<const String, MidiDeviceComponent*> midiDevices_;
         CriticalSection midiDevicesLock_;
         bool paused_ { false };

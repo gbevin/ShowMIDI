@@ -19,6 +19,7 @@
 
 #include "MidiDeviceComponent.h"
 #include "PluginProcessor.h"
+#include "StoredSettings.h"
 #include "UwynLookAndFeel.h"
 
 namespace showmidi
@@ -132,7 +133,7 @@ namespace showmidi
         
         UwynLookAndFeel lookAndFeel_;
         ShowMIDIPluginAudioProcessorEditor* const owner_;
-        Theme theme_ = Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT;
+        Theme theme_ = StoredSettings().loadTheme();
         ShowMIDIPluginAudioProcessor& audioProcessor_;
         Viewport viewPort_;
         MidiDeviceComponent midiDevice_;

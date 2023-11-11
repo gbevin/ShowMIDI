@@ -14,12 +14,6 @@ namespace BinaryData
     extern const char*   JetBrainsMonoItalic_ttf;
     const int            JetBrainsMonoItalic_ttfSize = 276840;
 
-    extern const char*   JetBrainsMonoMedium_ttf;
-    const int            JetBrainsMonoMedium_ttfSize = 273860;
-
-    extern const char*   JetBrainsMonoMediumItalic_ttf;
-    const int            JetBrainsMonoMediumItalic_ttfSize = 276804;
-
     extern const char*   JetBrainsMonoRegular_ttf;
     const int            JetBrainsMonoRegular_ttfSize = 273900;
 
@@ -30,7 +24,7 @@ namespace BinaryData
     const int            JetBrainsMonoSemiBoldItalic_ttfSize = 279828;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 7;
+    const int namedResourceListSize = 5;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

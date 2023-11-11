@@ -19,6 +19,7 @@
 
 #include <JuceHeader.h>
 
+#include "SettingsManager.h"
 #include "Theme.h"
 
 namespace showmidi
@@ -30,8 +31,11 @@ namespace showmidi
         MidiDeviceComponent(Theme& theme, const MidiDeviceInfo&);
         ~MidiDeviceComponent() override;
 
-        static int getStandardWidth();
+        void setSettingsManager(SettingsManager*);
         
+        static int getStandardWidth();
+        int getVisibleHeight() const;
+
         void render();
         void paint(juce::Graphics&) override;
         void resized() override;
@@ -39,8 +43,6 @@ namespace showmidi
         void handleIncomingMidiMessage(const MidiMessage&);
 
         void setPaused(bool);
-        
-        int getVisibleHeight() const;
         
         bool isInterestedInFileDrag(const StringArray&) override;
         void filesDropped(const StringArray&, int, int) override;

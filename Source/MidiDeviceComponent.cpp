@@ -94,7 +94,13 @@ namespace showmidi
         
         ~Pimpl()
         {
+            settingsManager_ = nullptr;
             midiIn_ = nullptr;
+        }
+        
+        void setSettingsManager(SettingsManager* manager)
+        {
+            settingsManager_ = manager;
         }
         
         void handleIncomingMidiMessage(MidiInput*, const MidiMessage& msg)
@@ -609,16 +615,22 @@ namespace showmidi
         {
             for (auto file : files)
             {
-                theme_.parseXmlFile(file);
+                theme_.parseXml(File(file).loadFileAsString());
             }
             
             owner_->getParentComponent()->repaint();
+            
+            if (settingsManager_ != nullptr)
+            {
+                settingsManager_->storeSettings();
+            }
         }
 
         MidiDeviceComponent* const owner_;
         
         Theme& theme_;
         MidiDeviceInfo deviceInfo_;
+        SettingsManager* settingsManager_ { nullptr };
         std::unique_ptr<juce::MidiInput> midiIn_ { nullptr };
         std::atomic_bool dirty_ { true };
         Time lastRender_;
@@ -638,6 +650,8 @@ namespace showmidi
     MidiDeviceComponent::MidiDeviceComponent(Theme& theme, const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, theme, info)) {}
     MidiDeviceComponent::~MidiDeviceComponent() = default;
     
+    void MidiDeviceComponent::setSettingsManager(SettingsManager* m)  { pimpl_->setSettingsManager(m); }
+
     int MidiDeviceComponent::getStandardWidth()         { return Pimpl::getStandardWidth(); }
     int MidiDeviceComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }
 

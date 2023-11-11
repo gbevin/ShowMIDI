@@ -622,6 +622,9 @@
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\StoredSettings.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\UwynLookAndFeel.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
@@ -3075,7 +3078,13 @@
     <ClInclude Include="..\..\Source\PluginProcessor.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\SettingsManager.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\ShowMidiApplication.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\StoredSettings.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Theme.h">
@@ -5946,12 +5955,6 @@
       <Filter>ShowMIDI\Assets</Filter>
     </None>
     <None Include="..\..\Fonts\JetBrainsMono-Italic.ttf">
-      <Filter>ShowMIDI\Fonts</Filter>
-    </None>
-    <None Include="..\..\Fonts\JetBrainsMono-Medium.ttf">
-      <Filter>ShowMIDI\Fonts</Filter>
-    </None>
-    <None Include="..\..\Fonts\JetBrainsMono-MediumItalic.ttf">
       <Filter>ShowMIDI\Fonts</Filter>
     </None>
     <None Include="..\..\Fonts\JetBrainsMono-Regular.ttf">

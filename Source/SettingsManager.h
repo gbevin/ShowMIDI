@@ -19,22 +19,13 @@
 
 #include <JuceHeader.h>
 
-#include "SettingsManager.h"
-
 namespace showmidi
 {
-    class MainComponent : public juce::Component
+    class SettingsManager
     {
     public:
-        MainComponent();
-        ~MainComponent() override;
+        virtual ~SettingsManager() {};
         
-        void paint(juce::Graphics&) override;
-        
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+        virtual void storeSettings() = 0;
     };
 }

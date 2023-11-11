@@ -24,8 +24,8 @@ struct UwynLookAndFeel::Pimpl
     Pimpl() :
         jetbrainMono_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoRegular_ttf, BinaryData::JetBrainsMonoRegular_ttfSize)),
         jetbrainMonoItalic_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoItalic_ttf, BinaryData::JetBrainsMonoItalic_ttfSize)),
-        jetbrainMonoBold_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoSemiBold_ttf, BinaryData::JetBrainsMonoSemiBold_ttfSize)),
-        jetbrainMonoBoldItalic_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoSemiBoldItalic_ttf, BinaryData::JetBrainsMonoSemiBoldItalic_ttfSize))
+        jetbrainMonoSemiBold_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoSemiBold_ttf, BinaryData::JetBrainsMonoSemiBold_ttfSize)),
+        jetbrainMonoSemiBoldItalic_(Typeface::createSystemTypefaceFor(BinaryData::JetBrainsMonoSemiBoldItalic_ttf, BinaryData::JetBrainsMonoSemiBoldItalic_ttfSize))
     {
     }
 
@@ -37,11 +37,11 @@ struct UwynLookAndFeel::Pimpl
         {
             if (italic)
             {
-                return jetbrainMonoBoldItalic_;
+                return jetbrainMonoSemiBoldItalic_;
             }
             else
             {
-                return jetbrainMonoBold_;
+                return jetbrainMonoSemiBold_;
             }
         }
 
@@ -57,8 +57,8 @@ struct UwynLookAndFeel::Pimpl
 
     Typeface::Ptr jetbrainMono_;
     Typeface::Ptr jetbrainMonoItalic_;
-    Typeface::Ptr jetbrainMonoBold_;
-    Typeface::Ptr jetbrainMonoBoldItalic_;
+    Typeface::Ptr jetbrainMonoSemiBold_;
+    Typeface::Ptr jetbrainMonoSemiBoldItalic_;
 };
 
 UwynLookAndFeel::UwynLookAndFeel() : pimpl_(new Pimpl())
