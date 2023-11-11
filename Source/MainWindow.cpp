@@ -88,8 +88,6 @@ namespace showmidi
             owner_->setResizable(true, true);
             owner_->centreWithSize(owner_->getWidth(), owner_->getHeight());
 #endif
-            
-            owner_->setVisible(true);
         }
         
         ~Pimpl()
@@ -116,7 +114,11 @@ namespace showmidi
     
     MainWindow::MainWindow(String name) :
         DocumentWindow(name, SMApp.getTheme().colorBackground, DocumentWindow::allButtons),
-        pimpl_(new Pimpl(this)) {}
+        pimpl_(new Pimpl(this))
+    {
+        setVisible(true);
+    }
+    
     MainWindow::~MainWindow() = default;
     
     void MainWindow::resized()
