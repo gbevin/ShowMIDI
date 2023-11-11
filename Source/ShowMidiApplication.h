@@ -34,6 +34,11 @@ namespace showmidi
     public:
         ShowMidiApplication();
         
+        inline static bool hasInstance()
+        {
+            return JUCEApplication::getInstance() != nullptr;
+        }
+        
         inline static ShowMidiApplication& getInstance()
         {
             ShowMidiApplication* const app = dynamic_cast<ShowMidiApplication*>(JUCEApplication::getInstance());
@@ -55,6 +60,7 @@ namespace showmidi
         void setWindowSize(int, int);
         int getWindowHeight();
         
+        StoredSettings& getSettings();
         void storeSettings() override;
         Theme& getTheme();
 

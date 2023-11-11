@@ -72,11 +72,6 @@ namespace showmidi
     {
         return {};
     }
-    
-    bool ShowMIDIPluginAudioProcessor::isBusesLayoutSupported(const BusesLayout&) const
-    {
-        return true;
-    }
 
     void ShowMIDIPluginAudioProcessor::changeProgramName(int, const String&)
     {

@@ -19,6 +19,8 @@
 
 namespace showmidi
 {
+    const String StoredSettings::OCTAVE_MIDDLE_C = {"octaveMiddleC"};
+    const String StoredSettings::TIMEOUT_DELAY = {"timeoutDelay"};
     const String StoredSettings::THEME = {"theme"};
     
     StoredSettings::StoredSettings()

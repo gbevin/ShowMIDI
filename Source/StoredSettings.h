@@ -26,6 +26,8 @@ namespace showmidi
     class StoredSettings
     {
     public:
+        static const String OCTAVE_MIDDLE_C;
+        static const String TIMEOUT_DELAY;
         static const String THEME;
 
         StoredSettings();

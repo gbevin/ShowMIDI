@@ -96,6 +96,11 @@ int ShowMidiApplication::getWindowHeight()
     return 0;
 }
 
+StoredSettings& ShowMidiApplication::getSettings()
+{
+    return settings_;
+}
+
 void ShowMidiApplication::storeSettings()
 {
     settings_.storeTheme(theme_);

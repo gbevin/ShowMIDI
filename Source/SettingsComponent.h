@@ -35,7 +35,10 @@ namespace showmidi
     private:
         Theme& theme_;
         
+        TextButton loadThemeButton_;
         TextButton closeButton_;
+        
+        std::unique_ptr<FileChooser> themeChooser_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SettingsComponent)
     };

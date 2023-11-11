@@ -27,10 +27,16 @@ namespace showmidi
     {
         setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme_.linePosition(12));
         
+        loadThemeButton_.addListener(this);
         closeButton_.addListener(this);
         
+        loadThemeButton_.setBounds(0,  theme_.linePosition(8), getWidth(), theme_.labelHeight());
         closeButton_.setBounds(0,  getHeight() - theme_.linePosition(1) - theme_.labelHeight(), getWidth(), theme_.labelHeight());
+        
+        addAndMakeVisible(loadThemeButton_);
         addAndMakeVisible(closeButton_);
+        
+        themeChooser_ = std::make_unique<FileChooser>("Please select the theme you want to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
     }
     
     void SettingsComponent::paint(Graphics& g)
@@ -120,7 +126,21 @@ namespace showmidi
     
     void SettingsComponent::buttonClicked(Button* buttonThatWasClicked)
     {
-        if (buttonThatWasClicked == &closeButton_)
+        if (buttonThatWasClicked == &loadThemeButton_)
+        {
+            themeChooser_->launchAsync(FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
+            {
+                File file(chooser.getResult());
+         
+                theme_.parseXml(file.loadFileAsString());
+                
+                if (ShowMidiApplication::hasInstance())
+                {
+                    SMApp.storeSettings();
+                }
+            });
+        }
+        else if (buttonThatWasClicked == &closeButton_)
         {
             setVisible(false);
         }

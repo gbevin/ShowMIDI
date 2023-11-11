@@ -22,9 +22,6 @@
 namespace showmidi
 {
     class ShowMIDIPluginAudioProcessor  : public AudioProcessor
-#if JucePlugin_Enable_ARA
-    , public AudioProcessorARAExtension
-#endif
     {
     public:
         ShowMIDIPluginAudioProcessor();
@@ -32,10 +29,6 @@ namespace showmidi
         
         void prepareToPlay(double sampleRate, int samplesPerBlock) override;
         void releaseResources() override;
-        
-#ifndef JucePlugin_PreferredChannelConfigurations
-        bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
-#endif
         
         void processBlock(AudioBuffer<float>&, MidiBuffer&) override;
         
