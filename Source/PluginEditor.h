@@ -22,7 +22,7 @@
 
 namespace showmidi
 {
-    class ShowMIDIPluginAudioProcessorEditor : public juce::AudioProcessorEditor
+    class ShowMIDIPluginAudioProcessorEditor : public AudioProcessorEditor
     {
     public:
         ShowMIDIPluginAudioProcessorEditor(ShowMIDIPluginAudioProcessor&);
@@ -30,7 +30,7 @@ namespace showmidi
         
         void handleIncomingMidiMessage(const MidiMessage&);
 
-        void paint(juce::Graphics&) override;
+        void paint(Graphics&) override;
         void resized() override;
         
         struct Pimpl;

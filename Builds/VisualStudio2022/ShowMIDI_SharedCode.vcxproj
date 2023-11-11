@@ -147,7 +147,7 @@
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp"/>
-    <ClCompile Include="..\..\Source\Sidebar.cpp"/>
+    <ClCompile Include="..\..\Source\SidebarComponent.cpp"/>
     <ClCompile Include="..\..\Source\StoredSettings.cpp"/>
     <ClCompile Include="..\..\Source\Theme.cpp"/>
     <ClCompile Include="..\..\Source\UwynLookAndFeel.cpp"/>
@@ -2424,7 +2424,7 @@
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\SettingsManager.h"/>
     <ClInclude Include="..\..\Source\ShowMidiApplication.h"/>
-    <ClInclude Include="..\..\Source\Sidebar.h"/>
+    <ClInclude Include="..\..\Source\SidebarComponent.h"/>
     <ClInclude Include="..\..\Source\StoredSettings.h"/>
     <ClInclude Include="..\..\Source\Theme.h"/>
     <ClInclude Include="..\..\Source\UwynLookAndFeel.h"/>

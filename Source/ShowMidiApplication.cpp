@@ -23,15 +23,15 @@ using namespace showmidi;
 
 ShowMidiApplication::ShowMidiApplication()
 {
-    juce::Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
+    Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
 }
 
-const juce::String ShowMidiApplication::getApplicationName()
+const String ShowMidiApplication::getApplicationName()
 {
     return ProjectInfo::projectName;
 }
 
-const juce::String ShowMidiApplication::getApplicationVersion()
+const String ShowMidiApplication::getApplicationVersion()
 {
     return ProjectInfo::versionString;
 }
@@ -46,7 +46,7 @@ UwynLookAndFeel& ShowMidiApplication::getLookAndFeel()
     return lookAndFeel_;
 }
 
-void ShowMidiApplication::initialise(const juce::String&)
+void ShowMidiApplication::initialise(const String&)
 {
     mainWindow_.reset(new MainWindow(getApplicationName()));
 }
@@ -61,7 +61,7 @@ void ShowMidiApplication::systemRequestedQuit()
     quit();
 }
 
-void ShowMidiApplication::anotherInstanceStarted(const juce::String&)
+void ShowMidiApplication::anotherInstanceStarted(const String&)
 {
 }
 

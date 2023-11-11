@@ -29,7 +29,7 @@ namespace showmidi
 {
     class MainWindow;
     
-    class ShowMidiApplication : public juce::JUCEApplication, public SettingsManager
+    class ShowMidiApplication : public JUCEApplication, public SettingsManager
     {
     public:
         ShowMidiApplication();
@@ -41,15 +41,15 @@ namespace showmidi
             return *app;
         }
         
-        const juce::String getApplicationName() override;
-        const juce::String getApplicationVersion() override;
+        const String getApplicationName() override;
+        const String getApplicationVersion() override;
         bool moreThanOneInstanceAllowed() override;
         UwynLookAndFeel& getLookAndFeel();
         
-        void initialise(const juce::String& commandLine) override;
+        void initialise(const String& commandLine) override;
         void shutdown() override;
         void systemRequestedQuit() override;
-        void anotherInstanceStarted(const juce::String& commandLine) override;
+        void anotherInstanceStarted(const String& commandLine) override;
 
         void setWindowTitle(const String&);
         void setWindowSize(int, int);

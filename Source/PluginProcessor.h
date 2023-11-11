@@ -21,9 +21,9 @@
 
 namespace showmidi
 {
-    class ShowMIDIPluginAudioProcessor  : public juce::AudioProcessor
+    class ShowMIDIPluginAudioProcessor  : public AudioProcessor
 #if JucePlugin_Enable_ARA
-    , public juce::AudioProcessorARAExtension
+    , public AudioProcessorARAExtension
 #endif
     {
     public:
@@ -37,12 +37,12 @@ namespace showmidi
         bool isBusesLayoutSupported(const BusesLayout& layouts) const override;
 #endif
         
-        void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+        void processBlock(AudioBuffer<float>&, MidiBuffer&) override;
         
-        juce::AudioProcessorEditor* createEditor() override;
+        AudioProcessorEditor* createEditor() override;
         bool hasEditor() const override;
         
-        const juce::String getName() const override;
+        const String getName() const override;
         
         bool acceptsMidi() const override;
         bool producesMidi() const override;
@@ -52,10 +52,10 @@ namespace showmidi
         int getNumPrograms() override;
         int getCurrentProgram() override;
         void setCurrentProgram(int index) override;
-        const juce::String getProgramName(int index) override;
-        void changeProgramName(int index, const juce::String& newName) override;
+        const String getProgramName(int index) override;
+        void changeProgramName(int index, const String& newName) override;
         
-        void getStateInformation(juce::MemoryBlock& destData) override;
+        void getStateInformation(MemoryBlock& destData) override;
         void setStateInformation(const void* data, int sizeInBytes) override;
         
     private:

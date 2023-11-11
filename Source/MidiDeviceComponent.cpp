@@ -23,7 +23,7 @@ namespace showmidi
 {
     static constexpr int DEFAULT_OCTAVE_MIDDLE_C = 3;
     
-    struct MidiDeviceComponent::Pimpl : public juce::MidiInputCallback
+    struct MidiDeviceComponent::Pimpl : public MidiInputCallback
     {
         Pimpl(MidiDeviceComponent* owner, Theme& theme, const String& name) : owner_(owner), theme_(theme), deviceInfo_({ name, ""})
         {
@@ -38,7 +38,7 @@ namespace showmidi
                 midiIn_.swap(midi_input);
             }
             
-            //            showTestData();
+//            showTestData();
         }
         
         void showTestData()
@@ -222,7 +222,7 @@ namespace showmidi
             bool header_ { false };
         };
         
-        void paint(juce::Graphics& g)
+        void paint(Graphics& g)
         {
             g.fillAll(theme_.colorBackground);
             
@@ -283,7 +283,7 @@ namespace showmidi
             return lastHeight_;
         }
         
-        void ensurePaintedChannelHeader(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
+        void ensurePaintedChannelHeader(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             if (!state.header_)
             {
@@ -291,7 +291,7 @@ namespace showmidi
             }
         }
         
-        void paintChannelHeader(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
+        void paintChannelHeader(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             state.header_ = true;
             
@@ -311,7 +311,7 @@ namespace showmidi
             state.offset_ += HEIGHT_SEPERATOR + Y_CHANNEL_PADDING;
         }
         
-        void paintProgramChange(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
+        void paintProgramChange(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             auto& program_change = channel.programChange_;
             if (!isExpired(state.time_, program_change.time_))
@@ -329,7 +329,7 @@ namespace showmidi
             }
         }
         
-        int paintPitchBend(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
+        int paintPitchBend(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             int y_offset = state.offset_;
             
@@ -394,7 +394,7 @@ namespace showmidi
             return y_offset;
         }
         
-        int paintNotes(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
+        int paintNotes(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             int y_offset = -1;
             
@@ -503,7 +503,7 @@ namespace showmidi
             return y_offset;
         }
         
-        int paintControlChanges(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
+        int paintControlChanges(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             int y_offset = -1;
             
@@ -528,7 +528,7 @@ namespace showmidi
             return y_offset;
         }
         
-        void paintControlChangeEntry(juce::Graphics& g, ChannelPaintState& state, ActiveChannel& channel, int& yOffset, const String& label, int value)
+        void paintControlChangeEntry(Graphics& g, ChannelPaintState& state, ActiveChannel& channel, int& yOffset, const String& label, int value)
         {
             ensurePaintedChannelHeader(g, state, channel);
             
@@ -631,7 +631,7 @@ namespace showmidi
         Theme& theme_;
         MidiDeviceInfo deviceInfo_;
         SettingsManager* settingsManager_ { nullptr };
-        std::unique_ptr<juce::MidiInput> midiIn_ { nullptr };
+        std::unique_ptr<MidiInput> midiIn_ { nullptr };
         std::atomic_bool dirty_ { true };
         Time lastRender_;
         bool paused_ { false };
@@ -655,15 +655,12 @@ namespace showmidi
     int MidiDeviceComponent::getStandardWidth()         { return Pimpl::getStandardWidth(); }
     int MidiDeviceComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }
 
-    void MidiDeviceComponent::render()                  { pimpl_->render(); }
-    void MidiDeviceComponent::paint(juce::Graphics& g)  { pimpl_->paint(g); }
-    void MidiDeviceComponent::resized()                 { pimpl_->resized(); }
-    
+    void MidiDeviceComponent::render()            { pimpl_->render(); }
+    void MidiDeviceComponent::paint(Graphics& g)  { pimpl_->paint(g); }
+    void MidiDeviceComponent::resized()           { pimpl_->resized(); }
+    void MidiDeviceComponent::setPaused(bool p)   { pimpl_->setPaused(p); }
+
     void MidiDeviceComponent::handleIncomingMidiMessage(const MidiMessage& m)   { pimpl_->handleIncomingMidiMessage(nullptr, m); };
-    
-    void MidiDeviceComponent::setPaused(bool p)         { pimpl_->setPaused(p); }
-    
-    
     bool MidiDeviceComponent::isInterestedInFileDrag(const StringArray& f)      { return pimpl_->isInterestedInFileDrag(f); }
     void MidiDeviceComponent::filesDropped(const StringArray& f, int x, int y)  { pimpl_->filesDropped(f, x, y); }
 }

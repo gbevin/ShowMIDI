@@ -19,10 +19,10 @@
 
 namespace showmidi
 {
-    class MainWindow : public juce::DocumentWindow
+    class MainWindow : public DocumentWindow
     {
     public:
-        MainWindow(juce::String name);
+        MainWindow(String name);
         ~MainWindow();
 
         void resized() override;

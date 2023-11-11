@@ -36,7 +36,7 @@ namespace showmidi
         
         Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor& p) : owner_(owner), audioProcessor_(p), midiDevice_(theme_, "ShowMIDI")
         {
-            juce::Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
+            Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
             owner_->setResizable(true, true);
             owner_->getConstrainer()->setMinimumWidth(MidiDeviceComponent::getStandardWidth());
@@ -123,7 +123,7 @@ namespace showmidi
             midiDevice_.setSize(MidiDeviceComponent::getStandardWidth(), height);
         }
         
-        void paint(juce::Graphics& g)
+        void paint(Graphics& g)
         {
             g.fillAll(theme_.colorSidebar);
         }
@@ -151,7 +151,14 @@ namespace showmidi
     
     void ShowMIDIPluginAudioProcessorEditor::handleIncomingMidiMessage(const MidiMessage& m)   { pimpl_->handleIncomingMidiMessage(m); };
 
-    void ShowMIDIPluginAudioProcessorEditor::paint(juce::Graphics& g)   { if (pimpl_.get()) pimpl_->paint(g); }
+    void ShowMIDIPluginAudioProcessorEditor::paint(Graphics& g)
+    {
+        if (pimpl_.get())
+        {
+            pimpl_->paint(g);
+        }
+    }
+    
     void ShowMIDIPluginAudioProcessorEditor::resized()
     {
         if (pimpl_.get() && isVisible() && getHeight() > 0)

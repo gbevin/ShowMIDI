@@ -19,12 +19,12 @@
 
 #include "MainComponent.h"
 #include "MidiDeviceComponent.h"
-#include "Sidebar.h"
+#include "SidebarComponent.h"
 #include "ShowMidiApplication.h"
 
 namespace showmidi
 {
-    class LayoutComponent : public Component, public juce::FileDragAndDropTarget
+    class LayoutComponent : public Component, public FileDragAndDropTarget
     {
     public:
         LayoutComponent() {}
@@ -108,14 +108,14 @@ namespace showmidi
         }
         
         MainWindow* const owner_;
-        Sidebar sidebar_;
+        SidebarComponent sidebar_;
         Viewport viewport_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MainWindow::MainWindow(juce::String name) :
-        DocumentWindow(name, juce::Desktop::getInstance().getDefaultLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId), DocumentWindow::allButtons),
+    MainWindow::MainWindow(String name) :
+        DocumentWindow(name, SMApp.getTheme().colorBackground, DocumentWindow::allButtons),
         pimpl_(new Pimpl(this)) {}
     MainWindow::~MainWindow() = default;
     

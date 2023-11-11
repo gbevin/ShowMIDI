@@ -77,7 +77,7 @@ namespace showmidi
             }
         }
         
-        void paint(juce::Graphics& g)
+        void paint(Graphics& g)
         {
             g.fillAll(SMApp.getTheme().colorSidebar);
         }
@@ -263,5 +263,5 @@ namespace showmidi
     MainComponent::MainComponent() : pimpl_(new Pimpl(this)) {}
     MainComponent::~MainComponent() = default;
     
-    void MainComponent::paint(juce::Graphics& g) { pimpl_->paint(g); }
+    void MainComponent::paint(Graphics& g) { pimpl_->paint(g); }
 }

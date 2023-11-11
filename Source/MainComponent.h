@@ -23,13 +23,13 @@
 
 namespace showmidi
 {
-    class MainComponent : public juce::Component
+    class MainComponent : public Component
     {
     public:
         MainComponent();
         ~MainComponent() override;
         
-        void paint(juce::Graphics&) override;
+        void paint(Graphics&) override;
         
         struct Pimpl;
     private:

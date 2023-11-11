@@ -21,6 +21,6 @@
 
 ApplicationCommandManager* commandManager = 0;
 JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wmissing-prototypes")
-juce::JUCEApplicationBase* juce_CreateApplication() { return new showmidi::ShowMidiApplication(); }
-void* juce_GetIOSCustomDelegateClass()              { return nullptr; }
+JUCEApplicationBase* juce_CreateApplication() { return new showmidi::ShowMidiApplication(); }
+void* juce_GetIOSCustomDelegateClass()        { return nullptr; }
 JUCE_END_IGNORE_WARNINGS_GCC_LIKE

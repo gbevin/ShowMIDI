@@ -24,7 +24,7 @@
 
 namespace showmidi
 {
-    class MidiDeviceComponent : public juce::Component, public juce::FileDragAndDropTarget
+    class MidiDeviceComponent : public Component, public FileDragAndDropTarget
     {
     public:
         MidiDeviceComponent(Theme& theme, const String&);
@@ -37,12 +37,11 @@ namespace showmidi
         int getVisibleHeight() const;
 
         void render();
-        void paint(juce::Graphics&) override;
+        void paint(Graphics&) override;
         void resized() override;
-        
-        void handleIncomingMidiMessage(const MidiMessage&);
-
         void setPaused(bool);
+
+        void handleIncomingMidiMessage(const MidiMessage&);
         
         bool isInterestedInFileDrag(const StringArray&) override;
         void filesDropped(const StringArray&, int, int) override;

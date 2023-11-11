@@ -29,7 +29,7 @@ namespace showmidi
     {
     }
     
-    const juce::String ShowMIDIPluginAudioProcessor::getName() const
+    const String ShowMIDIPluginAudioProcessor::getName() const
     {
         return JucePlugin_Name;
     }
@@ -68,7 +68,7 @@ namespace showmidi
     {
     }
     
-    const juce::String ShowMIDIPluginAudioProcessor::getProgramName(int)
+    const String ShowMIDIPluginAudioProcessor::getProgramName(int)
     {
         return {};
     }
@@ -78,7 +78,7 @@ namespace showmidi
         return true;
     }
 
-    void ShowMIDIPluginAudioProcessor::changeProgramName(int, const juce::String&)
+    void ShowMIDIPluginAudioProcessor::changeProgramName(int, const String&)
     {
     }
 
@@ -90,9 +90,9 @@ namespace showmidi
     {
     }
 
-    void ShowMIDIPluginAudioProcessor::processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer& midiMessages)
+    void ShowMIDIPluginAudioProcessor::processBlock(AudioBuffer<float>&, MidiBuffer& midiMessages)
     {
-        juce::ScopedNoDenormals noDenormals;
+        ScopedNoDenormals noDenormals;
         
         for (const MidiMessageMetadata metadata : midiMessages)
         {
@@ -109,12 +109,12 @@ namespace showmidi
         return true;
     }
     
-    juce::AudioProcessorEditor* ShowMIDIPluginAudioProcessor::createEditor()
+    AudioProcessorEditor* ShowMIDIPluginAudioProcessor::createEditor()
     {
         return new ShowMIDIPluginAudioProcessorEditor(*this);
     }
     
-    void ShowMIDIPluginAudioProcessor::getStateInformation(juce::MemoryBlock&)
+    void ShowMIDIPluginAudioProcessor::getStateInformation(MemoryBlock&)
     {
     }
     
@@ -123,7 +123,7 @@ namespace showmidi
     }
 }
 
-juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
+AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new showmidi::ShowMIDIPluginAudioProcessor();
 }

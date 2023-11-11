@@ -15,16 +15,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "Sidebar.h"
+#include "SidebarComponent.h"
 
 #include "AboutComponent.h"
 #include "ShowMidiApplication.h"
 
 namespace showmidi
 {
-    struct Sidebar::Pimpl : public Button::Listener
+    struct SidebarComponent::Pimpl : public Button::Listener
     {
-        Pimpl(Sidebar* owner) : owner_(owner)
+        Pimpl(SidebarComponent* owner) : owner_(owner)
         {
             MessageManager::getInstance()->callAsync([this] { setup(); });
         }
@@ -42,6 +42,7 @@ namespace showmidi
             
             owner_->getParentComponent()->addChildComponent(about_);
         }
+        
         static constexpr int X_SETTINGS = 12;
         static constexpr int Y_SETTINGS = 13;
 
@@ -56,7 +57,7 @@ namespace showmidi
             }
         }
 
-        void paint(juce::Graphics& g)
+        void paint(Graphics& g)
         {
             g.fillAll(SMApp.getTheme().colorSidebar);
             
@@ -69,7 +70,7 @@ namespace showmidi
             help_svg->drawAt(g, X_HELP, owner_->getHeight() - help_svg->getHeight() - Y_HELP, 1.0);
         }
 
-        Sidebar* const owner_;
+        SidebarComponent* const owner_;
         
         std::unique_ptr<Drawable> settingsSvg_ = Drawable::createFromImageData(BinaryData::settings_svg, BinaryData::settings_svgSize);
         std::unique_ptr<Drawable> helpSvg_ = Drawable::createFromImageData(BinaryData::help_svg, BinaryData::help_svgSize);
@@ -80,8 +81,8 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    Sidebar::Sidebar() : pimpl_(new Pimpl(this)) {}
-    Sidebar::~Sidebar() = default;
+    SidebarComponent::SidebarComponent() : pimpl_(new Pimpl(this)) {}
+    SidebarComponent::~SidebarComponent() = default;
     
-    void Sidebar::paint(juce::Graphics& g) { pimpl_->paint(g); }
+    void SidebarComponent::paint(Graphics& g) { pimpl_->paint(g); }
 }

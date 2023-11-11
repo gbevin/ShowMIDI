@@ -23,18 +23,18 @@
 
 namespace showmidi
 {
-    class Sidebar : public juce::Component
+    class SidebarComponent : public Component
     {
     public:
-        Sidebar();
-        ~Sidebar() override;
+        SidebarComponent();
+        ~SidebarComponent() override;
         
-        void paint(juce::Graphics&) override;
+        void paint(Graphics&) override;
         
         struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_;
 
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Sidebar)
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SidebarComponent)
     };
 }

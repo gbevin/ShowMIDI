@@ -58,8 +58,10 @@
             file="Source/ShowMidiApplication.cpp"/>
       <FILE id="sfMjhZ" name="ShowMidiApplication.h" compile="0" resource="0"
             file="Source/ShowMidiApplication.h"/>
-      <FILE id="BaGxbw" name="Sidebar.cpp" compile="1" resource="0" file="Source/Sidebar.cpp"/>
-      <FILE id="Re6kWf" name="Sidebar.h" compile="0" resource="0" file="Source/Sidebar.h"/>
+      <FILE id="BaGxbw" name="SidebarComponent.cpp" compile="1" resource="0"
+            file="Source/SidebarComponent.cpp"/>
+      <FILE id="Re6kWf" name="SidebarComponent.h" compile="0" resource="0"
+            file="Source/SidebarComponent.h"/>
       <FILE id="BkirUR" name="StoredSettings.cpp" compile="1" resource="0"
             file="Source/StoredSettings.cpp"/>
       <FILE id="dZfZXo" name="StoredSettings.h" compile="0" resource="0"

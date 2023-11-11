@@ -625,7 +625,7 @@
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Sidebar.cpp">
+    <ClCompile Include="..\..\Source\SidebarComponent.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\StoredSettings.cpp">
@@ -3093,7 +3093,7 @@
     <ClInclude Include="..\..\Source\ShowMidiApplication.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Sidebar.h">
+    <ClInclude Include="..\..\Source\SidebarComponent.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\StoredSettings.h">

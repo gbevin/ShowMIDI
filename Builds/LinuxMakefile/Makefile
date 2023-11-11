@@ -156,7 +156,7 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
   $(JUCE_OBJDIR)/ShowMidiApplication_31576413.o \
-  $(JUCE_OBJDIR)/Sidebar_ebdb4dbd.o \
+  $(JUCE_OBJDIR)/SidebarComponent_6799f70a.o \
   $(JUCE_OBJDIR)/StoredSettings_dfdf196f.o \
   $(JUCE_OBJDIR)/Theme_9f3534aa.o \
   $(JUCE_OBJDIR)/UwynLookAndFeel_d5d63ba8.o \
@@ -326,9 +326,9 @@ $(JUCE_OBJDIR)/ShowMidiApplication_31576413.o: ../../Source/ShowMidiApplication.
 	@echo "Compiling ShowMidiApplication.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/Sidebar_ebdb4dbd.o: ../../Source/Sidebar.cpp
+$(JUCE_OBJDIR)/SidebarComponent_6799f70a.o: ../../Source/SidebarComponent.cpp
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling Sidebar.cpp"
+	@echo "Compiling SidebarComponent.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/StoredSettings_dfdf196f.o: ../../Source/StoredSettings.cpp

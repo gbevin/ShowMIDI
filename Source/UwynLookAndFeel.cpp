@@ -65,15 +65,15 @@ UwynLookAndFeel::UwynLookAndFeel() : pimpl_(new Pimpl())
 {
     setColourScheme(getDarkColourScheme());
     
-    setColour(TextEditor::focusedOutlineColourId, juce::Colour(0x00000000));
-    setColour(TextEditor::outlineColourId, juce::Colour(0x00000000));
-    setColour(ComboBox::outlineColourId, juce::Colour(0x00000000));
-    setColour(ComboBox::buttonColourId, juce::Colour(0xff2e2e2e));
-    setColour(TextButton::buttonColourId, juce::Colour(0xff2e2e2e));
-    setColour(ScrollBar::thumbColourId, juce::Colour(0xff999999));
-    setColour(ScrollBar::trackColourId, juce::Colour(0xff666666));
-    setColour(AlertWindow::backgroundColourId, juce::Colour(0xff1e1e1e));
-    setColour(AlertWindow::outlineColourId, juce::Colour(0xff2e2e2e));
+    setColour(TextEditor::focusedOutlineColourId, Colour(0x00000000));
+    setColour(TextEditor::outlineColourId, Colour(0x00000000));
+    setColour(ComboBox::outlineColourId, Colour(0x00000000));
+    setColour(ComboBox::buttonColourId, Colour(0xff2e2e2e));
+    setColour(TextButton::buttonColourId, Colour(0xff2e2e2e));
+    setColour(ScrollBar::thumbColourId, Colour(0xff999999));
+    setColour(ScrollBar::trackColourId, Colour(0xff666666));
+    setColour(AlertWindow::backgroundColourId, Colour(0xff1e1e1e));
+    setColour(AlertWindow::outlineColourId, Colour(0xff2e2e2e));
 }
 
 UwynLookAndFeel::~UwynLookAndFeel() = default;
