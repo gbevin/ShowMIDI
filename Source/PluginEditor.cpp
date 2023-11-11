@@ -117,13 +117,15 @@ namespace showmidi
         
         void renderDevices()
         {
+            auto height = owner_->getParentHeight();
             midiDevice_.render();
-            midiDevice_.setSize(MidiDeviceComponent::getStandardWidth(), midiDevice_.getVisibleHeight());
+            height = std::max(height, midiDevice_.getVisibleHeight());
+            midiDevice_.setSize(MidiDeviceComponent::getStandardWidth(), height);
         }
         
         void paint(juce::Graphics& g)
         {
-            g.fillAll(lookAndFeel_.findColour(juce::ResizableWindow::backgroundColourId));
+            g.fillAll(theme_.colorSidebar);
         }
         
         void resized(int height)
