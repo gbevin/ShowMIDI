@@ -34,7 +34,10 @@ namespace showmidi
             GrabKeyboardFocus
         };
         
-        Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor& p) : owner_(owner), audioProcessor_(p), midiDevice_(theme_, "ShowMIDI")
+        Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor& p) :
+            owner_(owner),
+            audioProcessor_(p),
+            midiDevice_(settings_.getTheme(), "ShowMIDI")
         {
             Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
@@ -125,7 +128,7 @@ namespace showmidi
         
         void paint(Graphics& g)
         {
-            g.fillAll(theme_.colorSidebar);
+            g.fillAll(settings_.getTheme().colorSidebar);
         }
         
         void resized(int height)
@@ -135,7 +138,7 @@ namespace showmidi
         
         UwynLookAndFeel lookAndFeel_;
         ShowMIDIPluginAudioProcessorEditor* const owner_;
-        Theme theme_ = StoredSettings().loadTheme();
+        StoredSettings settings_;
         ShowMIDIPluginAudioProcessor& audioProcessor_;
         Viewport viewPort_;
         MidiDeviceComponent midiDevice_;

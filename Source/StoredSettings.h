@@ -29,14 +29,23 @@ namespace showmidi
         static const String OCTAVE_MIDDLE_C;
         static const String TIMEOUT_DELAY;
         static const String THEME;
+        
+        static constexpr int DEFAULT_OCTAVE_MIDDLE_C { 3 };
+        static constexpr int DEFAULT_TIMEOUT_DELAY { 2 };
 
         StoredSettings();
         ~StoredSettings();
         
-        Theme loadTheme();
-        void storeTheme(Theme&);
+        int getOctaveMiddleC();
+        void setOctaveMiddleC(int);
         
-        PropertiesFile &getGlobalProperties();
+        int getTimeoutDelay();
+        void setTimeoutDelay(int);
+        
+        Theme& getTheme();
+        void storeTheme();
+        
+        PropertiesFile& getGlobalProperties();
         
         void flush();
         void reload();
@@ -45,6 +54,8 @@ namespace showmidi
         std::unique_ptr<PropertiesFile> propertyFile_;
         
         void updateGlobalProps();
+        
+        Theme theme_;
         
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StoredSettings)
     };

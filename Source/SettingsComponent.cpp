@@ -23,121 +23,174 @@
 
 namespace showmidi
 {
-    SettingsComponent::SettingsComponent(Theme& theme) : theme_(theme)
+    SettingsComponent::SettingsComponent(SettingsManager& manager) : manager_(manager),
+        middleCOct2Button_("oct 2"),
+        middleCOct3Button_("oct 3"),
+        middleCOct4Button_("oct 4"),
+        timeout2SecButton_("2 sec"),
+        timeout5SecButton_("5 sec"),
+        timeout10SecButton_("10 sec"),
+        loadThemeButton_("load"),
+        closeButton_{ "close" }
     {
-        setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme_.linePosition(12));
+        auto& theme = manager_.getSettings().getTheme();
         
+        setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme.linePosition(12));
+        
+        middleCOct2Button_.addListener(this);
+        middleCOct3Button_.addListener(this);
+        middleCOct4Button_.addListener(this);
+        timeout2SecButton_.addListener(this);
+        timeout5SecButton_.addListener(this);
+        timeout10SecButton_.addListener(this);
         loadThemeButton_.addListener(this);
         closeButton_.addListener(this);
+
+        auto left_margin = 23;
+        auto button_spacing = 70;
+        middleCOct2Button_.setBoundsForTouch(left_margin, theme.linePosition(2),
+                                             getWidth(), theme.labelHeight());
+        middleCOct3Button_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(2),
+                                             getWidth(), theme.labelHeight());
+        middleCOct4Button_.setBoundsForTouch(left_margin + button_spacing * 2, theme.linePosition(2),
+                                             getWidth(), theme.labelHeight());
         
-        loadThemeButton_.setBounds(0,  theme_.linePosition(8), getWidth(), theme_.labelHeight());
-        closeButton_.setBounds(0,  getHeight() - theme_.linePosition(1) - theme_.labelHeight(), getWidth(), theme_.labelHeight());
+        timeout2SecButton_.setBoundsForTouch(left_margin, theme.linePosition(5),
+                                             getWidth(), theme.labelHeight());
+        timeout5SecButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(5),
+                                             getWidth(), theme.labelHeight());
+        timeout10SecButton_.setBoundsForTouch(left_margin + button_spacing * 2, theme.linePosition(5),
+                                             getWidth(), theme.labelHeight());
+
+        loadThemeButton_.setBoundsForTouch(left_margin, theme.linePosition(8),
+                                           getWidth(), theme.labelHeight());
         
+        closeButton_.setBoundsForTouch(0, getHeight() - theme.linePosition(1) - theme.labelHeight(),
+                                       getWidth(), theme.labelHeight());
+        
+        addAndMakeVisible(middleCOct2Button_);
+        addAndMakeVisible(middleCOct3Button_);
+        addAndMakeVisible(middleCOct4Button_);
+        addAndMakeVisible(timeout2SecButton_);
+        addAndMakeVisible(timeout5SecButton_);
+        addAndMakeVisible(timeout10SecButton_);
         addAndMakeVisible(loadThemeButton_);
         addAndMakeVisible(closeButton_);
         
         themeChooser_ = std::make_unique<FileChooser>("Please select the theme you want to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
     }
     
+    void SettingsComponent::setSettingOptionFont(Graphics& g, std::function<bool()> condition)
+    {
+        g.setFont(manager_.getSettings().getTheme().fontData().withStyle(condition() ? Font::underlined : Font::plain));
+    }
+    
     void SettingsComponent::paint(Graphics& g)
     {
-        g.fillAll(theme_.colorBackground);
+        auto& settings = manager_.getSettings();
+        auto& theme = settings.getTheme();
         
-        g.setColour(theme_.colorData);
+        g.fillAll(theme.colorBackground);
+        
+        g.setColour(theme.colorData);
         g.drawRect(Rectangle<int>{0, 0, getWidth(), getHeight()});
         
         // middle c
         
-        g.setColour(theme_.colorData);
-        g.setFont(theme_.fontLabel());
+        g.setColour(theme.colorData);
+        g.setFont(theme.fontLabel());
         g.drawText("Middle C",
-                   23, theme_.linePosition(1),
-                   getWidth(), theme_.labelHeight(),
+                   23, theme.linePosition(1),
+                   getWidth(), theme.labelHeight(),
                    Justification::centredLeft, true);
         
-        g.setColour(theme_.colorData.withAlpha(0.7f));
-        g.setFont(theme_.fontData());
-        g.drawText("oct 2",
-                   23, theme_.linePosition(2),
-                   getWidth(), theme_.labelHeight(),
-                   Justification::centredLeft, true);
-        g.setFont(theme_.fontData().withStyle(Font::underlined));
-        g.drawText("oct 3",
-                   93, theme_.linePosition(2),
-                   getWidth(), theme_.labelHeight(),
-                   Justification::centredLeft, true);
-        g.setFont(theme_.fontData());
-        g.drawText("oct 4",
-                   163, theme_.linePosition(2),
-                   getWidth(), theme_.labelHeight(),
-                   Justification::centredLeft, true);
+        g.setColour(theme.colorData.withAlpha(0.7f));
+        setSettingOptionFont(g, [&settings] () { return settings.getOctaveMiddleC() == 2; });
+        middleCOct2Button_.drawName(g, Justification::centredLeft);
+        setSettingOptionFont(g, [&settings] () { return settings.getOctaveMiddleC() == 3; });
+        middleCOct3Button_.drawName(g, Justification::centredLeft);
+        setSettingOptionFont(g, [&settings] () { return settings.getOctaveMiddleC() == 4; });
+        middleCOct4Button_.drawName(g, Justification::centredLeft);
         
         // timeout delay
         
-        g.setColour(theme_.colorData);
-        g.setFont(theme_.fontLabel());
+        g.setColour(theme.colorData);
+        g.setFont(theme.fontLabel());
         g.drawText("Timeout Delay",
-                   23, theme_.linePosition(4),
-                   getWidth(), theme_.labelHeight(),
+                   23, theme.linePosition(4),
+                   getWidth(), theme.labelHeight(),
                    Justification::centredLeft, true);
         
-        g.setColour(theme_.colorData.withAlpha(0.7f));
-        g.setFont(theme_.fontData().withStyle(Font::underlined));
-        g.drawText("2 sec",
-                   23, theme_.linePosition(5),
-                   getWidth(), theme_.labelHeight(),
-                   Justification::centredLeft, true);
-        g.setFont(theme_.fontData());
-        g.drawText("3 sec",
-                   93, theme_.linePosition(5),
-                   getWidth(), theme_.labelHeight(),
-                   Justification::centredLeft, true);
-        g.setFont(theme_.fontData());
-        g.drawText("5 sec",
-                   163, theme_.linePosition(5),
-                   getWidth(), theme_.labelHeight(),
-                   Justification::centredLeft, true);
+        g.setColour(theme.colorData.withAlpha(0.7f));
+        setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 2; });
+        timeout2SecButton_.drawName(g, Justification::centredLeft);
+        setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 5; });
+        timeout5SecButton_.drawName(g, Justification::centredLeft);
+        setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 10; });
+        timeout10SecButton_.drawName(g, Justification::centredLeft);
         
         // timeout delay
         
-        g.setColour(theme_.colorData);
-        g.setFont(theme_.fontLabel());
+        g.setColour(theme.colorData);
+        g.setFont(theme.fontLabel());
         g.drawText("Active Theme",
-                   23, theme_.linePosition(7),
-                   getWidth(), theme_.labelHeight(),
+                   23, theme.linePosition(7),
+                   getWidth(), theme.labelHeight(),
                    Justification::centredLeft, true);
         
-        g.setColour(theme_.colorData.withAlpha(0.7f));
-        g.setFont(theme_.fontData());
-        g.drawText("load",
-                   23, theme_.linePosition(8),
-                   getWidth(), theme_.labelHeight(),
-                   Justification::centredLeft, true);
+        g.setColour(theme.colorData.withAlpha(0.7f));
+        g.setFont(theme.fontData());
+        loadThemeButton_.drawName(g, Justification::centredLeft);
 
         // close button
         
-        g.setColour(theme_.colorController);
-        g.setFont(theme_.fontLabel());
-        g.drawText("close",
-                   closeButton_.getX(), closeButton_.getY(),
-                   closeButton_.getWidth(), closeButton_.getHeight(),
-                   Justification::centred, true);
+        g.setColour(theme.colorController);
+        g.setFont(theme.fontLabel());
+        closeButton_.drawName(g, Justification::centred);
     }
     
     void SettingsComponent::buttonClicked(Button* buttonThatWasClicked)
     {
-        if (buttonThatWasClicked == &loadThemeButton_)
+        auto& settings = manager_.getSettings();
+        
+        if (buttonThatWasClicked == &middleCOct2Button_)
+        {
+            settings.setOctaveMiddleC(2);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &middleCOct3Button_)
+        {
+            settings.setOctaveMiddleC(3);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &middleCOct4Button_)
+        {
+            settings.setOctaveMiddleC(4);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &timeout2SecButton_)
+        {
+            settings.setTimeoutDelay(2);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &timeout5SecButton_)
+        {
+            settings.setTimeoutDelay(5);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &timeout10SecButton_)
+        {
+            settings.setTimeoutDelay(10);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &loadThemeButton_)
         {
             themeChooser_->launchAsync(FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
             {
                 File file(chooser.getResult());
          
-                theme_.parseXml(file.loadFileAsString());
-                
-                if (ShowMidiApplication::hasInstance())
-                {
-                    SMApp.storeSettings();
-                }
+                manager_.getSettings().getTheme().parseXml(file.loadFileAsString());
+                manager_.storeSettings();
             });
         }
         else if (buttonThatWasClicked == &closeButton_)

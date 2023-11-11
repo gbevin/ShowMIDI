@@ -19,6 +19,7 @@
 
 #include "JuceHeader.h"
 
+#include "PaintedButton.h"
 #include "Theme.h"
 
 namespace showmidi
@@ -28,15 +29,15 @@ namespace showmidi
     public:
         AboutComponent(Theme&);
         
-        void paint(Graphics& g) override;
+        void paint(Graphics&) override;
         
-        void buttonClicked(Button* buttonThatWasClicked) override;
+        void buttonClicked(Button*) override;
         
     private:
         Theme& theme_;
         
-        TextButton websiteButton_;
-        TextButton closeButton_;
+        PaintedButton websiteButton_;
+        PaintedButton closeButton_;
         
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AboutComponent)
     };

@@ -21,8 +21,6 @@
 
 namespace showmidi
 {
-    static constexpr int DEFAULT_OCTAVE_MIDDLE_C = 3;
-    
     struct MidiDeviceComponent::Pimpl : public MidiInputCallback
     {
         Pimpl(MidiDeviceComponent* owner, Theme& theme, const String& name) : owner_(owner), theme_(theme), deviceInfo_({ name, ""})
@@ -571,14 +569,24 @@ namespace showmidi
             yOffset += HEIGHT_INDICATOR;
         }
         
-        static bool isExpired(const Time& currentTime, Time& messageTime)
+        bool isExpired(const Time& currentTime, Time& messageTime)
         {
-            return (currentTime - messageTime).inSeconds() > 2.0;
+            auto delay = StoredSettings::DEFAULT_TIMEOUT_DELAY;
+            if (settingsManager_)
+            {
+                delay = settingsManager_->getSettings().getTimeoutDelay();
+            }
+            return (currentTime - messageTime).inSeconds() > delay;
         }
         
         String outputNote(int noteNumber)
         {
-            return MidiMessage::getMidiNoteName(noteNumber, true, true, DEFAULT_OCTAVE_MIDDLE_C);
+            auto octave = StoredSettings::DEFAULT_OCTAVE_MIDDLE_C;
+            if (settingsManager_)
+            {
+                octave = settingsManager_->getSettings().getOctaveMiddleC();
+            }
+            return MidiMessage::getMidiNoteName(noteNumber, true, true, octave);
         }
         
         void resized()

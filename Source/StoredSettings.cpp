@@ -22,7 +22,7 @@ namespace showmidi
     const String StoredSettings::OCTAVE_MIDDLE_C = {"octaveMiddleC"};
     const String StoredSettings::TIMEOUT_DELAY = {"timeoutDelay"};
     const String StoredSettings::THEME = {"theme"};
-    
+
     StoredSettings::StoredSettings()
     {
         reload();
@@ -33,32 +33,44 @@ namespace showmidi
         flush();
     }
     
-    Theme StoredSettings::loadTheme()
+    int StoredSettings::getOctaveMiddleC()
     {
-        auto& props = getGlobalProperties();
-        if (!props.containsKey(THEME))
-        {
-            return Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT;
-        }
-        
-        auto theme_xml = props.getValue(THEME);
-        Theme theme;
-        theme.parseXml(theme_xml);
-        
-        return theme;
+        return getGlobalProperties().getIntValue(OCTAVE_MIDDLE_C, DEFAULT_OCTAVE_MIDDLE_C);
     }
     
-    void StoredSettings::storeTheme(Theme& theme)
+    void StoredSettings::setOctaveMiddleC(int octave)
     {
-        getGlobalProperties().setValue(THEME, theme.generateXml());
+        getGlobalProperties().setValue(OCTAVE_MIDDLE_C, octave);
+        flush();
+    }
+    
+    int StoredSettings::getTimeoutDelay()
+    {
+        return getGlobalProperties().getIntValue(TIMEOUT_DELAY, DEFAULT_TIMEOUT_DELAY);
+    }
+    
+    void StoredSettings::setTimeoutDelay(int delay)
+    {
+        getGlobalProperties().setValue(TIMEOUT_DELAY, delay);
+        flush();
     }
 
-    PropertiesFile &StoredSettings::getGlobalProperties()
+    Theme& StoredSettings::getTheme()
+    {
+        return theme_;
+    }
+    
+    void StoredSettings::storeTheme()
+    {
+        getGlobalProperties().setValue(THEME, theme_.generateXml());
+    }
+
+    PropertiesFile& StoredSettings::getGlobalProperties()
     {
         return *propertyFile_;
     }
     
-    static PropertiesFile *createPropsFile(const String &filename)
+    static PropertiesFile* createPropsFile(const String& filename)
     {
         PropertiesFile::Options options;
         options.applicationName = filename;
@@ -81,5 +93,18 @@ namespace showmidi
     void StoredSettings::reload()
     {
         propertyFile_.reset(createPropsFile(ProjectInfo::projectName));
+        
+        auto& props = getGlobalProperties();
+        if (!props.containsKey(THEME))
+        {
+            theme_ = Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT;
+        }
+        else
+        {
+            auto theme_xml = props.getValue(THEME);
+            Theme theme;
+            theme.parseXml(theme_xml);
+            theme_ = theme;
+        }
     }
 }

@@ -47,7 +47,7 @@ namespace showmidi
         {
             for (auto file : files)
             {
-                SMApp.getTheme().parseXml(File(file).loadFileAsString());
+                SMApp.getSettings().getTheme().parseXml(File(file).loadFileAsString());
             }
             
             repaint();
@@ -106,14 +106,14 @@ namespace showmidi
         }
         
         MainWindow* const owner_;
-        SidebarComponent sidebar_ { SMApp.getTheme() };
+        SidebarComponent sidebar_ { SMApp };
         Viewport viewport_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
     MainWindow::MainWindow(String name) :
-        DocumentWindow(name, SMApp.getTheme().colorBackground, DocumentWindow::allButtons),
+        DocumentWindow(name, SMApp.getSettings().getTheme().colorBackground, DocumentWindow::allButtons),
         pimpl_(new Pimpl(this))
     {
         setVisible(true);

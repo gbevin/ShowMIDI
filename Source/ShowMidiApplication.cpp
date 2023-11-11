@@ -103,13 +103,8 @@ StoredSettings& ShowMidiApplication::getSettings()
 
 void ShowMidiApplication::storeSettings()
 {
-    settings_.storeTheme(theme_);
+    settings_.storeTheme();
     settings_.flush();
     
     mainWindow_->repaint();
-}
-
-Theme& ShowMidiApplication::getTheme()
-{
-    return theme_;
 }

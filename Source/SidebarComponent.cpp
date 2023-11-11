@@ -18,13 +18,18 @@
 #include "SidebarComponent.h"
 
 #include "AboutComponent.h"
+#include "PaintedButton.h"
 #include "SettingsComponent.h"
 
 namespace showmidi
 {
     struct SidebarComponent::Pimpl : public Button::Listener
     {
-        Pimpl(SidebarComponent* owner, Theme& theme) : owner_(owner), theme_(theme), settings_(theme), about_(theme)
+        Pimpl(SidebarComponent* owner, SettingsManager& manager) :
+            owner_(owner),
+            manager_(manager),
+            settings_(manager),
+            about_(manager.getSettings().getTheme())
         {
             MessageManager::getInstance()->callAsync([this] { setup(); });
         }
@@ -61,44 +66,46 @@ namespace showmidi
 
         void paint(Graphics& g)
         {
-            g.fillAll(theme_.colorSidebar);
+            auto& theme = manager_.getSettings().getTheme();
+            
+            g.fillAll(theme.colorSidebar);
             
             auto settings_svg = settingsSvg_->createCopy();
-            settings_svg->replaceColour(Colours::black, theme_.colorData);
-            settings_svg->drawAt(g, X_SETTINGS, Y_SETTINGS, 1.0);
+            settings_svg->replaceColour(Colours::black, theme.colorData);
+            settingsButton_.drawDrawable(g, *settings_svg);
             
             auto help_svg = helpSvg_->createCopy();
-            help_svg->replaceColour(Colours::black, theme_.colorData);
-            help_svg->drawAt(g, X_HELP, (float)owner_->getHeight() - helpSvg_->getHeight() - Y_HELP, 1.0);
+            help_svg->replaceColour(Colours::black, theme.colorData);
+            helpButton_.drawDrawable(g, *help_svg);
         }
         
         void resized()
         {
-            settingsButton_.setBounds(0, 0,
-                                      owner_->getWidth(), settingsSvg_->getHeight() + Y_SETTINGS * 2);
+            settingsButton_.setBoundsForTouch(X_SETTINGS, Y_SETTINGS,
+                                              settingsSvg_->getWidth(), settingsSvg_->getHeight());
 
-            helpButton_.setBounds(0, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP * 2,
-                                  owner_->getWidth(), helpSvg_->getHeight() + Y_HELP * 2);
+            helpButton_.setBoundsForTouch(X_HELP, (float)owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
+                                          owner_->getWidth(), helpSvg_->getHeight());
             
             settings_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
             about_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_.getHeight());
         }
 
         SidebarComponent* const owner_;
-        Theme& theme_;
+        SettingsManager& manager_;
         
         std::unique_ptr<Drawable> settingsSvg_ = Drawable::createFromImageData(BinaryData::settings_svg, BinaryData::settings_svgSize);
         std::unique_ptr<Drawable> helpSvg_ = Drawable::createFromImageData(BinaryData::help_svg, BinaryData::help_svgSize);
 
-        TextButton settingsButton_;
-        TextButton helpButton_;
+        PaintedButton settingsButton_;
+        PaintedButton helpButton_;
         SettingsComponent settings_;
         AboutComponent about_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SidebarComponent::SidebarComponent(Theme& theme) : pimpl_(new Pimpl(this, theme)) {}
+    SidebarComponent::SidebarComponent(SettingsManager& m) : pimpl_(new Pimpl(this, m)) {}
     SidebarComponent::~SidebarComponent() = default;
     
     void SidebarComponent::paint(Graphics& g) { pimpl_->paint(g); }

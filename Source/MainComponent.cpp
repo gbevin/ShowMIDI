@@ -79,7 +79,7 @@ namespace showmidi
         
         void paint(Graphics& g)
         {
-            g.fillAll(SMApp.getTheme().colorSidebar);
+            g.fillAll(SMApp.getSettings().getTheme().colorSidebar);
         }
         
         bool keyPressed(const KeyPress& key, Component*) override
@@ -222,7 +222,7 @@ namespace showmidi
                         MidiDeviceComponent* component = midiDevices_.getReference(info.identifier);
                         if (component == nullptr)
                         {
-                            component = new MidiDeviceComponent(SMApp.getTheme(), info);
+                            component = new MidiDeviceComponent(SMApp.getSettings().getTheme(), info);
                             component->setSettingsManager(&SMApp);
                             midiDevices_.set(info.identifier, component);
                         }

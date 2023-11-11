@@ -19,36 +19,29 @@
 
 #include "JuceHeader.h"
 
-#include "PaintedButton.h"
-#include "SettingsManager.h"
+#include "Theme.h"
 
 namespace showmidi
 {
-    class SettingsComponent : public Component, public Button::Listener
+    class PaintedButton : public Button
     {
     public:
-        SettingsComponent(SettingsManager&);
+        PaintedButton();
+        PaintedButton(const String&);
         
-        void paint(Graphics&) override;
-        
-        void buttonClicked(Button*) override;
+        void paintButton(Graphics&, bool, bool) override;
+
+        void setBoundsForTouch(int, int, int, int);
+
+        void drawName(Graphics&, Justification);
+        void drawDrawable(Graphics&, Drawable&);
         
     private:
-        void setSettingOptionFont(Graphics&, std::function<bool()>);
-        
-        SettingsManager& manager_;
-        
-        PaintedButton middleCOct2Button_;
-        PaintedButton middleCOct3Button_;
-        PaintedButton middleCOct4Button_;
-        PaintedButton timeout2SecButton_;
-        PaintedButton timeout5SecButton_;
-        PaintedButton timeout10SecButton_;
-        PaintedButton loadThemeButton_;
-        PaintedButton closeButton_;
-        
-        std::unique_ptr<FileChooser> themeChooser_;
+        void setBounds(Rectangle<int>);
+        void setBounds(int, int, int, int);
 
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SettingsComponent)
+        static constexpr int DEFAULT_TOUCH_OUTSET { 12 };
+        
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PaintedButton)
     };
 }

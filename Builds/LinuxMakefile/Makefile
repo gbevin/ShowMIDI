@@ -153,6 +153,7 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/MainComponent_a6ffb4a5.o \
   $(JUCE_OBJDIR)/MainWindow_499ac812.o \
   $(JUCE_OBJDIR)/MidiDeviceComponent_1b687947.o \
+  $(JUCE_OBJDIR)/PaintedButton_d5a3e6f0.o \
   $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
   $(JUCE_OBJDIR)/SettingsComponent_119b047b.o \
@@ -310,6 +311,11 @@ $(JUCE_OBJDIR)/MainWindow_499ac812.o: ../../Source/MainWindow.cpp
 $(JUCE_OBJDIR)/MidiDeviceComponent_1b687947.o: ../../Source/MidiDeviceComponent.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling MidiDeviceComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PaintedButton_d5a3e6f0.o: ../../Source/PaintedButton.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling PaintedButton.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o: ../../Source/PluginEditor.cpp

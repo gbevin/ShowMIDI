@@ -19,7 +19,7 @@
 
 #include <JuceHeader.h>
 
-#include "Theme.h"
+#include "SettingsManager.h"
 
 namespace showmidi
 {
@@ -32,7 +32,7 @@ namespace showmidi
         static constexpr int X_HELP = 11;
         static constexpr int Y_HELP = 12;
 
-        SidebarComponent(Theme&);
+        SidebarComponent(SettingsManager&);
         ~SidebarComponent() override;
         
         void paint(Graphics&) override;

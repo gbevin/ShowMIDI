@@ -19,6 +19,8 @@
 
 #include <JuceHeader.h>
 
+#include "StoredSettings.h"
+
 namespace showmidi
 {
     class SettingsManager
@@ -26,6 +28,7 @@ namespace showmidi
     public:
         virtual ~SettingsManager() {};
         
+        virtual StoredSettings& getSettings() = 0;
         virtual void storeSettings() = 0;
     };
 }
