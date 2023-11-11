@@ -39,9 +39,9 @@ The plugin versions can be used in any DAW that supports MIDI effect plugins. So
 
 ## Credits
 
-ShowMIDI was created by Geert Bevin (https://uwyn.com)
+ShowMIDI was created by Geert Bevin: https://uwyn.com
 
-The UI design was done by Stephen Petoniak (https://spetoniak.com)
+The UI design was done by Stephen Petoniak: https://spetoniak.com
 
 ## Building on Linux
 
