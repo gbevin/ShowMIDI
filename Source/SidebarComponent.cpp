@@ -67,7 +67,7 @@ namespace showmidi
             
             auto help_svg = helpSvg_->createCopy();
             help_svg->replaceColour(Colours::black, SMApp.getTheme().colorData);
-            help_svg->drawAt(g, X_HELP, owner_->getHeight() - help_svg->getHeight() - Y_HELP, 1.0);
+            help_svg->drawAt(g, X_HELP, (float)owner_->getHeight() - help_svg->getHeight() - Y_HELP, 1.0);
         }
 
         SidebarComponent* const owner_;

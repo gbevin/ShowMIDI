@@ -100,22 +100,22 @@ LookAndFeel_V4::ColourScheme UwynLookAndFeel::getDarkColourScheme()
 // in paint calls, so that we can always change based on the active theme, without
 // having to propagate and update the theme colours
 
-void UwynLookAndFeel::drawPopupMenuBackground(Graphics& g, int, int)
+void UwynLookAndFeel::drawPopupMenuBackground(Graphics&, int, int)
 {
 }
 
-void UwynLookAndFeel::drawButtonBackground(Graphics &g, Button &button, const Colour &backgroundColour, bool isMouseOverButton, bool isButtonDown)
+void UwynLookAndFeel::drawButtonBackground(Graphics&, Button&, const Colour&, bool, bool)
 {
 }
 
-void UwynLookAndFeel::drawButtonText(Graphics &g, TextButton &button, bool isMouseOverButton, bool isButtonDown)
+void UwynLookAndFeel::drawButtonText(Graphics&, TextButton&, bool, bool)
 {
 }
 
-void UwynLookAndFeel::drawToggleButton(Graphics&, ToggleButton&, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+void UwynLookAndFeel::drawToggleButton(Graphics&, ToggleButton&, bool, bool)
 {
 }
 
-void UwynLookAndFeel::drawTickBox(Graphics&, Component&, float x, float y, float w, float h, bool ticked, bool isEnabled, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+void UwynLookAndFeel::drawTickBox(Graphics&, Component&, float, float, float, float, bool, bool, bool, bool)
 {
 }
