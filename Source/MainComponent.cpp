@@ -136,8 +136,6 @@ namespace showmidi
         
         void renderDevices()
         {
-            owner_->repaint();
-
             ScopedLock g(midiDevicesLock_);
 
             auto height = owner_->getParentHeight();

@@ -611,6 +611,8 @@ namespace showmidi
             {
                 theme_.parseXmlFile(file);
             }
+            
+            owner_->getParentComponent()->repaint();
         }
 
         MidiDeviceComponent* const owner_;
