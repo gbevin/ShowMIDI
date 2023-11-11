@@ -19,19 +19,22 @@
 
 #include "JuceHeader.h"
 
+#include "Theme.h"
+
 namespace showmidi
 {
     class AboutComponent : public Component, public Button::Listener
     {
     public:
-        AboutComponent();
+        AboutComponent(Theme&);
         
         void paint(Graphics& g) override;
-        void setVisible(bool shouldBeVisible) override;
         
         void buttonClicked(Button* buttonThatWasClicked) override;
         
     private:
+        Theme& theme_;
+        
         TextButton websiteButton_;
         TextButton closeButton_;
         

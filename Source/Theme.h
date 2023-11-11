@@ -23,6 +23,10 @@ namespace showmidi
 {
     struct Theme
     {
+        static constexpr int DIALOG_LINE_HEIGHT = 24;
+        
+        int linePosition(int);
+        
         Font fontLabel();
         int labelHeight();
         Font fontData();

@@ -18,13 +18,13 @@
 #include "SidebarComponent.h"
 
 #include "AboutComponent.h"
-#include "ShowMidiApplication.h"
+#include "SettingsComponent.h"
 
 namespace showmidi
 {
     struct SidebarComponent::Pimpl : public Button::Listener
     {
-        Pimpl(SidebarComponent* owner) : owner_(owner)
+        Pimpl(SidebarComponent* owner, Theme& theme) : owner_(owner), theme_(theme), settings_(theme), about_(theme)
         {
             MessageManager::getInstance()->callAsync([this] { setup(); });
         }
@@ -35,23 +35,25 @@ namespace showmidi
         
         void setup()
         {
-            helpButton_.setBounds(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
-                                  helpSvg_->getWidth(), helpSvg_->getHeight());
             helpButton_.addListener(this);
-            owner_->addAndMakeVisible(helpButton_);
-            
-            owner_->getParentComponent()->addChildComponent(about_);
-        }
-        
-        static constexpr int X_SETTINGS = 12;
-        static constexpr int Y_SETTINGS = 13;
+            settingsButton_.addListener(this);
 
-        static constexpr int X_HELP = 11;
-        static constexpr int Y_HELP = 12;
+            owner_->addAndMakeVisible(helpButton_);
+            owner_->addAndMakeVisible(settingsButton_);
+
+            owner_->getParentComponent()->addChildComponent(about_);
+            owner_->getParentComponent()->addChildComponent(settings_);
+
+            resized();
+        }
 
         void buttonClicked(Button* button)
         {
-            if (button == &helpButton_)
+            if (button == &settingsButton_)
+            {
+                settings_.setVisible(!settings_.isVisible());
+            }
+            else if (button == &helpButton_)
             {
                 about_.setVisible(!about_.isVisible());
             }
@@ -59,30 +61,46 @@ namespace showmidi
 
         void paint(Graphics& g)
         {
-            g.fillAll(SMApp.getTheme().colorSidebar);
+            g.fillAll(theme_.colorSidebar);
             
             auto settings_svg = settingsSvg_->createCopy();
-            settings_svg->replaceColour(Colours::black, SMApp.getTheme().colorData);
-            settings_svg->drawAt(g, X_SETTINGS, Y_SETTINGS, 1.0);
+            settings_svg->replaceColour(Colours::black, theme_.colorData);
+            settings_svg->drawAt(g, settingsButton_.getX(), settingsButton_.getY(), 1.0);
             
             auto help_svg = helpSvg_->createCopy();
-            help_svg->replaceColour(Colours::black, SMApp.getTheme().colorData);
-            help_svg->drawAt(g, X_HELP, (float)owner_->getHeight() - help_svg->getHeight() - Y_HELP, 1.0);
+            help_svg->replaceColour(Colours::black, theme_.colorData);
+            help_svg->drawAt(g, helpButton_.getX(), helpButton_.getY(), 1.0);
+        }
+        
+        void resized()
+        {
+            settingsButton_.setBounds(X_SETTINGS, Y_SETTINGS,
+                                      settingsSvg_->getWidth(), settingsSvg_->getHeight());
+
+            helpButton_.setBounds(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
+                                  helpSvg_->getWidth(), helpSvg_->getHeight());
+            
+            settings_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
+            about_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_.getHeight());
         }
 
         SidebarComponent* const owner_;
+        Theme& theme_;
         
         std::unique_ptr<Drawable> settingsSvg_ = Drawable::createFromImageData(BinaryData::settings_svg, BinaryData::settings_svgSize);
         std::unique_ptr<Drawable> helpSvg_ = Drawable::createFromImageData(BinaryData::help_svg, BinaryData::help_svgSize);
 
+        TextButton settingsButton_;
         TextButton helpButton_;
+        SettingsComponent settings_;
         AboutComponent about_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SidebarComponent::SidebarComponent() : pimpl_(new Pimpl(this)) {}
+    SidebarComponent::SidebarComponent(Theme& theme) : pimpl_(new Pimpl(this, theme)) {}
     SidebarComponent::~SidebarComponent() = default;
     
     void SidebarComponent::paint(Graphics& g) { pimpl_->paint(g); }
+    void SidebarComponent::resized()          { pimpl_->resized(); }
 }

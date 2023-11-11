@@ -52,6 +52,10 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="pbOkrz" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+      <FILE id="YFaTS5" name="SettingsComponent.cpp" compile="1" resource="0"
+            file="Source/SettingsComponent.cpp"/>
+      <FILE id="Kdp7mq" name="SettingsComponent.h" compile="0" resource="0"
+            file="Source/SettingsComponent.h"/>
       <FILE id="njKfSl" name="SettingsManager.h" compile="0" resource="0"
             file="Source/SettingsManager.h"/>
       <FILE id="SMuCMV" name="ShowMidiApplication.cpp" compile="1" resource="0"

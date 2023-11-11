@@ -17,32 +17,26 @@
  */
 #pragma once
 
-#include <JuceHeader.h>
+#include "JuceHeader.h"
 
 #include "Theme.h"
 
 namespace showmidi
 {
-    class SidebarComponent : public Component
+    class SettingsComponent : public Component, public Button::Listener
     {
-    public:        
-        static constexpr int X_SETTINGS = 12;
-        static constexpr int Y_SETTINGS = 13;
-
-        static constexpr int X_HELP = 11;
-        static constexpr int Y_HELP = 12;
-
-        SidebarComponent(Theme&);
-        ~SidebarComponent() override;
+    public:
+        SettingsComponent(Theme&);
         
-        void paint(Graphics&) override;
+        void paint(Graphics& g) override;
         
-        void resized() override;
+        void buttonClicked(Button* buttonThatWasClicked) override;
         
-        struct Pimpl;
     private:
-        std::unique_ptr<Pimpl> pimpl_;
+        Theme& theme_;
+        
+        TextButton closeButton_;
 
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SidebarComponent)
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SettingsComponent)
     };
 }

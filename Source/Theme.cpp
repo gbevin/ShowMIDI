@@ -21,6 +21,11 @@
 
 namespace showmidi
 {
+    int Theme::linePosition(int number)
+    {
+        return DIALOG_LINE_HEIGHT * number;
+    }
+
     Font Theme::fontLabel()
     {
         return Font(16, Font::bold);

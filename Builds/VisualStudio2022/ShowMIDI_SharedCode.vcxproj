@@ -146,6 +146,7 @@
     <ClCompile Include="..\..\Source\MidiDeviceComponent.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
+    <ClCompile Include="..\..\Source\SettingsComponent.cpp"/>
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp"/>
     <ClCompile Include="..\..\Source\SidebarComponent.cpp"/>
     <ClCompile Include="..\..\Source\StoredSettings.cpp"/>
@@ -2422,6 +2423,7 @@
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
+    <ClInclude Include="..\..\Source\SettingsComponent.h"/>
     <ClInclude Include="..\..\Source\SettingsManager.h"/>
     <ClInclude Include="..\..\Source\ShowMidiApplication.h"/>
     <ClInclude Include="..\..\Source\SidebarComponent.h"/>

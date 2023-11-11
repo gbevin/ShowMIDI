@@ -91,6 +91,7 @@
 		E6BDA9C4B95D6F31D96F1438 /* Main.cpp */ = {isa = PBXBuildFile; fileRef = 60D631FC0F78AC6C198E73A8; };
 		E82687E6264A1ED71A5100DE /* BinaryData.cpp */ = {isa = PBXBuildFile; fileRef = C38DAA745C7DE61B6AFE626D; };
 		F1492392AEA124447A1426E2 /* VST3 */ = {isa = PBXBuildFile; fileRef = 9EFDCC15083326D21B41911D; };
+		FB06D6A6352BFA17ACE5F06A /* SettingsComponent.cpp */ = {isa = PBXBuildFile; fileRef = 541028D9F36EB1F495DCE2A4; };
 		FB7D6F530DE3F792A9A8AD3D /* RecentFilesMenuTemplate.nib */ = {isa = PBXBuildFile; fileRef = 2DD84B23B20E655253A3D5F0; };
 /* End PBXBuildFile section */
 
@@ -143,6 +144,7 @@
 		360F084DCC1FFB986575FC0B /* include_juce_audio_devices.mm */ /* include_juce_audio_devices.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_devices.mm; path = ../../JuceLibraryCode/include_juce_audio_devices.mm; sourceTree = SOURCE_ROOT; };
 		372E247AE8EA1DCC2438C0C3 /* include_juce_audio_processors_lv2_libs.cpp */ /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_lv2_libs.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_lv2_libs.cpp; sourceTree = SOURCE_ROOT; };
 		3BFBD5BE9998618A28B34775 /* Theme.cpp */ /* Theme.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Theme.cpp; path = ../../Source/Theme.cpp; sourceTree = SOURCE_ROOT; };
+		3E9019794FA6C7E7AF818E39 /* SettingsComponent.h */ /* SettingsComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SettingsComponent.h; path = ../../Source/SettingsComponent.h; sourceTree = SOURCE_ROOT; };
 		3F0D10A7839AE2AA878473A4 /* include_juce_data_structures.mm */ /* include_juce_data_structures.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_data_structures.mm; path = ../../JuceLibraryCode/include_juce_data_structures.mm; sourceTree = SOURCE_ROOT; };
 		4103274634C632287BD3388D /* MidiDeviceComponent.cpp */ /* MidiDeviceComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MidiDeviceComponent.cpp; path = ../../Source/MidiDeviceComponent.cpp; sourceTree = SOURCE_ROOT; };
 		42FD542643C45D2C5A9A1A35 /* ChannelState.h */ /* ChannelState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ChannelState.h; path = ../../Source/ChannelState.h; sourceTree = SOURCE_ROOT; };
@@ -153,6 +155,7 @@
 		4C9A95265A0E0902C0045742 /* PluginProcessor.h */ /* PluginProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginProcessor.h; path = ../../Source/PluginProcessor.h; sourceTree = SOURCE_ROOT; };
 		4EFEB0AB4277D5F5794572A6 /* Shared_Code.entitlements */ /* Shared_Code.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Shared_Code.entitlements; path = Shared_Code.entitlements; sourceTree = SOURCE_ROOT; };
 		4F7F78F0807149D173DA0F17 /* include_juce_gui_extra.mm */ /* include_juce_gui_extra.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_extra.mm; path = ../../JuceLibraryCode/include_juce_gui_extra.mm; sourceTree = SOURCE_ROOT; };
+		541028D9F36EB1F495DCE2A4 /* SettingsComponent.cpp */ /* SettingsComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SettingsComponent.cpp; path = ../../Source/SettingsComponent.cpp; sourceTree = SOURCE_ROOT; };
 		56B3B279F6CD99BB104EBD24 /* juce_audio_basics */ /* juce_audio_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_basics; path = ../../JuceLibraryCode/modules/juce_audio_basics; sourceTree = SOURCE_ROOT; };
 		5C0EBCDDFA797BE0FCCA8763 /* settings.svg */ /* settings.svg */ = {isa = PBXFileReference; lastKnownFileType = file.svg; name = settings.svg; path = ../../Assets/settings.svg; sourceTree = SOURCE_ROOT; };
 		5E8212E205DE721CE55589C7 /* PluginEditor.cpp */ /* PluginEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginEditor.cpp; path = ../../Source/PluginEditor.cpp; sourceTree = SOURCE_ROOT; };
@@ -525,6 +528,8 @@
 				A7D51DA4FAC7916144DC9C37,
 				2343ECC7F67FA6AD9E72214D,
 				4C9A95265A0E0902C0045742,
+				541028D9F36EB1F495DCE2A4,
+				3E9019794FA6C7E7AF818E39,
 				656E427836DF54D372F75761,
 				D7FA88F4A6B12D91E3D015FA,
 				B4130BDAEE02831DBC6CE268,
@@ -1219,6 +1224,7 @@
 				74A90D33B60D692AC29558AE,
 				69B90CBB6BB21353587D2A97,
 				D782D07214CD0BF4CAEBDD92,
+				FB06D6A6352BFA17ACE5F06A,
 				18BC972C6047CC27A142C2B8,
 				D15701538FF51592C7A4571C,
 				97C4F1EB7E6494C2C13E5126,

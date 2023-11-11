@@ -17,63 +17,57 @@
  */
 #include "AboutComponent.h"
 
-#include "ShowMidiApplication.h"
+#include "MidiDeviceComponent.h"
+#include "SidebarComponent.h"
 
 namespace showmidi
 {
-    AboutComponent::AboutComponent()
+    AboutComponent::AboutComponent(Theme& theme) : theme_(theme)
     {
+        setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme_.linePosition(8));
+
         websiteButton_.addListener(this);
         closeButton_.addListener(this);
         
-        setSize(240, 160);
-        
-        websiteButton_.setBounds(0, 80, getWidth(), SMApp.getTheme().labelHeight());
+        websiteButton_.setBounds(0, theme_.linePosition(4), getWidth(), theme_.labelHeight());
         addAndMakeVisible(websiteButton_);
         
-        closeButton_.setBounds(0, 130, getWidth(), SMApp.getTheme().labelHeight());
+        closeButton_.setBounds(0,  getHeight() - theme_.linePosition(1) - theme_.labelHeight(), getWidth(), theme_.labelHeight());
         addAndMakeVisible(closeButton_);
     }
     
     void AboutComponent::paint(Graphics& g)
     {
-        g.fillAll(SMApp.getTheme().colorBackground);
+        g.fillAll(theme_.colorBackground);
         
-        g.setColour(SMApp.getTheme().colorData);
+        g.setColour(theme_.colorData);
         g.drawRect(Rectangle<int>{0, 0, getWidth(), getHeight()});
         
-        g.setFont(SMApp.getTheme().fontLabel());
+        g.setFont(theme_.fontLabel());
         g.drawText(ProjectInfo::projectName,
-                   0, 20,
-                   getWidth(), SMApp.getTheme().labelHeight(),
+                   0, theme_.linePosition(1),
+                   getWidth(), theme_.labelHeight(),
                    Justification::centred, true);
         g.drawText(ProjectInfo::versionString,
-                   0, 40,
-                   getWidth(), SMApp.getTheme().labelHeight(),
+                   0, theme_.linePosition(2),
+                   getWidth(), theme_.labelHeight(),
                    Justification::centred, true);
         
-        g.setFont(SMApp.getTheme().fontLabel());
+        g.setColour(theme_.colorData.withAlpha(0.5f));
+        g.setFont(theme_.fontData());
         g.drawText("https://uwyn.com",
                    websiteButton_.getX(), websiteButton_.getY(),
                    websiteButton_.getWidth(), websiteButton_.getHeight(),
                    Justification::centred, true);
         
-        g.setColour(SMApp.getTheme().colorController);
-        g.setFont(SMApp.getTheme().fontLabel().withStyle(Font::underlined));
+        // close button
+        
+        g.setColour(theme_.colorController);
+        g.setFont(theme_.fontLabel());
         g.drawText("close",
                    closeButton_.getX(), closeButton_.getY(),
                    closeButton_.getWidth(), closeButton_.getHeight(),
                    Justification::centred, true);
-    }
-    
-    void AboutComponent::setVisible(bool shouldBeVisible)
-    {
-        if (shouldBeVisible)
-        {
-            centreWithSize(getWidth(), getHeight());
-        }
-        
-        Component::setVisible(shouldBeVisible);
     }
     
     void AboutComponent::buttonClicked(Button* buttonThatWasClicked)
