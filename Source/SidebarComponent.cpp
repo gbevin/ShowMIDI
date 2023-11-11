@@ -65,20 +65,20 @@ namespace showmidi
             
             auto settings_svg = settingsSvg_->createCopy();
             settings_svg->replaceColour(Colours::black, theme_.colorData);
-            settings_svg->drawAt(g, (float)settingsButton_.getX(), (float)settingsButton_.getY(), 1.0);
+            settings_svg->drawAt(g, X_SETTINGS, Y_SETTINGS, 1.0);
             
             auto help_svg = helpSvg_->createCopy();
             help_svg->replaceColour(Colours::black, theme_.colorData);
-            help_svg->drawAt(g, (float)helpButton_.getX(), (float)helpButton_.getY(), 1.0);
+            help_svg->drawAt(g, X_HELP, (float)owner_->getHeight() - helpSvg_->getHeight() - Y_HELP, 1.0);
         }
         
         void resized()
         {
-            settingsButton_.setBounds(X_SETTINGS, Y_SETTINGS,
-                                      settingsSvg_->getWidth(), settingsSvg_->getHeight());
+            settingsButton_.setBounds(0, 0,
+                                      owner_->getWidth(), settingsSvg_->getHeight() + Y_SETTINGS * 2);
 
-            helpButton_.setBounds(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
-                                  helpSvg_->getWidth(), helpSvg_->getHeight());
+            helpButton_.setBounds(0, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP * 2,
+                                  owner_->getWidth(), helpSvg_->getHeight() + Y_HELP * 2);
             
             settings_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
             about_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_.getHeight());
