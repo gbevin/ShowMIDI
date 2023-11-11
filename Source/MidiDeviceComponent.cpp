@@ -25,11 +25,11 @@ namespace showmidi
     
     struct MidiDeviceComponent::Pimpl : public juce::MidiInputCallback
     {
-        Pimpl(MidiDeviceComponent* owner, const Theme& theme, const String& name) : owner_(owner), theme_(theme), deviceInfo_({ name, ""})
+        Pimpl(MidiDeviceComponent* owner, Theme& theme, const String& name) : owner_(owner), theme_(theme), deviceInfo_({ name, ""})
         {
         }
         
-        Pimpl(MidiDeviceComponent* owner, const Theme& theme, const MidiDeviceInfo info) : owner_(owner), theme_(theme), deviceInfo_(info)
+        Pimpl(MidiDeviceComponent* owner, Theme& theme, const MidiDeviceInfo info) : owner_(owner), theme_(theme), deviceInfo_(info)
         {
             auto midi_input = MidiInput::openDevice(info.identifier, this);
             if (midi_input != nullptr)
@@ -38,7 +38,7 @@ namespace showmidi
                 midiIn_.swap(midi_input);
             }
             
-//            showTestData();
+            //            showTestData();
         }
         
         void showTestData()
@@ -67,7 +67,7 @@ namespace showmidi
             channel1.controlChanges_.time_ = t;
             channel1.controlChanges_.controlChange_[74].value_ = 127;
             channel1.controlChanges_.controlChange_[74].time_ = t;
-
+            
             auto& channel16 = channels_.channel_[15];
             channel16.time_ = t;
             channel16.programChange_.value_ = 127;
@@ -88,10 +88,10 @@ namespace showmidi
             channel16.controlChanges_.time_ = t;
             channel16.controlChanges_.controlChange_[127].value_ = 100;
             channel16.controlChanges_.controlChange_[127].time_ = t;
-
+            
             setPaused(true);
         }
-
+        
         ~Pimpl()
         {
             midiIn_ = nullptr;
@@ -195,7 +195,7 @@ namespace showmidi
         static constexpr int X_PB = 84;
         static constexpr int Y_PB = 7;
         static constexpr int X_PB_DATA = 24;
-
+        
         static constexpr int X_NOTE = 48;
         static constexpr int Y_NOTE = 7;
         static constexpr int X_ON_OFF = 84;
@@ -208,11 +208,6 @@ namespace showmidi
         static constexpr int X_CC = 156;
         static constexpr int Y_CC = 7;
         static constexpr int X_CC_DATA = 24;
-
-        static int getStandardWidth()
-        {
-            return STANDARD_WIDTH;
-        }
         
         struct ChannelPaintState
         {
@@ -220,7 +215,7 @@ namespace showmidi
             int offset_ { 0 };
             bool header_ { false };
         };
-
+        
         void paint(juce::Graphics& g)
         {
             g.fillAll(theme_.colorBackground);
@@ -232,7 +227,7 @@ namespace showmidi
                 t = pausedTime_;
                 channels = &pausedChannels_;
             }
-
+            
             // draw the data for each channel
             ChannelPaintState state = { t, 0, false };
             
@@ -248,7 +243,7 @@ namespace showmidi
                        X_PORT, Y_PORT,
                        owner_->getWidth(), theme_.labelHeight(),
                        Justification::centredLeft);
-
+            
             state.offset_ = Y_PORT + theme_.labelHeight();
             
             for (int channel_index = 0; channel_index < 16; ++channel_index)
@@ -272,6 +267,11 @@ namespace showmidi
             lastHeight_ = state.offset_;
         }
         
+        static int getStandardWidth()
+        {
+            return STANDARD_WIDTH;
+        }
+
         int getVisibleHeight() const
         {
             return lastHeight_;
@@ -335,12 +335,12 @@ namespace showmidi
                 y_offset = state.offset_;
                 
                 y_offset += Y_PB;
-
+                
                 Colour pb_color = theme_.colorLabel;
-
+                
                 int pb_width = getStandardWidth() - X_PB - X_PB_DATA;
                 int pb_range = pb_width / 2;
-
+                
                 int indicator_x = X_PB + pb_range + 1;
                 int indicator_width = (pb_range * (pitch_bend.value_ - 0x2000)) / 0x2000;
                 if (pitch_bend.value_ > 0x2000)
@@ -373,15 +373,15 @@ namespace showmidi
                 y_offset += theme_.labelHeight();
                 
                 // draw pitchbend indicator
-
+                
                 g.setColour(theme_.colorTrack);
                 g.fillRect(X_PB, y_offset,
                            pb_width, HEIGHT_INDICATOR);
-
+                
                 g.setColour(pb_color);
                 g.fillRect(indicator_x, y_offset,
                            indicator_width, HEIGHT_INDICATOR);
-
+                
                 y_offset += HEIGHT_INDICATOR;
             }
             
@@ -406,7 +406,7 @@ namespace showmidi
                             note.time_ = state.time_;
                             notes.time_ = state.time_;
                         }
-
+                        
                         ensurePaintedChannelHeader(g, state, channel);
                         
                         if (y_offset == -1)
@@ -444,11 +444,11 @@ namespace showmidi
                         y_offset += theme_.labelHeight();
                         
                         // draw velocity indicator
-
+                        
                         g.setColour(theme_.colorTrack);
                         g.fillRect(X_ON_OFF, y_offset,
                                    note_width, HEIGHT_INDICATOR);
-
+                        
                         g.setColour(note_color);
                         g.fillRect(X_ON_OFF, y_offset,
                                    (note_width * note.value_) / 127, HEIGHT_INDICATOR);
@@ -549,15 +549,15 @@ namespace showmidi
                        X_CC, yOffset,
                        cc_width, theme_.dataHeight(),
                        Justification::centredRight);
-
+            
             yOffset += theme_.labelHeight();
             
             // draw value indicator
-
+            
             g.setColour(theme_.colorTrack);
             g.fillRect(X_CC, yOffset,
                        cc_width, HEIGHT_INDICATOR);
-
+            
             g.setColour(theme_.colorController);
             g.fillRect(X_CC, yOffset,
                        (cc_width * value) / 127, HEIGHT_INDICATOR);
@@ -592,9 +592,30 @@ namespace showmidi
             paused_ = paused;
         }
         
-        MidiDeviceComponent* const owner_;
+        bool isInterestedInFileDrag(const StringArray& files)
+        {
+            for (auto file : files)
+            {
+                if (file.endsWith(".svg"))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        void filesDropped(const StringArray& files, int, int)
+        {
+            for (auto file : files)
+            {
+                theme_.parseXmlFile(file);
+            }
+        }
 
-        Theme theme_;
+        MidiDeviceComponent* const owner_;
+        
+        Theme& theme_;
         MidiDeviceInfo deviceInfo_;
         std::unique_ptr<juce::MidiInput> midiIn_ { nullptr };
         std::atomic_bool dirty_ { true };
@@ -611,12 +632,13 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MidiDeviceComponent::MidiDeviceComponent(const Theme& theme, const String& name) : pimpl_(new Pimpl(this, theme, name)) {}
-    MidiDeviceComponent::MidiDeviceComponent(const Theme& theme, const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, theme, info)) {}
+    MidiDeviceComponent::MidiDeviceComponent(Theme& theme, const String& name) : pimpl_(new Pimpl(this, theme, name)) {}
+    MidiDeviceComponent::MidiDeviceComponent(Theme& theme, const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, theme, info)) {}
     MidiDeviceComponent::~MidiDeviceComponent() = default;
     
     int MidiDeviceComponent::getStandardWidth()         { return Pimpl::getStandardWidth(); }
-    
+    int MidiDeviceComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }
+
     void MidiDeviceComponent::render()                  { pimpl_->render(); }
     void MidiDeviceComponent::paint(juce::Graphics& g)  { pimpl_->paint(g); }
     void MidiDeviceComponent::resized()                 { pimpl_->resized(); }
@@ -624,6 +646,8 @@ namespace showmidi
     void MidiDeviceComponent::handleIncomingMidiMessage(const MidiMessage& m)   { pimpl_->handleIncomingMidiMessage(nullptr, m); };
     
     void MidiDeviceComponent::setPaused(bool p)         { pimpl_->setPaused(p); }
-
-    int MidiDeviceComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }
+    
+    
+    bool MidiDeviceComponent::isInterestedInFileDrag(const StringArray& f)      { return pimpl_->isInterestedInFileDrag(f); }
+    void MidiDeviceComponent::filesDropped(const StringArray& f, int x, int y)  { pimpl_->filesDropped(f, x, y); }
 }

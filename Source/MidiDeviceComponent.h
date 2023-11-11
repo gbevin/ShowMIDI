@@ -23,11 +23,11 @@
 
 namespace showmidi
 {
-    class MidiDeviceComponent : public juce::Component
+    class MidiDeviceComponent : public juce::Component, public juce::FileDragAndDropTarget
     {
     public:
-        MidiDeviceComponent(const Theme& theme, const String&);
-        MidiDeviceComponent(const Theme& theme, const MidiDeviceInfo&);
+        MidiDeviceComponent(Theme& theme, const String&);
+        MidiDeviceComponent(Theme& theme, const MidiDeviceInfo&);
         ~MidiDeviceComponent() override;
 
         static int getStandardWidth();
@@ -41,6 +41,9 @@ namespace showmidi
         void setPaused(bool);
         
         int getVisibleHeight() const;
+        
+        bool isInterestedInFileDrag(const StringArray&) override;
+        void filesDropped(const StringArray&, int, int) override;
 
         struct Pimpl;
     private:
