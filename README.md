@@ -35,6 +35,14 @@ To use it, simply double-click the application to launch it.
 
 To pause the MIDI data stream, press the spacebar, to un-pause, press it again.
 
+The plugin versions can be used in any DAW that supports MIDI effect plugins. Some plugin formats, like VST3, might filter out certain MIDI messages and not present a fully accurate view.
+
+## Credits
+
+ShowMIDI was created by Geert Bevin (https://uwyn.com)
+
+The UI design was done by Stephen Petoniak (https://spetoniak.com)
+
 ## Building on Linux
 
 To build ShowMIDI on Linux you need a minimal set of packages installed beforehand, on Ubuntu this can be done with:
