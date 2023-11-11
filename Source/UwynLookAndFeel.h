@@ -35,7 +35,7 @@ namespace showmidi
         void drawButtonText(Graphics &, TextButton &, bool, bool) override;
         Font getNarrowFont(float);
         
-        class Pimpl;
+        struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_;
         

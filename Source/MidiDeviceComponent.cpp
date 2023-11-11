@@ -245,10 +245,10 @@ namespace showmidi
             g.setColour(theme_.colorData);
             g.drawText(port_name,
                        X_PORT, Y_PORT,
-                       owner_->getWidth(), theme_.fontLabel().getHeight(),
+                       owner_->getWidth(), theme_.labelHeight(),
                        Justification::centredLeft);
 
-            state.offset_ = Y_PORT + theme_.fontLabel().getHeight();
+            state.offset_ = Y_PORT + theme_.labelHeight();
             
             for (int channel_index = 0; channel_index < 16; ++channel_index)
             {
@@ -291,9 +291,9 @@ namespace showmidi
             state.offset_ += Y_CHANNEL;
             g.drawText(String("CH ") + String(channel.number_ + 1),
                        X_CHANNEL, state.offset_,
-                       getStandardWidth() - X_CHANNEL, theme_.fontLabel().getHeight(),
+                       getStandardWidth() - X_CHANNEL, theme_.labelHeight(),
                        Justification::centredLeft);
-            state.offset_ += theme_.fontLabel().getHeight();
+            state.offset_ += theme_.labelHeight();
             
             g.setColour(theme_.colorSeperator);
             state.offset_ += Y_SEPERATOR;
@@ -314,8 +314,8 @@ namespace showmidi
                 g.setColour(theme_.colorLabel);
                 g.setFont(theme_.fontLabel());
                 g.drawText(String("PRGM ") + String(program_change.value_),
-                           0, state.offset_ - Y_CHANNEL_PADDING - Y_SEPERATOR - HEIGHT_SEPERATOR - theme_.fontLabel().getHeight(),
-                           getStandardWidth() - X_PRGM, theme_.fontLabel().getHeight(),
+                           0, state.offset_ - Y_CHANNEL_PADDING - Y_SEPERATOR - HEIGHT_SEPERATOR - theme_.labelHeight(),
+                           getStandardWidth() - X_PRGM, theme_.labelHeight(),
                            Justification::centredRight);
             }
         }
@@ -357,17 +357,17 @@ namespace showmidi
                 g.setFont(theme_.fontLabel());
                 g.drawText("PB",
                            X_PB, y_offset,
-                           pb_width, theme_.fontLabel().getHeight(),
+                           pb_width, theme_.labelHeight(),
                            Justification::centredLeft);
                 
                 g.setColour(theme_.colorData);
                 g.setFont(theme_.fontData());
                 g.drawText(String(pitch_bend.value_),
                            X_PB, y_offset,
-                           pb_width, theme_.fontData().getHeight(),
+                           pb_width, theme_.dataHeight(),
                            Justification::centredRight);
                 
-                y_offset += theme_.fontLabel().getHeight();
+                y_offset += theme_.labelHeight();
                 
                 // draw pitchbend indicator
 
@@ -420,7 +420,7 @@ namespace showmidi
                         g.setFont(theme_.fontLabel());
                         g.drawText(outputNote(i),
                                    X_NOTE, y_offset,
-                                   getStandardWidth() - X_NOTE - X_NOTE_DATA, theme_.fontLabel().getHeight(),
+                                   getStandardWidth() - X_NOTE - X_NOTE_DATA, theme_.labelHeight(),
                                    Justification::centredLeft);
                         
                         int note_width = getStandardWidth() - X_ON_OFF - X_NOTE_DATA;
@@ -428,17 +428,17 @@ namespace showmidi
                         g.setFont(theme_.fontLabel());
                         g.drawText(note.on_ ? "ON" : "OFF",
                                    X_ON_OFF, y_offset,
-                                   note_width, theme_.fontLabel().getHeight(),
+                                   note_width, theme_.labelHeight(),
                                    Justification::centredLeft);
                         
                         g.setColour(theme_.colorData);
                         g.setFont(theme_.fontData());
                         g.drawText(String(note.value_),
                                    X_ON_OFF, y_offset,
-                                   note_width, theme_.fontData().getHeight(),
+                                   note_width, theme_.dataHeight(),
                                    Justification::centredRight);
                         
-                        y_offset += theme_.fontLabel().getHeight();
+                        y_offset += theme_.labelHeight();
                         
                         // draw velocity indicator
 
@@ -463,17 +463,17 @@ namespace showmidi
                             g.setFont(theme_.fontLabel());
                             g.drawText("PP",
                                        X_PP, y_offset,
-                                       pp_width, theme_.fontLabel().getHeight(),
+                                       pp_width, theme_.labelHeight(),
                                        Justification::centredLeft);
                             
                             g.setColour(theme_.colorData);
                             g.setFont(theme_.fontData());
                             g.drawText(String(note.polyPressure_),
                                        X_PP, y_offset,
-                                       pp_width, theme_.fontData().getHeight(),
+                                       pp_width, theme_.dataHeight(),
                                        Justification::centredRight);
                             
-                            y_offset += theme_.fontLabel().getHeight();
+                            y_offset += theme_.labelHeight();
                             
                             // draw velocity indicator
                             
@@ -537,17 +537,17 @@ namespace showmidi
             g.setFont(theme_.fontLabel());
             g.drawText(label,
                        X_CC, yOffset,
-                       cc_width, theme_.fontLabel().getHeight(),
+                       cc_width, theme_.labelHeight(),
                        Justification::centredLeft);
             
             g.setColour(theme_.colorData);
             g.setFont(theme_.fontData());
             g.drawText(String(value),
                        X_CC, yOffset,
-                       cc_width, theme_.fontData().getHeight(),
+                       cc_width, theme_.dataHeight(),
                        Justification::centredRight);
 
-            yOffset += theme_.fontLabel().getHeight();
+            yOffset += theme_.labelHeight();
             
             // draw value indicator
 

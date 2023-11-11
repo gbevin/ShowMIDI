@@ -27,10 +27,20 @@ namespace showmidi
         {
             return Font(16, Font::bold);
         }
+
+        int labelHeight()
+        {
+            return (int)fontLabel().getHeight();
+        }
         
         Font fontData()
         {
             return Font(16, Font::italic);
+        }
+
+        int dataHeight()
+        {
+            return (int)fontData().getHeight();
         }
         
         Colour colorSidebar;
