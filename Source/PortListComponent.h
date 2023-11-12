@@ -19,23 +19,24 @@
 
 #include <JuceHeader.h>
 
+#include "SettingsManager.h"
+
 namespace showmidi
 {
-    class MainWindow : public DocumentWindow
+    class PortListComponent : public Component
     {
-    public:
-        MainWindow(String name);
-        ~MainWindow();
-
-        void resized() override;
-        void closeButtonPressed() override;
+    public:        
+        PortListComponent(SettingsManager&);
+        ~PortListComponent() override;
         
-        int getSidebarWidth();
+        void paint(Graphics&) override;
+        
+        void resized() override;
         
         struct Pimpl;
     private:
-        std::unique_ptr<Pimpl> pimpl_ { nullptr };
+        std::unique_ptr<Pimpl> pimpl_;
 
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PortListComponent)
     };
 }

@@ -25,9 +25,13 @@ namespace showmidi
 {
     struct SidebarComponent::Pimpl : public Button::Listener
     {
-        Pimpl(SidebarComponent* owner, SettingsManager& manager) :
+        static constexpr int COLLAPSED_WIDTH = 36;
+        static constexpr int EXPANDED_WIDTH = 180;
+        
+        Pimpl(SidebarComponent* owner, SettingsManager& manager, bool expandable) :
             owner_(owner),
             manager_(manager),
+            expandable_(expandable),
             settings_(manager),
             about_(manager.getSettings().getTheme())
         {
@@ -40,11 +44,24 @@ namespace showmidi
         
         void setup()
         {
+            collapsedButton_.addListener(this);
+            expandedButton_.addListener(this);
             helpButton_.addListener(this);
             settingsButton_.addListener(this);
 
+            owner_->addChildComponent(collapsedButton_);
+            owner_->addChildComponent(expandedButton_);
             owner_->addAndMakeVisible(helpButton_);
-            owner_->addAndMakeVisible(settingsButton_);
+            owner_->addChildComponent(settingsButton_);
+            
+            if (expandable_)
+            {
+                collapsedButton_.setVisible(true);
+            }
+            else
+            {
+                settingsButton_.setVisible(true);
+            }
 
             owner_->getParentComponent()->addChildComponent(about_);
             owner_->getParentComponent()->addChildComponent(settings_);
@@ -54,15 +71,33 @@ namespace showmidi
 
         void buttonClicked(Button* button)
         {
-            if (button == &settingsButton_)
+            if (button == &collapsedButton_)
             {
-                settings_.setVisible(!settings_.isVisible());
-                about_.setVisible(false);
+                expanded_ = true;
+                collapsedButton_.setVisible(false);
+                expandedButton_.setVisible(true);
+                settingsButton_.setVisible(true);
+                
+                owner_->getParentComponent()->resized();
+            }
+            else if (button == &expandedButton_)
+            {
+                expanded_ = false;
+                collapsedButton_.setVisible(true);
+                expandedButton_.setVisible(false);
+                settingsButton_.setVisible(false);
+                
+                owner_->getParentComponent()->resized();
             }
             else if (button == &helpButton_)
             {
                 about_.setVisible(!about_.isVisible());
                 settings_.setVisible(false);
+            }
+            else if (button == &settingsButton_)
+            {
+                settings_.setVisible(!settings_.isVisible());
+                about_.setVisible(false);
             }
         }
 
@@ -71,45 +106,86 @@ namespace showmidi
             auto& theme = manager_.getSettings().getTheme();
             
             g.fillAll(theme.colorSidebar);
-            
-            auto settings_svg = settingsSvg_->createCopy();
-            settings_svg->replaceColour(Colours::black, theme.colorData);
-            settingsButton_.drawDrawable(g, *settings_svg);
-            
+
+            if (collapsedButton_.isVisible())
+            {
+                auto collapsed_svg = collapsedSvg_->createCopy();
+                collapsed_svg->replaceColour(Colours::black, theme.colorData);
+                collapsedButton_.drawDrawable(g, *collapsed_svg);
+            }
+
+            if (expandedButton_.isVisible())
+            {
+                auto expanded_svg = expandedSvg_->createCopy();
+                expanded_svg->replaceColour(Colours::black, theme.colorData);
+                expandedButton_.drawDrawable(g, *expanded_svg);
+            }
+
             auto help_svg = helpSvg_->createCopy();
             help_svg->replaceColour(Colours::black, theme.colorData);
             helpButton_.drawDrawable(g, *help_svg);
+
+            if (settingsButton_.isVisible())
+            {
+                auto settings_svg = settingsSvg_->createCopy();
+                settings_svg->replaceColour(Colours::black, theme.colorData);
+                settingsButton_.drawDrawable(g, *settings_svg);
+            }
         }
         
         void resized()
         {
-            settingsButton_.setBoundsForTouch(X_SETTINGS, Y_SETTINGS,
-                                              settingsSvg_->getWidth(), settingsSvg_->getHeight());
+            collapsedButton_.setBoundsForTouch(X_COLLAPSED, Y_COLLAPSED,
+                                               collapsedSvg_->getWidth(), collapsedSvg_->getHeight());
+
+            expandedButton_.setBoundsForTouch(X_EXPANDED, Y_EXPANDED,
+                                              expandedSvg_->getWidth(), expandedSvg_->getHeight());
 
             helpButton_.setBoundsForTouch(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
-                                          owner_->getWidth(), helpSvg_->getHeight());
+                                          helpSvg_->getWidth(), helpSvg_->getHeight());
             
-            settings_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
+            settingsButton_.setBoundsForTouch(owner_->getWidth() - expandedSvg_->getWidth() - X_SETTINGS, Y_SETTINGS,
+                                              settingsSvg_->getWidth(), settingsSvg_->getHeight());
+
             about_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_.getHeight());
+            settings_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
+        }
+        
+        int getActiveWidth()
+        {
+            if (expanded_)
+            {
+                return EXPANDED_WIDTH;
+            }
+            
+            return COLLAPSED_WIDTH;
         }
 
         SidebarComponent* const owner_;
         SettingsManager& manager_;
+        const bool expandable_;
         
-        std::unique_ptr<Drawable> settingsSvg_ = Drawable::createFromImageData(BinaryData::settings_svg, BinaryData::settings_svgSize);
+        bool expanded_ = false;
+        
+        std::unique_ptr<Drawable> collapsedSvg_ = Drawable::createFromImageData(BinaryData::collapsed_svg, BinaryData::collapsed_svgSize);
+        std::unique_ptr<Drawable> expandedSvg_ = Drawable::createFromImageData(BinaryData::expanded_svg, BinaryData::expanded_svgSize);
         std::unique_ptr<Drawable> helpSvg_ = Drawable::createFromImageData(BinaryData::help_svg, BinaryData::help_svgSize);
+        std::unique_ptr<Drawable> settingsSvg_ = Drawable::createFromImageData(BinaryData::settings_svg, BinaryData::settings_svgSize);
 
-        PaintedButton settingsButton_;
+        PaintedButton collapsedButton_;
+        PaintedButton expandedButton_;
         PaintedButton helpButton_;
+        PaintedButton settingsButton_;
         SettingsComponent settings_;
         AboutComponent about_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SidebarComponent::SidebarComponent(SettingsManager& m) : pimpl_(new Pimpl(this, m)) {}
+    SidebarComponent::SidebarComponent(SettingsManager& m, bool e) : pimpl_(new Pimpl(this, m, e)) {}
     SidebarComponent::~SidebarComponent() = default;
     
     void SidebarComponent::paint(Graphics& g) { pimpl_->paint(g); }
     void SidebarComponent::resized()          { pimpl_->resized(); }
+    int SidebarComponent::getActiveWidth()    { return pimpl_->getActiveWidth(); }
 }

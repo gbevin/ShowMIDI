@@ -45,23 +45,11 @@ namespace showmidi
             Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
             owner_->setResizable(true, true);
-            owner_->getConstrainer()->setMinimumWidth(SidebarComponent::SIDEBAR_WIDTH + MidiDeviceComponent::getStandardWidth());
-            owner_->getConstrainer()->setMaximumWidth(SidebarComponent::SIDEBAR_WIDTH + MidiDeviceComponent::getStandardWidth());
+            owner_->getConstrainer()->setMinimumWidth(layout_.getSidebarWidth() + MidiDeviceComponent::getStandardWidth());
+            owner_->getConstrainer()->setMaximumWidth(owner_->getConstrainer()->getMaximumWidth());
             owner_->getConstrainer()->setMinimumHeight(120);
             
-            sidebar_.setBounds(0, 0, SidebarComponent::SIDEBAR_WIDTH, DEFAULT_EDITOR_HEIGHT);
-            layout_.addAndMakeVisible(sidebar_);
-
             midiDevice_.setBounds(0, 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
-
-            viewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
-            viewport_.setScrollBarsShown(true, false);
-            viewport_.setScrollBarThickness(4);
-            viewport_.setViewedComponent(&midiDevice_, false);
-            viewport_.setBounds(sidebar_.getWidth(), 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
-            layout_.addAndMakeVisible(viewport_);
-
-            layout_.setSize(sidebar_.getWidth() + viewport_.getWidth(), DEFAULT_EDITOR_HEIGHT);
 
             owner_->addAndMakeVisible(layout_);
 
@@ -143,8 +131,6 @@ namespace showmidi
         void resized(int height)
         {
             layout_.setBounds(0, 0, layout_.getWidth(), height);
-            sidebar_.setBounds(0, 0, sidebar_.getWidth(), height);
-            viewport_.setBounds(sidebar_.getWidth(), 0, layout_.getWidth() - sidebar_.getWidth(), height);
         }
         
         Settings& getSettings() override
@@ -168,10 +154,8 @@ namespace showmidi
         ShowMIDIPluginAudioProcessorEditor* const owner_;
         ShowMIDIPluginAudioProcessor& audioProcessor_;
         
-        MainLayoutComponent layout_ { *this };
-        SidebarComponent sidebar_ { *this };
-        Viewport viewport_;
         MidiDeviceComponent midiDevice_;
+        MainLayoutComponent layout_ { *this, MainLayoutType::layoutPlugin, &midiDevice_ };
         
         bool paused_ { false };
 

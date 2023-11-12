@@ -851,19 +851,36 @@ static const unsigned char temp_binary_data_0[] =
 
 const char* appicon_png = (const char*) temp_binary_data_0;
 
-//================== expanded.svg ==================
+//================== collapsed.svg ==================
 static const unsigned char temp_binary_data_1[] =
-"<svg width=\"12\" height=\"11\" viewBox=\"0 0 12 11\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n"
-"<g id=\"Group 24\">\n"
-"<path id=\"Vector 4\" d=\"M1 10L5.55405 6.27396C6.04307 5.87385 6.04307 5.12615 5.55405 4.72604L1 1\" stroke=\"black\"/>\n"
-"<path id=\"Vector 5\" d=\"M6.5 10L11.0541 6.27396C11.5431 5.87385 11.5431 5.12615 11.0541 4.72604L6.5 1\" stroke=\"black\"/>\n"
-"</g>\n"
+"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+"<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
+"<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 12 11\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-ru"
+"le:evenodd;\">\n"
+"    <g id=\"Group-24\" serif:id=\"Group 24\" transform=\"matrix(-1,0,0,1,12.4208,0)\">\n"
+"        <path id=\"Vector-4\" serif:id=\"Vector 4\" d=\"M1,10L5.554,6.274C6.043,5.874 6.043,5.126 5.554,4.726L1,1\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"        <path id=\"Vector-5\" serif:id=\"Vector 5\" d=\"M6.5,10L11.054,6.274C11.543,5.874 11.543,5.126 11.054,4.726L6.5,1\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"    </g>\n"
 "</svg>\n";
 
-const char* expanded_svg = (const char*) temp_binary_data_1;
+const char* collapsed_svg = (const char*) temp_binary_data_1;
+
+//================== expanded.svg ==================
+static const unsigned char temp_binary_data_2[] =
+"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+"<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
+"<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 12 11\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-ru"
+"le:evenodd;\">\n"
+"    <g id=\"Group-24\" serif:id=\"Group 24\">\n"
+"        <path id=\"Vector-4\" serif:id=\"Vector 4\" d=\"M1,10L5.554,6.274C6.043,5.874 6.043,5.126 5.554,4.726L1,1\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"        <path id=\"Vector-5\" serif:id=\"Vector 5\" d=\"M6.5,10L11.054,6.274C11.543,5.874 11.543,5.126 11.054,4.726L6.5,1\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"    </g>\n"
+"</svg>\n";
+
+const char* expanded_svg = (const char*) temp_binary_data_2;
 
 //================== help.svg ==================
-static const unsigned char temp_binary_data_2[] =
+static const unsigned char temp_binary_data_3[] =
 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
 "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
 "<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 15 15\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-ru"
@@ -881,65 +898,73 @@ static const unsigned char temp_binary_data_2[] =
 "    </g>\n"
 "</svg>\n";
 
-const char* help_svg = (const char*) temp_binary_data_2;
+const char* help_svg = (const char*) temp_binary_data_3;
 
 //================== hidden.svg ==================
-static const unsigned char temp_binary_data_3[] =
-"<svg width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n"
-"<g id=\"Group 21\">\n"
-"<g id=\"Group 17\">\n"
-"<path id=\"Intersect (Stroke)\" d=\"M2 8C3 10.5001 6 12.5001 9 12.5001C12 12.5001 14.5 10.5001 15.5 8\" stroke=\"black\" stroke-linecap=\"square\"/>\n"
-"<path id=\"Vector 1\" d=\"M9 12.5V16\" stroke=\"black\" stroke-linecap=\"square\"/>\n"
-"<path id=\"Vector 2\" d=\"M14 11L16 13\" stroke=\"black\" stroke-linecap=\"square\"/>\n"
-"<path id=\"Vector 3\" d=\"M4 11L2 13\" stroke=\"black\" stroke-linecap=\"square\"/>\n"
-"</g>\n"
-"</g>\n"
+static const unsigned char temp_binary_data_4[] =
+"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+"<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
+"<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 18 18\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-ru"
+"le:evenodd;stroke-linecap:square;\">\n"
+"    <g id=\"Group-21\" serif:id=\"Group 21\">\n"
+"        <g id=\"Group-17\" serif:id=\"Group 17\">\n"
+"            <path id=\"Intersect--Stroke-\" serif:id=\"Intersect (Stroke)\" d=\"M2,8C3,10.5 6,12.5 9,12.5C12,12.5 14.5,10.5 15.5,8\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"            <path id=\"Vector-1\" serif:id=\"Vector 1\" d=\"M9,12.5L9,16\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"            <path id=\"Vector-2\" serif:id=\"Vector 2\" d=\"M14,11L16,13\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"            <path id=\"Vector-3\" serif:id=\"Vector 3\" d=\"M4,11L2,13\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"        </g>\n"
+"    </g>\n"
 "</svg>\n";
 
-const char* hidden_svg = (const char*) temp_binary_data_3;
+const char* hidden_svg = (const char*) temp_binary_data_4;
 
 //================== settings.svg ==================
-static const unsigned char temp_binary_data_4[] =
-"<svg width=\"12\" height=\"15\" viewBox=\"0 0 12 15\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n"
-"<g id=\"Group 23\">\n"
-"<line id=\"Line 1\" y1=\"2.5\" x2=\"4\" y2=\"2.5\" stroke=\"black\"/>\n"
-"<line id=\"Line 4\" x1=\"7\" y1=\"2.5\" x2=\"12\" y2=\"2.5\" stroke=\"black\"/>\n"
-"<line id=\"Line 2\" y1=\"7.5\" x2=\"8\" y2=\"7.5\" stroke=\"black\"/>\n"
-"<line id=\"Line 5\" x1=\"11\" y1=\"7.5\" x2=\"12\" y2=\"7.5\" stroke=\"black\"/>\n"
-"<line id=\"Line 3\" y1=\"12.5\" x2=\"2\" y2=\"12.5\" stroke=\"black\"/>\n"
-"<line id=\"Line 6\" x1=\"5\" y1=\"12.5\" x2=\"12\" y2=\"12.5\" stroke=\"black\"/>\n"
-"<rect id=\"Rectangle 332\" x=\"4.5\" y=\"0.5\" width=\"2\" height=\"4\" rx=\"1\" stroke=\"black\"/>\n"
-"<rect id=\"Rectangle 333\" x=\"8.5\" y=\"5.5\" width=\"2\" height=\"4\" rx=\"1\" stroke=\"black\"/>\n"
-"<rect id=\"Rectangle 334\" x=\"2.5\" y=\"10.5\" width=\"2\" height=\"4\" rx=\"1\" stroke=\"black\"/>\n"
-"</g>\n"
+static const unsigned char temp_binary_data_5[] =
+"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+"<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
+"<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 12 15\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-ru"
+"le:evenodd;\">\n"
+"    <g id=\"Group-23\" serif:id=\"Group 23\">\n"
+"        <path id=\"Line-1\" serif:id=\"Line 1\" d=\"M0,2.5L4,2.5\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"        <path id=\"Line-4\" serif:id=\"Line 4\" d=\"M7,2.5L12,2.5\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"        <path id=\"Line-2\" serif:id=\"Line 2\" d=\"M0,7.5L8,7.5\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"        <path id=\"Line-5\" serif:id=\"Line 5\" d=\"M11,7.5L12,7.5\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"        <path id=\"Line-3\" serif:id=\"Line 3\" d=\"M0,12.5L2,12.5\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"        <path id=\"Line-6\" serif:id=\"Line 6\" d=\"M5,12.5L12,12.5\" style=\"fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;\"/>\n"
+"        <path id=\"Rectangle-332\" serif:id=\"Rectangle 332\" d=\"M6.5,1.5C6.5,0.948 6.052,0.5 5.5,0.5C4.948,0.5 4.5,0.948 4.5,1.5L4.5,3.5C4.5,4.052 4.948,4.5 5.5,4.5C6.052,4.5 6.5,4.052 6.5,3.5L6.5,1.5Z\" style=\"fill:none;stroke:black;stroke-width:"
+"1px;\"/>\n"
+"        <path id=\"Rectangle-333\" serif:id=\"Rectangle 333\" d=\"M10.5,6.5C10.5,5.948 10.052,5.5 9.5,5.5C8.948,5.5 8.5,5.948 8.5,6.5L8.5,8.5C8.5,9.052 8.948,9.5 9.5,9.5C10.052,9.5 10.5,9.052 10.5,8.5L10.5,6.5Z\" style=\"fill:none;stroke:black;stroke"
+"-width:1px;\"/>\n"
+"        <path id=\"Rectangle-334\" serif:id=\"Rectangle 334\" d=\"M4.5,11.5C4.5,10.948 4.052,10.5 3.5,10.5C2.948,10.5 2.5,10.948 2.5,11.5L2.5,13.5C2.5,14.052 2.948,14.5 3.5,14.5C4.052,14.5 4.5,14.052 4.5,13.5L4.5,11.5Z\" style=\"fill:none;stroke:blac"
+"k;stroke-width:1px;\"/>\n"
+"    </g>\n"
 "</svg>\n";
 
-const char* settings_svg = (const char*) temp_binary_data_4;
+const char* settings_svg = (const char*) temp_binary_data_5;
 
 //================== visible.svg ==================
-static const unsigned char temp_binary_data_5[] =
-"<svg width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n"
-"<g id=\"Group 20\">\n"
-"<g id=\"Group 16\">\n"
-"<g id=\"Intersect\">\n"
-"<mask id=\"path-1-inside-1_85_5\" fill=\"white\">\n"
-"<path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M2.1866 9.89519C2.06032 9.64689 2.06032 9.35326 2.18659 9.10496C3.42541 6.66891 5.95579 5 8.87597 5C11.7961 5 14.3264 6.66884 15.5653 9.10482C15.6915 9.35312 15.6916 9.64674 15.5653 9.89504C14.326"
-"5 12.3311 11.7961 14 8.8759 14C5.95578 14 3.42544 12.3312 2.1866 9.89519Z\"/>\n"
-"</mask>\n"
-"<path d=\"M15.5653 9.10482L16.2338 8.76483L15.5653 9.10482ZM15.5653 9.89504L16.2338 10.235L15.5653 9.89504ZM2.85511 9.44493C3.97099 7.25063 6.24889 5.75 8.87597 5.75V4.25C5.66269 4.25 2.87983 6.08719 1.51807 8.76499L2.85511 9.44493ZM8.87597 5.75C11.5"
-"03 5.75 13.7809 7.25057 14.8968 9.4448L16.2338 8.76483C14.872 6.08712 12.0892 4.25 8.87597 4.25V5.75ZM14.8968 9.55507C13.7809 11.7494 11.503 13.25 8.8759 13.25V14.75C12.0892 14.75 14.872 12.9128 16.2338 10.235L14.8968 9.55507ZM8.8759 13.25C6.24888 13"
-".25 3.97102 11.7494 2.85511 9.5552L1.51808 10.2352C2.87987 12.9129 5.66269 14.75 8.8759 14.75V13.25ZM14.8968 9.4448C14.9144 9.47947 14.9144 9.5204 14.8968 9.55507L16.2338 10.235C16.4687 9.77307 16.4687 9.22676 16.2338 8.76483L14.8968 9.4448ZM1.51807 "
-"8.76499C1.28316 9.22693 1.28316 9.77324 1.51808 10.2352L2.85511 9.5552C2.83748 9.52053 2.83748 9.4796 2.85511 9.44493L1.51807 8.76499Z\" fill=\"black\" mask=\"url(#path-1-inside-1_85_5)\"/>\n"
-"</g>\n"
-"<circle id=\"Ellipse 40\" cx=\"8.87598\" cy=\"9.5\" r=\"2.5\" fill=\"black\"/>\n"
-"</g>\n"
-"</g>\n"
+static const unsigned char temp_binary_data_6[] =
+"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+"<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n"
+"<svg width=\"100%\" height=\"100%\" viewBox=\"0 0 18 18\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xml:space=\"preserve\" xmlns:serif=\"http://www.serif.com/\" style=\"fill-rule:evenodd;clip-ru"
+"le:evenodd;stroke-linejoin:round;stroke-miterlimit:2;\">\n"
+"    <g id=\"Group-20\" serif:id=\"Group 20\">\n"
+"        <g id=\"Group-16\" serif:id=\"Group 16\">\n"
+"            <g id=\"Intersect\">\n"
+"                <path d=\"M15.565,9.105L16.234,8.765L15.565,9.105ZM15.565,9.895L16.234,10.235L15.565,9.895ZM2.855,9.445C3.971,7.251 6.249,5.75 8.876,5.75L8.876,4.25C5.663,4.25 2.88,6.087 1.518,8.765L2.855,9.445ZM8.876,5.75C11.503,5.75 13.781,7.251 14"
+".897,9.445L16.234,8.765C14.872,6.087 12.089,4.25 8.876,4.25L8.876,5.75ZM14.897,9.555C13.781,11.749 11.503,13.25 8.876,13.25L8.876,14.75C12.089,14.75 14.872,12.913 16.234,10.235L14.897,9.555ZM8.876,13.25C6.249,13.25 3.971,11.749 2.855,9.555L1.518,10.2"
+"35C2.88,12.913 5.663,14.75 8.876,14.75L8.876,13.25ZM14.897,9.445C14.914,9.479 14.914,9.52 14.897,9.555L16.234,10.235C16.469,9.773 16.469,9.227 16.234,8.765L14.897,9.445ZM1.518,8.765C1.283,9.227 1.283,9.773 1.518,10.235L2.855,9.555C2.837,9.521 2.837,9"
+".48 2.855,9.445L1.518,8.765Z\" style=\"fill-rule:nonzero;\"/>\n"
+"            </g>\n"
+"            <circle id=\"Ellipse-40\" serif:id=\"Ellipse 40\" cx=\"8.876\" cy=\"9.5\" r=\"2.5\"/>\n"
+"        </g>\n"
+"    </g>\n"
 "</svg>\n";
 
-const char* visible_svg = (const char*) temp_binary_data_5;
+const char* visible_svg = (const char*) temp_binary_data_6;
 
 //================== JetBrainsMono-Italic.ttf ==================
-static const unsigned char temp_binary_data_6[] =
+static const unsigned char temp_binary_data_7[] =
 { 0,1,0,0,0,17,1,0,0,4,0,16,71,68,69,70,0,57,10,111,0,3,177,192,0,0,2,36,71,80,79,83,63,53,39,16,0,3,179,228,0,0,36,66,71,83,85,66,146,169,74,64,0,3,216,40,0,0,97,62,79,83,47,50,18,54,11,112,0,0,1,152,0,0,0,96,99,109,97,112,33,220,68,252,0,0,28,252,0,0,
 66,106,99,118,116,32,37,182,13,128,0,0,110,76,0,0,0,168,102,112,103,109,98,47,3,127,0,0,95,104,0,0,14,12,103,97,115,112,0,0,0,16,0,3,177,184,0,0,0,8,103,108,121,102,88,56,71,62,0,0,138,0,0,2,214,0,104,101,97,100,27,34,96,128,0,0,1,28,0,0,0,54,104,104,
 101,97,0,200,11,47,0,0,1,84,0,0,0,36,104,109,116,120,50,15,247,121,0,0,1,248,0,0,27,4,108,111,99,97,8,68,14,88,0,0,110,244,0,0,27,12,109,97,120,112,15,187,20,68,0,0,1,120,0,0,0,32,110,97,109,101,178,224,63,85,0,3,96,0,0,0,6,39,112,111,115,116,243,214,
@@ -3954,10 +3979,10 @@ static const unsigned char temp_binary_data_6[] =
 0,0,0,1,3,52,0,1,0,3,4,12,3,28,4,12,0,0,0,1,3,52,0,1,0,3,4,12,3,31,4,12,0,0,0,1,3,52,0,1,0,3,4,12,4,15,4,15,0,0,0,1,3,52,0,1,0,3,4,12,3,46,4,12,0,0,0,2,3,33,3,52,0,1,0,1,4,14,0,0,0,0,0,1,0,1,4,14,0,1,0,0,0,192,0,3,4,15,3,33,3,52,0,1,0,1,4,14,0,0,0,1,
 0,1,0,1,0,1,0,3,0,0,0,0,0,1,0,2,0,3,0,3,0,0,0,0,0,1,0,2,0,3,0,2,0,0,0,0,0,1,0,2,0,3,0,5,0,0,0,0,0,1,0,2,0,3,0,4,0,0,0,0,0,1,0,3,0,3,0,1,0,4,0,0,0,0,0,1,0,1,0,3,0,1,0,0,0,110,0,0,0,1,0,4,0,3,0,1,0,1,0,4,0,0,0,0,0,1,0,5,0,3,0,1,0,1,0,1,0,4,0,0,0,0,0,0 };
 
-const char* JetBrainsMonoItalic_ttf = (const char*) temp_binary_data_6;
+const char* JetBrainsMonoItalic_ttf = (const char*) temp_binary_data_7;
 
 //================== JetBrainsMono-Regular.ttf ==================
-static const unsigned char temp_binary_data_7[] =
+static const unsigned char temp_binary_data_8[] =
 { 0,1,0,0,0,17,1,0,0,4,0,16,71,68,69,70,20,220,5,146,0,3,166,20,0,0,2,42,71,80,79,83,104,233,154,71,0,3,168,64,0,0,35,150,71,83,85,66,40,219,201,136,0,3,203,216,0,0,98,20,79,83,47,50,18,53,11,132,0,0,1,152,0,0,0,96,99,109,97,112,90,36,88,218,0,0,29,52,
 0,0,66,106,99,118,116,32,39,88,15,26,0,0,110,132,0,0,0,168,102,112,103,109,98,47,3,127,0,0,95,160,0,0,14,12,103,97,115,112,0,0,0,16,0,3,166,12,0,0,0,8,103,108,121,102,108,23,33,125,0,0,138,108,0,2,201,60,104,101,97,100,27,43,96,132,0,0,1,28,0,0,0,54,
 104,104,101,97,0,53,7,87,0,0,1,84,0,0,0,36,104,109,116,120,84,246,74,15,0,0,1,248,0,0,27,60,108,111,99,97,8,52,33,100,0,0,111,44,0,0,27,64,109,97,120,112,15,200,20,68,0,0,1,120,0,0,0,32,110,97,109,101,148,75,78,93,0,3,83,168,0,0,6,47,112,111,115,116,
@@ -6948,10 +6973,10 @@ static const unsigned char temp_binary_data_7[] =
 3,43,4,25,0,0,0,1,3,67,0,1,0,3,4,25,3,46,4,25,0,0,0,1,3,67,0,1,0,3,4,25,4,28,4,28,0,0,0,1,3,67,0,1,0,3,4,25,3,61,4,25,0,0,0,2,3,48,3,67,0,1,0,1,4,27,0,0,0,0,0,1,0,1,4,27,0,1,0,0,0,192,0,3,4,28,3,48,3,67,0,1,0,1,4,27,0,0,0,1,0,1,0,1,0,1,0,3,0,0,0,0,0,
 1,0,2,0,3,0,3,0,0,0,0,0,1,0,2,0,3,0,2,0,0,0,0,0,1,0,2,0,3,0,5,0,0,0,0,0,1,0,2,0,3,0,4,0,0,0,0,0,1,0,3,0,3,0,1,0,4,0,0,0,0,0,1,0,1,0,3,0,1,0,0,0,110,0,0,0,1,0,4,0,3,0,1,0,1,0,4,0,0,0,0,0,1,0,5,0,3,0,1,0,1,0,1,0,4,0,0,0,0 };
 
-const char* JetBrainsMonoRegular_ttf = (const char*) temp_binary_data_7;
+const char* JetBrainsMonoRegular_ttf = (const char*) temp_binary_data_8;
 
 //================== JetBrainsMono-SemiBold.ttf ==================
-static const unsigned char temp_binary_data_8[] =
+static const unsigned char temp_binary_data_9[] =
 { 0,1,0,0,0,17,1,0,0,4,0,16,71,68,69,70,20,220,5,146,0,3,178,68,0,0,2,42,71,80,79,83,62,117,107,243,0,3,180,112,0,0,35,222,71,83,85,66,40,219,201,136,0,3,216,80,0,0,98,20,79,83,47,50,18,253,11,132,0,0,1,152,0,0,0,96,99,109,97,112,90,36,88,218,0,0,29,52,
 0,0,66,106,99,118,116,32,39,219,15,156,0,0,110,132,0,0,0,168,102,112,103,109,98,47,3,127,0,0,95,160,0,0,14,12,103,97,115,112,0,0,0,16,0,3,178,60,0,0,0,8,103,108,121,102,136,67,205,193,0,0,138,108,0,2,213,16,104,101,97,100,27,49,96,134,0,0,1,28,0,0,0,
 54,104,104,101,97,0,59,7,87,0,0,1,84,0,0,0,36,104,109,116,120,84,249,44,91,0,0,1,248,0,0,27,60,108,111,99,97,8,80,222,84,0,0,111,44,0,0,27,64,109,97,120,112,15,200,20,59,0,0,1,120,0,0,0,32,110,97,109,101,209,18,85,187,0,3,95,124,0,0,6,139,112,111,115,
@@ -9978,10 +10003,10 @@ static const unsigned char temp_binary_data_8[] =
 0,1,4,27,0,0,0,1,0,1,0,1,0,1,0,3,0,0,0,0,0,1,0,2,0,3,0,3,0,0,0,0,0,1,0,2,0,3,0,2,0,0,0,0,0,1,0,2,0,3,0,5,0,0,0,0,0,1,0,2,0,3,0,4,0,0,0,0,0,1,0,3,0,3,0,1,0,4,0,0,0,0,0,1,0,1,0,3,0,1,0,0,0,110,0,0,0,1,0,4,0,3,0,1,0,1,0,4,0,0,0,0,0,1,0,5,0,3,0,1,0,1,0,1,
 0,4,0,0,0,0 };
 
-const char* JetBrainsMonoSemiBold_ttf = (const char*) temp_binary_data_8;
+const char* JetBrainsMonoSemiBold_ttf = (const char*) temp_binary_data_9;
 
 //================== JetBrainsMono-SemiBoldItalic.ttf ==================
-static const unsigned char temp_binary_data_9[] =
+static const unsigned char temp_binary_data_10[] =
 { 0,1,0,0,0,17,1,0,0,4,0,16,71,68,69,70,0,57,10,111,0,3,189,92,0,0,2,36,71,80,79,83,132,29,109,43,0,3,191,128,0,0,36,84,71,83,85,66,146,169,74,64,0,3,227,212,0,0,97,62,79,83,47,50,18,254,11,112,0,0,1,152,0,0,0,96,99,109,97,112,33,220,68,252,0,0,28,252,
 0,0,66,106,99,118,116,32,37,246,13,187,0,0,110,76,0,0,0,168,102,112,103,109,98,47,3,127,0,0,95,104,0,0,14,12,103,97,115,112,0,0,0,16,0,3,189,84,0,0,0,8,103,108,121,102,24,56,201,51,0,0,138,0,0,2,225,4,104,101,97,100,27,38,96,130,0,0,1,28,0,0,0,54,104,
 104,101,97,0,204,11,47,0,0,1,84,0,0,0,36,104,109,116,120,50,51,216,89,0,0,1,248,0,0,27,4,108,111,99,97,8,77,193,8,0,0,110,244,0,0,27,12,109,97,120,112,15,187,20,59,0,0,1,120,0,0,0,32,110,97,109,101,147,89,177,237,0,3,107,4,0,0,6,189,112,111,115,116,243,
@@ -13027,7 +13052,7 @@ static const unsigned char temp_binary_data_9[] =
 3,52,0,1,0,1,4,14,0,0,0,1,0,1,0,1,0,1,0,3,0,0,0,0,0,1,0,2,0,3,0,3,0,0,0,0,0,1,0,2,0,3,0,2,0,0,0,0,0,1,0,2,0,3,0,5,0,0,0,0,0,1,0,2,0,3,0,4,0,0,0,0,0,1,0,3,0,3,0,1,0,4,0,0,0,0,0,1,0,1,0,3,0,1,0,0,0,110,0,0,0,1,0,4,0,3,0,1,0,1,0,4,0,0,0,0,0,1,0,5,0,3,0,
 1,0,1,0,1,0,4,0,0,0,0,0,0 };
 
-const char* JetBrainsMonoSemiBoldItalic_ttf = (const char*) temp_binary_data_9;
+const char* JetBrainsMonoSemiBoldItalic_ttf = (const char*) temp_binary_data_10;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes);
@@ -13042,11 +13067,12 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
     switch (hash)
     {
         case 0xfcc30284:  numBytes = 62644; return appicon_png;
-        case 0xe11195de:  numBytes = 360; return expanded_svg;
+        case 0x880f3c7c:  numBytes = 864; return collapsed_svg;
+        case 0xe11195de:  numBytes = 825; return expanded_svg;
         case 0xd0f23466:  numBytes = 1674; return help_svg;
-        case 0xfe60a64f:  numBytes = 520; return hidden_svg;
-        case 0x1fdee048:  numBytes = 774; return settings_svg;
-        case 0x07cd5517:  numBytes = 1552; return visible_svg;
+        case 0xfe60a64f:  numBytes = 1148; return hidden_svg;
+        case 0x1fdee048:  numBytes = 2022; return settings_svg;
+        case 0x07cd5517:  numBytes = 1504; return visible_svg;
         case 0xd9693c50:  numBytes = 276840; return JetBrainsMonoItalic_ttf;
         case 0xfc4b58ea:  numBytes = 273900; return JetBrainsMonoRegular_ttf;
         case 0x2afa9573:  numBytes = 277092; return JetBrainsMonoSemiBold_ttf;
@@ -13061,6 +13087,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
 const char* namedResourceList[] =
 {
     "appicon_png",
+    "collapsed_svg",
     "expanded_svg",
     "help_svg",
     "hidden_svg",
@@ -13075,6 +13102,7 @@ const char* namedResourceList[] =
 const char* originalFilenames[] =
 {
     "appicon.png",
+    "collapsed.svg",
     "expanded.svg",
     "help.svg",
     "hidden.svg",

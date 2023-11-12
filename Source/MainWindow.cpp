@@ -18,6 +18,7 @@
 #include "MainWindow.h"
 
 #include "MainComponent.h"
+#include "MainComponent.h"
 #include "MainLayoutComponent.h"
 #include "MidiDeviceComponent.h"
 #include "SidebarComponent.h"
@@ -33,21 +34,7 @@ namespace showmidi
         {
             owner_->setUsingNativeTitleBar(true);
             
-            auto layout = new MainLayoutComponent(SMApp);
-            
-            sidebar_.setBounds(0, 0, SidebarComponent::SIDEBAR_WIDTH, DEFAULT_WINDOW_HEIGHT);
-            layout->addAndMakeVisible(sidebar_);
-
-            viewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
-            viewport_.setScrollBarsShown(true, true);
-            viewport_.setScrollBarThickness(4);
-            viewport_.setViewedComponent(new MainComponent(), true);
-            viewport_.setBounds(sidebar_.getWidth(), 0, (MidiDeviceComponent::getStandardWidth() + 2) + 2, DEFAULT_WINDOW_HEIGHT);
-            layout->addAndMakeVisible(viewport_);
-
-            layout->setSize(sidebar_.getWidth() + viewport_.getWidth(), DEFAULT_WINDOW_HEIGHT);
-            
-            owner_->setContentOwned(layout, true);
+            owner_->setContentNonOwned(&layout_, true);
 #if JUCE_IOS
             owner_->setFullScreen(true);
 #else
@@ -66,14 +53,9 @@ namespace showmidi
             JUCEApplication::getInstance()->systemRequestedQuit();
         }
         
-        int getSidebarWidth()
-        {
-            return SidebarComponent::SIDEBAR_WIDTH;
-        }
-        
         MainWindow* const owner_;
-        SidebarComponent sidebar_ { SMApp };
-        Viewport viewport_;
+        MainComponent main_;
+        MainLayoutComponent layout_ { SMApp, MainLayoutType::layoutStandalone, &main_ };
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
@@ -91,12 +73,10 @@ namespace showmidi
     {
         if (pimpl_.get() && isVisible())
         {
-            getContentComponent()->setBounds(0, 0, getWidth(), getHeight());
-            pimpl_->sidebar_.setBounds(0, 0, pimpl_->getSidebarWidth(), getHeight());
-            pimpl_->viewport_.setBounds(pimpl_->getSidebarWidth(), 0, getWidth() - pimpl_->getSidebarWidth(), getHeight());
+            pimpl_->layout_.setBounds(0, 0, getWidth(), getHeight());
         }
     };
     
     void MainWindow::closeButtonPressed() { pimpl_->closeButtonPressed(); }
-    int MainWindow::getSizebarWidth()     { return pimpl_->getSidebarWidth(); }
+    int MainWindow::getSidebarWidth()     { return pimpl_->layout_.getSidebarWidth(); }
 }

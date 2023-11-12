@@ -13,6 +13,7 @@
   <MAINGROUP id="BsIwV1" name="ShowMIDI">
     <GROUP id="{8CB228DE-9289-566C-FA68-A725D7D623F1}" name="Assets">
       <FILE id="eY2NXn" name="appicon.png" compile="0" resource="1" file="Assets/appicon.png"/>
+      <FILE id="FUuUaF" name="collapsed.svg" compile="0" resource="1" file="Assets/collapsed.svg"/>
       <FILE id="ubQN3v" name="expanded.svg" compile="0" resource="1" file="Assets/expanded.svg"/>
       <FILE id="lTbJOc" name="help.svg" compile="0" resource="1" file="Assets/help.svg"/>
       <FILE id="PqCEx8" name="hidden.svg" compile="0" resource="1" file="Assets/hidden.svg"/>
@@ -67,6 +68,10 @@
             file="Source/PopupColourSelector.cpp"/>
       <FILE id="I5FNO9" name="PopupColourSelector.h" compile="0" resource="0"
             file="Source/PopupColourSelector.h"/>
+      <FILE id="MuJ5so" name="PortListComponent.cpp" compile="1" resource="0"
+            file="Source/PortListComponent.cpp"/>
+      <FILE id="CDlnFy" name="PortListComponent.h" compile="0" resource="0"
+            file="Source/PortListComponent.h"/>
       <FILE id="a4oYP1" name="PropertiesSettings.cpp" compile="1" resource="0"
             file="Source/PropertiesSettings.cpp"/>
       <FILE id="cXRA86" name="PropertiesSettings.h" compile="0" resource="0"

@@ -150,6 +150,7 @@
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginSettings.cpp"/>
     <ClCompile Include="..\..\Source\PopupColourSelector.cpp"/>
+    <ClCompile Include="..\..\Source\PortListComponent.cpp"/>
     <ClCompile Include="..\..\Source\PropertiesSettings.cpp"/>
     <ClCompile Include="..\..\Source\SettingsComponent.cpp"/>
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp"/>
@@ -2431,6 +2432,7 @@
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginSettings.h"/>
     <ClInclude Include="..\..\Source\PopupColourSelector.h"/>
+    <ClInclude Include="..\..\Source\PortListComponent.h"/>
     <ClInclude Include="..\..\Source\PropertiesSettings.h"/>
     <ClInclude Include="..\..\Source\Settings.h"/>
     <ClInclude Include="..\..\Source\SettingsComponent.h"/>
@@ -3394,6 +3396,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Assets\appicon.png"/>
+    <None Include="..\..\Assets\collapsed.svg"/>
     <None Include="..\..\Assets\expanded.svg"/>
     <None Include="..\..\Assets\help.svg"/>
     <None Include="..\..\Assets\hidden.svg"/>

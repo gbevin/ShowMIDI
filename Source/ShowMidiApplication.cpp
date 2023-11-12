@@ -77,7 +77,7 @@ void ShowMidiApplication::setWindowSize(int width, int height)
 {
     if (mainWindow_ != nullptr)
     {
-        width += mainWindow_->getSizebarWidth();
+        width += mainWindow_->getSidebarWidth();
 #if JUCE_IOS
         mainWindow_->setBounds(0, 0, width, height);
 #else

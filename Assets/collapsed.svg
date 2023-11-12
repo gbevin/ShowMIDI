@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg width="100%" height="100%" viewBox="0 0 12 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
-    <g id="Group-24" serif:id="Group 24">
+    <g id="Group-24" serif:id="Group 24" transform="matrix(-1,0,0,1,12.4208,0)">
         <path id="Vector-4" serif:id="Vector 4" d="M1,10L5.554,6.274C6.043,5.874 6.043,5.126 5.554,4.726L1,1" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
         <path id="Vector-5" serif:id="Vector 5" d="M6.5,10L11.054,6.274C11.543,5.874 11.543,5.126 11.054,4.726L6.5,1" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
     </g>

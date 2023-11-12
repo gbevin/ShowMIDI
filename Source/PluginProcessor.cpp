@@ -111,6 +111,8 @@ namespace showmidi
     
     void ShowMIDIPluginAudioProcessor::getStateInformation(MemoryBlock& destData)
     {
+        settings_.storeTheme();
+        
         auto& state = settings_.getValueTree();
         if (auto xml_state = state.createXml())
         {

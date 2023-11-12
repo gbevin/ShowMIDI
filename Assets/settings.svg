@@ -1,13 +1,15 @@
-<svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Group 23">
-<line id="Line 1" y1="2.5" x2="4" y2="2.5" stroke="black"/>
-<line id="Line 4" x1="7" y1="2.5" x2="12" y2="2.5" stroke="black"/>
-<line id="Line 2" y1="7.5" x2="8" y2="7.5" stroke="black"/>
-<line id="Line 5" x1="11" y1="7.5" x2="12" y2="7.5" stroke="black"/>
-<line id="Line 3" y1="12.5" x2="2" y2="12.5" stroke="black"/>
-<line id="Line 6" x1="5" y1="12.5" x2="12" y2="12.5" stroke="black"/>
-<rect id="Rectangle 332" x="4.5" y="0.5" width="2" height="4" rx="1" stroke="black"/>
-<rect id="Rectangle 333" x="8.5" y="5.5" width="2" height="4" rx="1" stroke="black"/>
-<rect id="Rectangle 334" x="2.5" y="10.5" width="2" height="4" rx="1" stroke="black"/>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 12 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <g id="Group-23" serif:id="Group 23">
+        <path id="Line-1" serif:id="Line 1" d="M0,2.5L4,2.5" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+        <path id="Line-4" serif:id="Line 4" d="M7,2.5L12,2.5" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+        <path id="Line-2" serif:id="Line 2" d="M0,7.5L8,7.5" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+        <path id="Line-5" serif:id="Line 5" d="M11,7.5L12,7.5" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+        <path id="Line-3" serif:id="Line 3" d="M0,12.5L2,12.5" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+        <path id="Line-6" serif:id="Line 6" d="M5,12.5L12,12.5" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+        <path id="Rectangle-332" serif:id="Rectangle 332" d="M6.5,1.5C6.5,0.948 6.052,0.5 5.5,0.5C4.948,0.5 4.5,0.948 4.5,1.5L4.5,3.5C4.5,4.052 4.948,4.5 5.5,4.5C6.052,4.5 6.5,4.052 6.5,3.5L6.5,1.5Z" style="fill:none;stroke:black;stroke-width:1px;"/>
+        <path id="Rectangle-333" serif:id="Rectangle 333" d="M10.5,6.5C10.5,5.948 10.052,5.5 9.5,5.5C8.948,5.5 8.5,5.948 8.5,6.5L8.5,8.5C8.5,9.052 8.948,9.5 9.5,9.5C10.052,9.5 10.5,9.052 10.5,8.5L10.5,6.5Z" style="fill:none;stroke:black;stroke-width:1px;"/>
+        <path id="Rectangle-334" serif:id="Rectangle 334" d="M4.5,11.5C4.5,10.948 4.052,10.5 3.5,10.5C2.948,10.5 2.5,10.948 2.5,11.5L2.5,13.5C2.5,14.052 2.948,14.5 3.5,14.5C4.052,14.5 4.5,14.052 4.5,13.5L4.5,11.5Z" style="fill:none;stroke:black;stroke-width:1px;"/>
+    </g>
 </svg>

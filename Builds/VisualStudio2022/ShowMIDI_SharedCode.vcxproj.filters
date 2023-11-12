@@ -634,6 +634,9 @@
     <ClCompile Include="..\..\Source\PopupColourSelector.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\PortListComponent.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PropertiesSettings.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
@@ -3112,6 +3115,9 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PopupColourSelector.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PortListComponent.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PropertiesSettings.h">
@@ -5997,6 +6003,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Assets\appicon.png">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\collapsed.svg">
       <Filter>ShowMIDI\Assets</Filter>
     </None>
     <None Include="..\..\Assets\expanded.svg">

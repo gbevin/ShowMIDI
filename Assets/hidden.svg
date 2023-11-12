@@ -1,10 +1,12 @@
-<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Group 21">
-<g id="Group 17">
-<path id="Intersect (Stroke)" d="M2 8C3 10.5001 6 12.5001 9 12.5001C12 12.5001 14.5 10.5001 15.5 8" stroke="black" stroke-linecap="square"/>
-<path id="Vector 1" d="M9 12.5V16" stroke="black" stroke-linecap="square"/>
-<path id="Vector 2" d="M14 11L16 13" stroke="black" stroke-linecap="square"/>
-<path id="Vector 3" d="M4 11L2 13" stroke="black" stroke-linecap="square"/>
-</g>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:square;">
+    <g id="Group-21" serif:id="Group 21">
+        <g id="Group-17" serif:id="Group 17">
+            <path id="Intersect--Stroke-" serif:id="Intersect (Stroke)" d="M2,8C3,10.5 6,12.5 9,12.5C12,12.5 14.5,10.5 15.5,8" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+            <path id="Vector-1" serif:id="Vector 1" d="M9,12.5L9,16" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+            <path id="Vector-2" serif:id="Vector 2" d="M14,11L16,13" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+            <path id="Vector-3" serif:id="Vector 3" d="M4,11L2,13" style="fill:none;fill-rule:nonzero;stroke:black;stroke-width:1px;"/>
+        </g>
+    </g>
 </svg>

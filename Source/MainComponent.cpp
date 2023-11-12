@@ -25,7 +25,7 @@ namespace showmidi
     class MidiDeviceInfoComparator
     {
     public:
-        static int compareElements (MidiDeviceInfo first, MidiDeviceInfo second)
+        static int compareElements(MidiDeviceInfo first, MidiDeviceInfo second)
         {
             return (first.name < second.name) ? -1 : ((second.name < first.name) ? 1 : 0);
         }

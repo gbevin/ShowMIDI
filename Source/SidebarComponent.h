@@ -26,20 +26,26 @@ namespace showmidi
     class SidebarComponent : public Component
     {
     public:        
-        static constexpr int X_SETTINGS = 12;
+        static constexpr int X_COLLAPSED = 12;
+        static constexpr int Y_COLLAPSED = 13;
+
+        static constexpr int X_EXPANDED = 12;
+        static constexpr int Y_EXPANDED = 13;
+
+        static constexpr int X_SETTINGS = 11;
         static constexpr int Y_SETTINGS = 13;
 
         static constexpr int X_HELP = 11;
         static constexpr int Y_HELP = 12;
 
-        static constexpr int SIDEBAR_WIDTH = 36;
-
-        SidebarComponent(SettingsManager&);
+        SidebarComponent(SettingsManager&, bool);
         ~SidebarComponent() override;
         
         void paint(Graphics&) override;
         
         void resized() override;
+        
+        int getActiveWidth();
         
         struct Pimpl;
     private:

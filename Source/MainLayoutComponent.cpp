@@ -17,35 +17,96 @@
  */
 #include "MainLayoutComponent.h"
 
+#include "MainComponent.h"
+#include "MidiDeviceComponent.h"
+#include "SidebarComponent.h"
+
 namespace showmidi
 {
-    MainLayoutComponent::MainLayoutComponent(SettingsManager& manager) : settingsManager_(manager)
+    struct MainLayoutComponent::Pimpl
     {
-    }
-    
-    bool MainLayoutComponent::isInterestedInFileDrag(const StringArray& files)
-    {
-        for (auto file : files)
+        static constexpr int DEFAULT_WINDOW_HEIGHT = 600;
+        
+        Pimpl(MainLayoutComponent* owner, SettingsManager& manager, MainLayoutType type, Component* content) :
+            owner_(owner),
+            settingsManager_(manager),
+            layoutType_(type)
         {
-            if (file.endsWith(".svg"))
-            {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    void MainLayoutComponent::filesDropped(const StringArray& files, int, int)
-    {
-        for (auto file : files)
-        {
-            settingsManager_.getSettings().getTheme().parseXml(File(file).loadFileAsString());
-        }
-        
-        repaint();
-        
-        settingsManager_.storeSettings();
-    }
+            sidebar_.setBounds(0, 0, getSidebarWidth(), DEFAULT_WINDOW_HEIGHT);
+            owner_->addAndMakeVisible(sidebar_);
 
+            viewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
+            viewport_.setScrollBarsShown(true, true);
+            viewport_.setScrollBarThickness(4);
+            viewport_.setViewedComponent(content, false);
+            auto viewport_width = MidiDeviceComponent::getStandardWidth();
+            if (layoutType_ == MainLayoutType::layoutStandalone)
+            {
+                viewport_width += 4;
+            }
+            viewport_.setBounds(sidebar_.getWidth(), 0, viewport_width, DEFAULT_WINDOW_HEIGHT);
+            owner_->addAndMakeVisible(viewport_);
+        }
+        
+        ~Pimpl()
+        {
+        }
+
+        bool isInterestedInFileDrag(const StringArray& files)
+        {
+            for (auto file : files)
+            {
+                if (file.endsWith(".svg"))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+        
+        void filesDropped(const StringArray& files)
+        {
+            for (auto file : files)
+            {
+                settingsManager_.getSettings().getTheme().parseXml(File(file).loadFileAsString());
+            }
+            
+            owner_->repaint();
+            
+            settingsManager_.storeSettings();
+        }
+
+        void resized()
+        {
+            sidebar_.setBounds(0, 0, getSidebarWidth(), owner_->getHeight());
+            viewport_.setBounds(getSidebarWidth(), 0, owner_->getWidth() - getSidebarWidth(), owner_->getHeight());
+        }
+        
+        int getSidebarWidth()
+        {
+            return sidebar_.getActiveWidth();
+        }
+
+        MainLayoutComponent* const owner_;
+        SettingsManager& settingsManager_;
+        const MainLayoutType layoutType_;
+        SidebarComponent sidebar_ { settingsManager_, layoutType_ == MainLayoutType::layoutStandalone };
+        Viewport viewport_;
+
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
+    };
+    
+    MainLayoutComponent::MainLayoutComponent(SettingsManager& m, MainLayoutType t, Component* c) : pimpl_(new Pimpl(this, m, t, c))
+    {
+        setSize(pimpl_->sidebar_.getWidth() + pimpl_->viewport_.getWidth(), Pimpl::DEFAULT_WINDOW_HEIGHT);
+    }
+    
+    MainLayoutComponent::~MainLayoutComponent() = default;
+    
+    bool MainLayoutComponent::isInterestedInFileDrag(const StringArray& f)  { return pimpl_->isInterestedInFileDrag(f); };
+    void MainLayoutComponent::filesDropped(const StringArray& f, int, int)  { pimpl_->filesDropped(f); };
+
+    void MainLayoutComponent::resized()         { pimpl_->resized(); }
+    int MainLayoutComponent::getSidebarWidth()  { return pimpl_->getSidebarWidth(); }
 }
