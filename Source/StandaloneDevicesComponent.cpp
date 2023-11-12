@@ -28,7 +28,6 @@ namespace showmidi
     {
         static constexpr int MIN_MIDI_DEVICES_AUTO_SHOWN = 1;
         static constexpr int MAX_MIDI_DEVICES_AUTO_SHOWN = 6;
-        static constexpr int MIDI_DEVICE_SPACING = 2;
         
         enum Timers
         {
@@ -70,7 +69,23 @@ namespace showmidi
         
         void paint(Graphics& g)
         {
-            g.fillAll(SMApp.getSettings().getTheme().colorSidebar);
+            auto& theme = SMApp.getSettings().getTheme();
+            g.fillAll(theme.colorSidebar);
+            
+            {
+                ScopedLock guard(midiDevicesLock_);
+                if (midiDevices_.size() == 0)
+                {
+                    g.setColour(theme.colorBackground);
+                    g.fillRect(Rectangle<int>(Theme::MIDI_DEVICE_SPACING, 0, MidiDeviceComponent::getStandardWidth(), owner_->getHeight()));
+                    
+                    g.setFont(theme.fontLabel());
+                    g.setColour(theme.colorData);
+                    
+                    g.drawMultiLineText("No MIDI devices are visible.\n\n"
+                                        "Either no devices are connected, or all connected devices are hidden in the settings.", Theme::MIDI_DEVICE_SPACING + 23, 24, MidiDeviceComponent::getStandardWidth() - 46);
+                }
+            }
         }
         
         bool keyPressed(const KeyPress& key, Component*) override
@@ -131,7 +146,7 @@ namespace showmidi
                 height = std::max(height, c->getVisibleHeight());
             }
             
-            auto width = std::max(owner_->getParentWidth(), midiDevices_.size() * (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING) - MIDI_DEVICE_SPACING);
+            auto width = std::max(owner_->getParentWidth(), midiDevices_.size() * (MidiDeviceComponent::getStandardWidth() + Theme::MIDI_DEVICE_SPACING) - Theme::MIDI_DEVICE_SPACING);
             owner_->setSize(width, height);
 
             for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
@@ -215,7 +230,7 @@ namespace showmidi
                             midiDevices_.set(info.identifier, component);
                         }
                         
-                        component->setBounds(MIDI_DEVICE_SPACING + position++ * (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING), 0,
+                        component->setBounds(Theme::MIDI_DEVICE_SPACING + position++ * (MidiDeviceComponent::getStandardWidth() + Theme::MIDI_DEVICE_SPACING), 0,
                                              component->getStandardWidth(), owner_->getParentHeight());
                         
                         owner_->addAndMakeVisible(component);
@@ -230,9 +245,8 @@ namespace showmidi
         {
             MessageManager::callAsync([this] () {
                 // resize the window in order to display the MIDI devices
-                auto devices_width = (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING) * std::max(MIN_MIDI_DEVICES_AUTO_SHOWN, std::min(MAX_MIDI_DEVICES_AUTO_SHOWN, midiDevices_.size())) + MIDI_DEVICE_SPACING;
-                auto scrollbar_width = 8;
-                SMApp.setWindowWidthForMainLayout(devices_width + scrollbar_width);
+                auto devices_width = (MidiDeviceComponent::getStandardWidth() + Theme::MIDI_DEVICE_SPACING) * std::max(MIN_MIDI_DEVICES_AUTO_SHOWN, std::min(MAX_MIDI_DEVICES_AUTO_SHOWN, midiDevices_.size())) + Theme::MIDI_DEVICE_SPACING;
+                SMApp.setWindowWidthForMainLayout(devices_width + Theme::SCROLLBAR_THICKNESS);
             });
         }
 

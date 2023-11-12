@@ -45,7 +45,7 @@ namespace showmidi
             Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
             owner_->setResizable(true, true);
-            owner_->getConstrainer()->setMinimumWidth(layout_.getSidebarWidth() + MidiDeviceComponent::getStandardWidth() + 8);
+            owner_->getConstrainer()->setMinimumWidth(layout_.getSidebarWidth() + MidiDeviceComponent::getStandardWidth() + Theme::SCROLLBAR_THICKNESS);
             owner_->getConstrainer()->setMaximumWidth(owner_->getConstrainer()->getMaximumWidth());
             owner_->getConstrainer()->setMinimumHeight(120);
             

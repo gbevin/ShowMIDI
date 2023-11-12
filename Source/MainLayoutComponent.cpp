@@ -35,11 +35,16 @@ namespace showmidi
             sidebar_.setBounds(0, 0, getSidebarWidth(), DEFAULT_WINDOW_HEIGHT);
             owner_->addAndMakeVisible(sidebar_);
 
+            auto default_width = MidiDeviceComponent::getStandardWidth() + Theme::SCROLLBAR_THICKNESS;
+            if (type == MainLayoutType::layoutStandalone)
+            {
+                default_width += Theme::MIDI_DEVICE_SPACING * 2;
+            }
             viewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
             viewport_.setScrollBarsShown(true, true);
-            viewport_.setScrollBarThickness(8);
+            viewport_.setScrollBarThickness(Theme::SCROLLBAR_THICKNESS);
             viewport_.setViewedComponent(content, false);
-            viewport_.setBounds(sidebar_.getWidth(), 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_WINDOW_HEIGHT);
+            viewport_.setBounds(sidebar_.getWidth(), 0, default_width, DEFAULT_WINDOW_HEIGHT);
             owner_->addAndMakeVisible(viewport_);
         }
 

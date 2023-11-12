@@ -60,7 +60,7 @@ namespace showmidi
             
             portViewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
             portViewport_.setScrollBarsShown(true, false);
-            portViewport_.setScrollBarThickness(8);
+            portViewport_.setScrollBarThickness(Theme::SCROLLBAR_THICKNESS);
             portViewport_.setViewedComponent(&portList_, false);
             owner_->addChildComponent(portViewport_);
             
