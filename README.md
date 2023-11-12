@@ -6,7 +6,7 @@ All the heavy lifting is done by the wonderful JUCE library.
 
 The project website is https://github.com/gbevin/ShowMIDI
 
-<p><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-0.5.0.png" width="640" /></p>
+<p><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-0.5.0.png" style="width: auto" /></p>
 
 ## Community
 
