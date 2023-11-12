@@ -3108,6 +3108,9 @@
     <ClInclude Include="..\..\Source\PaintedButton.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\PauseManager.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\PluginEditor.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>

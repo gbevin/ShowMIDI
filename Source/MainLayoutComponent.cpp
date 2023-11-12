@@ -23,15 +23,19 @@
 
 namespace showmidi
 {
-    struct MainLayoutComponent::Pimpl : public SidebarListener
+    struct MainLayoutComponent::Pimpl : public SidebarListener, public KeyListener
     {
         static constexpr int DEFAULT_WINDOW_HEIGHT = 600;
         
-        Pimpl(MainLayoutComponent* owner, SettingsManager& manager, MainLayoutType type, Component* content) :
+        Pimpl(MainLayoutComponent* owner, SettingsManager& settings, PauseManager& pause, MainLayoutType type, Component* content) :
             owner_(owner),
-            settingsManager_(manager),
+            settingsManager_(settings),
+            pauseManager_(pause),
             layoutType_(type)
         {
+            owner_->setWantsKeyboardFocus(true);
+            owner_->addKeyListener(this);
+            
             sidebar_.setBounds(0, 0, getSidebarWidth(), DEFAULT_WINDOW_HEIGHT);
             owner_->addAndMakeVisible(sidebar_);
 
@@ -46,6 +50,22 @@ namespace showmidi
             viewport_.setViewedComponent(content, false);
             viewport_.setBounds(sidebar_.getWidth(), 0, default_width, DEFAULT_WINDOW_HEIGHT);
             owner_->addAndMakeVisible(viewport_);
+        }
+        
+        ~Pimpl()
+        {
+            owner_->removeKeyListener(this);
+        }
+
+        bool keyPressed(const KeyPress& key, Component*) override
+        {
+            if (key.getKeyCode() == KeyPress::spaceKey)
+            {
+                pauseManager_.togglePaused();
+                return true;
+            }
+            
+            return false;
         }
 
         bool isInterestedInFileDrag(const StringArray& files)
@@ -84,7 +104,7 @@ namespace showmidi
             return sidebar_.getActiveWidth();
         }
         
-        void sidebarChangedWidth()
+        void sidebarChangedWidth() override
         {
             if (layoutType_ == MainLayoutType::layoutStandalone)
             {
@@ -94,6 +114,7 @@ namespace showmidi
 
         MainLayoutComponent* const owner_;
         SettingsManager& settingsManager_;
+        PauseManager& pauseManager_;
         const MainLayoutType layoutType_;
         SidebarComponent sidebar_ {
             settingsManager_,
@@ -104,7 +125,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MainLayoutComponent::MainLayoutComponent(SettingsManager& m, MainLayoutType t, Component* c) : pimpl_(new Pimpl(this, m, t, c))
+    MainLayoutComponent::MainLayoutComponent(SettingsManager& s, PauseManager& p, MainLayoutType t, Component* c) : pimpl_(new Pimpl(this, s, p, t, c))
     {
         setSize(pimpl_->sidebar_.getWidth() + pimpl_->viewport_.getWidth(), Pimpl::DEFAULT_WINDOW_HEIGHT);
     }

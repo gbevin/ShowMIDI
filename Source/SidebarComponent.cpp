@@ -39,7 +39,6 @@ namespace showmidi
             manager_(manager),
             sidebarType_(type),
             listener_(listener),
-            portList_(manager),
             settings_(manager),
             about_(manager.getSettings().getTheme())
         {
@@ -57,16 +56,19 @@ namespace showmidi
             owner_->addChildComponent(expandedButton_);
             owner_->addAndMakeVisible(helpButton_);
             owner_->addChildComponent(settingsButton_);
-            
-            portViewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
-            portViewport_.setScrollBarsShown(true, false);
-            portViewport_.setScrollBarThickness(Theme::SCROLLBAR_THICKNESS);
-            portViewport_.setViewedComponent(&portList_, false);
-            owner_->addChildComponent(portViewport_);
-            
+                        
             if (sidebarType_ == SidebarType::sidebarExpandable)
             {
                 collapsedButton_.setVisible(true);
+                
+                portList_ = std::make_unique<PortListComponent>(manager_);
+                
+                portViewport_ = std::make_unique<Viewport>();
+                portViewport_->setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
+                portViewport_->setScrollBarsShown(true, false);
+                portViewport_->setScrollBarThickness(Theme::SCROLLBAR_THICKNESS);
+                portViewport_->setViewedComponent(portList_.get(), false);
+                owner_->addChildComponent(portViewport_.get());
             }
             else
             {
@@ -85,7 +87,10 @@ namespace showmidi
                 collapsedButton_.setVisible(false);
                 expandedButton_.setVisible(true);
                 settingsButton_.setVisible(true);
-                portViewport_.setVisible(true);
+                if (portViewport_.get())
+                {
+                    portViewport_->setVisible(true);
+                }
                 
                 settings_.setVisible(false);
                 about_.setVisible(false);
@@ -98,7 +103,10 @@ namespace showmidi
                 collapsedButton_.setVisible(true);
                 expandedButton_.setVisible(false);
                 settingsButton_.setVisible(false);
-                portViewport_.setVisible(false);
+                if (portViewport_.get())
+                {
+                    portViewport_->setVisible(false);
+                }
                 
                 settings_.setVisible(false);
                 about_.setVisible(false);
@@ -163,9 +171,11 @@ namespace showmidi
             settingsButton_.setBoundsForTouch(owner_->getWidth() - expandedSvg_->getWidth() - X_SETTINGS, Y_SETTINGS,
                                               settingsSvg_->getWidth(), settingsSvg_->getHeight());
 
-            
-            portViewport_.setBounds(0, Y_PORTLIST, owner_->getWidth(), owner_->getHeight() - Y_PORTLIST - PORTLIST_BOTTOM_MARGIN);
-            portList_.setSize(owner_->getWidth() - portViewport_.getScrollBarThickness(), std::max(portViewport_.getHeight(), portList_.getVisibleHeight()));
+            if (portViewport_.get())
+            {
+                portViewport_->setBounds(0, Y_PORTLIST, owner_->getWidth(), owner_->getHeight() - Y_PORTLIST - PORTLIST_BOTTOM_MARGIN);
+                portList_->setSize(owner_->getWidth() - portViewport_->getScrollBarThickness(), std::max(portViewport_->getHeight(), portList_->getVisibleHeight()));
+            }
             about_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_.getHeight());
             settings_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
         }
@@ -196,8 +206,8 @@ namespace showmidi
         PaintedButton expandedButton_;
         PaintedButton helpButton_;
         PaintedButton settingsButton_;
-        Viewport portViewport_;
-        PortListComponent portList_;
+        std::unique_ptr<Viewport> portViewport_;
+        std::unique_ptr<PortListComponent> portList_;
         SettingsComponent settings_;
         AboutComponent about_;
 

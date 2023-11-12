@@ -54,6 +54,7 @@
       <FILE id="j0c4oQ" name="PaintedButton.cpp" compile="1" resource="0"
             file="Source/PaintedButton.cpp"/>
       <FILE id="kJ6zgy" name="PaintedButton.h" compile="0" resource="0" file="Source/PaintedButton.h"/>
+      <FILE id="GYtqwL" name="PauseManager.h" compile="0" resource="0" file="Source/PauseManager.h"/>
       <FILE id="mgqWKI" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="BZ2So7" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>

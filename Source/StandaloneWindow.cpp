@@ -53,7 +53,7 @@ namespace showmidi
         
         StandaloneWindow* const owner_;
         StandaloneDevicesComponent main_;
-        MainLayoutComponent layout_ { SMApp, MainLayoutType::layoutStandalone, &main_ };
+        MainLayoutComponent layout_ { SMApp, main_, MainLayoutType::layoutStandalone, &main_ };
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };

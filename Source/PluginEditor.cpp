@@ -27,7 +27,7 @@
 
 namespace showmidi
 {
-    struct ShowMIDIPluginAudioProcessorEditor::Pimpl : public MultiTimer, public KeyListener, public SettingsManager
+    struct ShowMIDIPluginAudioProcessorEditor::Pimpl : public MultiTimer, public SettingsManager, public PauseManager
     {
         static constexpr int DEFAULT_EDITOR_HEIGHT = 600;
         
@@ -55,7 +55,6 @@ namespace showmidi
 
             owner_->setSize(layout_.getWidth(), DEFAULT_EDITOR_HEIGHT);
             owner_->setWantsKeyboardFocus(true);
-            owner_->addKeyListener(this);
             
             // 30Hz
             startTimer(RenderDevices, 1000 / 30);
@@ -65,8 +64,6 @@ namespace showmidi
         
         ~Pimpl()
         {
-            owner_->removeKeyListener(this);
-            
             stopTimer(RenderDevices);
         }
 
@@ -75,15 +72,9 @@ namespace showmidi
             midiDevice_.handleIncomingMidiMessage(msg);
         }
         
-        bool keyPressed(const KeyPress& key, Component*) override
+        void togglePaused() override
         {
-            if (key.getKeyCode() == KeyPress::spaceKey)
-            {
-                setPaused(!paused_);
-                return true;
-            }
-            
-            return false;
+            setPaused(!paused_);
         }
         
         void setPaused(bool paused)
@@ -160,7 +151,7 @@ namespace showmidi
         ShowMIDIPluginAudioProcessor& audioProcessor_;
         
         MidiDeviceComponent midiDevice_;
-        MainLayoutComponent layout_ { *this, MainLayoutType::layoutPlugin, &midiDevice_ };
+        MainLayoutComponent layout_ { *this, *this, MainLayoutType::layoutPlugin, &midiDevice_ };
         
         MidiDevicesListeners midiDevicesListeners_;
 

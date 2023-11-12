@@ -127,6 +127,7 @@
 		174103AD3F224D30061D8C33 /* JetBrainsMono-Italic.ttf */ /* JetBrainsMono-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; name = "JetBrainsMono-Italic.ttf"; path = "../../Fonts/JetBrainsMono-Italic.ttf"; sourceTree = SOURCE_ROOT; };
 		17ACFE7C6558A3BFE6DE79C9 /* CoreMIDI.framework */ /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		18E89D52FCDF34385983843E /* AUv3 AppExtension */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShowMIDI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E8AF652B5355FF40C9CC3C2 /* PauseManager.h */ /* PauseManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PauseManager.h; path = ../../Source/PauseManager.h; sourceTree = SOURCE_ROOT; };
 		1F9AA665E4E0435365DA2D52 /* juce_data_structures */ /* juce_data_structures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_data_structures; path = ../../JuceLibraryCode/modules/juce_data_structures; sourceTree = SOURCE_ROOT; };
 		226AF0455917BA09A7EFD367 /* StandaloneWindow.h */ /* StandaloneWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StandaloneWindow.h; path = ../../Source/StandaloneWindow.h; sourceTree = SOURCE_ROOT; };
 		2343ECC7F67FA6AD9E72214D /* PluginProcessor.cpp */ /* PluginProcessor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginProcessor.cpp; path = ../../Source/PluginProcessor.cpp; sourceTree = SOURCE_ROOT; };
@@ -548,6 +549,7 @@
 				BB0B90FF903B2C484336242E,
 				E071CD1AE979F36DF9BCBCCF,
 				88AAC6E05E409AD97864C094,
+				1E8AF652B5355FF40C9CC3C2,
 				5E8212E205DE721CE55589C7,
 				A7D51DA4FAC7916144DC9C37,
 				2343ECC7F67FA6AD9E72214D,

@@ -2429,6 +2429,7 @@
     <ClInclude Include="..\..\Source\MidiDeviceInfoComparator.h"/>
     <ClInclude Include="..\..\Source\MidiDevicesListener.h"/>
     <ClInclude Include="..\..\Source\PaintedButton.h"/>
+    <ClInclude Include="..\..\Source\PauseManager.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginSettings.h"/>

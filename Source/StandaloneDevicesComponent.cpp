@@ -24,7 +24,7 @@
 
 namespace showmidi
 {
-    struct StandaloneDevicesComponent::Pimpl : public MultiTimer, public KeyListener, public MidiDevicesListener
+    struct StandaloneDevicesComponent::Pimpl : public MultiTimer, public MidiDevicesListener
     {
         static constexpr int MIN_MIDI_DEVICES_AUTO_SHOWN = 1;
         static constexpr int MAX_MIDI_DEVICES_AUTO_SHOWN = 6;
@@ -37,9 +37,6 @@ namespace showmidi
         
         Pimpl(StandaloneDevicesComponent* owner) : owner_(owner)
         {
-            owner_->setWantsKeyboardFocus(true);
-            owner_->addKeyListener(this);
-            
             SMApp.getMidiDevicesListeners().add(this);
             
             refreshMidiDevices();
@@ -53,7 +50,6 @@ namespace showmidi
         ~Pimpl()
         {
             SMApp.getMidiDevicesListeners().remove(this);
-            owner_->removeKeyListener(this);
             
             stopTimer(RenderDevices);
             
@@ -88,26 +84,19 @@ namespace showmidi
             }
         }
         
-        bool keyPressed(const KeyPress& key, Component*) override
+        void togglePaused()
         {
-            if (key.getKeyCode() == KeyPress::spaceKey)
-            {
-                setPaused(!paused_);
-                return true;
-            }
-            
-            return false;
+            setPaused(!paused_);
         }
         
         void setPaused(bool paused)
         {
             SMApp.setWindowTitle(String("ShowMIDI") + (paused ? " (paused)" : ""));
+            paused_ = paused;
             
             ScopedLock g(midiDevicesLock_);
             for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
             {
-                paused_ = paused;
-                
                 i.getValue()->setPaused(paused);
             }
         }
@@ -201,8 +190,6 @@ namespace showmidi
             
             if (devices_to_remove.size() > 0 || new_devices_preset)
             {
-                setPaused(false);
-                
                 owner_->removeAllChildren();
                 
                 // remove the devices that disappeared
@@ -227,6 +214,7 @@ namespace showmidi
                         if (component == nullptr)
                         {
                             component = new MidiDeviceComponent(SMApp, info);
+                            component->setPaused(paused_);
                             midiDevices_.set(info.identifier, component);
                         }
                         
@@ -262,4 +250,5 @@ namespace showmidi
     StandaloneDevicesComponent::~StandaloneDevicesComponent() = default;
     
     void StandaloneDevicesComponent::paint(Graphics& g) { pimpl_->paint(g); }
+    void StandaloneDevicesComponent::togglePaused()     { pimpl_->togglePaused(); }
 }
