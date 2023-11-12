@@ -27,23 +27,25 @@ namespace showmidi
 {
     struct MainWindow::Pimpl
     {
+        static constexpr int DEFAULT_WINDOW_HEIGHT = 600;
+        
         Pimpl(MainWindow* owner) : owner_(owner)
         {
             owner_->setUsingNativeTitleBar(true);
             
             auto layout = new MainLayoutComponent(SMApp);
             
-            sidebar_.setBounds(0, 0, SidebarComponent::SIDEBAR_WIDTH, 600);
+            sidebar_.setBounds(0, 0, SidebarComponent::SIDEBAR_WIDTH, DEFAULT_WINDOW_HEIGHT);
             layout->addAndMakeVisible(sidebar_);
 
             viewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
             viewport_.setScrollBarsShown(true, true);
             viewport_.setScrollBarThickness(4);
             viewport_.setViewedComponent(new MainComponent(), true);
-            viewport_.setBounds(sidebar_.getWidth(), 0, (MidiDeviceComponent::getStandardWidth() + 2) + 2, 600);
+            viewport_.setBounds(sidebar_.getWidth(), 0, (MidiDeviceComponent::getStandardWidth() + 2) + 2, DEFAULT_WINDOW_HEIGHT);
             layout->addAndMakeVisible(viewport_);
 
-            layout->setSize(sidebar_.getWidth() + viewport_.getWidth(), 600);
+            layout->setSize(sidebar_.getWidth() + viewport_.getWidth(), DEFAULT_WINDOW_HEIGHT);
             
             owner_->setContentOwned(layout, true);
 #if JUCE_IOS
