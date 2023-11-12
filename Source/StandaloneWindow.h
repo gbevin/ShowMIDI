@@ -21,11 +21,11 @@
 
 namespace showmidi
 {
-    class MainWindow : public DocumentWindow
+    class StandaloneWindow : public DocumentWindow
     {
     public:
-        MainWindow(String name);
-        ~MainWindow();
+        StandaloneWindow(String name);
+        ~StandaloneWindow();
 
         void resized() override;
         void closeButtonPressed() override;
@@ -36,6 +36,6 @@ namespace showmidi
     private:
         std::unique_ptr<Pimpl> pimpl_ { nullptr };
 
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StandaloneWindow)
     };
 }

@@ -17,7 +17,6 @@
  */
 #include "MainLayoutComponent.h"
 
-#include "MainComponent.h"
 #include "MidiDeviceComponent.h"
 #include "SidebarComponent.h"
 

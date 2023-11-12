@@ -607,13 +607,7 @@
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\MainComponent.cpp">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\MainLayoutComponent.cpp">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\MainWindow.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MidiDeviceComponent.cpp">
@@ -647,6 +641,12 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SidebarComponent.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StandaloneDevicesComponent.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\StandaloneWindow.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Theme.cpp">
@@ -3090,13 +3090,7 @@
     <ClInclude Include="..\..\Source\ChannelState.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\MainComponent.h">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\MainLayoutComponent.h">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\MainWindow.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h">
@@ -3136,6 +3130,12 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SidebarComponent.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\StandaloneDevicesComponent.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\StandaloneWindow.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Theme.h">

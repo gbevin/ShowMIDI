@@ -15,10 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "MainWindow.h"
+#include "StandaloneWindow.h"
 
-#include "MainComponent.h"
-#include "MainComponent.h"
+#include "StandaloneDevicesComponent.h"
+#include "StandaloneDevicesComponent.h"
 #include "MainLayoutComponent.h"
 #include "MidiDeviceComponent.h"
 #include "SidebarComponent.h"
@@ -26,11 +26,9 @@
 
 namespace showmidi
 {
-    struct MainWindow::Pimpl
+    struct StandaloneWindow::Pimpl
     {
-        static constexpr int DEFAULT_WINDOW_HEIGHT = 600;
-        
-        Pimpl(MainWindow* owner) : owner_(owner)
+        Pimpl(StandaloneWindow* owner) : owner_(owner)
         {
             owner_->setUsingNativeTitleBar(true);
             
@@ -53,23 +51,23 @@ namespace showmidi
             JUCEApplication::getInstance()->systemRequestedQuit();
         }
         
-        MainWindow* const owner_;
-        MainComponent main_;
+        StandaloneWindow* const owner_;
+        StandaloneDevicesComponent main_;
         MainLayoutComponent layout_ { SMApp, MainLayoutType::layoutStandalone, &main_ };
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MainWindow::MainWindow(String name) :
+    StandaloneWindow::StandaloneWindow(String name) :
         DocumentWindow(name, SMApp.getSettings().getTheme().colorBackground, DocumentWindow::allButtons),
         pimpl_(new Pimpl(this))
     {
         setVisible(true);
     }
     
-    MainWindow::~MainWindow() = default;
+    StandaloneWindow::~StandaloneWindow() = default;
     
-    void MainWindow::resized()
+    void StandaloneWindow::resized()
     {
         if (pimpl_.get() && isVisible())
         {
@@ -77,6 +75,6 @@ namespace showmidi
         }
     };
     
-    void MainWindow::closeButtonPressed() { pimpl_->closeButtonPressed(); }
-    int MainWindow::getSidebarWidth()     { return pimpl_->layout_.getSidebarWidth(); }
+    void StandaloneWindow::closeButtonPressed() { pimpl_->closeButtonPressed(); }
+    int StandaloneWindow::getSidebarWidth()     { return pimpl_->layout_.getSidebarWidth(); }
 }

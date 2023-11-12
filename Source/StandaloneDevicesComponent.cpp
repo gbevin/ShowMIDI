@@ -15,7 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "MainComponent.h"
+#include "StandaloneDevicesComponent.h"
 
 #include "MidiDeviceComponent.h"
 #include "ShowMidiApplication.h"
@@ -31,7 +31,7 @@ namespace showmidi
         }
     };
 
-    struct MainComponent::Pimpl : public MultiTimer, public KeyListener
+    struct StandaloneDevicesComponent::Pimpl : public MultiTimer, public KeyListener
     {
         static constexpr int MIN_MIDI_DEVICES_AUTO_SHOWN = 1;
         static constexpr int MAX_MIDI_DEVICES_AUTO_SHOWN = 6;
@@ -44,7 +44,7 @@ namespace showmidi
             GrabKeyboardFocus
         };
         
-        Pimpl(MainComponent* owner) : owner_(owner)
+        Pimpl(StandaloneDevicesComponent* owner) : owner_(owner)
         {
             owner_->setWantsKeyboardFocus(true);
             owner_->addKeyListener(this);
@@ -251,7 +251,7 @@ namespace showmidi
             });
         }
 
-        MainComponent* const owner_;
+        StandaloneDevicesComponent* const owner_;
         HashMap<const String, MidiDeviceComponent*> midiDevices_;
         CriticalSection midiDevicesLock_;
         bool paused_ { false };
@@ -259,8 +259,8 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MainComponent::MainComponent() : pimpl_(new Pimpl(this)) {}
-    MainComponent::~MainComponent() = default;
+    StandaloneDevicesComponent::StandaloneDevicesComponent() : pimpl_(new Pimpl(this)) {}
+    StandaloneDevicesComponent::~StandaloneDevicesComponent() = default;
     
-    void MainComponent::paint(Graphics& g) { pimpl_->paint(g); }
+    void StandaloneDevicesComponent::paint(Graphics& g) { pimpl_->paint(g); }
 }

@@ -27,7 +27,7 @@
 
 namespace showmidi
 {
-    class MainWindow;
+    class StandaloneWindow;
     
     class ShowMidiApplication : public JUCEApplication, public SettingsManager
     {
@@ -66,7 +66,7 @@ namespace showmidi
 
     private:
         UwynLookAndFeel lookAndFeel_;
-        std::unique_ptr<MainWindow> mainWindow_;
+        std::unique_ptr<StandaloneWindow> mainWindow_;
         PropertiesSettings settings_;
     };
 }

@@ -17,7 +17,7 @@
  */
 #include "ShowMidiApplication.h"
 
-#include "MainWindow.h"
+#include "StandaloneWindow.h"
 
 using namespace showmidi;
 
@@ -48,7 +48,7 @@ UwynLookAndFeel& ShowMidiApplication::getLookAndFeel()
 
 void ShowMidiApplication::initialise(const String&)
 {
-    mainWindow_.reset(new MainWindow(getApplicationName()));
+    mainWindow_.reset(new StandaloneWindow(getApplicationName()));
 }
 
 void ShowMidiApplication::shutdown()

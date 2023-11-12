@@ -37,15 +37,10 @@
             file="Source/AboutComponent.h"/>
       <FILE id="xPnPHy" name="ChannelState.h" compile="0" resource="0" file="Source/ChannelState.h"/>
       <FILE id="S4SSUV" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
-      <FILE id="kos11p" name="MainComponent.cpp" compile="1" resource="0"
-            file="Source/MainComponent.cpp"/>
-      <FILE id="suV7Rc" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="o0k9jO" name="MainLayoutComponent.cpp" compile="1" resource="0"
             file="Source/MainLayoutComponent.cpp"/>
       <FILE id="OzMfsd" name="MainLayoutComponent.h" compile="0" resource="0"
             file="Source/MainLayoutComponent.h"/>
-      <FILE id="LnBH3K" name="MainWindow.cpp" compile="1" resource="0" file="Source/MainWindow.cpp"/>
-      <FILE id="EM3kKt" name="MainWindow.h" compile="0" resource="0" file="Source/MainWindow.h"/>
       <FILE id="gBe2aa" name="MidiDeviceComponent.cpp" compile="1" resource="0"
             file="Source/MidiDeviceComponent.cpp"/>
       <FILE id="EdT8SZ" name="MidiDeviceComponent.h" compile="0" resource="0"
@@ -91,6 +86,14 @@
             file="Source/SidebarComponent.cpp"/>
       <FILE id="Re6kWf" name="SidebarComponent.h" compile="0" resource="0"
             file="Source/SidebarComponent.h"/>
+      <FILE id="kos11p" name="StandaloneDevicesComponent.cpp" compile="1"
+            resource="0" file="Source/StandaloneDevicesComponent.cpp"/>
+      <FILE id="suV7Rc" name="StandaloneDevicesComponent.h" compile="0" resource="0"
+            file="Source/StandaloneDevicesComponent.h"/>
+      <FILE id="LnBH3K" name="StandaloneWindow.cpp" compile="1" resource="0"
+            file="Source/StandaloneWindow.cpp"/>
+      <FILE id="EM3kKt" name="StandaloneWindow.h" compile="0" resource="0"
+            file="Source/StandaloneWindow.h"/>
       <FILE id="fBV1fH" name="Theme.cpp" compile="1" resource="0" file="Source/Theme.cpp"/>
       <FILE id="YqVJfs" name="Theme.h" compile="0" resource="0" file="Source/Theme.h"/>
       <FILE id="Bl5ZcR" name="UwynLookAndFeel.cpp" compile="1" resource="0"

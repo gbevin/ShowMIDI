@@ -141,9 +141,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\AboutComponent.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
-    <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\MainLayoutComponent.cpp"/>
-    <ClCompile Include="..\..\Source\MainWindow.cpp"/>
     <ClCompile Include="..\..\Source\MidiDeviceComponent.cpp"/>
     <ClCompile Include="..\..\Source\PaintedButton.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
@@ -155,6 +153,8 @@
     <ClCompile Include="..\..\Source\SettingsComponent.cpp"/>
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp"/>
     <ClCompile Include="..\..\Source\SidebarComponent.cpp"/>
+    <ClCompile Include="..\..\Source\StandaloneDevicesComponent.cpp"/>
+    <ClCompile Include="..\..\Source\StandaloneWindow.cpp"/>
     <ClCompile Include="..\..\Source\Theme.cpp"/>
     <ClCompile Include="..\..\Source\UwynLookAndFeel.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.cpp">
@@ -2423,9 +2423,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\AboutComponent.h"/>
     <ClInclude Include="..\..\Source\ChannelState.h"/>
-    <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="..\..\Source\MainLayoutComponent.h"/>
-    <ClInclude Include="..\..\Source\MainWindow.h"/>
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h"/>
     <ClInclude Include="..\..\Source\PaintedButton.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
@@ -2439,6 +2437,8 @@
     <ClInclude Include="..\..\Source\SettingsManager.h"/>
     <ClInclude Include="..\..\Source\ShowMidiApplication.h"/>
     <ClInclude Include="..\..\Source\SidebarComponent.h"/>
+    <ClInclude Include="..\..\Source\StandaloneDevicesComponent.h"/>
+    <ClInclude Include="..\..\Source\StandaloneWindow.h"/>
     <ClInclude Include="..\..\Source\Theme.h"/>
     <ClInclude Include="..\..\Source\UwynLookAndFeel.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
