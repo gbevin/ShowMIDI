@@ -57,10 +57,12 @@ namespace showmidi
             if (button == &settingsButton_)
             {
                 settings_.setVisible(!settings_.isVisible());
+                about_.setVisible(false);
             }
             else if (button == &helpButton_)
             {
                 about_.setVisible(!about_.isVisible());
+                settings_.setVisible(false);
             }
         }
 

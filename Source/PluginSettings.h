@@ -32,6 +32,12 @@ namespace showmidi
         int getOctaveMiddleC();
         void setOctaveMiddleC(int);
         
+        NoteFormat getNoteFormat();
+        void setNoteFormat(NoteFormat);
+
+        NumberFormat getNumberFormat();
+        void setNumberFormat(NumberFormat);
+        
         int getTimeoutDelay();
         void setTimeoutDelay(int);
         

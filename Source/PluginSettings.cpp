@@ -24,6 +24,8 @@ namespace showmidi
     {
         PropertiesSettings properties_settings;
         settings_.setProperty(PropertiesSettings::OCTAVE_MIDDLE_C, properties_settings.getOctaveMiddleC(), nullptr);
+        settings_.setProperty(PropertiesSettings::NOTE_FORMAT, properties_settings.getNoteFormat(), nullptr);
+        settings_.setProperty(PropertiesSettings::NUMBER_FORMAT, properties_settings.getNumberFormat(), nullptr);
         settings_.setProperty(PropertiesSettings::TIMEOUT_DELAY, properties_settings.getTimeoutDelay(), nullptr);
         
         theme_ = properties_settings.getTheme();
@@ -42,6 +44,26 @@ namespace showmidi
     void PluginSettings::setOctaveMiddleC(int octave)
     {
         settings_.setProperty(PropertiesSettings::OCTAVE_MIDDLE_C, octave, nullptr);
+    }
+    
+    NoteFormat PluginSettings::getNoteFormat()
+    {
+        return (NoteFormat)(int)settings_.getProperty(PropertiesSettings::NOTE_FORMAT, PropertiesSettings::DEFAULT_NOTE_FORMAT);
+    }
+    
+    void PluginSettings::setNoteFormat(NoteFormat format)
+    {
+        settings_.setProperty(PropertiesSettings::NOTE_FORMAT, format, nullptr);
+    }
+    
+    NumberFormat PluginSettings::getNumberFormat()
+    {
+        return (NumberFormat)(int)settings_.getProperty(PropertiesSettings::NUMBER_FORMAT, PropertiesSettings::DEFAULT_NUMBER_FORMAT);
+    }
+    
+    void PluginSettings::setNumberFormat(NumberFormat format)
+    {
+        settings_.setProperty(PropertiesSettings::NUMBER_FORMAT, format, nullptr);
     }
     
     int PluginSettings::getTimeoutDelay()

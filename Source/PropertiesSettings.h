@@ -27,6 +27,8 @@ namespace showmidi
     {
     public:
         static const String OCTAVE_MIDDLE_C;
+        static const String NOTE_FORMAT;
+        static const String NUMBER_FORMAT;
         static const String TIMEOUT_DELAY;
         static const String THEME;
         
@@ -35,6 +37,12 @@ namespace showmidi
         
         int getOctaveMiddleC();
         void setOctaveMiddleC(int);
+        
+        NoteFormat getNoteFormat();
+        void setNoteFormat(NoteFormat);
+        
+        NumberFormat getNumberFormat();
+        void setNumberFormat(NumberFormat);
         
         int getTimeoutDelay();
         void setTimeoutDelay(int);

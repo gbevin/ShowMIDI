@@ -298,7 +298,7 @@ namespace showmidi
             g.setColour(theme_.colorData);
             g.setFont(theme_.fontLabel());
             state.offset_ += Y_CHANNEL;
-            g.drawText(String("CH ") + String(channel.number_ + 1),
+            g.drawText(String("CH ") + output7Bit(channel.number_ + 1),
                        X_CHANNEL, state.offset_,
                        getStandardWidth() - X_CHANNEL, theme_.labelHeight(),
                        Justification::centredLeft);
@@ -322,7 +322,7 @@ namespace showmidi
                 
                 g.setColour(theme_.colorLabel);
                 g.setFont(theme_.fontLabel());
-                g.drawText(String("PRGM ") + String(program_change.value_),
+                g.drawText(String("PRGM ") + output7Bit(program_change.value_),
                            0, state.offset_ - Y_CHANNEL_PADDING - Y_SEPERATOR - HEIGHT_SEPERATOR - theme_.labelHeight(),
                            getStandardWidth() - X_PRGM, theme_.labelHeight(),
                            Justification::centredRight);
@@ -371,7 +371,7 @@ namespace showmidi
                 
                 g.setColour(theme_.colorData);
                 g.setFont(theme_.fontData());
-                g.drawText(String(pitch_bend.value_),
+                g.drawText(output14Bit(pitch_bend.value_),
                            X_PB, y_offset,
                            pb_width, theme_.dataHeight(),
                            Justification::centredRight);
@@ -442,7 +442,7 @@ namespace showmidi
                         
                         g.setColour(theme_.colorData);
                         g.setFont(theme_.fontData());
-                        g.drawText(String(note.value_),
+                        g.drawText(output7Bit(note.value_),
                                    X_ON_OFF, y_offset,
                                    note_width, theme_.dataHeight(),
                                    Justification::centredRight);
@@ -477,7 +477,7 @@ namespace showmidi
                             
                             g.setColour(theme_.colorData);
                             g.setFont(theme_.fontData());
-                            g.drawText(String(note.polyPressure_),
+                            g.drawText(output7Bit(note.polyPressure_),
                                        X_PP, y_offset,
                                        pp_width, theme_.dataHeight(),
                                        Justification::centredRight);
@@ -520,7 +520,7 @@ namespace showmidi
                     auto& cc = control_changes.controlChange_[i];
                     if (!isExpired(state.time_, cc.time_))
                     {
-                        paintControlChangeEntry(g, state, channel, y_offset, String("CC ") + String(cc.number_), cc.value_);
+                        paintControlChangeEntry(g, state, channel, y_offset, String("CC ") + output7Bit(cc.number_), cc.value_);
                     }
                 }
             }
@@ -551,7 +551,7 @@ namespace showmidi
             
             g.setColour(theme_.colorData);
             g.setFont(theme_.fontData());
-            g.drawText(String(value),
+            g.drawText(output7Bit(value),
                        X_CC, yOffset,
                        cc_width, theme_.dataHeight(),
                        Justification::centredRight);
@@ -577,10 +577,51 @@ namespace showmidi
             return (currentTime - messageTime).inSeconds() > delay;
         }
         
+        String output7BitAsHex(int v)
+        {
+            return String::toHexString(v).paddedLeft('0', 2).toUpperCase() + "H";
+        }
+        
+        String output7Bit(int v)
+        {
+            if (settingsManager_.getSettings().getNumberFormat() == NumberFormat::formatHexadecimal)
+            {
+                return output7BitAsHex(v);
+            }
+            else
+            {
+                return String(v);
+            }
+        }
+        
+        String output14BitAsHex(int v)
+        {
+            return String::toHexString(v).paddedLeft('0', 4).toUpperCase() + "H";
+        }
+        
+        String output14Bit(int v)
+        {
+            if (settingsManager_.getSettings().getNumberFormat() == NumberFormat::formatHexadecimal)
+            {
+                return output14BitAsHex(v);
+            }
+            else
+            {
+                return String(v);
+            }
+        }
+        
         String outputNote(int noteNumber)
         {
-            auto octave = settingsManager_.getSettings().getOctaveMiddleC();
-            return MidiMessage::getMidiNoteName(noteNumber, true, true, octave);
+            if (settingsManager_.getSettings().getNoteFormat() == NoteFormat::formatNumber)
+            {
+                return output7Bit(noteNumber);
+            }
+            else
+            {
+                auto octave = settingsManager_.getSettings().getOctaveMiddleC();
+                return MidiMessage::getMidiNoteName(noteNumber, true, true, octave);
+            }
         }
         
         void resized()

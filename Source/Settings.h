@@ -23,10 +23,24 @@
 
 namespace showmidi
 {
+    enum NoteFormat
+    {
+        formatName = 1,
+        formatNumber
+    };
+    
+    enum NumberFormat
+    {
+        formatDecimal = 1,
+        formatHexadecimal
+    };
+    
     class Settings
     {
     public:
         static constexpr int DEFAULT_OCTAVE_MIDDLE_C { 3 };
+        static constexpr NoteFormat DEFAULT_NOTE_FORMAT { formatName };
+        static constexpr NumberFormat DEFAULT_NUMBER_FORMAT { formatDecimal };
         static constexpr int DEFAULT_TIMEOUT_DELAY { 2 };
 
         Settings() {};
@@ -34,6 +48,12 @@ namespace showmidi
         
         virtual int getOctaveMiddleC() = 0;
         virtual void setOctaveMiddleC(int) = 0;
+        
+        virtual NoteFormat getNoteFormat() = 0;
+        virtual void setNoteFormat(NoteFormat) = 0;
+        
+        virtual NumberFormat getNumberFormat() = 0;
+        virtual void setNumberFormat(NumberFormat) = 0;
         
         virtual int getTimeoutDelay() = 0;
         virtual void setTimeoutDelay(int) = 0;

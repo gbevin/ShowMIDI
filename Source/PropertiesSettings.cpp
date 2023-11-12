@@ -19,9 +19,11 @@
 
 namespace showmidi
 {
-    const String PropertiesSettings::OCTAVE_MIDDLE_C = {"octaveMiddleC"};
-    const String PropertiesSettings::TIMEOUT_DELAY = {"timeoutDelay"};
-    const String PropertiesSettings::THEME = {"theme"};
+    const String PropertiesSettings::OCTAVE_MIDDLE_C = { "octaveMiddleC" };
+    const String PropertiesSettings::NOTE_FORMAT = { "noteFormat" };
+    const String PropertiesSettings::NUMBER_FORMAT = { "numberFormat" };
+    const String PropertiesSettings::TIMEOUT_DELAY = { "timeoutDelay" };
+    const String PropertiesSettings::THEME = { "theme" };
 
     PropertiesSettings::PropertiesSettings()
     {
@@ -41,6 +43,28 @@ namespace showmidi
     void PropertiesSettings::setOctaveMiddleC(int octave)
     {
         getGlobalProperties().setValue(OCTAVE_MIDDLE_C, octave);
+        flush();
+    }
+    
+    NoteFormat PropertiesSettings::getNoteFormat()
+    {
+        return (NoteFormat)getGlobalProperties().getIntValue(NOTE_FORMAT, DEFAULT_NOTE_FORMAT);
+    }
+    
+    void PropertiesSettings::setNoteFormat(NoteFormat format)
+    {
+        getGlobalProperties().setValue(NOTE_FORMAT, format);
+        flush();
+    }
+    
+    NumberFormat PropertiesSettings::getNumberFormat()
+    {
+        return (NumberFormat)getGlobalProperties().getIntValue(NUMBER_FORMAT, DEFAULT_NUMBER_FORMAT);
+    }
+    
+    void PropertiesSettings::setNumberFormat(NumberFormat format)
+    {
+        getGlobalProperties().setValue(NUMBER_FORMAT, format);
         flush();
     }
     

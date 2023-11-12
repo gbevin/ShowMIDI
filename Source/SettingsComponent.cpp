@@ -27,6 +27,10 @@ namespace showmidi
         middleCOct2Button_("oct 2"),
         middleCOct3Button_("oct 3"),
         middleCOct4Button_("oct 4"),
+        notesNameButton_("name"),
+        notesNumberButton_("number"),
+        numbersDecButton_("decimal"),
+        numbersHexButton_("hexadecimal"),
         timeout2SecButton_("2 sec"),
         timeout5SecButton_("5 sec"),
         timeout10SecButton_("10 sec"),
@@ -35,11 +39,15 @@ namespace showmidi
     {
         auto& theme = manager_.getSettings().getTheme();
         
-        setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme.linePosition(12));
+        setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme.linePosition(18));
         
         middleCOct2Button_.addListener(this);
         middleCOct3Button_.addListener(this);
         middleCOct4Button_.addListener(this);
+        notesNameButton_.addListener(this);
+        notesNumberButton_.addListener(this);
+        numbersDecButton_.addListener(this);
+        numbersHexButton_.addListener(this);
         timeout2SecButton_.addListener(this);
         timeout5SecButton_.addListener(this);
         timeout10SecButton_.addListener(this);
@@ -54,15 +62,25 @@ namespace showmidi
                                              getWidth(), theme.labelHeight());
         middleCOct4Button_.setBoundsForTouch(left_margin + button_spacing * 2, theme.linePosition(2),
                                              getWidth(), theme.labelHeight());
+
+        notesNameButton_.setBoundsForTouch(left_margin, theme.linePosition(5),
+                                           getWidth(), theme.labelHeight());
+        notesNumberButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(5),
+                                           getWidth(), theme.labelHeight());
+
+        numbersDecButton_.setBoundsForTouch(left_margin, theme.linePosition(8),
+                                            getWidth(), theme.labelHeight());
+        numbersHexButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(8),
+                                            getWidth(), theme.labelHeight());
         
-        timeout2SecButton_.setBoundsForTouch(left_margin, theme.linePosition(5),
+        timeout2SecButton_.setBoundsForTouch(left_margin, theme.linePosition(11),
                                              getWidth(), theme.labelHeight());
-        timeout5SecButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(5),
+        timeout5SecButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(11),
                                              getWidth(), theme.labelHeight());
-        timeout10SecButton_.setBoundsForTouch(left_margin + button_spacing * 2, theme.linePosition(5),
+        timeout10SecButton_.setBoundsForTouch(left_margin + button_spacing * 2, theme.linePosition(11),
                                              getWidth(), theme.labelHeight());
 
-        loadThemeButton_.setBoundsForTouch(left_margin, theme.linePosition(8),
+        loadThemeButton_.setBoundsForTouch(left_margin, theme.linePosition(14),
                                            getWidth(), theme.labelHeight());
         
         closeButton_.setBoundsForTouch(0, getHeight() - theme.linePosition(1) - theme.labelHeight(),
@@ -71,6 +89,10 @@ namespace showmidi
         addAndMakeVisible(middleCOct2Button_);
         addAndMakeVisible(middleCOct3Button_);
         addAndMakeVisible(middleCOct4Button_);
+        addAndMakeVisible(notesNameButton_);
+        addAndMakeVisible(notesNumberButton_);
+        addAndMakeVisible(numbersDecButton_);
+        addAndMakeVisible(numbersHexButton_);
         addAndMakeVisible(timeout2SecButton_);
         addAndMakeVisible(timeout5SecButton_);
         addAndMakeVisible(timeout10SecButton_);
@@ -112,12 +134,42 @@ namespace showmidi
         setSettingOptionFont(g, [&settings] () { return settings.getOctaveMiddleC() == 4; });
         middleCOct4Button_.drawName(g, Justification::centredLeft);
         
+        // note format
+        
+        g.setColour(theme.colorData);
+        g.setFont(theme.fontLabel());
+        g.drawText("Note Format",
+                   23, theme.linePosition(4),
+                   getWidth(), theme.labelHeight(),
+                   Justification::centredLeft, true);
+        
+        g.setColour(theme.colorData.withAlpha(0.7f));
+        setSettingOptionFont(g, [&settings] () { return settings.getNoteFormat() == NoteFormat::formatName; });
+        notesNameButton_.drawName(g, Justification::centredLeft);
+        setSettingOptionFont(g, [&settings] () { return settings.getNoteFormat() == NoteFormat::formatNumber; });
+        notesNumberButton_.drawName(g, Justification::centredLeft);
+        
+        // number format
+        
+        g.setColour(theme.colorData);
+        g.setFont(theme.fontLabel());
+        g.drawText("Number Format",
+                   23, theme.linePosition(7),
+                   getWidth(), theme.labelHeight(),
+                   Justification::centredLeft, true);
+        
+        g.setColour(theme.colorData.withAlpha(0.7f));
+        setSettingOptionFont(g, [&settings] () { return settings.getNumberFormat() == NumberFormat::formatDecimal; });
+        numbersDecButton_.drawName(g, Justification::centredLeft);
+        setSettingOptionFont(g, [&settings] () { return settings.getNumberFormat() == NumberFormat::formatHexadecimal; });
+        numbersHexButton_.drawName(g, Justification::centredLeft);
+        
         // timeout delay
         
         g.setColour(theme.colorData);
         g.setFont(theme.fontLabel());
         g.drawText("Timeout Delay",
-                   23, theme.linePosition(4),
+                   23, theme.linePosition(10),
                    getWidth(), theme.labelHeight(),
                    Justification::centredLeft, true);
         
@@ -128,13 +180,13 @@ namespace showmidi
         timeout5SecButton_.drawName(g, Justification::centredLeft);
         setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 10; });
         timeout10SecButton_.drawName(g, Justification::centredLeft);
-        
-        // timeout delay
+
+        // active theme
         
         g.setColour(theme.colorData);
         g.setFont(theme.fontLabel());
         g.drawText("Active Theme",
-                   23, theme.linePosition(7),
+                   23, theme.linePosition(13),
                    getWidth(), theme.labelHeight(),
                    Justification::centredLeft, true);
         
@@ -166,6 +218,26 @@ namespace showmidi
         else if (buttonThatWasClicked == &middleCOct4Button_)
         {
             settings.setOctaveMiddleC(4);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &notesNameButton_)
+        {
+            settings.setNoteFormat(NoteFormat::formatName);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &notesNumberButton_)
+        {
+            settings.setNoteFormat(NoteFormat::formatNumber);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &numbersDecButton_)
+        {
+            settings.setNumberFormat(NumberFormat::formatDecimal);
+            repaint();
+        }
+        else if (buttonThatWasClicked == &numbersHexButton_)
+        {
+            settings.setNumberFormat(NumberFormat::formatHexadecimal);
             repaint();
         }
         else if (buttonThatWasClicked == &timeout2SecButton_)

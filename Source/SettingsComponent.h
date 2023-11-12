@@ -41,6 +41,10 @@ namespace showmidi
         PaintedButton middleCOct2Button_;
         PaintedButton middleCOct3Button_;
         PaintedButton middleCOct4Button_;
+        PaintedButton notesNameButton_;
+        PaintedButton notesNumberButton_;
+        PaintedButton numbersDecButton_;
+        PaintedButton numbersHexButton_;
         PaintedButton timeout2SecButton_;
         PaintedButton timeout5SecButton_;
         PaintedButton timeout10SecButton_;
