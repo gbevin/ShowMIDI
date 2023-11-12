@@ -22,7 +22,7 @@ Instead of wading through logs of MIDI messages to correlate relevant ones and i
 
 Here's a tutorial video that shows you a quick overview of why I created ShowMIDI:
 
-<a href="https://www.youtube.com/watch?v=TliuBpUY8pw" target="_blank"><img src="https://i.ytimg.com/vi/TliuBpUY8pw/maxresdefault.jpg" alt="Tutorial Video" width="640" height="360" border="0" /></a>
+<a href="https://www.youtube.com/watch?v=TliuBpUY8pw" target="_blank"><img src="https://i.ytimg.com/vi/TliuBpUY8pw/maxresdefault.jpg" alt="Tutorial Video" width="640" border="0" /></a>
 
 ## Download
 
