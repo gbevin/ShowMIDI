@@ -49,7 +49,7 @@ namespace showmidi
                    getWidth(), theme_.labelHeight(),
                    Justification::centredLeft, true);
         
-        g.setColour(theme_.colorData.withAlpha(0.5f));
+        g.setColour(theme_.colorData.withAlpha(0.7f));
         g.setFont(theme_.fontData());
         g.drawText("oct 2",
                    23, theme_.linePosition(2),
@@ -75,7 +75,7 @@ namespace showmidi
                    getWidth(), theme_.labelHeight(),
                    Justification::centredLeft, true);
         
-        g.setColour(theme_.colorData.withAlpha(0.5f));
+        g.setColour(theme_.colorData.withAlpha(0.7f));
         g.setFont(theme_.fontData().withStyle(Font::underlined));
         g.drawText("2 sec",
                    23, theme_.linePosition(5),
@@ -101,7 +101,7 @@ namespace showmidi
                    getWidth(), theme_.labelHeight(),
                    Justification::centredLeft, true);
         
-        g.setColour(theme_.colorData.withAlpha(0.5f));
+        g.setColour(theme_.colorData.withAlpha(0.7f));
         g.setFont(theme_.fontData());
         g.drawText("load",
                    23, theme_.linePosition(8),

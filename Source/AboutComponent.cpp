@@ -53,7 +53,7 @@ namespace showmidi
                    getWidth(), theme_.labelHeight(),
                    Justification::centred, true);
         
-        g.setColour(theme_.colorData.withAlpha(0.5f));
+        g.setColour(theme_.colorData.withAlpha(0.7f));
         g.setFont(theme_.fontData());
         g.drawText("https://uwyn.com",
                    websiteButton_.getX(), websiteButton_.getY(),

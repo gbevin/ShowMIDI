@@ -65,11 +65,11 @@ namespace showmidi
             
             auto settings_svg = settingsSvg_->createCopy();
             settings_svg->replaceColour(Colours::black, theme_.colorData);
-            settings_svg->drawAt(g, settingsButton_.getX(), settingsButton_.getY(), 1.0);
+            settings_svg->drawAt(g, (float)settingsButton_.getX(), (float)settingsButton_.getY(), 1.0);
             
             auto help_svg = helpSvg_->createCopy();
             help_svg->replaceColour(Colours::black, theme_.colorData);
-            help_svg->drawAt(g, helpButton_.getX(), helpButton_.getY(), 1.0);
+            help_svg->drawAt(g, (float)helpButton_.getX(), (float)helpButton_.getY(), 1.0);
         }
         
         void resized()
