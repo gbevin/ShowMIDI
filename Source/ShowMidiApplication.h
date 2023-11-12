@@ -57,8 +57,7 @@ namespace showmidi
         void anotherInstanceStarted(const String& commandLine) override;
 
         void setWindowTitle(const String&);
-        void setWindowSize(int, int);
-        int getWindowHeight();
+        void setWindowWidthForMainLayout(int);
         
         Settings& getSettings() override;
         void applySettings() override;

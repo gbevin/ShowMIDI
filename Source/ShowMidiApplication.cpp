@@ -73,27 +73,17 @@ void ShowMidiApplication::setWindowTitle(const String& title)
     }
 }
 
-void ShowMidiApplication::setWindowSize(int width, int height)
+void ShowMidiApplication::setWindowWidthForMainLayout(int width)
 {
     if (mainWindow_ != nullptr)
     {
         width += mainWindow_->getSidebarWidth();
 #if JUCE_IOS
-        mainWindow_->setBounds(0, 0, width, height);
+        mainWindow_->setBounds(0, 0, width, Desktop::getInstance().getDisplays().getPrimaryDisplay()->totalArea.getHeight());
 #else
-        mainWindow_->setSize(width, height);
+        mainWindow_->setSize(width, mainWindow_->getHeight());
 #endif
     }
-}
-
-int ShowMidiApplication::getWindowHeight()
-{
-    if (mainWindow_ != nullptr)
-    {
-        return mainWindow_->getHeight();
-    }
-    
-    return 0;
 }
 
 Settings& ShowMidiApplication::getSettings()

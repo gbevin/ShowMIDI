@@ -29,6 +29,15 @@ namespace showmidi
         sidebarFixed
     };
     
+    class SidebarListener
+    {
+    public:
+        SidebarListener();
+        virtual ~SidebarListener();
+        
+        virtual void sidebarChangedWidth() = 0;
+    };
+    
     class SidebarComponent : public Component
     {
     public:        
@@ -44,7 +53,7 @@ namespace showmidi
         static constexpr int X_HELP = 11;
         static constexpr int Y_HELP = 12;
 
-        SidebarComponent(SettingsManager&, SidebarType);
+        SidebarComponent(SettingsManager&, SidebarType, SidebarListener&);
         ~SidebarComponent() override;
         
         void paint(Graphics&) override;

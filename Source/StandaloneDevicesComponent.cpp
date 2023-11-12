@@ -242,12 +242,7 @@ namespace showmidi
             MessageManager::callAsync([this] () {
                 // resize the window in order to display the MIDI devices
                 auto window_width = (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING) * std::max(MIN_MIDI_DEVICES_AUTO_SHOWN, std::min(MAX_MIDI_DEVICES_AUTO_SHOWN, midiDevices_.size())) + MIDI_DEVICE_SPACING;
-                auto window_height = SMApp.getWindowHeight();
-#if JUCE_IOS
-                window_height = Desktop::getInstance().getDisplays().getPrimaryDisplay()->totalArea.getHeight();
-#else
-                SMApp.setWindowSize(window_width, window_height);
-#endif
+                SMApp.setWindowWidthForMainLayout(window_width);
             });
         }
 

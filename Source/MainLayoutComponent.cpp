@@ -19,10 +19,11 @@
 
 #include "MidiDeviceComponent.h"
 #include "SidebarComponent.h"
+#include "ShowMidiApplication.h"
 
 namespace showmidi
 {
-    struct MainLayoutComponent::Pimpl
+    struct MainLayoutComponent::Pimpl : public SidebarListener
     {
         static constexpr int DEFAULT_WINDOW_HEIGHT = 600;
         
@@ -86,11 +87,22 @@ namespace showmidi
         {
             return sidebar_.getActiveWidth();
         }
+        
+        void sidebarChangedWidth()
+        {
+            if (layoutType_ == MainLayoutType::layoutStandalone)
+            {
+                SMApp.setWindowWidthForMainLayout(viewport_.getWidth());
+            }
+        }
 
         MainLayoutComponent* const owner_;
         SettingsManager& settingsManager_;
         const MainLayoutType layoutType_;
-        SidebarComponent sidebar_ { settingsManager_, layoutType_ == MainLayoutType::layoutStandalone ? SidebarType::sidebarExpandable : SidebarType::sidebarFixed };
+        SidebarComponent sidebar_ {
+            settingsManager_,
+            layoutType_ == MainLayoutType::layoutStandalone ? SidebarType::sidebarExpandable : SidebarType::sidebarFixed,
+            *this };
         Viewport viewport_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)

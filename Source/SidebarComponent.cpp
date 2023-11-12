@@ -23,15 +23,19 @@
 
 namespace showmidi
 {
+    SidebarListener::SidebarListener() {}
+    SidebarListener::~SidebarListener() {}
+
     struct SidebarComponent::Pimpl : public Button::Listener
     {
         static constexpr int COLLAPSED_WIDTH = 36;
         static constexpr int EXPANDED_WIDTH = 180;
         
-        Pimpl(SidebarComponent* owner, SettingsManager& manager, SidebarType type) :
+        Pimpl(SidebarComponent* owner, SettingsManager& manager, SidebarType type, SidebarListener& listener) :
             owner_(owner),
             manager_(manager),
             sidebarType_(type),
+            listener_(listener),
             settings_(manager),
             about_(manager.getSettings().getTheme())
         {
@@ -78,7 +82,10 @@ namespace showmidi
                 expandedButton_.setVisible(true);
                 settingsButton_.setVisible(true);
                 
-                owner_->getParentComponent()->resized();
+                settings_.setVisible(false);
+                about_.setVisible(false);
+                
+                listener_.sidebarChangedWidth();
             }
             else if (button == &expandedButton_)
             {
@@ -87,7 +94,10 @@ namespace showmidi
                 expandedButton_.setVisible(false);
                 settingsButton_.setVisible(false);
                 
-                owner_->getParentComponent()->resized();
+                settings_.setVisible(false);
+                about_.setVisible(false);
+                
+                listener_.sidebarChangedWidth();
             }
             else if (button == &helpButton_)
             {
@@ -164,6 +174,7 @@ namespace showmidi
         SidebarComponent* const owner_;
         SettingsManager& manager_;
         const SidebarType sidebarType_;
+        SidebarListener& listener_;
         
         bool expanded_ = false;
         
@@ -182,7 +193,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SidebarComponent::SidebarComponent(SettingsManager& m, SidebarType t) : pimpl_(new Pimpl(this, m, t)) {}
+    SidebarComponent::SidebarComponent(SettingsManager& m, SidebarType t, SidebarListener& l) : pimpl_(new Pimpl(this, m, t, l)) {}
     SidebarComponent::~SidebarComponent() = default;
     
     void SidebarComponent::paint(Graphics& g) { pimpl_->paint(g); }
