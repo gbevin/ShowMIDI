@@ -1,0 +1,11 @@
+<svg width="96px" height="64px" xmlns="http://www.w3.org/2000/svg" baseProfile="full" version="1.1">
+  <rect width='96' height='64'  id='background' fill='#E0B1CB'></rect>
+  <circle cx='24' cy='24' r='8' id='sidebar'    fill='#BE95C4'></circle>
+  <circle cx='40' cy='24' r='8' id='seperator'  fill='#FFFFFF'></circle>
+  <circle cx='56' cy='24' r='8' id='track'      fill='#C7ADBB'></circle>
+  <circle cx='72' cy='24' r='8' id='label'      fill='#48416D'></circle>
+  <circle cx='24' cy='40' r='8' id='data'       fill='#231942'></circle>
+  <circle cx='40' cy='40' r='8' id='positive'   fill='#725D8F'></circle>
+  <circle cx='56' cy='40' r='8' id='negative'   fill='#9F86C0'></circle>
+  <circle cx='72' cy='40' r='8' id='controller' fill='#917296'></circle>
+</svg>

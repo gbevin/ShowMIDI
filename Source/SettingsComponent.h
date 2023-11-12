@@ -49,6 +49,8 @@ namespace showmidi
         PaintedButton timeout5SecButton_;
         PaintedButton timeout10SecButton_;
         PaintedButton loadThemeButton_;
+        PaintedButton randomThemeButton_;
+        PaintedButton saveThemeButton_;
         PaintedButton closeButton_;
         
         std::unique_ptr<FileChooser> themeChooser_;

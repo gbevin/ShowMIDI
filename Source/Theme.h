@@ -35,6 +35,8 @@ namespace showmidi
         String generateXml();
         void parseXml(const String&);
         
+        void randomize();
+        
         static String convertSvgColor(const String&);
 
         Colour colorBackground;

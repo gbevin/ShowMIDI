@@ -98,14 +98,14 @@ namespace showmidi
                     else if (id == "controller") colorController = colour;
                     
                     // support the Hundred Rabbits theme SVG format
-                    else if (id == "b_low")     colorSidebar = colour;
-                    else if (id == "b_med")     colorSeperator = colour;
-                    else if (id == "b_high")    colorTrack = colour;
-                    else if (id == "f_med")     colorLabel = colour;
                     else if (id == "f_high")    colorData = colour;
-                    else if (id == "f_inv")     colorPositive = colour;
-                    else if (id == "b_inv")     colorNegative = colour;
+                    else if (id == "f_med")     colorLabel = colour;
                     else if (id == "f_low")     colorController = colour;
+                    else if (id == "f_inv")     colorPositive = colour;
+                    else if (id == "b_high")    colorTrack = colour;
+                    else if (id == "b_med")     colorSeperator = colour;
+                    else if (id == "b_low")     colorSidebar = colour;
+                    else if (id == "b_inv")     colorNegative = colour;
                 }
             }
         }
@@ -119,5 +119,24 @@ namespace showmidi
         }
         
         return String("ff") + colour.substring(1);
+    }
+    
+    static Random colorRandom;
+    static Colour randomColor()
+    {
+        return Colour(colorRandom.nextInt(255), colorRandom.nextInt(255), colorRandom.nextInt(255));
+    }
+    
+    void Theme::randomize()
+    {
+        colorBackground = randomColor();
+        colorSidebar = randomColor();
+        colorSeperator = randomColor();
+        colorTrack = randomColor();
+        colorLabel = randomColor();
+        colorData = randomColor();
+        colorPositive = randomColor();
+        colorNegative = randomColor();
+        colorController = randomColor();
     }
 }

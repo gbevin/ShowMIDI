@@ -35,6 +35,8 @@ namespace showmidi
         timeout5SecButton_("5 sec"),
         timeout10SecButton_("10 sec"),
         loadThemeButton_("load"),
+        randomThemeButton_("random"),
+        saveThemeButton_("save"),
         closeButton_{ "close" }
     {
         auto& theme = manager_.getSettings().getTheme();
@@ -52,6 +54,8 @@ namespace showmidi
         timeout5SecButton_.addListener(this);
         timeout10SecButton_.addListener(this);
         loadThemeButton_.addListener(this);
+        randomThemeButton_.addListener(this);
+        saveThemeButton_.addListener(this);
         closeButton_.addListener(this);
 
         auto left_margin = 23;
@@ -82,6 +86,10 @@ namespace showmidi
 
         loadThemeButton_.setBoundsForTouch(left_margin, theme.linePosition(14),
                                            getWidth(), theme.labelHeight());
+        randomThemeButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(14),
+                                             getWidth(), theme.labelHeight());
+        saveThemeButton_.setBoundsForTouch(left_margin + button_spacing * 2, theme.linePosition(14),
+                                           getWidth(), theme.labelHeight());
         
         closeButton_.setBoundsForTouch(0, getHeight() - theme.linePosition(1) - theme.labelHeight(),
                                        getWidth(), theme.labelHeight());
@@ -97,6 +105,8 @@ namespace showmidi
         addAndMakeVisible(timeout5SecButton_);
         addAndMakeVisible(timeout10SecButton_);
         addAndMakeVisible(loadThemeButton_);
+        addAndMakeVisible(randomThemeButton_);
+        addAndMakeVisible(saveThemeButton_);
         addAndMakeVisible(closeButton_);
         
         themeChooser_ = std::make_unique<FileChooser>("Please select the theme you want to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
@@ -193,6 +203,14 @@ namespace showmidi
         g.setColour(theme.colorData.withAlpha(0.7f));
         g.setFont(theme.fontData());
         loadThemeButton_.drawName(g, Justification::centredLeft);
+        
+        g.setColour(theme.colorData.withAlpha(0.7f));
+        g.setFont(theme.fontData());
+        randomThemeButton_.drawName(g, Justification::centredLeft);
+        
+        g.setColour(theme.colorData.withAlpha(0.7f));
+        g.setFont(theme.fontData());
+        saveThemeButton_.drawName(g, Justification::centredLeft);
 
         // close button
         
@@ -263,6 +281,22 @@ namespace showmidi
          
                 manager_.getSettings().getTheme().parseXml(file.loadFileAsString());
                 manager_.storeSettings();
+            });
+        }
+        else if (buttonThatWasClicked == &randomThemeButton_)
+        {
+            manager_.getSettings().getTheme().randomize();
+            manager_.storeSettings();
+        }
+        else if (buttonThatWasClicked == &saveThemeButton_)
+        {
+            themeChooser_->launchAsync(FileBrowserComponent::saveMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
+            {
+                File file(chooser.getResult());
+                
+                TemporaryFile temp_file(file, File::createTempFile("svg"));
+                temp_file.getFile().appendText(manager_.getSettings().getTheme().generateXml(), false, false, "\r\n");
+                temp_file.overwriteTargetFileWithTemporary();
             });
         }
         else if (buttonThatWasClicked == &closeButton_)
