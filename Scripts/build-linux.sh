@@ -30,7 +30,7 @@ mv clap/ShowMIDI_artefacts/Release/ShowMIDI.clap $STAGE_DIR/clap
 mv ShowMIDI.lv2 $STAGE_DIR/lv2
 cp $PROJECT_DIR/*.md $STAGE_DIR
 
-ARCHIVE_FILE="ShowMIDI-Linux-Ubuntu-x64-$RELEASE_VERSION.tar.bz2"
+ARCHIVE_FILE="$PROJECT_DIR/Installers/ShowMIDI-Linux-Ubuntu-x64-$RELEASE_VERSION.tar.bz2"
 tar cvp $STAGE_DIR | bzip2 > $ARCHIVE_FILE
 echo "Finished building `realpath $ARCHIVE_FILE`"
 
