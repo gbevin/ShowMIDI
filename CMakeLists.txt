@@ -52,7 +52,7 @@ create_jucer_clap_target(
         PLUGIN_CODE shmi
         VERSION_STRING "$ENV{RELEASE_VERSION}"
         CLAP_ID "com.uwyn.showmidi.clap"
-        CLAP_FEATURES instrument 
+        CLAP_FEATURES note-effect utility
         CLAP_MANUAL_URL "https://www.uwyn.com"
         CLAP_SUPPORT_URL "https://www.uwyn.com"
         EDITOR_NEEDS_KEYBOARD_FOCUS TRUE

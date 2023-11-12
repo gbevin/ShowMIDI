@@ -8,9 +8,11 @@ fi
 export RELEASE_VERSION="$1"
 export PATH_TO_JUCE=/Users/gbevin/JUCE
 
+rm -rfv $BUILD_DIR
+
+PROJECT_DIR=$PWD
 SIGN_ID="Developer ID Application: Uwyn, LLC (AGZT8GVS7G)"
 BUILD_DIR=$PWD/Builds/MacOSX/build
-rm -rfv $BUILD_DIR
 
 # build release artifacts
 echo "Building all ProJucer artifacts"
@@ -45,7 +47,7 @@ echo "Building installer package"
 /usr/local/bin/packagesbuild --project $BUILD_DIR/ShowMIDI_versioned.pkgproj -v
 mv $BUILD_DIR/ShowMIDI.pkg $BUILD_DIR/ShowMIDI-${RELEASE_VERSION}.pkg
 
-ARCHIVE_FILE="$BUILD_DIR/ShowMIDI-macOS-${RELEASE_VERSION}.zip"
+ARCHIVE_FILE="$PROJECT_DIR/Installers/ShowMIDI-macOS-${RELEASE_VERSION}.zip"
 pushd "$BUILD_DIR"
 
 PKG_FILE="ShowMIDI-${RELEASE_VERSION}.pkg"
