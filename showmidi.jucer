@@ -39,6 +39,10 @@
       <FILE id="kos11p" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="suV7Rc" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="o0k9jO" name="MainLayoutComponent.cpp" compile="1" resource="0"
+            file="Source/MainLayoutComponent.cpp"/>
+      <FILE id="OzMfsd" name="MainLayoutComponent.h" compile="0" resource="0"
+            file="Source/MainLayoutComponent.h"/>
       <FILE id="LnBH3K" name="MainWindow.cpp" compile="1" resource="0" file="Source/MainWindow.cpp"/>
       <FILE id="EM3kKt" name="MainWindow.h" compile="0" resource="0" file="Source/MainWindow.h"/>
       <FILE id="gBe2aa" name="MidiDeviceComponent.cpp" compile="1" resource="0"

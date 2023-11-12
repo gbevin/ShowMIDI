@@ -19,23 +19,22 @@
 
 #include <JuceHeader.h>
 
+#include "SettingsManager.h"
+
 namespace showmidi
 {
-    class MainWindow : public DocumentWindow
+    class MainLayoutComponent : public Component, public FileDragAndDropTarget
     {
     public:
-        MainWindow(String name);
-        ~MainWindow();
+        MainLayoutComponent(SettingsManager&);
+        virtual ~MainLayoutComponent() = default;
+        
+        bool isInterestedInFileDrag(const StringArray&);
+        void filesDropped(const StringArray&, int, int);
 
-        void resized() override;
-        void closeButtonPressed() override;
-        
-        int getSizebarWidth();
-        
-        struct Pimpl;
     private:
-        std::unique_ptr<Pimpl> pimpl_ { nullptr };
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
+        SettingsManager& settingsManager_;
+        
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainLayoutComponent)
     };
 }

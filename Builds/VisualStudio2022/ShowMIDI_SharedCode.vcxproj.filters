@@ -610,6 +610,9 @@
     <ClCompile Include="..\..\Source\MainComponent.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\MainLayoutComponent.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\MainWindow.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
@@ -3082,6 +3085,9 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MainLayoutComponent.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MainWindow.h">

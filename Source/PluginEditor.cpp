@@ -17,10 +17,12 @@
  */
 #include "PluginEditor.h"
 
+#include "MainLayoutComponent.h"
 #include "MidiDeviceComponent.h"
 #include "PluginProcessor.h"
 #include "PluginSettings.h"
 #include "SettingsManager.h"
+#include "SidebarComponent.h"
 #include "UwynLookAndFeel.h"
 
 namespace showmidi
@@ -43,21 +45,27 @@ namespace showmidi
             Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
             owner_->setResizable(true, true);
-            owner_->getConstrainer()->setMinimumWidth(MidiDeviceComponent::getStandardWidth());
-            owner_->getConstrainer()->setMaximumWidth(MidiDeviceComponent::getStandardWidth());
+            owner_->getConstrainer()->setMinimumWidth(SidebarComponent::SIDEBAR_WIDTH + MidiDeviceComponent::getStandardWidth());
+            owner_->getConstrainer()->setMaximumWidth(SidebarComponent::SIDEBAR_WIDTH + MidiDeviceComponent::getStandardWidth());
             owner_->getConstrainer()->setMinimumHeight(120);
             
+            sidebar_.setBounds(0, 0, SidebarComponent::SIDEBAR_WIDTH, DEFAULT_EDITOR_HEIGHT);
+            layout_.addAndMakeVisible(sidebar_);
+
             midiDevice_.setBounds(0, 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
 
-            viewPort_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
-            viewPort_.setScrollBarsShown(true, false);
-            viewPort_.setScrollBarThickness(4);
-            viewPort_.setViewedComponent(&midiDevice_, false);
-            viewPort_.setBounds(0, 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
-            
-            owner_->addAndMakeVisible(viewPort_);
+            viewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
+            viewport_.setScrollBarsShown(true, false);
+            viewport_.setScrollBarThickness(4);
+            viewport_.setViewedComponent(&midiDevice_, false);
+            viewport_.setBounds(sidebar_.getWidth(), 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
+            layout_.addAndMakeVisible(viewport_);
 
-            owner_->setSize(MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
+            layout_.setSize(sidebar_.getWidth() + viewport_.getWidth(), DEFAULT_EDITOR_HEIGHT);
+
+            owner_->addAndMakeVisible(layout_);
+
+            owner_->setSize(layout_.getWidth(), DEFAULT_EDITOR_HEIGHT);
             owner_->setWantsKeyboardFocus(true);
             owner_->addKeyListener(this);
             
@@ -134,7 +142,9 @@ namespace showmidi
         
         void resized(int height)
         {
-            viewPort_.setBounds(0, 0, viewPort_.getWidth(), height);
+            layout_.setBounds(0, 0, layout_.getWidth(), height);
+            sidebar_.setBounds(0, 0, sidebar_.getWidth(), height);
+            viewport_.setBounds(sidebar_.getWidth(), 0, layout_.getWidth() - sidebar_.getWidth(), height);
         }
         
         Settings& getSettings() override
@@ -149,10 +159,15 @@ namespace showmidi
         }
 
         UwynLookAndFeel lookAndFeel_;
+        
         ShowMIDIPluginAudioProcessorEditor* const owner_;
         ShowMIDIPluginAudioProcessor& audioProcessor_;
-        Viewport viewPort_;
+        
+        MainLayoutComponent layout_ { *this };
+        SidebarComponent sidebar_ { *this };
+        Viewport viewport_;
         MidiDeviceComponent midiDevice_;
+        
         bool paused_ { false };
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)

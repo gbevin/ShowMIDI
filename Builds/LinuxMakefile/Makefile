@@ -151,6 +151,7 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/AboutComponent_ebbe5b79.o \
   $(JUCE_OBJDIR)/Main_90ebc5c2.o \
   $(JUCE_OBJDIR)/MainComponent_a6ffb4a5.o \
+  $(JUCE_OBJDIR)/MainLayoutComponent_d0413b5b.o \
   $(JUCE_OBJDIR)/MainWindow_499ac812.o \
   $(JUCE_OBJDIR)/MidiDeviceComponent_1b687947.o \
   $(JUCE_OBJDIR)/PaintedButton_d5a3e6f0.o \
@@ -302,6 +303,11 @@ $(JUCE_OBJDIR)/Main_90ebc5c2.o: ../../Source/Main.cpp
 $(JUCE_OBJDIR)/MainComponent_a6ffb4a5.o: ../../Source/MainComponent.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling MainComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MainLayoutComponent_d0413b5b.o: ../../Source/MainLayoutComponent.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling MainLayoutComponent.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/MainWindow_499ac812.o: ../../Source/MainWindow.cpp

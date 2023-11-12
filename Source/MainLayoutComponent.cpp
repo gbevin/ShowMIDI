@@ -15,27 +15,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
-
-#include <JuceHeader.h>
+#include "MainLayoutComponent.h"
 
 namespace showmidi
 {
-    class MainWindow : public DocumentWindow
+    MainLayoutComponent::MainLayoutComponent(SettingsManager& manager) : settingsManager_(manager)
     {
-    public:
-        MainWindow(String name);
-        ~MainWindow();
-
-        void resized() override;
-        void closeButtonPressed() override;
+    }
+    
+    bool MainLayoutComponent::isInterestedInFileDrag(const StringArray& files)
+    {
+        for (auto file : files)
+        {
+            if (file.endsWith(".svg"))
+            {
+                return true;
+            }
+        }
         
-        int getSizebarWidth();
+        return false;
+    }
+    
+    void MainLayoutComponent::filesDropped(const StringArray& files, int, int)
+    {
+        for (auto file : files)
+        {
+            settingsManager_.getSettings().getTheme().parseXml(File(file).loadFileAsString());
+        }
         
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_ { nullptr };
+        repaint();
+        
+        settingsManager_.storeSettings();
+    }
 
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
-    };
 }

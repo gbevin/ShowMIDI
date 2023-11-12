@@ -95,27 +95,3 @@ LookAndFeel_V4::ColourScheme UwynLookAndFeel::getDarkColourScheme()
         0xff989898, 0xffffffff, 0xffa2a2a2,
         0xffffffff, 0xff4f4f4f, 0xffffffff };
 }
-
-// we're stubbing out all button drawing routines since we'll be doing this ourselves
-// in paint calls, so that we can always change based on the active theme, without
-// having to propagate and update the theme colours
-
-void UwynLookAndFeel::drawPopupMenuBackground(Graphics&, int, int)
-{
-}
-
-void UwynLookAndFeel::drawButtonBackground(Graphics&, Button&, const Colour&, bool, bool)
-{
-}
-
-void UwynLookAndFeel::drawButtonText(Graphics&, TextButton&, bool, bool)
-{
-}
-
-void UwynLookAndFeel::drawToggleButton(Graphics&, ToggleButton&, bool, bool)
-{
-}
-
-void UwynLookAndFeel::drawTickBox(Graphics&, Component&, float, float, float, float, bool, bool, bool, bool)
-{
-}

@@ -18,58 +18,22 @@
 #include "MainWindow.h"
 
 #include "MainComponent.h"
+#include "MainLayoutComponent.h"
 #include "MidiDeviceComponent.h"
 #include "SidebarComponent.h"
 #include "ShowMidiApplication.h"
 
 namespace showmidi
 {
-    class LayoutComponent : public Component, public FileDragAndDropTarget
-    {
-    public:
-        LayoutComponent() {}
-        virtual ~LayoutComponent() = default;
-        
-        bool isInterestedInFileDrag(const StringArray& files)
-        {
-            for (auto file : files)
-            {
-                if (file.endsWith(".svg"))
-                {
-                    return true;
-                }
-            }
-            
-            return false;
-        }
-        
-        void filesDropped(const StringArray& files, int, int)
-        {
-            for (auto file : files)
-            {
-                SMApp.getSettings().getTheme().parseXml(File(file).loadFileAsString());
-            }
-            
-            repaint();
-            
-            SMApp.storeSettings();
-        }
-
-    private:
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (LayoutComponent)
-    };
-    
     struct MainWindow::Pimpl
     {
-        static constexpr int SIDEBAR_WIDTH = 36;
-
         Pimpl(MainWindow* owner) : owner_(owner)
         {
             owner_->setUsingNativeTitleBar(true);
             
-            auto layout = new LayoutComponent();
+            auto layout = new MainLayoutComponent(SMApp);
             
-            sidebar_.setBounds(0, 0, SIDEBAR_WIDTH, 600);
+            sidebar_.setBounds(0, 0, SidebarComponent::SIDEBAR_WIDTH, 600);
             layout->addAndMakeVisible(sidebar_);
 
             viewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
@@ -102,7 +66,7 @@ namespace showmidi
         
         int getSidebarWidth()
         {
-            return SIDEBAR_WIDTH;
+            return SidebarComponent::SIDEBAR_WIDTH;
         }
         
         MainWindow* const owner_;

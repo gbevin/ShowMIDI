@@ -32,6 +32,8 @@ namespace showmidi
         static constexpr int X_HELP = 11;
         static constexpr int Y_HELP = 12;
 
+        static constexpr int SIDEBAR_WIDTH = 36;
+
         SidebarComponent(SettingsManager&);
         ~SidebarComponent() override;
         

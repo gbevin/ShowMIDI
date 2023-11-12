@@ -64,6 +64,7 @@
 		A5C4DD496574040E5EAB6BAA /* include_juce_data_structures.mm */ = {isa = PBXBuildFile; fileRef = 3F0D10A7839AE2AA878473A4; };
 		AC28EC40C013E7EAAFB784DE /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = 7044C8187C93F03ACA494C1E; };
 		ADAC1E3AC25FA830E7BCABC5 /* Theme.cpp */ = {isa = PBXBuildFile; fileRef = 3BFBD5BE9998618A28B34775; };
+		B1967F966631AED4C407CA3C /* MainLayoutComponent.cpp */ = {isa = PBXBuildFile; fileRef = D8C228AC03A494A8D96BE842; };
 		B2CA45071B7F2A42F6ED4CBE /* CoreImage.framework */ = {isa = PBXBuildFile; fileRef = E1DF7D86C0AB1CF7A4E052C5; };
 		B438451537D48B85DC57EE1E /* Icon.icns */ = {isa = PBXBuildFile; fileRef = ADFC4D4C01DA373375788BEB; };
 		B6088241F34A646B3124200D /* CoreGraphics.framework */ = {isa = PBXBuildFile; fileRef = FC5E3D4401B6EC67E2B8F72A; };
@@ -175,6 +176,7 @@
 		C38DAA745C7DE61B6AFE626D /* BinaryData.cpp */ /* BinaryData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = SOURCE_ROOT; };
 		C5DF18C9C40125F16925A9B1 /* JetBrainsMono-Regular.ttf */ /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; name = "JetBrainsMono-Regular.ttf"; path = "../../Fonts/JetBrainsMono-Regular.ttf"; sourceTree = SOURCE_ROOT; };
 		CC0CB51C951EC22BC3619CA3 /* help.svg */ /* help.svg */ = {isa = PBXFileReference; lastKnownFileType = file.svg; name = help.svg; path = ../../Assets/help.svg; sourceTree = SOURCE_ROOT; };
+		CED23DF6C8819A2B22F204F5 /* MainLayoutComponent.h */ /* MainLayoutComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainLayoutComponent.h; path = ../../Source/MainLayoutComponent.h; sourceTree = SOURCE_ROOT; };
 		D37BC26585486939C17BB1A9 /* include_juce_audio_basics.mm */ /* include_juce_audio_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_basics.mm; path = ../../JuceLibraryCode/include_juce_audio_basics.mm; sourceTree = SOURCE_ROOT; };
 		D443EB07355FF2F422FE3CBA /* SidebarComponent.cpp */ /* SidebarComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SidebarComponent.cpp; path = ../../Source/SidebarComponent.cpp; sourceTree = SOURCE_ROOT; };
 		D49D7B9D827D60C884A9D145 /* juce_graphics */ /* juce_graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_graphics; path = ../../JuceLibraryCode/modules/juce_graphics; sourceTree = SOURCE_ROOT; };
@@ -182,6 +184,7 @@
 		D7611A11C4A2C78107D6EECC /* juce_gui_basics */ /* juce_gui_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_basics; path = ../../JuceLibraryCode/modules/juce_gui_basics; sourceTree = SOURCE_ROOT; };
 		D7FA88F4A6B12D91E3D015FA /* ShowMidiApplication.cpp */ /* ShowMidiApplication.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ShowMidiApplication.cpp; path = ../../Source/ShowMidiApplication.cpp; sourceTree = SOURCE_ROOT; };
 		D836C4B412BD0316C8041F6C /* CoreAudioKit.framework */ /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		D8C228AC03A494A8D96BE842 /* MainLayoutComponent.cpp */ /* MainLayoutComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MainLayoutComponent.cpp; path = ../../Source/MainLayoutComponent.cpp; sourceTree = SOURCE_ROOT; };
 		DB8B829620280E288A1F3FE8 /* juce_events */ /* juce_events */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_events; path = ../../JuceLibraryCode/modules/juce_events; sourceTree = SOURCE_ROOT; };
 		DE4481E7DEEF4C83EF0CB6A4 /* SidebarComponent.h */ /* SidebarComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SidebarComponent.h; path = ../../Source/SidebarComponent.h; sourceTree = SOURCE_ROOT; };
 		E013C293C16FA729CD3BCF41 /* AUv3_AppExtension.entitlements */ /* AUv3_AppExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = AUv3_AppExtension.entitlements; path = AUv3_AppExtension.entitlements; sourceTree = SOURCE_ROOT; };
@@ -369,6 +372,8 @@
 				60D631FC0F78AC6C198E73A8,
 				4B878390445548AD7505C578,
 				5EB11E28355A4B9C5CE14A14,
+				D8C228AC03A494A8D96BE842,
+				CED23DF6C8819A2B22F204F5,
 				340617DDF876A9E131F4AB85,
 				760AAB122A3E59ABF8758294,
 				4103274634C632287BD3388D,
@@ -661,6 +666,7 @@
 				49275756321FDB8F7DC25D31,
 				E6BDA9C4B95D6F31D96F1438,
 				9AA86B7AE70397310C1EB0D2,
+				B1967F966631AED4C407CA3C,
 				005983B357E20B510C6D35BE,
 				74A90D33B60D692AC29558AE,
 				0E37862E84E50AAAF3B36BFF,

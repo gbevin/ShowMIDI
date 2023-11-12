@@ -30,15 +30,6 @@ namespace showmidi
         Typeface::Ptr getTypefaceForFont(const Font& font) override;
 
         LookAndFeel_V4::ColourScheme getDarkColourScheme();
-        void drawPopupMenuBackground(Graphics &, int, int) override;
-        void drawButtonBackground(Graphics &, Button &, const Colour &, bool, bool) override;
-        void drawButtonText(Graphics &, TextButton &, bool, bool) override;
-        void drawToggleButton(Graphics&, ToggleButton&,
-                              bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
-        void drawTickBox(Graphics&, Component&,
-                         float x, float y, float w, float h,
-                         bool ticked, bool isEnabled,
-                         bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
 
         struct Pimpl;
     private:
