@@ -17,7 +17,7 @@
                BlueprintIdentifier = "8D4550665620D436C7E8B433"
                BuildableName = "ShowMIDI - All"
                BlueprintName = "ShowMIDI - All"
-               ReferencedContainer = "container:ShowMIDI.xcodeproj">
+               ReferencedContainer = "container:showmidi.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -52,7 +52,7 @@
             BlueprintIdentifier = "8D4550665620D436C7E8B433"
             BuildableName = "ShowMIDI - All"
             BlueprintName = "ShowMIDI - All"
-            ReferencedContainer = "container:ShowMIDI.xcodeproj">
+            ReferencedContainer = "container:showmidi.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -17,7 +17,7 @@
                BlueprintIdentifier = "084392EE76BCAA7AE36C8A8A"
                BuildableName = "ShowMIDI.app"
                BlueprintName = "ShowMIDI - Standalone Plugin"
-               ReferencedContainer = "container:ShowMIDI.xcodeproj">
+               ReferencedContainer = "container:showmidi.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,7 +46,7 @@
             BlueprintIdentifier = "084392EE76BCAA7AE36C8A8A"
             BuildableName = "ShowMIDI.app"
             BlueprintName = "ShowMIDI - Standalone Plugin"
-            ReferencedContainer = "container:ShowMIDI.xcodeproj">
+            ReferencedContainer = "container:showmidi.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,7 +63,7 @@
             BlueprintIdentifier = "084392EE76BCAA7AE36C8A8A"
             BuildableName = "ShowMIDI.app"
             BlueprintName = "ShowMIDI - Standalone Plugin"
-            ReferencedContainer = "container:ShowMIDI.xcodeproj">
+            ReferencedContainer = "container:showmidi.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
