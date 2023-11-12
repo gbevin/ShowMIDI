@@ -152,6 +152,11 @@ namespace showmidi
             return audioProcessor_.getSettings();
         }
         
+        void applySettings() override
+        {
+            owner_->repaint();
+        }
+
         void storeSettings() override
         {
             audioProcessor_.getSettings().storeTheme();

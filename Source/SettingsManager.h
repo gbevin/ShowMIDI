@@ -29,6 +29,7 @@ namespace showmidi
         virtual ~SettingsManager() {};
         
         virtual Settings& getSettings() = 0;
+        virtual void applySettings() = 0;
         virtual void storeSettings() = 0;
     };
 }

@@ -101,6 +101,11 @@ Settings& ShowMidiApplication::getSettings()
     return settings_;
 }
 
+void ShowMidiApplication::applySettings()
+{
+    mainWindow_->repaint();
+}
+
 void ShowMidiApplication::storeSettings()
 {
     settings_.storeTheme();

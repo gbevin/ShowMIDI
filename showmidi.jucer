@@ -63,6 +63,10 @@
             file="Source/PluginSettings.cpp"/>
       <FILE id="ah25ua" name="PluginSettings.h" compile="0" resource="0"
             file="Source/PluginSettings.h"/>
+      <FILE id="TrE9N1" name="PopupColourSelector.cpp" compile="1" resource="0"
+            file="Source/PopupColourSelector.cpp"/>
+      <FILE id="I5FNO9" name="PopupColourSelector.h" compile="0" resource="0"
+            file="Source/PopupColourSelector.h"/>
       <FILE id="a4oYP1" name="PropertiesSettings.cpp" compile="1" resource="0"
             file="Source/PropertiesSettings.cpp"/>
       <FILE id="cXRA86" name="PropertiesSettings.h" compile="0" resource="0"

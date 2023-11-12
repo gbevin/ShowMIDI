@@ -19,30 +19,21 @@
 
 #include "JuceHeader.h"
 
-#include "Theme.h"
-
 namespace showmidi
 {
-    class PaintedButton : public Button
+    class PopupColourSelector : public Component, public ChangeListener,  public Value::Listener
     {
     public:
-        PaintedButton();
-        PaintedButton(const String&);
+        PopupColourSelector(const Value&);
         
-        void paintButton(Graphics&, bool, bool) override;
-
-        void setBoundsForTouch(int, int, int, int);
-        Rectangle<float> getBoundsForDrawing();
-
-        void drawName(Graphics&, Justification);
-        void drawDrawable(Graphics&, Drawable&);
+        void resized();
+        Colour getColour() const;
+        void setColour(const Colour &);
+        void changeListenerCallback(ChangeBroadcaster*);
+        void valueChanged(Value&);
         
     private:
-        void setBounds(Rectangle<int>);
-        void setBounds(int, int, int, int);
-
-        static constexpr int DEFAULT_TOUCH_OUTSET { 12 };
-        
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PaintedButton)
+        ColourSelector selector_;
+        Value colourValue_;
     };
 }

@@ -25,7 +25,7 @@ namespace showmidi
     {
         static constexpr int DIALOG_LINE_HEIGHT = 24;
         
-        int linePosition(int);
+        int linePosition(float);
         
         Font fontLabel();
         int labelHeight();

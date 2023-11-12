@@ -158,6 +158,7 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
   $(JUCE_OBJDIR)/PluginSettings_526d8cff.o \
+  $(JUCE_OBJDIR)/PopupColourSelector_ea11b478.o \
   $(JUCE_OBJDIR)/PropertiesSettings_ef1220ff.o \
   $(JUCE_OBJDIR)/SettingsComponent_119b047b.o \
   $(JUCE_OBJDIR)/ShowMidiApplication_31576413.o \
@@ -338,6 +339,11 @@ $(JUCE_OBJDIR)/PluginProcessor_a059e380.o: ../../Source/PluginProcessor.cpp
 $(JUCE_OBJDIR)/PluginSettings_526d8cff.o: ../../Source/PluginSettings.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling PluginSettings.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PopupColourSelector_ea11b478.o: ../../Source/PopupColourSelector.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling PopupColourSelector.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PropertiesSettings_ef1220ff.o: ../../Source/PropertiesSettings.cpp

@@ -61,6 +61,7 @@ namespace showmidi
         int getWindowHeight();
         
         Settings& getSettings() override;
+        void applySettings() override;
         void storeSettings() override;
 
     private:

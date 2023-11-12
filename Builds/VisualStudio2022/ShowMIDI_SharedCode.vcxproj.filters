@@ -631,6 +631,9 @@
     <ClCompile Include="..\..\Source\PluginSettings.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\PopupColourSelector.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PropertiesSettings.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
@@ -3106,6 +3109,9 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginSettings.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PopupColourSelector.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PropertiesSettings.h">

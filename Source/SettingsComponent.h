@@ -19,41 +19,21 @@
 
 #include "JuceHeader.h"
 
-#include "PaintedButton.h"
 #include "SettingsManager.h"
 
 namespace showmidi
 {
-    class SettingsComponent : public Component, public Button::Listener
+    class SettingsComponent : public Component
     {
     public:
         SettingsComponent(SettingsManager&);
+        ~SettingsComponent();
         
         void paint(Graphics&) override;
         
-        void buttonClicked(Button*) override;
-        
+        struct Pimpl;
     private:
-        void setSettingOptionFont(Graphics&, std::function<bool()>);
-        
-        SettingsManager& manager_;
-        
-        PaintedButton middleCOct2Button_;
-        PaintedButton middleCOct3Button_;
-        PaintedButton middleCOct4Button_;
-        PaintedButton notesNameButton_;
-        PaintedButton notesNumberButton_;
-        PaintedButton numbersDecButton_;
-        PaintedButton numbersHexButton_;
-        PaintedButton timeout2SecButton_;
-        PaintedButton timeout5SecButton_;
-        PaintedButton timeout10SecButton_;
-        PaintedButton loadThemeButton_;
-        PaintedButton randomThemeButton_;
-        PaintedButton saveThemeButton_;
-        PaintedButton closeButton_;
-        
-        std::unique_ptr<FileChooser> themeChooser_;
+        std::unique_ptr<Pimpl> pimpl_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SettingsComponent)
     };

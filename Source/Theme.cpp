@@ -21,7 +21,7 @@
 
 namespace showmidi
 {
-    int Theme::linePosition(int number)
+    int Theme::linePosition(float number)
     {
         return DIALOG_LINE_HEIGHT * number;
     }

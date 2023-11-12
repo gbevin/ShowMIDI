@@ -40,6 +40,11 @@ namespace showmidi
         Component::setBounds(bounds.expanded(DEFAULT_TOUCH_OUTSET));
     }
 
+    Rectangle<float> PaintedButton::getBoundsForDrawing()
+    {
+        return getBounds().reduced(DEFAULT_TOUCH_OUTSET).toFloat();
+    }
+
     void PaintedButton::drawName(Graphics& g, Justification justificationType)
     {
         auto bounds = getBounds().reduced(DEFAULT_TOUCH_OUTSET);
