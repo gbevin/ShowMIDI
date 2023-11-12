@@ -23,6 +23,12 @@
 
 namespace showmidi
 {
+    enum SidebarType
+    {
+        sidebarExpandable = 1,
+        sidebarFixed
+    };
+    
     class SidebarComponent : public Component
     {
     public:        
@@ -38,7 +44,7 @@ namespace showmidi
         static constexpr int X_HELP = 11;
         static constexpr int Y_HELP = 12;
 
-        SidebarComponent(SettingsManager&, bool);
+        SidebarComponent(SettingsManager&, SidebarType);
         ~SidebarComponent() override;
         
         void paint(Graphics&) override;

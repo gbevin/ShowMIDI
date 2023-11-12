@@ -91,7 +91,7 @@ namespace showmidi
         MainLayoutComponent* const owner_;
         SettingsManager& settingsManager_;
         const MainLayoutType layoutType_;
-        SidebarComponent sidebar_ { settingsManager_, layoutType_ == MainLayoutType::layoutStandalone };
+        SidebarComponent sidebar_ { settingsManager_, layoutType_ == MainLayoutType::layoutStandalone ? SidebarType::sidebarExpandable : SidebarType::sidebarFixed };
         Viewport viewport_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)

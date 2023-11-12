@@ -28,10 +28,10 @@ namespace showmidi
         static constexpr int COLLAPSED_WIDTH = 36;
         static constexpr int EXPANDED_WIDTH = 180;
         
-        Pimpl(SidebarComponent* owner, SettingsManager& manager, bool expandable) :
+        Pimpl(SidebarComponent* owner, SettingsManager& manager, SidebarType type) :
             owner_(owner),
             manager_(manager),
-            expandable_(expandable),
+            sidebarType_(type),
             settings_(manager),
             about_(manager.getSettings().getTheme())
         {
@@ -54,7 +54,7 @@ namespace showmidi
             owner_->addAndMakeVisible(helpButton_);
             owner_->addChildComponent(settingsButton_);
             
-            if (expandable_)
+            if (sidebarType_ == SidebarType::sidebarExpandable)
             {
                 collapsedButton_.setVisible(true);
             }
@@ -163,7 +163,7 @@ namespace showmidi
 
         SidebarComponent* const owner_;
         SettingsManager& manager_;
-        const bool expandable_;
+        const SidebarType sidebarType_;
         
         bool expanded_ = false;
         
@@ -182,7 +182,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SidebarComponent::SidebarComponent(SettingsManager& m, bool e) : pimpl_(new Pimpl(this, m, e)) {}
+    SidebarComponent::SidebarComponent(SettingsManager& m, SidebarType t) : pimpl_(new Pimpl(this, m, t)) {}
     SidebarComponent::~SidebarComponent() = default;
     
     void SidebarComponent::paint(Graphics& g) { pimpl_->paint(g); }
