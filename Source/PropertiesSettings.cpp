@@ -23,6 +23,7 @@ namespace showmidi
     const String PropertiesSettings::NOTE_FORMAT = { "noteFormat" };
     const String PropertiesSettings::NUMBER_FORMAT = { "numberFormat" };
     const String PropertiesSettings::TIMEOUT_DELAY = { "timeoutDelay" };
+    const String PropertiesSettings::MIDI_DEVICE_VISIBLE_PREFIX = { "midiDevice:visible:" };
     const String PropertiesSettings::THEME = { "theme" };
 
     PropertiesSettings::PropertiesSettings()
@@ -87,6 +88,17 @@ namespace showmidi
     void PropertiesSettings::storeTheme()
     {
         getGlobalProperties().setValue(THEME, theme_.generateXml());
+    }
+    
+    bool PropertiesSettings::isMidiDeviceVisible(const String& identifier)
+    {
+        return getGlobalProperties().getBoolValue(MIDI_DEVICE_VISIBLE_PREFIX + identifier, true);
+    }
+    
+    void PropertiesSettings::setMidiDeviceVisible(const String& identifier, bool visible)
+    {
+        getGlobalProperties().setValue(MIDI_DEVICE_VISIBLE_PREFIX + identifier, visible);
+        flush();
     }
 
     PropertiesFile& PropertiesSettings::getGlobalProperties()

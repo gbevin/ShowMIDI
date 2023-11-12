@@ -613,6 +613,9 @@
     <ClCompile Include="..\..\Source\MidiDeviceComponent.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\MidiDevicesListener.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PaintedButton.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
@@ -3094,6 +3097,12 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MidiDeviceInfoComparator.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\MidiDevicesListener.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PaintedButton.h">

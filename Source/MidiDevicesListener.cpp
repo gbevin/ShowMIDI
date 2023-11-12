@@ -15,28 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
-
-#include <JuceHeader.h>
-
-#include "SettingsManager.h"
+#include "MidiDevicesListener.h"
 
 namespace showmidi
 {
-    class PortListComponent : public Component
+    MidiDevicesListener::MidiDevicesListener()  { }
+    MidiDevicesListener::~MidiDevicesListener() { }
+
+    void MidiDevicesListeners::broadcast()
     {
-    public:        
-        PortListComponent(SettingsManager&);
-        ~PortListComponent() override;
-        
-        int getVisibleHeight() const;
-
-        void paint(Graphics&) override;
-        
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PortListComponent)
-    };
+        call([] (MidiDevicesListener& l) { l.refreshMidiDevices(); });
+    }
 }

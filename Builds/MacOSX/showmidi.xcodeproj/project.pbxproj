@@ -45,6 +45,7 @@
 		249CE4640C712BC1782DCB5D /* CoreMIDI.framework */ = {isa = PBXBuildFile; fileRef = 17ACFE7C6558A3BFE6DE79C9; };
 		2528C301DEC8E6A9B76FB608 /* AU */ = {isa = PBXBuildFile; fileRef = E75F7A443620C328ACD31943; };
 		26DA3DAAE3A6AF989A542B9D /* LV2 Manifest Helper */ = {isa = PBXBuildFile; fileRef = 9B35CA1CF4CBD6EC4BF5D6C5; };
+		2BE136F9771FD33F0C7A6703 /* MidiDevicesListener.cpp */ = {isa = PBXBuildFile; fileRef = 522F4183B107213ABBA95E54; };
 		353E878E2C4866F8F792ABB8 /* PropertiesSettings.cpp */ = {isa = PBXBuildFile; fileRef = 8EEF02F4B9640EBAC9C1B340; };
 		368701CC81BCD114F89A6FEE /* include_juce_graphics.mm */ = {isa = PBXBuildFile; fileRef = F0823A50303AB62A3DC1CF36; };
 		4408F5269D7071063662550F /* include_juce_audio_plugin_client_ARA.cpp */ = {isa = PBXBuildFile; fileRef = FDB11BB7D46CFB537BD77891; };
@@ -162,6 +163,7 @@
 		4C9A95265A0E0902C0045742 /* PluginProcessor.h */ /* PluginProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginProcessor.h; path = ../../Source/PluginProcessor.h; sourceTree = SOURCE_ROOT; };
 		4EFEB0AB4277D5F5794572A6 /* Shared_Code.entitlements */ /* Shared_Code.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Shared_Code.entitlements; path = Shared_Code.entitlements; sourceTree = SOURCE_ROOT; };
 		4F7F78F0807149D173DA0F17 /* include_juce_gui_extra.mm */ /* include_juce_gui_extra.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_extra.mm; path = ../../JuceLibraryCode/include_juce_gui_extra.mm; sourceTree = SOURCE_ROOT; };
+		522F4183B107213ABBA95E54 /* MidiDevicesListener.cpp */ /* MidiDevicesListener.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MidiDevicesListener.cpp; path = ../../Source/MidiDevicesListener.cpp; sourceTree = SOURCE_ROOT; };
 		541028D9F36EB1F495DCE2A4 /* SettingsComponent.cpp */ /* SettingsComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SettingsComponent.cpp; path = ../../Source/SettingsComponent.cpp; sourceTree = SOURCE_ROOT; };
 		56B3B279F6CD99BB104EBD24 /* juce_audio_basics */ /* juce_audio_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_basics; path = ../../JuceLibraryCode/modules/juce_audio_basics; sourceTree = SOURCE_ROOT; };
 		5C0EBCDDFA797BE0FCCA8763 /* settings.svg */ /* settings.svg */ = {isa = PBXFileReference; lastKnownFileType = file.svg; name = settings.svg; path = ../../Assets/settings.svg; sourceTree = SOURCE_ROOT; };
@@ -182,6 +184,7 @@
 		74BF7243F4B5A5C89B85AE55 /* PluginSettings.h */ /* PluginSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginSettings.h; path = ../../Source/PluginSettings.h; sourceTree = SOURCE_ROOT; };
 		76626B38FEC33CD26C14D909 /* Settings.h */ /* Settings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Settings.h; path = ../../Source/Settings.h; sourceTree = SOURCE_ROOT; };
 		769B7E29896F9663B5117831 /* Shared Code */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libShowMIDI.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		79964C8DCCC8635EB86C5470 /* MidiDeviceInfoComparator.h */ /* MidiDeviceInfoComparator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MidiDeviceInfoComparator.h; path = ../../Source/MidiDeviceInfoComparator.h; sourceTree = SOURCE_ROOT; };
 		7C75A0F1DB0EDE6AD443D6B2 /* PropertiesSettings.h */ /* PropertiesSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropertiesSettings.h; path = ../../Source/PropertiesSettings.h; sourceTree = SOURCE_ROOT; };
 		7D85E9B456D141CE755AB2F5 /* Security.framework */ /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		80ABD3BDC42C5FE92F7FE42C /* AboutComponent.cpp */ /* AboutComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AboutComponent.cpp; path = ../../Source/AboutComponent.cpp; sourceTree = SOURCE_ROOT; };
@@ -216,6 +219,7 @@
 		B29AD572554995864888DF39 /* Accelerate.framework */ /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		B4130BDAEE02831DBC6CE268 /* ShowMidiApplication.h */ /* ShowMidiApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShowMidiApplication.h; path = ../../Source/ShowMidiApplication.h; sourceTree = SOURCE_ROOT; };
 		B4C89F1AD3A2986B441B3312 /* include_juce_audio_plugin_client_LV2.mm */ /* include_juce_audio_plugin_client_LV2.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_plugin_client_LV2.mm; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_LV2.mm; sourceTree = SOURCE_ROOT; };
+		BB0B90FF903B2C484336242E /* MidiDevicesListener.h */ /* MidiDevicesListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MidiDevicesListener.h; path = ../../Source/MidiDevicesListener.h; sourceTree = SOURCE_ROOT; };
 		C38DAA745C7DE61B6AFE626D /* BinaryData.cpp */ /* BinaryData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = SOURCE_ROOT; };
 		C5DF18C9C40125F16925A9B1 /* JetBrainsMono-Regular.ttf */ /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; name = "JetBrainsMono-Regular.ttf"; path = "../../Fonts/JetBrainsMono-Regular.ttf"; sourceTree = SOURCE_ROOT; };
 		CC0CB51C951EC22BC3619CA3 /* help.svg */ /* help.svg */ = {isa = PBXFileReference; lastKnownFileType = file.svg; name = help.svg; path = ../../Assets/help.svg; sourceTree = SOURCE_ROOT; };
@@ -539,6 +543,9 @@
 				CED23DF6C8819A2B22F204F5,
 				4103274634C632287BD3388D,
 				A6EC2BC2B40C837D93B251BB,
+				79964C8DCCC8635EB86C5470,
+				522F4183B107213ABBA95E54,
+				BB0B90FF903B2C484336242E,
 				E071CD1AE979F36DF9BCBCCF,
 				88AAC6E05E409AD97864C094,
 				5E8212E205DE721CE55589C7,
@@ -1250,6 +1257,7 @@
 				E6BDA9C4B95D6F31D96F1438,
 				B1967F966631AED4C407CA3C,
 				74A90D33B60D692AC29558AE,
+				2BE136F9771FD33F0C7A6703,
 				0E37862E84E50AAAF3B36BFF,
 				69B90CBB6BB21353587D2A97,
 				D782D07214CD0BF4CAEBDD92,

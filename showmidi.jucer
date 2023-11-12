@@ -45,6 +45,12 @@
             file="Source/MidiDeviceComponent.cpp"/>
       <FILE id="EdT8SZ" name="MidiDeviceComponent.h" compile="0" resource="0"
             file="Source/MidiDeviceComponent.h"/>
+      <FILE id="qZECl2" name="MidiDeviceInfoComparator.h" compile="0" resource="0"
+            file="Source/MidiDeviceInfoComparator.h"/>
+      <FILE id="f2NoXI" name="MidiDevicesListener.cpp" compile="1" resource="0"
+            file="Source/MidiDevicesListener.cpp"/>
+      <FILE id="jk8PKI" name="MidiDevicesListener.h" compile="0" resource="0"
+            file="Source/MidiDevicesListener.h"/>
       <FILE id="j0c4oQ" name="PaintedButton.cpp" compile="1" resource="0"
             file="Source/PaintedButton.cpp"/>
       <FILE id="kJ6zgy" name="PaintedButton.h" compile="0" resource="0" file="Source/PaintedButton.h"/>

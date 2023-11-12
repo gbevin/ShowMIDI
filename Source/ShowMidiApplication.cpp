@@ -19,87 +19,123 @@
 
 #include "StandaloneWindow.h"
 
-using namespace showmidi;
-
-ShowMidiApplication::ShowMidiApplication()
+namespace showmidi
 {
-    Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
-}
-
-const String ShowMidiApplication::getApplicationName()
-{
-    return ProjectInfo::projectName;
-}
-
-const String ShowMidiApplication::getApplicationVersion()
-{
-    return ProjectInfo::versionString;
-}
-
-bool ShowMidiApplication::moreThanOneInstanceAllowed()
-{
-    return true;
-}
-
-UwynLookAndFeel& ShowMidiApplication::getLookAndFeel()
-{
-    return lookAndFeel_;
-}
-
-void ShowMidiApplication::initialise(const String&)
-{
-    mainWindow_.reset(new StandaloneWindow(getApplicationName()));
-}
-
-void ShowMidiApplication::shutdown()
-{
-    mainWindow_ = nullptr;
-}
-
-void ShowMidiApplication::systemRequestedQuit()
-{
-    quit();
-}
-
-void ShowMidiApplication::anotherInstanceStarted(const String&)
-{
-}
-
-void ShowMidiApplication::setWindowTitle(const String& title)
-{
-    if (mainWindow_ != nullptr)
+    struct ShowMidiApplication::Pimpl : public Timer
     {
-        mainWindow_->setName(title);
-    }
-}
-
-void ShowMidiApplication::setWindowWidthForMainLayout(int width)
-{
-    if (mainWindow_ != nullptr)
-    {
-        width += mainWindow_->getSidebarWidth();
+        Pimpl()
+        {
+            // poll for MIDI devices refresh
+            startTimerHz(5);
+        }
+        
+        ~Pimpl()
+        {
+            stopTimer();
+        }
+        
+        void timerCallback()
+        {
+            midiDevicesListeners_.broadcast();
+        }
+        
+        void setWindowTitle(const String& title)
+        {
+            if (mainWindow_ != nullptr)
+            {
+                mainWindow_->setName(title);
+            }
+        }
+        
+        void setWindowWidthForMainLayout(int width)
+        {
+            if (mainWindow_ != nullptr)
+            {
+                width += mainWindow_->getSidebarWidth();
 #if JUCE_IOS
-        mainWindow_->setBounds(0, 0, width, Desktop::getInstance().getDisplays().getPrimaryDisplay()->totalArea.getHeight());
+                mainWindow_->setBounds(0, 0, width, Desktop::getInstance().getDisplays().getPrimaryDisplay()->totalArea.getHeight());
 #else
-        mainWindow_->setSize(width, mainWindow_->getHeight());
+                mainWindow_->setSize(width, mainWindow_->getHeight());
 #endif
-    }
-}
+            }
+        }
+        
+        void storeSettings()
+        {
+            settings_.storeTheme();
+            settings_.flush();
+            
+            mainWindow_->repaint();
+        }
 
-Settings& ShowMidiApplication::getSettings()
-{
-    return settings_;
-}
+        UwynLookAndFeel lookAndFeel_;
+        std::unique_ptr<StandaloneWindow> mainWindow_;
+        PropertiesSettings settings_;
+        MidiDevicesListeners midiDevicesListeners_;
 
-void ShowMidiApplication::applySettings()
-{
-    mainWindow_->repaint();
-}
-
-void ShowMidiApplication::storeSettings()
-{
-    settings_.storeTheme();
-    settings_.flush();
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
+    };
     
-    mainWindow_->repaint();
+    const String ShowMidiApplication::getApplicationName()
+    {
+        return ProjectInfo::projectName;
+    }
+    
+    const String ShowMidiApplication::getApplicationVersion()
+    {
+        return ProjectInfo::versionString;
+    }
+    
+    bool ShowMidiApplication::moreThanOneInstanceAllowed()
+    {
+        return true;
+    }
+    
+    UwynLookAndFeel& ShowMidiApplication::getLookAndFeel()
+    {
+        return pimpl_->lookAndFeel_;
+    }
+    
+    void ShowMidiApplication::initialise(const String&)
+    {
+        pimpl_->mainWindow_.reset(new StandaloneWindow(getApplicationName()));
+    }
+    
+    void ShowMidiApplication::shutdown()
+    {
+        pimpl_->mainWindow_ = nullptr;
+    }
+    
+    void ShowMidiApplication::systemRequestedQuit()
+    {
+        quit();
+    }
+    
+    void ShowMidiApplication::anotherInstanceStarted(const String&)
+    {
+    }
+    
+    Settings& ShowMidiApplication::getSettings()
+    {
+        return pimpl_->settings_;
+    }
+    
+    void ShowMidiApplication::applySettings()
+    {
+        pimpl_->mainWindow_->repaint();
+    }
+    
+    MidiDevicesListeners& ShowMidiApplication::getMidiDevicesListeners()
+    {
+        return pimpl_->midiDevicesListeners_;
+    }
+    
+    ShowMidiApplication::ShowMidiApplication() : pimpl_(new Pimpl())
+    {
+        Desktop::getInstance().setDefaultLookAndFeel(&pimpl_->lookAndFeel_);
+    }
+
+    void ShowMidiApplication::setWindowTitle(const String& title)    { pimpl_->setWindowTitle(title); }
+    void ShowMidiApplication::setWindowWidthForMainLayout(int width) { pimpl_->setWindowWidthForMainLayout(width); }
+    void ShowMidiApplication::storeSettings()                        { pimpl_->storeSettings(); }
 }

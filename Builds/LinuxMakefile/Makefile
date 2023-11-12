@@ -152,6 +152,7 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/Main_90ebc5c2.o \
   $(JUCE_OBJDIR)/MainLayoutComponent_d0413b5b.o \
   $(JUCE_OBJDIR)/MidiDeviceComponent_1b687947.o \
+  $(JUCE_OBJDIR)/MidiDevicesListener_5b057db1.o \
   $(JUCE_OBJDIR)/PaintedButton_d5a3e6f0.o \
   $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
@@ -310,6 +311,11 @@ $(JUCE_OBJDIR)/MainLayoutComponent_d0413b5b.o: ../../Source/MainLayoutComponent.
 $(JUCE_OBJDIR)/MidiDeviceComponent_1b687947.o: ../../Source/MidiDeviceComponent.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling MidiDeviceComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/MidiDevicesListener_5b057db1.o: ../../Source/MidiDevicesListener.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling MidiDevicesListener.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PaintedButton_d5a3e6f0.o: ../../Source/PaintedButton.cpp

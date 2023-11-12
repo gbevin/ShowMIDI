@@ -19,6 +19,7 @@
 
 #include <JuceHeader.h>
 
+#include "MidiDevicesListener.h"
 #include "Settings.h"
 
 namespace showmidi
@@ -31,5 +32,7 @@ namespace showmidi
         virtual Settings& getSettings() = 0;
         virtual void applySettings() = 0;
         virtual void storeSettings() = 0;
+        
+        virtual MidiDevicesListeners& getMidiDevicesListeners() = 0;
     };
 }

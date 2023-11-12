@@ -30,6 +30,7 @@ namespace showmidi
         static const String NOTE_FORMAT;
         static const String NUMBER_FORMAT;
         static const String TIMEOUT_DELAY;
+        static const String MIDI_DEVICE_VISIBLE_PREFIX;
         static const String THEME;
         
         PropertiesSettings();
@@ -50,6 +51,9 @@ namespace showmidi
         Theme& getTheme();
         void storeTheme();
         
+        bool isMidiDeviceVisible(const String&);
+        void setMidiDeviceVisible(const String&, bool);
+
         void flush();
         
     private:

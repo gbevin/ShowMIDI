@@ -86,6 +86,16 @@ namespace showmidi
         settings_.setProperty(PropertiesSettings::THEME, theme_.generateXml(), nullptr);
     }
     
+    bool PluginSettings::isMidiDeviceVisible(const String&)
+    {
+        return true;
+    }
+    
+    void PluginSettings::setMidiDeviceVisible(const String&, bool)
+    {
+        // no-op
+    }
+
     ValueTree& PluginSettings::getValueTree()
     {
         return settings_;

@@ -19,8 +19,9 @@
 
 #include <JuceHeader.h>
 
-#include "SettingsManager.h"
+#include "MidiDevicesListener.h"
 #include "PropertiesSettings.h"
+#include "SettingsManager.h"
 #include "UwynLookAndFeel.h"
 
 #define SMApp ShowMidiApplication::getInstance()
@@ -62,10 +63,11 @@ namespace showmidi
         Settings& getSettings() override;
         void applySettings() override;
         void storeSettings() override;
-
+        
+        MidiDevicesListeners& getMidiDevicesListeners() override;
+        
+        struct Pimpl;
     private:
-        UwynLookAndFeel lookAndFeel_;
-        std::unique_ptr<StandaloneWindow> mainWindow_;
-        PropertiesSettings settings_;
+        std::unique_ptr<Pimpl> pimpl_;
     };
 }

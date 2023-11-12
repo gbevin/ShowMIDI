@@ -17,26 +17,14 @@
  */
 #pragma once
 
-#include <JuceHeader.h>
-
-#include "SettingsManager.h"
-
 namespace showmidi
 {
-    class PortListComponent : public Component
+    class MidiDeviceInfoComparator
     {
-    public:        
-        PortListComponent(SettingsManager&);
-        ~PortListComponent() override;
-        
-        int getVisibleHeight() const;
-
-        void paint(Graphics&) override;
-        
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PortListComponent)
+    public:
+        static int compareElements(MidiDeviceInfo first, MidiDeviceInfo second)
+        {
+            return (first.name.toLowerCase() < second.name.toLowerCase()) ? -1 : ((second.name.toLowerCase() < first.name.toLowerCase()) ? 1 : 0);
+        }
     };
 }

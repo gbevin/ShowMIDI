@@ -60,5 +60,8 @@ namespace showmidi
         
         virtual Theme& getTheme() = 0;
         virtual void storeTheme() = 0;
+        
+        virtual bool isMidiDeviceVisible(const String&) = 0;
+        virtual void setMidiDeviceVisible(const String&, bool) = 0;
     };
 }

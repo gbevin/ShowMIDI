@@ -44,6 +44,9 @@ namespace showmidi
         Theme& getTheme();
         void storeTheme();
         
+        bool isMidiDeviceVisible(const String&);
+        void setMidiDeviceVisible(const String&, bool);
+
         ValueTree& getValueTree();
         void copyValueTree(ValueTree&);
         

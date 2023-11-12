@@ -18,20 +18,13 @@
 #include "StandaloneDevicesComponent.h"
 
 #include "MidiDeviceComponent.h"
+#include "MidiDeviceInfoComparator.h"
+#include "MidiDevicesListener.h"
 #include "ShowMidiApplication.h"
 
 namespace showmidi
 {
-    class MidiDeviceInfoComparator
-    {
-    public:
-        static int compareElements(MidiDeviceInfo first, MidiDeviceInfo second)
-        {
-            return (first.name < second.name) ? -1 : ((second.name < first.name) ? 1 : 0);
-        }
-    };
-
-    struct StandaloneDevicesComponent::Pimpl : public MultiTimer, public KeyListener
+    struct StandaloneDevicesComponent::Pimpl : public MultiTimer, public KeyListener, public MidiDevicesListener
     {
         static constexpr int MIN_MIDI_DEVICES_AUTO_SHOWN = 1;
         static constexpr int MAX_MIDI_DEVICES_AUTO_SHOWN = 6;
@@ -40,7 +33,6 @@ namespace showmidi
         enum Timers
         {
             RenderDevices = 1,
-            RefreshMidiDevices,
             GrabKeyboardFocus
         };
         
@@ -49,23 +41,22 @@ namespace showmidi
             owner_->setWantsKeyboardFocus(true);
             owner_->addKeyListener(this);
             
+            SMApp.getMidiDevicesListeners().add(this);
+            
             refreshMidiDevices();
             
             // 30Hz
             startTimer(RenderDevices, 1000 / 30);
-            
-            // 5Hz
-            startTimer(RefreshMidiDevices, 1000 / 5);
             
             startTimer(GrabKeyboardFocus, 100);
         }
         
         ~Pimpl()
         {
+            SMApp.getMidiDevicesListeners().remove(this);
             owner_->removeKeyListener(this);
             
             stopTimer(RenderDevices);
-            stopTimer(RefreshMidiDevices);
             
             {
                 ScopedLock g(midiDevicesLock_);
@@ -116,12 +107,6 @@ namespace showmidi
                     break;
                 }
                     
-                case RefreshMidiDevices:
-                {
-                    refreshMidiDevices();
-                    break;
-                }
-                    
                 case GrabKeyboardFocus:
                 {
                     if (owner_->isVisible())
@@ -155,8 +140,10 @@ namespace showmidi
             }
         }
         
-        void refreshMidiDevices()
+        void refreshMidiDevices() override
         {
+            auto& settings = SMApp.getSettings();
+
             ScopedLock g(midiDevicesLock_);
             
             auto devices = MidiInput::getAvailableDevices();
@@ -172,7 +159,7 @@ namespace showmidi
                 bool found = false;
                 for (int i = 0; i < devices.size(); ++i)
                 {
-                    if (devices[i].identifier == identifier)
+                    if (devices[i].identifier == identifier && settings.isMidiDeviceVisible(identifier))
                     {
                         found = true;
                         break;
@@ -189,7 +176,8 @@ namespace showmidi
             bool new_devices_preset = false;
             for (int i = 0; i < devices.size(); ++i)
             {
-                if (!midiDevices_.contains(devices[i].identifier))
+                auto identifier = devices[i].identifier;
+                if (!midiDevices_.contains(identifier) && settings.isMidiDeviceVisible(identifier))
                 {
                     new_devices_preset = true;
                     break;
@@ -214,10 +202,11 @@ namespace showmidi
                 
                 // create the new devices and reuse the existing ones
                 // lay them out in alpabetical order
+                int position = 0;
                 for (int i = 0; i < devices.size(); ++i)
                 {
                     auto info = devices[i];
-                    if (!devices_to_remove.contains(info.identifier))
+                    if (!devices_to_remove.contains(info.identifier) && settings.isMidiDeviceVisible(info.identifier))
                     {
                         MidiDeviceComponent* component = midiDevices_.getReference(info.identifier);
                         if (component == nullptr)
@@ -226,7 +215,7 @@ namespace showmidi
                             midiDevices_.set(info.identifier, component);
                         }
                         
-                        component->setBounds(MIDI_DEVICE_SPACING + i * (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING), 0,
+                        component->setBounds(MIDI_DEVICE_SPACING + position++ * (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING), 0,
                                              component->getStandardWidth(), owner_->getParentHeight());
                         
                         owner_->addAndMakeVisible(component);
@@ -241,8 +230,9 @@ namespace showmidi
         {
             MessageManager::callAsync([this] () {
                 // resize the window in order to display the MIDI devices
-                auto window_width = (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING) * std::max(MIN_MIDI_DEVICES_AUTO_SHOWN, std::min(MAX_MIDI_DEVICES_AUTO_SHOWN, midiDevices_.size())) + MIDI_DEVICE_SPACING;
-                SMApp.setWindowWidthForMainLayout(window_width);
+                auto devices_width = (MidiDeviceComponent::getStandardWidth() + MIDI_DEVICE_SPACING) * std::max(MIN_MIDI_DEVICES_AUTO_SHOWN, std::min(MAX_MIDI_DEVICES_AUTO_SHOWN, midiDevices_.size())) + MIDI_DEVICE_SPACING;
+                auto scrollbar_width = 8;
+                SMApp.setWindowWidthForMainLayout(devices_width + scrollbar_width);
             });
         }
 

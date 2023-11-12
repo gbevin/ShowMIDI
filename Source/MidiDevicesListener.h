@@ -17,26 +17,22 @@
  */
 #pragma once
 
-#include <JuceHeader.h>
-
-#include "SettingsManager.h"
+#include "JuceHeader.h"
 
 namespace showmidi
 {
-    class PortListComponent : public Component
+    class MidiDevicesListener
     {
-    public:        
-        PortListComponent(SettingsManager&);
-        ~PortListComponent() override;
+    public:
+        MidiDevicesListener();
+        virtual ~MidiDevicesListener();
         
-        int getVisibleHeight() const;
-
-        void paint(Graphics&) override;
-        
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PortListComponent)
+        virtual void refreshMidiDevices() = 0;
+    };
+    
+    class MidiDevicesListeners : public ListenerList<MidiDevicesListener>
+    {
+    public:
+        void broadcast();
     };
 }

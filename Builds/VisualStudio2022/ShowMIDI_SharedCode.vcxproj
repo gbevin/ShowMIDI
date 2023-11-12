@@ -143,6 +143,7 @@
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainLayoutComponent.cpp"/>
     <ClCompile Include="..\..\Source\MidiDeviceComponent.cpp"/>
+    <ClCompile Include="..\..\Source\MidiDevicesListener.cpp"/>
     <ClCompile Include="..\..\Source\PaintedButton.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
@@ -2425,6 +2426,8 @@
     <ClInclude Include="..\..\Source\ChannelState.h"/>
     <ClInclude Include="..\..\Source\MainLayoutComponent.h"/>
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h"/>
+    <ClInclude Include="..\..\Source\MidiDeviceInfoComparator.h"/>
+    <ClInclude Include="..\..\Source\MidiDevicesListener.h"/>
     <ClInclude Include="..\..\Source\PaintedButton.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>

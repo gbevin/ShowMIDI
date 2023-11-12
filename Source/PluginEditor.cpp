@@ -45,7 +45,7 @@ namespace showmidi
             Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
             owner_->setResizable(true, true);
-            owner_->getConstrainer()->setMinimumWidth(layout_.getSidebarWidth() + MidiDeviceComponent::getStandardWidth());
+            owner_->getConstrainer()->setMinimumWidth(layout_.getSidebarWidth() + MidiDeviceComponent::getStandardWidth() + 8);
             owner_->getConstrainer()->setMaximumWidth(owner_->getConstrainer()->getMaximumWidth());
             owner_->getConstrainer()->setMinimumHeight(120);
             
@@ -148,6 +148,11 @@ namespace showmidi
             audioProcessor_.getSettings().storeTheme();
             owner_->repaint();
         }
+        
+        MidiDevicesListeners& getMidiDevicesListeners() override
+        {
+            return midiDevicesListeners_;
+        }
 
         UwynLookAndFeel lookAndFeel_;
         
@@ -157,6 +162,8 @@ namespace showmidi
         MidiDeviceComponent midiDevice_;
         MainLayoutComponent layout_ { *this, MainLayoutType::layoutPlugin, &midiDevice_ };
         
+        MidiDevicesListeners midiDevicesListeners_;
+
         bool paused_ { false };
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)

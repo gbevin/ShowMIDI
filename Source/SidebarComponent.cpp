@@ -19,6 +19,7 @@
 
 #include "AboutComponent.h"
 #include "PaintedButton.h"
+#include "PortListComponent.h"
 #include "SettingsComponent.h"
 
 namespace showmidi
@@ -29,15 +30,23 @@ namespace showmidi
     struct SidebarComponent::Pimpl : public Button::Listener
     {
         static constexpr int COLLAPSED_WIDTH = 36;
-        static constexpr int EXPANDED_WIDTH = 180;
-        
+        static constexpr int EXPANDED_WIDTH = 200;
+        static constexpr int Y_PORTLIST = 48;
+        static constexpr int PORTLIST_BOTTOM_MARGIN = 36;
+
         Pimpl(SidebarComponent* owner, SettingsManager& manager, SidebarType type, SidebarListener& listener) :
             owner_(owner),
             manager_(manager),
             sidebarType_(type),
             listener_(listener),
+            portList_(manager),
             settings_(manager),
             about_(manager.getSettings().getTheme())
+        {
+            MessageManager::getInstance()->callAsync([this] { setup(); });
+        }
+        
+        void setup()
         {
             collapsedButton_.addListener(this);
             expandedButton_.addListener(this);
@@ -48,6 +57,12 @@ namespace showmidi
             owner_->addChildComponent(expandedButton_);
             owner_->addAndMakeVisible(helpButton_);
             owner_->addChildComponent(settingsButton_);
+            
+            portViewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
+            portViewport_.setScrollBarsShown(true, false);
+            portViewport_.setScrollBarThickness(8);
+            portViewport_.setViewedComponent(&portList_, false);
+            owner_->addChildComponent(portViewport_);
             
             if (sidebarType_ == SidebarType::sidebarExpandable)
             {
@@ -70,6 +85,7 @@ namespace showmidi
                 collapsedButton_.setVisible(false);
                 expandedButton_.setVisible(true);
                 settingsButton_.setVisible(true);
+                portViewport_.setVisible(true);
                 
                 settings_.setVisible(false);
                 about_.setVisible(false);
@@ -82,6 +98,7 @@ namespace showmidi
                 collapsedButton_.setVisible(true);
                 expandedButton_.setVisible(false);
                 settingsButton_.setVisible(false);
+                portViewport_.setVisible(false);
                 
                 settings_.setVisible(false);
                 about_.setVisible(false);
@@ -146,6 +163,9 @@ namespace showmidi
             settingsButton_.setBoundsForTouch(owner_->getWidth() - expandedSvg_->getWidth() - X_SETTINGS, Y_SETTINGS,
                                               settingsSvg_->getWidth(), settingsSvg_->getHeight());
 
+            
+            portViewport_.setBounds(0, Y_PORTLIST, owner_->getWidth(), owner_->getHeight() - Y_PORTLIST - PORTLIST_BOTTOM_MARGIN);
+            portList_.setSize(owner_->getWidth() - portViewport_.getScrollBarThickness(), std::max(portViewport_.getHeight(), portList_.getVisibleHeight()));
             about_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_.getHeight());
             settings_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
         }
@@ -176,6 +196,8 @@ namespace showmidi
         PaintedButton expandedButton_;
         PaintedButton helpButton_;
         PaintedButton settingsButton_;
+        Viewport portViewport_;
+        PortListComponent portList_;
         SettingsComponent settings_;
         AboutComponent about_;
 
