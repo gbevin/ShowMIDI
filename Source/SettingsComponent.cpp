@@ -127,12 +127,12 @@ namespace showmidi
 
             // theme colours
             
-            float color_x = 23;
-            float color_x_offset = Theme::DIALOG_LINE_HEIGHT * 1.5;
-            float color_y = theme.linePosition(16);
-            float color_y_offset = Theme::DIALOG_LINE_HEIGHT * 1.5;
-            float color_w = Theme::DIALOG_LINE_HEIGHT;
-            float color_h = Theme::DIALOG_LINE_HEIGHT;
+            int color_x = 23;
+            int color_x_offset = (int)(Theme::DIALOG_LINE_HEIGHT * 1.5);
+            int color_y = theme.linePosition(16);
+            int color_y_offset = (int)(Theme::DIALOG_LINE_HEIGHT * 1.5);
+            int color_w = Theme::DIALOG_LINE_HEIGHT;
+            int color_h = Theme::DIALOG_LINE_HEIGHT;
             
             colorBackgroundButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x += color_x_offset;

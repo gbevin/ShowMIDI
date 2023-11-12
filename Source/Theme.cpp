@@ -23,7 +23,7 @@ namespace showmidi
 {
     int Theme::linePosition(float number)
     {
-        return DIALOG_LINE_HEIGHT * number;
+        return (int)(DIALOG_LINE_HEIGHT * number);
     }
 
     Font Theme::fontLabel()
@@ -124,7 +124,7 @@ namespace showmidi
     static Random colorRandom;
     static Colour randomColor()
     {
-        return Colour(colorRandom.nextInt(255), colorRandom.nextInt(255), colorRandom.nextInt(255));
+        return Colour((uint8)colorRandom.nextInt(255), (uint8)colorRandom.nextInt(255), (uint8)colorRandom.nextInt(255));
     }
     
     void Theme::randomize()
