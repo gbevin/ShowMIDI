@@ -52,6 +52,6 @@ namespace showmidi
     void PaintedButton::drawDrawable(Graphics& g, Drawable& drawable)
     {
         auto bounds = getBounds().reduced(DEFAULT_TOUCH_OUTSET);
-        drawable.drawAt(g, bounds.getX(), bounds.getY(), 1.0f);
+        drawable.drawAt(g, (float)bounds.getX(), (float)bounds.getY(), 1.0f);
     }
 }

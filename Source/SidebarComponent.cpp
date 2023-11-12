@@ -84,7 +84,7 @@ namespace showmidi
             settingsButton_.setBoundsForTouch(X_SETTINGS, Y_SETTINGS,
                                               settingsSvg_->getWidth(), settingsSvg_->getHeight());
 
-            helpButton_.setBoundsForTouch(X_HELP, (float)owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
+            helpButton_.setBoundsForTouch(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
                                           owner_->getWidth(), helpSvg_->getHeight());
             
             settings_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
