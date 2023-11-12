@@ -47,10 +47,6 @@ namespace showmidi
             viewport_.setBounds(sidebar_.getWidth(), 0, viewport_width, DEFAULT_WINDOW_HEIGHT);
             owner_->addAndMakeVisible(viewport_);
         }
-        
-        ~Pimpl()
-        {
-        }
 
         bool isInterestedInFileDrag(const StringArray& files)
         {

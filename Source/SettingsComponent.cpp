@@ -184,10 +184,6 @@ namespace showmidi
             
             themeChooser_ = std::make_unique<FileChooser>("Please select the theme you want to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
         }
-        
-        ~Pimpl()
-        {
-        }
 
         int getWidth()
         {

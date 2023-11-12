@@ -29,16 +29,6 @@ namespace showmidi
             owner_(owner),
             manager_(manager)
         {
-            MessageManager::getInstance()->callAsync([this] { setup(); });
-        }
-        
-        ~Pimpl()
-        {
-        }
-        
-        void setup()
-        {
-            resized();
         }
 
         void paint(Graphics& g)

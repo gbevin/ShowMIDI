@@ -39,15 +39,6 @@ namespace showmidi
             settings_(manager),
             about_(manager.getSettings().getTheme())
         {
-            MessageManager::getInstance()->callAsync([this] { setup(); });
-        }
-        
-        ~Pimpl()
-        {
-        }
-        
-        void setup()
-        {
             collapsedButton_.addListener(this);
             expandedButton_.addListener(this);
             helpButton_.addListener(this);
@@ -69,8 +60,6 @@ namespace showmidi
 
             owner_->getParentComponent()->addChildComponent(about_);
             owner_->getParentComponent()->addChildComponent(settings_);
-
-            resized();
         }
 
         void buttonClicked(Button* button)
