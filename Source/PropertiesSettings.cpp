@@ -15,57 +15,57 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "StoredSettings.h"
+#include "PropertiesSettings.h"
 
 namespace showmidi
 {
-    const String StoredSettings::OCTAVE_MIDDLE_C = {"octaveMiddleC"};
-    const String StoredSettings::TIMEOUT_DELAY = {"timeoutDelay"};
-    const String StoredSettings::THEME = {"theme"};
+    const String PropertiesSettings::OCTAVE_MIDDLE_C = {"octaveMiddleC"};
+    const String PropertiesSettings::TIMEOUT_DELAY = {"timeoutDelay"};
+    const String PropertiesSettings::THEME = {"theme"};
 
-    StoredSettings::StoredSettings()
+    PropertiesSettings::PropertiesSettings()
     {
         reload();
     }
     
-    StoredSettings::~StoredSettings()
+    PropertiesSettings::~PropertiesSettings()
     {
         flush();
     }
     
-    int StoredSettings::getOctaveMiddleC()
+    int PropertiesSettings::getOctaveMiddleC()
     {
         return getGlobalProperties().getIntValue(OCTAVE_MIDDLE_C, DEFAULT_OCTAVE_MIDDLE_C);
     }
     
-    void StoredSettings::setOctaveMiddleC(int octave)
+    void PropertiesSettings::setOctaveMiddleC(int octave)
     {
         getGlobalProperties().setValue(OCTAVE_MIDDLE_C, octave);
         flush();
     }
     
-    int StoredSettings::getTimeoutDelay()
+    int PropertiesSettings::getTimeoutDelay()
     {
         return getGlobalProperties().getIntValue(TIMEOUT_DELAY, DEFAULT_TIMEOUT_DELAY);
     }
     
-    void StoredSettings::setTimeoutDelay(int delay)
+    void PropertiesSettings::setTimeoutDelay(int delay)
     {
         getGlobalProperties().setValue(TIMEOUT_DELAY, delay);
         flush();
     }
 
-    Theme& StoredSettings::getTheme()
+    Theme& PropertiesSettings::getTheme()
     {
         return theme_;
     }
     
-    void StoredSettings::storeTheme()
+    void PropertiesSettings::storeTheme()
     {
         getGlobalProperties().setValue(THEME, theme_.generateXml());
     }
 
-    PropertiesFile& StoredSettings::getGlobalProperties()
+    PropertiesFile& PropertiesSettings::getGlobalProperties()
     {
         return *propertyFile_;
     }
@@ -85,12 +85,12 @@ namespace showmidi
         return new PropertiesFile(options);
     }
     
-    void StoredSettings::flush()
+    void PropertiesSettings::flush()
     {
         propertyFile_->saveIfNeeded();
     }
     
-    void StoredSettings::reload()
+    void PropertiesSettings::reload()
     {
         propertyFile_.reset(createPropsFile(ProjectInfo::projectName));
         

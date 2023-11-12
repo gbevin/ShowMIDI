@@ -23,12 +23,28 @@
 
 namespace showmidi
 {
-    class SettingsManager
+    class PluginSettings : public Settings
     {
     public:
-        virtual ~SettingsManager() {};
+        PluginSettings();
+        ~PluginSettings();
         
-        virtual Settings& getSettings() = 0;
-        virtual void storeSettings() = 0;
+        int getOctaveMiddleC();
+        void setOctaveMiddleC(int);
+        
+        int getTimeoutDelay();
+        void setTimeoutDelay(int);
+        
+        Theme& getTheme();
+        void storeTheme();
+        
+        ValueTree& getValueTree();
+        void copyValueTree(ValueTree&);
+        
+    private:
+        ValueTree settings_ { ProjectInfo::projectName };
+        Theme theme_;
+        
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginSettings)
     };
 }

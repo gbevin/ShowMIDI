@@ -23,12 +23,36 @@
 
 namespace showmidi
 {
-    class SettingsManager
+    class PropertiesSettings : public Settings
     {
     public:
-        virtual ~SettingsManager() {};
+        static const String OCTAVE_MIDDLE_C;
+        static const String TIMEOUT_DELAY;
+        static const String THEME;
         
-        virtual Settings& getSettings() = 0;
-        virtual void storeSettings() = 0;
+        PropertiesSettings();
+        ~PropertiesSettings();
+        
+        int getOctaveMiddleC();
+        void setOctaveMiddleC(int);
+        
+        int getTimeoutDelay();
+        void setTimeoutDelay(int);
+        
+        Theme& getTheme();
+        void storeTheme();
+        
+        void flush();
+        
+    private:
+        std::unique_ptr<PropertiesFile> propertyFile_;
+        
+        PropertiesFile& getGlobalProperties();        
+        void updateGlobalProps();
+        void reload();
+
+        Theme theme_;
+        
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PropertiesSettings)
     };
 }

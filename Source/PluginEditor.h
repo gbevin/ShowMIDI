@@ -18,6 +18,7 @@
 #pragma once
 
 #include <JuceHeader.h>
+
 #include "PluginProcessor.h"
 
 namespace showmidi
@@ -32,7 +33,7 @@ namespace showmidi
 
         void paint(Graphics&) override;
         void resized() override;
-        
+
         struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_ { nullptr };

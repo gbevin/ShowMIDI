@@ -147,10 +147,11 @@
     <ClCompile Include="..\..\Source\PaintedButton.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
+    <ClCompile Include="..\..\Source\PluginSettings.cpp"/>
+    <ClCompile Include="..\..\Source\PropertiesSettings.cpp"/>
     <ClCompile Include="..\..\Source\SettingsComponent.cpp"/>
     <ClCompile Include="..\..\Source\ShowMidiApplication.cpp"/>
     <ClCompile Include="..\..\Source\SidebarComponent.cpp"/>
-    <ClCompile Include="..\..\Source\StoredSettings.cpp"/>
     <ClCompile Include="..\..\Source\Theme.cpp"/>
     <ClCompile Include="..\..\Source\UwynLookAndFeel.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.cpp">
@@ -2425,11 +2426,13 @@
     <ClInclude Include="..\..\Source\PaintedButton.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
+    <ClInclude Include="..\..\Source\PluginSettings.h"/>
+    <ClInclude Include="..\..\Source\PropertiesSettings.h"/>
+    <ClInclude Include="..\..\Source\Settings.h"/>
     <ClInclude Include="..\..\Source\SettingsComponent.h"/>
     <ClInclude Include="..\..\Source\SettingsManager.h"/>
     <ClInclude Include="..\..\Source\ShowMidiApplication.h"/>
     <ClInclude Include="..\..\Source\SidebarComponent.h"/>
-    <ClInclude Include="..\..\Source\StoredSettings.h"/>
     <ClInclude Include="..\..\Source\Theme.h"/>
     <ClInclude Include="..\..\Source\UwynLookAndFeel.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>

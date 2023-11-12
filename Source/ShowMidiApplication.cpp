@@ -96,7 +96,7 @@ int ShowMidiApplication::getWindowHeight()
     return 0;
 }
 
-StoredSettings& ShowMidiApplication::getSettings()
+Settings& ShowMidiApplication::getSettings()
 {
     return settings_;
 }

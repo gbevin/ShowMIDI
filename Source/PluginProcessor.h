@@ -19,6 +19,8 @@
 
 #include <JuceHeader.h>
 
+#include "PluginSettings.h"
+
 namespace showmidi
 {
     class ShowMIDIPluginAudioProcessor  : public AudioProcessor
@@ -51,7 +53,11 @@ namespace showmidi
         void getStateInformation(MemoryBlock& destData) override;
         void setStateInformation(const void* data, int sizeInBytes) override;
         
+        PluginSettings& getSettings();
+        
     private:
+        PluginSettings settings_;
+        
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ShowMIDIPluginAudioProcessor)
     };
 }

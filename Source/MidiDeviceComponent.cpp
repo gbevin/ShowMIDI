@@ -23,11 +23,19 @@ namespace showmidi
 {
     struct MidiDeviceComponent::Pimpl : public MidiInputCallback
     {
-        Pimpl(MidiDeviceComponent* owner, Theme& theme, const String& name) : owner_(owner), theme_(theme), deviceInfo_({ name, ""})
+        Pimpl(MidiDeviceComponent* owner, SettingsManager& manager, const String& name) :
+            owner_(owner),
+            settingsManager_(manager),
+            theme_(manager.getSettings().getTheme()),
+            deviceInfo_({ name, ""})
         {
         }
         
-        Pimpl(MidiDeviceComponent* owner, Theme& theme, const MidiDeviceInfo info) : owner_(owner), theme_(theme), deviceInfo_(info)
+        Pimpl(MidiDeviceComponent* owner, SettingsManager& manager, const MidiDeviceInfo info) :
+            owner_(owner),
+            settingsManager_(manager),
+            theme_(manager.getSettings().getTheme()),
+            deviceInfo_(info)
         {
             auto midi_input = MidiInput::openDevice(info.identifier, this);
             if (midi_input != nullptr)
@@ -92,13 +100,7 @@ namespace showmidi
         
         ~Pimpl()
         {
-            settingsManager_ = nullptr;
             midiIn_ = nullptr;
-        }
-        
-        void setSettingsManager(SettingsManager* manager)
-        {
-            settingsManager_ = manager;
         }
         
         void handleIncomingMidiMessage(MidiInput*, const MidiMessage& msg)
@@ -571,21 +573,13 @@ namespace showmidi
         
         bool isExpired(const Time& currentTime, Time& messageTime)
         {
-            auto delay = StoredSettings::DEFAULT_TIMEOUT_DELAY;
-            if (settingsManager_)
-            {
-                delay = settingsManager_->getSettings().getTimeoutDelay();
-            }
+            auto delay = settingsManager_.getSettings().getTimeoutDelay();
             return (currentTime - messageTime).inSeconds() > delay;
         }
         
         String outputNote(int noteNumber)
         {
-            auto octave = StoredSettings::DEFAULT_OCTAVE_MIDDLE_C;
-            if (settingsManager_)
-            {
-                octave = settingsManager_->getSettings().getOctaveMiddleC();
-            }
+            auto octave = settingsManager_.getSettings().getOctaveMiddleC();
             return MidiMessage::getMidiNoteName(noteNumber, true, true, octave);
         }
         
@@ -628,17 +622,14 @@ namespace showmidi
             
             owner_->getParentComponent()->repaint();
             
-            if (settingsManager_ != nullptr)
-            {
-                settingsManager_->storeSettings();
-            }
+            settingsManager_.storeSettings();
         }
 
         MidiDeviceComponent* const owner_;
         
+        SettingsManager& settingsManager_;
         Theme& theme_;
         MidiDeviceInfo deviceInfo_;
-        SettingsManager* settingsManager_ { nullptr };
         std::unique_ptr<MidiInput> midiIn_ { nullptr };
         std::atomic_bool dirty_ { true };
         Time lastRender_;
@@ -654,11 +645,9 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MidiDeviceComponent::MidiDeviceComponent(Theme& theme, const String& name) : pimpl_(new Pimpl(this, theme, name)) {}
-    MidiDeviceComponent::MidiDeviceComponent(Theme& theme, const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, theme, info)) {}
+    MidiDeviceComponent::MidiDeviceComponent(SettingsManager& manager, const String& name) : pimpl_(new Pimpl(this, manager, name)) {}
+    MidiDeviceComponent::MidiDeviceComponent(SettingsManager& manager, const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, manager, info)) {}
     MidiDeviceComponent::~MidiDeviceComponent() = default;
-    
-    void MidiDeviceComponent::setSettingsManager(SettingsManager* m)  { pimpl_->setSettingsManager(m); }
 
     int MidiDeviceComponent::getStandardWidth()         { return Pimpl::getStandardWidth(); }
     int MidiDeviceComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }

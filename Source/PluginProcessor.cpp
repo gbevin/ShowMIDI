@@ -109,12 +109,27 @@ namespace showmidi
         return new ShowMIDIPluginAudioProcessorEditor(*this);
     }
     
-    void ShowMIDIPluginAudioProcessor::getStateInformation(MemoryBlock&)
+    void ShowMIDIPluginAudioProcessor::getStateInformation(MemoryBlock& destData)
     {
+        auto& state = settings_.getValueTree();
+        if (auto xml_state = state.createXml())
+        {
+            copyXmlToBinary(*xml_state, destData);
+        }
     }
     
-    void ShowMIDIPluginAudioProcessor::setStateInformation(const void*, int)
+    void ShowMIDIPluginAudioProcessor::setStateInformation(const void* data, int sizeInBytes)
     {
+        if (auto xml_state = getXmlFromBinary(data, sizeInBytes))
+        {
+            auto state = ValueTree::fromXml(*xml_state);
+            settings_.copyValueTree(state);
+        }
+    }
+    
+    PluginSettings& ShowMIDIPluginAudioProcessor::getSettings()
+    {
+        return settings_;
     }
 }
 

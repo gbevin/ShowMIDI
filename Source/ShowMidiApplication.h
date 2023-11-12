@@ -20,7 +20,7 @@
 #include <JuceHeader.h>
 
 #include "SettingsManager.h"
-#include "StoredSettings.h"
+#include "PropertiesSettings.h"
 #include "UwynLookAndFeel.h"
 
 #define SMApp ShowMidiApplication::getInstance()
@@ -60,12 +60,12 @@ namespace showmidi
         void setWindowSize(int, int);
         int getWindowHeight();
         
-        StoredSettings& getSettings() override;
+        Settings& getSettings() override;
         void storeSettings() override;
 
     private:
         UwynLookAndFeel lookAndFeel_;
         std::unique_ptr<MainWindow> mainWindow_;
-        StoredSettings settings_;
+        PropertiesSettings settings_;
     };
 }

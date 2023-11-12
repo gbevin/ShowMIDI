@@ -222,8 +222,7 @@ namespace showmidi
                         MidiDeviceComponent* component = midiDevices_.getReference(info.identifier);
                         if (component == nullptr)
                         {
-                            component = new MidiDeviceComponent(SMApp.getSettings().getTheme(), info);
-                            component->setSettingsManager(&SMApp);
+                            component = new MidiDeviceComponent(SMApp, info);
                             midiDevices_.set(info.identifier, component);
                         }
                         

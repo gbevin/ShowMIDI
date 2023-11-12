@@ -19,12 +19,13 @@
 
 #include "MidiDeviceComponent.h"
 #include "PluginProcessor.h"
-#include "StoredSettings.h"
+#include "PluginSettings.h"
+#include "SettingsManager.h"
 #include "UwynLookAndFeel.h"
 
 namespace showmidi
 {
-    struct ShowMIDIPluginAudioProcessorEditor::Pimpl : public MultiTimer, public KeyListener
+    struct ShowMIDIPluginAudioProcessorEditor::Pimpl : public MultiTimer, public KeyListener, public SettingsManager
     {
         static constexpr int DEFAULT_EDITOR_HEIGHT = 600;
         
@@ -37,7 +38,7 @@ namespace showmidi
         Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor& p) :
             owner_(owner),
             audioProcessor_(p),
-            midiDevice_(settings_.getTheme(), "ShowMIDI")
+            midiDevice_(*this, "ShowMIDI")
         {
             Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
@@ -128,7 +129,7 @@ namespace showmidi
         
         void paint(Graphics& g)
         {
-            g.fillAll(settings_.getTheme().colorSidebar);
+            g.fillAll(audioProcessor_.getSettings().getTheme().colorSidebar);
         }
         
         void resized(int height)
@@ -136,9 +137,19 @@ namespace showmidi
             viewPort_.setBounds(0, 0, viewPort_.getWidth(), height);
         }
         
+        Settings& getSettings() override
+        {
+            return audioProcessor_.getSettings();
+        }
+        
+        void storeSettings() override
+        {
+            audioProcessor_.getSettings().storeTheme();
+            owner_->repaint();
+        }
+
         UwynLookAndFeel lookAndFeel_;
         ShowMIDIPluginAudioProcessorEditor* const owner_;
-        StoredSettings settings_;
         ShowMIDIPluginAudioProcessor& audioProcessor_;
         Viewport viewPort_;
         MidiDeviceComponent midiDevice_;

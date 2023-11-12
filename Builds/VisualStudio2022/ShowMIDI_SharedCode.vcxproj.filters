@@ -625,6 +625,12 @@
     <ClCompile Include="..\..\Source\PluginProcessor.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\PluginSettings.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\PropertiesSettings.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\SettingsComponent.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
@@ -632,9 +638,6 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\SidebarComponent.cpp">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\StoredSettings.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Theme.cpp">
@@ -3096,6 +3099,15 @@
     <ClInclude Include="..\..\Source\PluginProcessor.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\PluginSettings.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PropertiesSettings.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Settings.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\SettingsComponent.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
@@ -3106,9 +3118,6 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\SidebarComponent.h">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\StoredSettings.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Theme.h">

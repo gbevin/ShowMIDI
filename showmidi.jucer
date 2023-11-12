@@ -55,6 +55,15 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="pbOkrz" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+      <FILE id="Xp9xUT" name="PluginSettings.cpp" compile="1" resource="0"
+            file="Source/PluginSettings.cpp"/>
+      <FILE id="ah25ua" name="PluginSettings.h" compile="0" resource="0"
+            file="Source/PluginSettings.h"/>
+      <FILE id="a4oYP1" name="PropertiesSettings.cpp" compile="1" resource="0"
+            file="Source/PropertiesSettings.cpp"/>
+      <FILE id="cXRA86" name="PropertiesSettings.h" compile="0" resource="0"
+            file="Source/PropertiesSettings.h"/>
+      <FILE id="AGg3AS" name="Settings.h" compile="0" resource="0" file="Source/Settings.h"/>
       <FILE id="YFaTS5" name="SettingsComponent.cpp" compile="1" resource="0"
             file="Source/SettingsComponent.cpp"/>
       <FILE id="Kdp7mq" name="SettingsComponent.h" compile="0" resource="0"
@@ -69,10 +78,6 @@
             file="Source/SidebarComponent.cpp"/>
       <FILE id="Re6kWf" name="SidebarComponent.h" compile="0" resource="0"
             file="Source/SidebarComponent.h"/>
-      <FILE id="BkirUR" name="StoredSettings.cpp" compile="1" resource="0"
-            file="Source/StoredSettings.cpp"/>
-      <FILE id="dZfZXo" name="StoredSettings.h" compile="0" resource="0"
-            file="Source/StoredSettings.h"/>
       <FILE id="fBV1fH" name="Theme.cpp" compile="1" resource="0" file="Source/Theme.cpp"/>
       <FILE id="YqVJfs" name="Theme.h" compile="0" resource="0" file="Source/Theme.h"/>
       <FILE id="Bl5ZcR" name="UwynLookAndFeel.cpp" compile="1" resource="0"
