@@ -22,9 +22,9 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.5.0</string>
+    <string>0.5.1</string>
     <key>CFBundleVersion</key>
-    <string>2</string>
+    <string>6</string>
     <key>NSHumanReadableCopyright</key>
     <string></string>
     <key>NSHighResolutionCapable</key>
@@ -53,7 +53,7 @@
             <key>subtype</key>
             <string>shmi</string>
             <key>version</key>
-            <integer>1280</integer>
+            <integer>1281</integer>
             <key>sandboxSafe</key>
             <true/>
             <key>tags</key>
