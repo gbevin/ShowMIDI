@@ -45,6 +45,22 @@ To pause the MIDI data stream, press the spacebar, to un-pause, press it again.
 
 The plugin versions can be used in any DAW that supports MIDI effect plugins. Some plugin formats, like VST3, might filter out certain MIDI messages and not present a fully accurate view.
 
+## Themes
+
+ShowMIDI ships with a handful of themes, more will be added in the future.
+
+You can edit, create and save them yourself in the application. Feel free to submit your themes to me.
+
+You can find the included themes [in the repository](https://github.com/gbevin/ShowMIDI/tree/main/Themes), please make sure to download the raw SVG files, otherwise the download might not contain the right information. Here are direct links to some of the included themes:
+
+![](https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Themes/bstation.svg)
+![](https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Themes/classic%20light.svg)
+![](https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Themes/darcula.svg)
+![](https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Themes/dark.svg)
+![](https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Themes/disco.svg)
+![](https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Themes/light.svg)
+![](https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Themes/mouha.svg)
+
 ## Credits
 
 ShowMIDI was created by Geert Bevin: https://uwyn.com
