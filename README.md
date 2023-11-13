@@ -39,7 +39,7 @@ Since ShowMIDI is free and open-source, you can also easily build it yourself. J
 
 If you're using the macOS Homebrew package manager, you can install ShowMIDI with:
 ```
-brew install --cask gbevin/tools/showmidi
+brew install gbevin/tools/showmidi
 ```
 
 ## Usage
