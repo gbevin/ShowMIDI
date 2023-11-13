@@ -65,7 +65,7 @@ namespace showmidi
             MidiDeviceInfoComparator comparator;
             devices.sort(comparator);
             {
-                ScopedLock g(midiDevicesLock_);
+                ScopedLock guard(midiDevicesLock_);
                 midiDevices_ = devices;
             }
             
@@ -75,12 +75,12 @@ namespace showmidi
                 if (settings.isMidiDeviceVisible(info.identifier))
                 {
                     g.setColour(theme.colorData);
-                    visible_svg->drawAt(g, X_VISIBILITY, y_offset + Y_VISIBILITY, 1.0);
+                    visible_svg->drawAt(g, X_VISIBILITY, (float)y_offset + Y_VISIBILITY, 1.0);
                 }
                 else
                 {
                     g.setColour(theme.colorLabel);
-                    hidden_svg->drawAt(g, X_VISIBILITY, y_offset + Y_VISIBILITY, 1.0);
+                    hidden_svg->drawAt(g, X_VISIBILITY, (float)y_offset + Y_VISIBILITY, 1.0);
                 }
                 g.drawText(info.name,
                            X_PORT, y_offset,
