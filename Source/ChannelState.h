@@ -118,6 +118,38 @@ namespace showmidi
     {
     };
     
+    struct Parameter : public ChannelMessage
+    {
+    };
+    
+    struct Parameters
+    {
+        Parameters()
+        {
+        }
+        
+        Parameters(const Parameters& other)
+        {
+            deepCopy(other);
+        }
+        
+        Parameters& operator=(Parameters other)
+        {
+            deepCopy(other);
+            return *this;
+        }
+        
+        void deepCopy(const Parameters& other)
+        {
+            time_ = other.time_;
+            param_.clear();
+            param_ = other.param_;
+        }
+
+        Time time_;
+        std::map<int, Parameter> param_;
+    };
+    
     struct ActiveChannel
     {
         int number_ { -1 };
@@ -127,6 +159,15 @@ namespace showmidi
         ProgramChange programChange_;
         ChannelPressure channelPressure_;
         PitchBend pitchBend_;
+        Parameters rpns_;
+        Parameters nrpns_;
+        
+        int lastRpnMsb_ { 127 };
+        int lastRpnLsb_ { 127 };
+        int lastNrpnMsb_ { 127 };
+        int lastNrpnLsb_ { 127 };
+        int lastDataMsb_ { 0 };
+        int lastDataLsb_ { 0 };
     };
     
     struct ActiveChannels

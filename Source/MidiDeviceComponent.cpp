@@ -117,31 +117,87 @@ namespace showmidi
             auto& channel = channels_.channel_[msg.getChannel() - 1];
             if (msg.isNoteOnOrOff())
             {
-                Notes& notes = channel.notes_;
+                auto& notes = channel.notes_;
                 notes.time_ = t;
                 
-                Note& note = notes.note_[msg.getNoteNumber()];
+                auto& note = notes.note_[msg.getNoteNumber()];
                 note.on_ = msg.isNoteOn();
                 note.value_ = msg.getVelocity();
                 channel_message = &note;
             }
             else if (msg.isAftertouch())
             {
-                Notes& notes = channel.notes_;
+                auto& notes = channel.notes_;
                 notes.time_ = t;
                 
-                Note& note = notes.note_[msg.getNoteNumber()];
+                auto& note = notes.note_[msg.getNoteNumber()];
                 note.polyPressure_ = msg.getAfterTouchValue();
                 note.polyPressureTime_ = t;
                 channel_message = &note;
             }
             else if (msg.isController())
             {
-                ControlChanges& control_changes = channel.controlChanges_;
+                auto& control_changes = channel.controlChanges_;
                 control_changes.time_ = t;
                 
-                channel_message = &control_changes.controlChange_[msg.getControllerNumber()];
-                channel_message->value_ = msg.getControllerValue();
+                auto number = msg.getControllerNumber();
+                auto value = msg.getControllerValue();
+                channel_message = &control_changes.controlChange_[number];
+                channel_message->value_ = value;
+                
+                switch (number)
+                {
+                    case 6:
+                        // if an NRPN or RPN parameter was selected, start constituting the data
+                        if ((channel.lastRpnMsb_ != 127 || channel.lastRpnLsb_ != 127) ||
+                            (channel.lastNrpnMsb_ != 127 || channel.lastNrpnLsb_ != 127))
+                        {
+                            channel.lastDataMsb_ = value;
+                        }
+                        break;
+                    case 38:
+                        if (channel.lastRpnMsb_ != 127 || channel.lastRpnLsb_ != 127)
+                        {
+                            channel.lastDataLsb_ = value;
+                            
+                            int rpn_number = (channel.lastRpnMsb_ << 7) + channel.lastRpnLsb_;
+                            int rpn_value = (channel.lastDataMsb_ << 7) + channel.lastDataLsb_;
+                            auto& rpns = channel.rpns_;
+                            rpns.time_ = t;
+                            rpns.param_[rpn_number].time_ = t;
+                            rpns.param_[rpn_number].value_ = rpn_value;
+                        }
+                        else if (channel.lastNrpnMsb_ != 127 || channel.lastNrpnLsb_ != 127)
+                        {
+                            channel.lastDataLsb_ = value;
+                            
+                            int nrpn_number = (channel.lastNrpnMsb_ << 7) + channel.lastNrpnLsb_;
+                            int nrpn_value = (channel.lastDataMsb_ << 7) + channel.lastDataLsb_;
+                            auto& nrpns = channel.nrpns_;
+                            nrpns.time_ = t;
+                            nrpns.param_[nrpn_number].time_ = t;
+                            nrpns.param_[nrpn_number].value_ = nrpn_value;
+                        }
+                        break;
+                    case 98:
+                        channel.lastNrpnLsb_ = value;
+                        break;
+                    case 99:
+                        channel.lastNrpnMsb_ = value;
+                        break;
+                    case 100:
+                        channel.lastRpnLsb_ = value;
+                        // resetting RPN numbers also resets NRPN numbers
+                        if (channel.lastRpnLsb_ == 127 && channel.lastRpnMsb_ == 127)
+                        {
+                            channel.lastNrpnLsb_ = 127;
+                            channel.lastNrpnMsb_ = 127;
+                        }
+                        break;
+                    case 101:
+                        channel.lastRpnMsb_ = value;
+                        break;
+                }
             }
             else if (msg.isProgramChange())
             {
@@ -202,6 +258,10 @@ namespace showmidi
         static constexpr int Y_PB = 7;
         static constexpr int X_PB_DATA = 24;
         
+        static constexpr int X_PARAM = 84;
+        static constexpr int Y_PARAM = 7;
+        static constexpr int X_PARAM_DATA = 24;
+
         static constexpr int X_NOTE = 48;
         static constexpr int Y_NOTE = 7;
         static constexpr int X_ON_OFF = 84;
@@ -261,6 +321,8 @@ namespace showmidi
                     
                     paintProgramChange(g, state, channel_messages);
                     state.offset_ = paintPitchBend(g, state, channel_messages);
+                    state.offset_ = paintParameters(g, state, "RPN", channel_messages, channel_messages.rpns_);
+                    state.offset_ = paintParameters(g, state, "NRPN", channel_messages, channel_messages.nrpns_);
                     int notes_bottom = paintNotes(g, state, channel_messages);
                     int control_changes_bottom = paintControlChanges(g, state, channel_messages);
                     
@@ -268,9 +330,28 @@ namespace showmidi
                     
                     state.offset_ += Y_CHANNEL_MARGIN;
                 }
+                
+                pruneParameters(t, channel_messages.rpns_);
+                pruneParameters(t, channel_messages.nrpns_);
             }
-            
+                        
             lastHeight_ = state.offset_;
+        }
+        
+        void pruneParameters(Time t, Parameters& params)
+        {
+            auto it_param = params.param_.begin();
+            while (it_param != params.param_.end())
+            {
+                if (isExpired(t, it_param->second.time_))
+                {
+                    it_param = params.param_.erase(it_param);
+                }
+                else
+                {
+                    ++it_param;
+                }
+            }
         }
         
         static int getStandardWidth()
@@ -394,6 +475,70 @@ namespace showmidi
             return y_offset;
         }
         
+        int paintParameters(Graphics& g, ChannelPaintState& state, const String& name, ActiveChannel& channel, Parameters& parameters)
+        {
+            int y_offset = -1;
+            
+            if (!isExpired(state.time_, parameters.time_))
+            {
+                for (auto& [number, param] : parameters.param_)
+                {
+                    if (!isExpired(state.time_, param.time_))
+                    {
+                        ensurePaintedChannelHeader(g, state, channel);
+                        
+                        if (y_offset == -1)
+                        {
+                            y_offset = state.offset_;
+                        }
+                        
+                        y_offset += Y_PARAM;
+                        
+                        Colour param_color = theme_.colorController;
+                        
+                        int param_width = getStandardWidth() - X_PARAM - X_PARAM_DATA;
+                        
+                        // draw the parameter text
+                        
+                        g.setColour(param_color);
+                        g.setFont(theme_.fontLabel());
+                        g.drawText(name + String(" ") + output14Bit(number),
+                                   X_PARAM, y_offset,
+                                   param_width, theme_.labelHeight(),
+                                   Justification::centredLeft);
+                        
+                        g.setColour(theme_.colorData);
+                        g.setFont(theme_.fontData());
+                        g.drawText(output14Bit(param.value_),
+                                   X_PARAM, y_offset,
+                                   param_width, theme_.dataHeight(),
+                                   Justification::centredRight);
+                        
+                        y_offset += theme_.labelHeight();
+                        
+                        // draw value indicator
+
+                        g.setColour(theme_.colorTrack);
+                        g.fillRect(X_PARAM, y_offset,
+                                   param_width, HEIGHT_INDICATOR);
+                        
+                        g.setColour(param_color);
+                        g.fillRect(X_PARAM, y_offset,
+                                   (param_width * param.value_) / 0x3FFF, HEIGHT_INDICATOR);
+                        
+                        y_offset += HEIGHT_INDICATOR;
+                    }
+                }
+            }
+            
+            if (y_offset == -1)
+            {
+                y_offset = state.offset_;
+            }
+                
+            return y_offset;
+        }
+
         int paintNotes(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             int y_offset = -1;
