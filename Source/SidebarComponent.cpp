@@ -42,11 +42,6 @@ namespace showmidi
             settings_(manager),
             about_(manager.getSettings().getTheme())
         {
-            MessageManager::getInstance()->callAsync([this] { setup(); });
-        }
-        
-        void setup()
-        {
             collapsedButton_.addListener(this);
             expandedButton_.addListener(this);
             helpButton_.addListener(this);
@@ -74,7 +69,10 @@ namespace showmidi
             {
                 settingsButton_.setVisible(true);
             }
-
+        }
+        
+        void setup()
+        {
             owner_->getParentComponent()->addChildComponent(about_);
             owner_->getParentComponent()->addChildComponent(settings_);
         }
@@ -216,7 +214,9 @@ namespace showmidi
     
     SidebarComponent::SidebarComponent(SettingsManager& m, SidebarType t, SidebarListener& l) : pimpl_(new Pimpl(this, m, t, l)) {}
     SidebarComponent::~SidebarComponent() = default;
-    
+
+    void SidebarComponent::setup() { pimpl_->setup(); }
+
     void SidebarComponent::paint(Graphics& g) { pimpl_->paint(g); }
     void SidebarComponent::resized()          { pimpl_->resized(); }
     int SidebarComponent::getActiveWidth()    { return pimpl_->getActiveWidth(); }

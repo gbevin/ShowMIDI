@@ -127,6 +127,8 @@ namespace showmidi
     
     MainLayoutComponent::MainLayoutComponent(SettingsManager& s, PauseManager& p, MainLayoutType t, Component* c) : pimpl_(new Pimpl(this, s, p, t, c))
     {
+        pimpl_->sidebar_.setup();
+        
         setSize(pimpl_->sidebar_.getWidth() + pimpl_->viewport_.getWidth(), Pimpl::DEFAULT_WINDOW_HEIGHT);
     }
     

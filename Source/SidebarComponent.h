@@ -56,6 +56,8 @@ namespace showmidi
         SidebarComponent(SettingsManager&, SidebarType, SidebarListener&);
         ~SidebarComponent() override;
         
+        void setup();
+
         void paint(Graphics&) override;
         
         void resized() override;
