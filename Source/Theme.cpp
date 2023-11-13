@@ -127,14 +127,38 @@ namespace showmidi
         return Colour((uint8)colorRandom.nextInt(255), (uint8)colorRandom.nextInt(255), (uint8)colorRandom.nextInt(255));
     }
     
+    struct YIQ
+    {
+        YIQ(Colour c) noexcept
+        {
+            auto r = c.getFloatRed();
+            auto g = c.getFloatGreen();
+            auto b = c.getFloatBlue();
+
+            y = 0.2999f * r + 0.5870f * g + 0.1140f * b;
+            i = 0.5957f * r - 0.2744f * g - 0.3212f * b;
+            q = 0.2114f * r - 0.5225f * g - 0.3113f * b;
+            alpha = c.getFloatAlpha();
+        }
+
+        float y = 0.0f, i = 0.0f, q = 0.0f, alpha = 0.0f;
+    };
+
     void Theme::randomize()
     {
         colorBackground = randomColor();
         colorSidebar = randomColor();
         colorSeperator = randomColor();
-        colorTrack = randomColor();
-        colorLabel = randomColor();
-        colorData = randomColor();
+        do
+        {
+            colorLabel = randomColor();
+        }
+        while (std::abs(YIQ(colorSidebar).y - YIQ(colorLabel).y) < 0.3);
+        do
+        {
+            colorData = randomColor();
+        }
+        while (std::abs(YIQ(colorBackground).y - YIQ(colorData).y) < 0.3);
         colorPositive = randomColor();
         colorNegative = randomColor();
         colorController = randomColor();
