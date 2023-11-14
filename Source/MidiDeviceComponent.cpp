@@ -258,6 +258,7 @@ namespace showmidi
         
         static constexpr int X_CHANNEL = 23;
         static constexpr int X_CHANNEL_MPE = 84;
+        static constexpr int X_CHANNEL_MPE_TYPE = 110;
         static constexpr int Y_CHANNEL = 12;
         static constexpr int Y_CHANNEL_MARGIN = 8;
         
@@ -392,22 +393,28 @@ namespace showmidi
             
             if (channel.mpeMember_ != MpeMember::mpeNone)
             {
-                auto mpe_label = String("MPE ");
+                g.setColour(theme_.colorLabel);
+                g.drawText("MPE",
+                           X_CHANNEL_MPE, state.offset_,
+                           getStandardWidth() - X_CHANNEL_MPE, theme_.labelHeight(),
+                           Justification::centredLeft);
+                auto mpe_label = String("");
+                
                 if (channel.mpeManager_)
                 {
-                    mpe_label += " MGR";
+                    mpe_label = "MGR";
                 }
                 else if (channel.mpeMember_ == MpeMember::mpeLower)
                 {
-                    mpe_label += " LO";
+                    mpe_label = "LZ";
                 }
                 else if (channel.mpeMember_ == MpeMember::mpeUpper)
                 {
-                    mpe_label += " UP";
+                    mpe_label = "UZ";
                 }
                 g.setColour(theme_.colorLabel);
-                g.drawText(String(mpe_label),
-                           X_CHANNEL_MPE, state.offset_,
+                g.drawText(mpe_label,
+                           X_CHANNEL_MPE_TYPE, state.offset_,
                            getStandardWidth() - X_CHANNEL_MPE, theme_.labelHeight(),
                            Justification::centredLeft);
             }
