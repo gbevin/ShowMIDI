@@ -178,9 +178,9 @@ namespace showmidi
                             rpns.param_[rpn_number].value_ = rpn_value;
                             
                             // handle MPE activation message
-                            if (rpn_number == 6 && rpn_value <= 0xf)
+                            if (rpn_number == 6 && channel.lastDataMsb_ <= 0xf)
                             {
-                                channels_.handleMpeActivation(t, channel, rpn_value);
+                                channels_.handleMpeActivation(t, channel, channel.lastDataMsb_);
                             }
                         }
                         else if (channel.lastNrpnMsb_ != 127 || channel.lastNrpnLsb_ != 127)
