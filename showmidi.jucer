@@ -4,7 +4,7 @@
               addUsingNamespaceToJuceHeader="1" displaySplashScreen="0" jucerFormatVersion="1"
               pluginFormats="buildAU,buildAUv3,buildLV2,buildStandalone,buildVST,buildVST3"
               pluginCharacteristicsValue="pluginIsMidiEffectPlugin,pluginProducesMidiOut,pluginWantsMidiIn"
-              version="0.5.2" companyName="Uwyn" companyWebsite="https://www.uwyn.com"
+              version="0.6.0" companyName="Uwyn" companyWebsite="https://www.uwyn.com"
               companyEmail="info@uwyn.com" bundleIdentifier="com.uwyn.showmidi"
               pluginName="ShowMIDI" pluginManufacturer="Uwyn" pluginManufacturerCode="Uwyn"
               pluginCode="shmi" pluginAUIsSandboxSafe="1" pluginVSTNumMidiInputs="1"
@@ -129,7 +129,7 @@
                JUCE_USE_WINDOWS_MEDIA_FORMAT="0" JUCE_WEB_BROWSER="0" JUCE_USE_CURL="0"/>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX" extraDefs="JUCE_SILENCE_XCODE_15_LINKER_WARNING=1&#10;JUCE_COREGRAPHICS_RENDER_WITH_MULTIPLE_PAINT_CALLS=1"
-               smallIcon="eY2NXn" bigIcon="eY2NXn" buildNumber="7" xcodeValidArchs="arm64,arm64e,x86_64"
+               smallIcon="eY2NXn" bigIcon="eY2NXn" buildNumber="8" xcodeValidArchs="arm64,arm64e,x86_64"
                appSandbox="1" hardenedRuntime="1" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;&#9;&lt;key&gt;ITSAppUsesNonExemptEncryption&lt;/key&gt;&#10;&#9;&lt;false/&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;&#10;"
                iosDevelopmentTeamID="AGZT8GVS7G" applicationCategory="public.app-category.music"
                vstLegacyFolder="/Users/gbevin/Workspace/vst2" appSandboxOptions="com.apple.security.files.user-selected.read-only,com.apple.security.files.user-selected.read-write">
@@ -197,7 +197,7 @@
       </MODULEPATHS>
     </VS2022>
     <XCODE_IPHONE targetFolder="Builds/iOS" extraDefs="JUCE_SILENCE_XCODE_15_LINKER_WARNING=1"
-                  smallIcon="eY2NXn" bigIcon="eY2NXn" buildNumber="7" iPadScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
+                  smallIcon="eY2NXn" bigIcon="eY2NXn" buildNumber="8" iPadScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
                   iosScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
                   UIStatusBarHidden="1" iosDevelopmentTeamID="AGZT8GVS7G">
       <CONFIGURATIONS>
