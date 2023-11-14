@@ -182,7 +182,8 @@ namespace showmidi
             owner_->addAndMakeVisible(colorControllerButton_);
             owner_->addAndMakeVisible(closeButton_);
             
-            themeChooser_ = std::make_unique<FileChooser>("Please select the theme you want to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
+            loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
+            saveThemeChooser_ = std::make_unique<FileChooser>("Please choose where to save the theme...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
         }
 
         int getWidth()
@@ -411,7 +412,7 @@ namespace showmidi
             }
             else if (buttonThatWasClicked == &loadThemeButton_)
             {
-                themeChooser_->launchAsync(FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
+                loadThemeChooser_->launchAsync(FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
                 {
                     File file(chooser.getResult());
                     if (file.getFullPathName().isEmpty())
@@ -425,7 +426,7 @@ namespace showmidi
             }
             else if (buttonThatWasClicked == &saveThemeButton_)
             {
-                themeChooser_->launchAsync(FileBrowserComponent::saveMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
+                saveThemeChooser_->launchAsync(FileBrowserComponent::saveMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
                 {
                     File file(chooser.getResult());
                     if (file.getFullPathName().isEmpty())
@@ -577,7 +578,8 @@ namespace showmidi
         Value colorValueNegative_;
         Value colorValueController_;
         
-        std::unique_ptr<FileChooser> themeChooser_;
+        std::unique_ptr<FileChooser> loadThemeChooser_;
+        std::unique_ptr<FileChooser> saveThemeChooser_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
