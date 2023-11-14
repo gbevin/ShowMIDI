@@ -9,7 +9,7 @@
 #include <windows.h>
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION  0,6,0,0
+FILEVERSION  0,6,1,0
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
@@ -17,9 +17,9 @@ BEGIN
     BEGIN
       VALUE "CompanyName",  "Uwyn\0"
       VALUE "FileDescription",  "ShowMIDI\0"
-      VALUE "FileVersion",  "0.6.0\0"
+      VALUE "FileVersion",  "0.6.1\0"
       VALUE "ProductName",  "ShowMIDI\0"
-      VALUE "ProductVersion",  "0.6.0\0"
+      VALUE "ProductVersion",  "0.6.1\0"
     END
   END
 
