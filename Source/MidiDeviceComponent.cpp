@@ -55,6 +55,8 @@ namespace showmidi
             deviceInfo_ = {"MIDI Instrument Name", deviceInfo_.identifier};
             
             auto& channel1 = channels_.channel_[0];
+            channel1.mpeManager_ = true;
+            channel1.mpeMember_ = MpeMember::mpeLower;
             channel1.time_ = t;
             channel1.programChange_.value_ = 0;
             channel1.programChange_.time_ = t;
@@ -174,6 +176,12 @@ namespace showmidi
                             rpns.time_ = t;
                             rpns.param_[rpn_number].time_ = t;
                             rpns.param_[rpn_number].value_ = rpn_value;
+                            
+                            // handle MPE activation message
+                            if (rpn_number == 6 && rpn_value <= 0xf)
+                            {
+                                channels_.handleMpeActivation(t, channel, rpn_value);
+                            }
                         }
                         else if (channel.lastNrpnMsb_ != 127 || channel.lastNrpnLsb_ != 127)
                         {
@@ -249,6 +257,7 @@ namespace showmidi
         static constexpr int Y_PORT = 12;
         
         static constexpr int X_CHANNEL = 23;
+        static constexpr int X_CHANNEL_MPE = 84;
         static constexpr int Y_CHANNEL = 12;
         static constexpr int Y_CHANNEL_MARGIN = 8;
         
@@ -287,7 +296,6 @@ namespace showmidi
         {
             Time time_;
             int offset_ { 0 };
-            bool header_ { false };
         };
         
         void paint(Graphics& g)
@@ -303,7 +311,7 @@ namespace showmidi
             }
             
             // draw the data for each channel
-            ChannelPaintState state = { t, 0, false };
+            ChannelPaintState state = { t, 0 };
             
             // draw MIDI port name
             auto port_name = deviceInfo_.name;
@@ -325,7 +333,7 @@ namespace showmidi
                 auto& channel_messages = channels->channel_[channel_index];
                 if (!isExpired(t, channel_messages.time_))
                 {
-                    state.header_ = false;
+                    paintChannelHeader(g, state, channel_messages);
                     
                     paintProgramChange(g, state, channel_messages);
                     state.offset_ = paintPitchBend(g, state, channel_messages);
@@ -372,18 +380,8 @@ namespace showmidi
             return lastHeight_;
         }
         
-        void ensurePaintedChannelHeader(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
-        {
-            if (!state.header_)
-            {
-                paintChannelHeader(g, state, channel);
-            }
-        }
-        
         void paintChannelHeader(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
-            state.header_ = true;
-            
             g.setColour(theme_.colorData);
             g.setFont(theme_.fontLabel());
             state.offset_ += Y_CHANNEL;
@@ -391,8 +389,30 @@ namespace showmidi
                        X_CHANNEL, state.offset_,
                        getStandardWidth() - X_CHANNEL, theme_.labelHeight(),
                        Justification::centredLeft);
-            state.offset_ += theme_.labelHeight();
             
+            if (channel.mpeMember_ != MpeMember::mpeNone)
+            {
+                auto mpe_label = String("MPE ");
+                if (channel.mpeManager_)
+                {
+                    mpe_label += " MGR";
+                }
+                else if (channel.mpeMember_ == MpeMember::mpeLower)
+                {
+                    mpe_label += " LO";
+                }
+                else if (channel.mpeMember_ == MpeMember::mpeUpper)
+                {
+                    mpe_label += " UP";
+                }
+                g.setColour(theme_.colorLabel);
+                g.drawText(String(mpe_label),
+                           X_CHANNEL_MPE, state.offset_,
+                           getStandardWidth() - X_CHANNEL_MPE, theme_.labelHeight(),
+                           Justification::centredLeft);
+            }
+            state.offset_ += theme_.labelHeight();
+
             g.setColour(theme_.colorSeperator);
             state.offset_ += Y_SEPERATOR;
             g.drawRect(X_CHANNEL + X_SEPERATOR, state.offset_,
@@ -405,8 +425,6 @@ namespace showmidi
             auto& program_change = channel.programChange_;
             if (!isExpired(state.time_, program_change.time_))
             {
-                ensurePaintedChannelHeader(g, state, channel);
-                
                 // write the texts
                 
                 g.setColour(theme_.colorLabel);
@@ -425,10 +443,6 @@ namespace showmidi
             auto& pitch_bend = channel.pitchBend_;
             if (!isExpired(state.time_, pitch_bend.time_))
             {
-                ensurePaintedChannelHeader(g, state, channel);
-                
-                y_offset = state.offset_;
-                
                 y_offset += Y_PB;
                 
                 Colour pb_color = theme_.colorLabel;
@@ -485,21 +499,14 @@ namespace showmidi
         
         int paintParameters(Graphics& g, ChannelPaintState& state, const String& name, ActiveChannel& channel, Parameters& parameters)
         {
-            int y_offset = -1;
-            
+            int y_offset = state.offset_;
+
             if (!isExpired(state.time_, parameters.time_))
             {
                 for (auto& [number, param] : parameters.param_)
                 {
                     if (!isExpired(state.time_, param.time_))
                     {
-                        ensurePaintedChannelHeader(g, state, channel);
-                        
-                        if (y_offset == -1)
-                        {
-                            y_offset = state.offset_;
-                        }
-                        
                         y_offset += Y_PARAM;
                         
                         Colour param_color = theme_.colorController;
@@ -539,11 +546,6 @@ namespace showmidi
                 }
             }
             
-            if (y_offset == -1)
-            {
-                y_offset = state.offset_;
-            }
-                
             return y_offset;
         }
 
@@ -565,8 +567,6 @@ namespace showmidi
                             note.time_ = state.time_;
                             notes.time_ = state.time_;
                         }
-                        
-                        ensurePaintedChannelHeader(g, state, channel);
                         
                         if (y_offset == -1)
                         {
@@ -683,8 +683,6 @@ namespace showmidi
         
         void paintControlChangeEntry(Graphics& g, ChannelPaintState& state, ActiveChannel& channel, int& yOffset, const String& label, int value)
         {
-            ensurePaintedChannelHeader(g, state, channel);
-            
             if (yOffset == -1)
             {
                 yOffset = state.offset_;

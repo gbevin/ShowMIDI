@@ -150,6 +150,13 @@ namespace showmidi
         std::map<int, Parameter> param_;
     };
     
+    enum MpeMember
+    {
+        mpeNone,
+        mpeLower,
+        mpeUpper
+    };
+    
     struct ActiveChannel
     {
         int number_ { -1 };
@@ -161,6 +168,8 @@ namespace showmidi
         PitchBend pitchBend_;
         Parameters rpns_;
         Parameters nrpns_;
+        bool mpeManager_ { false };
+        MpeMember mpeMember_ { MpeMember::mpeNone };
         
         int lastRpnMsb_ { 127 };
         int lastRpnLsb_ { 127 };
@@ -200,5 +209,107 @@ namespace showmidi
         }
 
         ActiveChannel channel_[16];
+        
+        void handleMpeActivation(Time t, ActiveChannel& channel, int range)
+        {
+            // handle lower zone
+            if (channel.number_ == 0)
+            {
+                // disable MPE for the lower zone
+                if (range == 0)
+                {
+                    // turn off all member channels that were assigned
+                    // to the lower zone
+                    for (int i = 1; i <= 14; ++i)
+                    {
+                        auto& ch = channel_[i];
+                        if (ch.mpeMember_ == MpeMember::mpeLower)
+                        {
+                            ch.mpeMember_ = MpeMember::mpeNone;
+                            ch.time_ = t;
+                        }
+                    }
+                    channel.mpeManager_ = false;
+                    channel.mpeMember_ = MpeMember::mpeNone;
+                }
+                // enable MPE for the lower zone
+                else
+                {
+                    // based on the MPE zone range,
+                    // assign channels to the lower zone
+                    for (int i = 1; i <= range; ++i)
+                    {
+                        auto& ch = channel_[i];
+                        ch.mpeMember_ = MpeMember::mpeLower;
+                        ch.time_ = t;
+                    }
+                    channel.mpeManager_ = true;
+                    channel.mpeMember_ = MpeMember::mpeLower;
+                    
+                    // if all member channels were assigned to the
+                    // lower zone, disabled the manager channel of the
+                    // upper zone, if it was enabled
+                    if (range >= 14)
+                    {
+                        auto& ch = channel_[15];
+                        if (ch.mpeManager_)
+                        {
+                            ch.mpeManager_ = false;
+                            ch.mpeMember_ = MpeMember::mpeNone;
+                            ch.time_ = t;
+                        }
+                    }
+                }
+            }
+            // handle upper zone
+            else if (channel.number_ == 15)
+            {
+                // disable MPE for the upper zone
+                if (range == 0)
+                {
+                    // turn off all member channels that were assigned
+                    // to the upper zone
+                    for (int i = 14; i >= 1; --i)
+                    {
+                        auto& ch = channel_[i];
+                        if (ch.mpeMember_ == MpeMember::mpeUpper)
+                        {
+                            ch.mpeMember_ = MpeMember::mpeNone;
+                            ch.time_ = t;
+                        }
+                    }
+                    channel.mpeManager_ = false;
+                    channel.mpeMember_ = MpeMember::mpeNone;
+                }
+                // enable MPE for the upper zone
+                else
+                {
+                    // based on the MPE zone range,
+                    // assign channels to the upper zone
+                    for (int i = 1; i <= range; ++i)
+                    {
+                        auto& ch = channel_[15 - i];
+                        ch.mpeMember_ = MpeMember::mpeUpper;
+                        ch.time_ = t;
+                    }
+                    channel.mpeManager_ = true;
+                    channel.mpeMember_ = MpeMember::mpeUpper;
+                    
+                    // if all member channels were assigned to the
+                    // upper zone, disabled the manager channel of the
+                    // lower zone, if it was enabled
+                    if (range >= 14)
+                    {
+                        auto& ch = channel_[0];
+                        if (ch.mpeManager_)
+                        {
+                            ch.mpeManager_ = false;
+                            ch.mpeMember_ = MpeMember::mpeNone;
+                            ch.time_ = t;
+                        }
+                    }
+                }
+            }
+        }
     };
 }
