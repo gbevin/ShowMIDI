@@ -60,6 +60,9 @@ namespace showmidi
             startTimer(RenderDevices, 1000 / 30);
             
             startTimer(GrabKeyboardFocus, 100);
+#if SHOW_TEST_DATA
+            togglePaused();
+#endif
         }
         
         ~Pimpl()

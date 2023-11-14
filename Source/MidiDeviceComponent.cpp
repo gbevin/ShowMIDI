@@ -43,8 +43,9 @@ namespace showmidi
                 midi_input->start();
                 midiIn_.swap(midi_input);
             }
-            
-//            showTestData();
+#if SHOW_TEST_DATA
+            showTestData();
+#endif
         }
         
         void showTestData()
@@ -66,13 +67,17 @@ namespace showmidi
             channel1.notes_.note_[61].time_ = t;
             channel1.notes_.note_[79].on_ = true;
             channel1.notes_.note_[79].value_ = 38;
-            channel1.notes_.note_[79].polyPressure_ = 0;
+            channel1.notes_.note_[79].polyPressure_ = 120;
+            channel1.notes_.note_[79].polyPressureTime_ = t;
             channel1.notes_.note_[79].time_ = t;
             channel1.channelPressure_.value_ = 76;
             channel1.channelPressure_.time_ = t;
             channel1.controlChanges_.time_ = t;
             channel1.controlChanges_.controlChange_[74].value_ = 127;
             channel1.controlChanges_.controlChange_[74].time_ = t;
+            channel1.rpns_.time_ = t;
+            channel1.rpns_.param_[0] = { t, 5000 };
+            channel1.rpns_.param_[6] = { t, 10 };
             
             auto& channel16 = channels_.channel_[15];
             channel16.time_ = t;
@@ -83,7 +88,8 @@ namespace showmidi
             channel16.notes_.time_ = t;
             channel16.notes_.note_[61].on_ = true;
             channel16.notes_.note_[61].value_ = 127;
-            channel16.notes_.note_[61].polyPressure_ = 0;
+            channel16.notes_.note_[61].polyPressure_ = 73;
+            channel16.notes_.note_[61].polyPressureTime_ = t;
             channel16.notes_.note_[61].time_ = t;
             channel16.notes_.note_[79].on_ = false;
             channel16.notes_.note_[79].value_ = 127;
@@ -92,10 +98,12 @@ namespace showmidi
             channel16.channelPressure_.value_ = 76;
             channel16.channelPressure_.time_ = t;
             channel16.controlChanges_.time_ = t;
+            channel16.controlChanges_.controlChange_[1].value_ = 124;
+            channel16.controlChanges_.controlChange_[1].time_ = t;
+            channel16.controlChanges_.controlChange_[45].value_ = 89;
+            channel16.controlChanges_.controlChange_[45].time_ = t;
             channel16.controlChanges_.controlChange_[127].value_ = 100;
             channel16.controlChanges_.controlChange_[127].time_ = t;
-            
-            setPaused(true);
         }
         
         ~Pimpl()

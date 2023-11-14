@@ -155,7 +155,7 @@
  #define JucePlugin_ARAFactoryID           "com.Uwyn.ShowMIDI.factory"
 #endif
 #ifndef  JucePlugin_ARADocumentArchiveID
- #define JucePlugin_ARADocumentArchiveID   "com.Uwyn.ShowMIDI.aradocumentarchive.0.5.1"
+ #define JucePlugin_ARADocumentArchiveID   "com.Uwyn.ShowMIDI.aradocumentarchive.0.5.2"
 #endif
 #ifndef  JucePlugin_ARACompatibleArchiveIDs
  #define JucePlugin_ARACompatibleArchiveIDs  ""
