@@ -338,8 +338,8 @@ namespace showmidi
                     
                     paintProgramChange(g, state, channel_messages);
                     state.offset_ = paintPitchBend(g, state, channel_messages);
-                    state.offset_ = paintParameters(g, state, "RPN", channel_messages, channel_messages.rpns_);
-                    state.offset_ = paintParameters(g, state, "NRPN", channel_messages, channel_messages.nrpns_);
+                    state.offset_ = paintParameters(g, state, "RPN", channel_messages.rpns_);
+                    state.offset_ = paintParameters(g, state, "NRPN", channel_messages.nrpns_);
                     int notes_bottom = paintNotes(g, state, channel_messages);
                     int control_changes_bottom = paintControlChanges(g, state, channel_messages);
                     
@@ -504,7 +504,7 @@ namespace showmidi
             return y_offset;
         }
         
-        int paintParameters(Graphics& g, ChannelPaintState& state, const String& name, ActiveChannel& channel, Parameters& parameters)
+        int paintParameters(Graphics& g, ChannelPaintState& state, const String& name, Parameters& parameters)
         {
             int y_offset = state.offset_;
 
@@ -669,7 +669,7 @@ namespace showmidi
             
             if (!isExpired(state.time_, channel.channelPressure_.time_))
             {
-                paintControlChangeEntry(g, state, channel, y_offset, String("CP"), channel.channelPressure_.value_);
+                paintControlChangeEntry(g, state, y_offset, String("CP"), channel.channelPressure_.value_);
             }
             
             auto& control_changes = channel.controlChanges_;
@@ -680,7 +680,7 @@ namespace showmidi
                     auto& cc = control_changes.controlChange_[i];
                     if (!isExpired(state.time_, cc.time_))
                     {
-                        paintControlChangeEntry(g, state, channel, y_offset, String("CC ") + output7Bit(cc.number_), cc.value_);
+                        paintControlChangeEntry(g, state, y_offset, String("CC ") + output7Bit(cc.number_), cc.value_);
                     }
                 }
             }
@@ -688,7 +688,7 @@ namespace showmidi
             return y_offset;
         }
         
-        void paintControlChangeEntry(Graphics& g, ChannelPaintState& state, ActiveChannel& channel, int& yOffset, const String& label, int value)
+        void paintControlChangeEntry(Graphics& g, ChannelPaintState& state, int& yOffset, const String& label, int value)
         {
             if (yOffset == -1)
             {
