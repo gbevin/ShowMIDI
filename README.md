@@ -78,8 +78,8 @@ To build ShowMIDI on Linux you need a minimal set of packages installed beforeha
 
 ```
 sudo apt install build-essential pkg-config libasound2-dev \
-  libfreetype6-dev libcurl4-openssl-dev libx11-dev \
-  libxrandr-dev libxinerama-dev libxcursor-dev
+  libfreetype6-dev libx11-dev libxrandr-dev \
+  libxinerama-dev libxcursor-dev
 ```
 
 You'll also need to find a version of the VST2 SDK and put it in a location that the compiler can find.
