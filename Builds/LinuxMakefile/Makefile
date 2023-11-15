@@ -39,7 +39,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.6.1" "-DJUCE_APP_VERSION_HEX=0x601" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK -I/home/gbevin/vst2 -I../../JuceLibraryCode -I../../JuceLibraryCode/modules $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.6.1" "-DJUCE_APP_VERSION_HEX=0x601" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK -I/home/gbevin/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
 
   JUCE_CPPFLAGS_VST :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_CFLAGS_VST := -fPIC -fvisibility=hidden
@@ -91,7 +91,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.6.1" "-DJUCE_APP_VERSION_HEX=0x601" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/LV2_SDK -I../../JuceLibraryCode/modules/juce_audio_processors/format_types/VST3_SDK -I/home/gbevin/vst2 -I../../JuceLibraryCode -I../../JuceLibraryCode/modules $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.6.1" "-DJUCE_APP_VERSION_HEX=0x601" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK -I/home/gbevin/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
 
   JUCE_CPPFLAGS_VST :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_CFLAGS_VST := -fPIC -fvisibility=hidden
@@ -184,10 +184,10 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/include_juce_gui_extra_6dee1c1a.o \
 
 OBJECTS_LV2_MANIFEST_HELPER := \
-  $(JUCE_OBJDIR)/juce_LV2ManifestHelper_ddbf2086.o \
+  $(JUCE_OBJDIR)/juce_LV2ManifestHelper_3c8d52b8.o \
 
 OBJECTS_VST3_MANIFEST_HELPER := \
-  $(JUCE_OBJDIR)/juce_VST3ManifestHelper_32018e4.o \
+  $(JUCE_OBJDIR)/juce_VST3ManifestHelper_e72a8696.o \
 
 .PHONY: clean all strip VST VST3 Standalone LV2 LV2_MANIFEST_HELPER VST3_MANIFEST_HELPER
 
@@ -463,12 +463,12 @@ $(JUCE_OBJDIR)/include_juce_gui_extra_6dee1c1a.o: ../../JuceLibraryCode/include_
 	@echo "Compiling include_juce_gui_extra.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/juce_LV2ManifestHelper_ddbf2086.o: ../../JuceLibraryCode/modules/juce_audio_plugin_client/LV2/juce_LV2ManifestHelper.cpp
+$(JUCE_OBJDIR)/juce_LV2ManifestHelper_3c8d52b8.o: ../../JUCE/modules/juce_audio_plugin_client/LV2/juce_LV2ManifestHelper.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling juce_LV2ManifestHelper.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_LV2_MANIFEST_HELPER) $(JUCE_CFLAGS_LV2_MANIFEST_HELPER) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/juce_VST3ManifestHelper_32018e4.o: ../../JuceLibraryCode/modules/juce_audio_plugin_client/VST3/juce_VST3ManifestHelper.cpp
+$(JUCE_OBJDIR)/juce_VST3ManifestHelper_e72a8696.o: ../../JUCE/modules/juce_audio_plugin_client/VST3/juce_VST3ManifestHelper.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling juce_VST3ManifestHelper.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_VST3_MANIFEST_HELPER) $(JUCE_CFLAGS_VST3_MANIFEST_HELPER) -o "$@" -c "$<"

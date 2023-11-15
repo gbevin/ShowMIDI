@@ -5,12 +5,12 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
+PROJECT_DIR=$PWD
+
 export RELEASE_VERSION="$1"
-export PATH_TO_JUCE=/home/gbevin/JUCE
+export PATH_TO_JUCE="$PROJECT_DIR/JUCE"
 
 rm -rfv Builds/LinuxMakefile/build/
-
-PROJECT_DIR=$PWD
 
 pushd Builds/LinuxMakefile
 make CONFIG=Release
