@@ -5,14 +5,15 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-export RELEASE_VERSION="$1"
-export PATH_TO_JUCE=/Users/gbevin/JUCE
-
-rm -rfv $BUILD_DIR
-
 PROJECT_DIR=$PWD
+
+export RELEASE_VERSION="$1"
+export PATH_TO_JUCE="$PROJECT_DIR/JUCE"
+
 SIGN_ID="Developer ID Application: Uwyn, LLC (AGZT8GVS7G)"
 BUILD_DIR=$PWD/Builds/MacOSX/build
+
+rm -rfv $BUILD_DIR
 
 # build release artifacts
 echo "Building all ProJucer artifacts"
