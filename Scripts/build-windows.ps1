@@ -9,7 +9,7 @@ Import-Module "C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\T
 Enter-VsDevShell -VsInstallPath "C:\Program Files\Microsoft Visual Studio\2022\Community\"
 
 $Env:RELEASE_VERSION = "$version"
-$Env:PATH_TO_JUCE = "C:\Users\gbevin\JUCE"
+$Env:PATH_TO_JUCE = "$curDir\JUCE"
 
 Write-Output "Changing location to $curDir"
 Set-Location $curDir
