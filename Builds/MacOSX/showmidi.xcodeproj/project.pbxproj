@@ -1417,7 +1417,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -1427,7 +1427,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
@@ -1484,7 +1484,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -1494,7 +1494,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
@@ -1600,7 +1600,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -1610,7 +1610,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lShowMIDI";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -d arm64_$arm64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\" -I \"$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AudioUnit.framework/Headers\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
@@ -1669,7 +1669,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -1679,7 +1679,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi.showmidiAUv3;
 				PRODUCT_NAME = "ShowMIDI";
@@ -1733,7 +1733,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -1742,7 +1742,7 @@
 				INFOPLIST_FILE = Info-VST3_Manifest_Helper.plist;
 				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "juce_vst3_helper";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1846,7 +1846,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -1858,7 +1858,7 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
@@ -1916,7 +1916,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -1924,7 +1924,7 @@
 				);
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1981,7 +1981,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -1997,7 +1997,7 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
@@ -2064,7 +2064,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2076,7 +2076,7 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
@@ -2134,7 +2134,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2144,7 +2144,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
@@ -2209,7 +2209,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2218,7 +2218,7 @@
 				INFOPLIST_FILE = Info-Standalone_Plugin.plist;
 				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
@@ -2272,7 +2272,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2282,7 +2282,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "juce_vst3_helper";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2338,7 +2338,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2347,7 +2347,7 @@
 				INFOPLIST_FILE = Info-AUv3_AppExtension.plist;
 				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi.showmidiAUv3;
 				PRODUCT_NAME = "ShowMIDI";
@@ -2404,7 +2404,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2418,7 +2418,7 @@
 				);
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lShowMIDI";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
@@ -2473,7 +2473,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2482,7 +2482,7 @@
 				INFOPLIST_FILE = Info-LV2_Manifest_Helper.plist;
 				INFOPLIST_PREPROCESS = NO;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "juce_lv2_helper";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2535,7 +2535,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2545,7 +2545,7 @@
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "juce_lv2_helper";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2601,7 +2601,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2613,7 +2613,7 @@
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				OTHER_LDFLAGS = "-bundle -lShowMIDI";
 				OTHER_REZFLAGS = "-d ppc_$ppc -d i386_$i386 -d ppc64_$ppc64 -d x86_64_$x86_64 -d arm64_$arm64 -I /System/Library/Frameworks/CoreServices.framework/Frameworks/CarbonCore.framework/Versions/A/Headers -I \"$(DEVELOPER_DIR)/Extras/CoreAudio/AudioUnits/AUPublic/AUBase\" -I \"$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/AudioUnit.framework/Headers\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
@@ -2672,7 +2672,7 @@
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
-					"/Users/gbevin/Workspace/vst2",
+					"$(SRCROOT)/../../libs/vst2",
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
@@ -2681,7 +2681,7 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.7;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK /Users/gbevin/Workspace/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK $(SRCROOT)/../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK $(SRCROOT)/../../libs/vst2 $(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
