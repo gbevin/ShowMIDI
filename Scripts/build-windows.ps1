@@ -17,15 +17,15 @@ Set-Location $curDir
 $signId = "Open Source Developer, Geert Bevin"
 $buildLocation = "Builds\VisualStudio2022\x64"
 
-#Write-Output "Deleting previous build from $buildLocation"
-#Remove-Item -LiteralPath $buildLocation -Force -Recurse
+Write-Output "Deleting previous build from $buildLocation"
+Remove-Item -LiteralPath $buildLocation -Force -Recurse
 
-#Write-Output "Building project"
-#MSBuild.exe .\Builds\VisualStudio2022\showmidi.sln /p:Configuration=Release /p:PreferredToolArchitecture=x64 /p:Platform=x64 /clp:ErrorsOnly
+Write-Output "Building project"
+MSBuild.exe .\Builds\VisualStudio2022\showmidi.sln /p:Configuration=Release /p:PreferredToolArchitecture=x64 /p:Platform=x64 /clp:ErrorsOnly
 
-#Write-Output "Building CLAP plugin"
-#cmake -B"$buildLocation\clap" -DCMAKE_BUILD_TYPE=Release
-#cmake --build "$buildLocation\clap" --config Release
+Write-Output "Building CLAP plugin"
+cmake -B"$buildLocation\clap" -DCMAKE_BUILD_TYPE=Release
+cmake --build "$buildLocation\clap" --config Release
 
 Write-Output "Codesigning all artifacts"
 
