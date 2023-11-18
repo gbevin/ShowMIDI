@@ -9,7 +9,7 @@
 namespace BinaryData
 {
     extern const char*   appicon_png;
-    const int            appicon_pngSize = 62644;
+    const int            appicon_pngSize = 51715;
 
     extern const char*   collapsed_svg;
     const int            collapsed_svgSize = 864;
