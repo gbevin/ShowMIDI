@@ -74,6 +74,14 @@ The UI design was done by Stephen Petoniak: https://spetoniak.com
 
 ## Building on Linux
 
+ShowMIDI relies on Git submodules for compilation of external dependencies.
+
+After cloning the repository, make sure to update and initialize all the Git submodules:
+
+```
+git submodule update --init --recursive
+```
+
 To build ShowMIDI on Linux you need a minimal set of packages installed beforehand, on Ubuntu this can be done with:
 
 ```
@@ -85,6 +93,7 @@ sudo apt install build-essential pkg-config libasound2-dev \
 You'll also need to find a version of the VST2 SDK and put it in a location that the compiler can find.
 Searching online for `vst2.x/aeffect.h` should give you some options for download.
 Sadly it's not allowed to distribute this SDK, so it has not been included.
+The folder of the VST2 SDK should be placed at `libs/vst2` in the source repository.
 
 After that, go to the `LinuxMakeFile` directory
 
