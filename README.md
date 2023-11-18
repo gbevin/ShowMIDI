@@ -95,10 +95,10 @@ Searching online for `vst2.x/aeffect.h` should give you some options for downloa
 Sadly it's not allowed to distribute this SDK, so it has not been included.
 The folder of the VST2 SDK should be placed at `libs/vst2` in the source repository.
 
-After that, go to the `LinuxMakeFile` directory
+After that, go to the `LinuxMakefile` directory
 
 ```
-cd Builds/LinuxMakeFile
+cd Builds/LinuxMakefile
 ```
 
 and build the binary by typing `make`
@@ -107,7 +107,7 @@ and build the binary by typing `make`
 make CONFIG=Release
 ```
 
-The resulting binary will be in the `Build/LinuxMakeFile/build` directory and can be moved anywhere appropriate on your system, for instance into `/usr/local/bin`:
+The resulting binary will be in the `Build/LinuxMakefile/build` directory and can be moved anywhere appropriate on your system, for instance into `/usr/local/bin`:
 
 ```
 sudo mv build/ShowMIDI /usr/local/bin
