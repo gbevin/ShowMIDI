@@ -23,6 +23,7 @@ namespace showmidi
     const String PropertiesSettings::NOTE_FORMAT = { "noteFormat" };
     const String PropertiesSettings::NUMBER_FORMAT = { "numberFormat" };
     const String PropertiesSettings::TIMEOUT_DELAY = { "timeoutDelay" };
+    const String PropertiesSettings::WINDOW_POSITION = { "windowPosition" };
     const String PropertiesSettings::MIDI_DEVICE_VISIBLE_PREFIX = { "midiDevice:visible:" };
     const String PropertiesSettings::THEME = { "theme" };
 
@@ -77,6 +78,17 @@ namespace showmidi
     void PropertiesSettings::setTimeoutDelay(int delay)
     {
         getGlobalProperties().setValue(TIMEOUT_DELAY, delay);
+        flush();
+    }
+    
+    WindowPosition PropertiesSettings::getWindowPosition()
+    {
+        return (WindowPosition)getGlobalProperties().getIntValue(WINDOW_POSITION, DEFAULT_WINDOW_POSITION);
+    }
+    
+    void PropertiesSettings::setWindowPosition(WindowPosition position)
+    {
+        getGlobalProperties().setValue(WINDOW_POSITION, position);
         flush();
     }
 

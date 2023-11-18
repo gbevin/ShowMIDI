@@ -99,6 +99,8 @@ namespace showmidi
     void ShowMidiApplication::initialise(const String&)
     {
         pimpl_->mainWindow_.reset(new StandaloneWindow(getApplicationName()));
+        
+        applySettings();
     }
     
     void ShowMidiApplication::shutdown()
@@ -115,6 +117,11 @@ namespace showmidi
     {
     }
     
+    bool ShowMidiApplication::isPlugin()
+    {
+        return false;
+    }
+
     Settings& ShowMidiApplication::getSettings()
     {
         return pimpl_->settings_;
@@ -122,6 +129,7 @@ namespace showmidi
     
     void ShowMidiApplication::applySettings()
     {
+        pimpl_->mainWindow_->setAlwaysOnTop(pimpl_->settings_.getWindowPosition() == WindowPosition::windowAlwaysOnTop);
         pimpl_->mainWindow_->repaint();
     }
     

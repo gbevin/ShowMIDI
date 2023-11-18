@@ -76,6 +76,16 @@ namespace showmidi
         settings_.setProperty(PropertiesSettings::TIMEOUT_DELAY, delay, nullptr);
     }
     
+    WindowPosition PluginSettings::getWindowPosition()
+    {
+        return (WindowPosition)(int)settings_.getProperty(PropertiesSettings::WINDOW_POSITION, PropertiesSettings::DEFAULT_WINDOW_POSITION);
+    }
+    
+    void PluginSettings::setWindowPosition(WindowPosition position)
+    {
+        settings_.setProperty(PropertiesSettings::WINDOW_POSITION, position, nullptr);
+    }
+
     Theme& PluginSettings::getTheme()
     {
         return theme_;

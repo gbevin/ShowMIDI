@@ -41,6 +41,9 @@ namespace showmidi
         int getTimeoutDelay();
         void setTimeoutDelay(int);
         
+        WindowPosition getWindowPosition();
+        void setWindowPosition(WindowPosition);
+
         Theme& getTheme();
         void storeTheme();
         

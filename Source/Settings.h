@@ -35,6 +35,12 @@ namespace showmidi
         formatHexadecimal
     };
     
+    enum WindowPosition
+    {
+        windowRegular = 1,
+        windowAlwaysOnTop
+    };
+    
     class Settings
     {
     public:
@@ -42,6 +48,7 @@ namespace showmidi
         static constexpr NoteFormat DEFAULT_NOTE_FORMAT { formatName };
         static constexpr NumberFormat DEFAULT_NUMBER_FORMAT { formatDecimal };
         static constexpr int DEFAULT_TIMEOUT_DELAY { 2 };
+        static constexpr WindowPosition DEFAULT_WINDOW_POSITION { windowRegular };
 
         Settings() {};
         virtual ~Settings() {};
@@ -58,6 +65,9 @@ namespace showmidi
         virtual int getTimeoutDelay() = 0;
         virtual void setTimeoutDelay(int) = 0;
         
+        virtual WindowPosition getWindowPosition() = 0;
+        virtual void setWindowPosition(WindowPosition) = 0;
+
         virtual Theme& getTheme() = 0;
         virtual void storeTheme() = 0;
         

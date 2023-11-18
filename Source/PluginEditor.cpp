@@ -127,6 +127,11 @@ namespace showmidi
             layout_.setBounds(0, 0, layout_.getWidth(), height);
         }
         
+        bool isPlugin() override
+        {
+            return true;
+        }
+
         Settings& getSettings() override
         {
             return audioProcessor_.getSettings();

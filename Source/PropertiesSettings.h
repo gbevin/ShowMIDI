@@ -30,6 +30,7 @@ namespace showmidi
         static const String NOTE_FORMAT;
         static const String NUMBER_FORMAT;
         static const String TIMEOUT_DELAY;
+        static const String WINDOW_POSITION;
         static const String MIDI_DEVICE_VISIBLE_PREFIX;
         static const String THEME;
         
@@ -48,6 +49,9 @@ namespace showmidi
         int getTimeoutDelay();
         void setTimeoutDelay(int);
         
+        WindowPosition getWindowPosition();
+        void setWindowPosition(WindowPosition);
+
         Theme& getTheme();
         void storeTheme();
         

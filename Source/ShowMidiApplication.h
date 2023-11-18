@@ -60,6 +60,7 @@ namespace showmidi
         void setWindowTitle(const String&);
         void setWindowWidthForMainLayout(int);
         
+        bool isPlugin() override;
         Settings& getSettings() override;
         void applySettings() override;
         void storeSettings() override;

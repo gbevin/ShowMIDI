@@ -38,6 +38,8 @@ namespace showmidi
             timeout2SecButton_("2 sec"),
             timeout5SecButton_("5 sec"),
             timeout10SecButton_("10 sec"),
+            windowRegular_("regular"),
+            windowAlwaysOnTop_("always on top"),
             loadThemeButton_("load"),
             saveThemeButton_("save"),
             randomThemeButton_("random"),
@@ -45,7 +47,16 @@ namespace showmidi
         {
             auto& theme = manager_.getSettings().getTheme();
             
-            owner_->setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme.linePosition(21.5));
+            int height;
+            if (manager_.isPlugin())
+            {
+                height = theme.linePosition(21.5);
+            }
+            else
+            {
+                height = theme.linePosition(24.5);
+            }
+            owner_->setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, height);
             
             middleCOct2Button_.addListener(this);
             middleCOct3Button_.addListener(this);
@@ -57,6 +68,8 @@ namespace showmidi
             timeout2SecButton_.addListener(this);
             timeout5SecButton_.addListener(this);
             timeout10SecButton_.addListener(this);
+            windowRegular_.addListener(this);
+            windowAlwaysOnTop_.addListener(this);
             loadThemeButton_.addListener(this);
             saveThemeButton_.addListener(this);
             randomThemeButton_.addListener(this);
@@ -83,53 +96,76 @@ namespace showmidi
 
             auto left_margin = 23;
             auto button_spacing = 70;
+            auto y_offset = theme.linePosition(2);
             
             // middle c
             
-            middleCOct2Button_.setBoundsForTouch(left_margin, theme.linePosition(2),
+            middleCOct2Button_.setBoundsForTouch(left_margin, y_offset,
                                                  getWidth(), theme.labelHeight());
-            middleCOct3Button_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(2),
+            middleCOct3Button_.setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                  getWidth(), theme.labelHeight());
-            middleCOct4Button_.setBoundsForTouch(left_margin + button_spacing * 2, theme.linePosition(2),
+            middleCOct4Button_.setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
                                                  getWidth(), theme.labelHeight());
             
             // note format
             
-            notesNameButton_.setBoundsForTouch(left_margin, theme.linePosition(5),
+            y_offset += theme.linePosition(3);
+            
+            notesNameButton_.setBoundsForTouch(left_margin, y_offset,
                                                getWidth(), theme.labelHeight());
-            notesNumberButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(5),
+            notesNumberButton_.setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                  getWidth(), theme.labelHeight());
             
             // number format
             
-            numbersDecButton_.setBoundsForTouch(left_margin, theme.linePosition(8),
+            y_offset += theme.linePosition(3);
+            
+            numbersDecButton_.setBoundsForTouch(left_margin, y_offset,
                                                 getWidth(), theme.labelHeight());
-            numbersHexButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(8),
+            numbersHexButton_.setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                 getWidth(), theme.labelHeight());
             
             // timeout delay
             
-            timeout2SecButton_.setBoundsForTouch(left_margin, theme.linePosition(11),
+            y_offset += theme.linePosition(3);
+            
+            timeout2SecButton_.setBoundsForTouch(left_margin, y_offset,
                                                  getWidth(), theme.labelHeight());
-            timeout5SecButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(11),
+            timeout5SecButton_.setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                  getWidth(), theme.labelHeight());
-            timeout10SecButton_.setBoundsForTouch(left_margin + button_spacing * 2, theme.linePosition(11),
+            timeout10SecButton_.setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
                                                   getWidth(), theme.labelHeight());
             
+            if (!manager_.isPlugin())
+            {
+                // window position
+                
+                y_offset += theme.linePosition(3);
+                
+                windowRegular_.setBoundsForTouch(left_margin, y_offset,
+                                                 getWidth(), theme.labelHeight());
+                windowAlwaysOnTop_.setBoundsForTouch(left_margin + button_spacing, y_offset,
+                                                     getWidth(), theme.labelHeight());
+            }
+
             // active theme
             
-            loadThemeButton_.setBoundsForTouch(left_margin, theme.linePosition(14),
+            y_offset += theme.linePosition(3);
+            
+            loadThemeButton_.setBoundsForTouch(left_margin, y_offset,
                                                getWidth(), theme.labelHeight());
-            saveThemeButton_.setBoundsForTouch(left_margin + button_spacing, theme.linePosition(14),
+            saveThemeButton_.setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                getWidth(), theme.labelHeight());
-            randomThemeButton_.setBoundsForTouch(left_margin + button_spacing * 2, theme.linePosition(14),
+            randomThemeButton_.setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
                                                  getWidth(), theme.labelHeight());
 
             // theme colours
             
+            y_offset += theme.linePosition(2);
+
             int color_x = 23;
             int color_x_offset = (int)(Theme::DIALOG_LINE_HEIGHT * 1.5);
-            int color_y = theme.linePosition(16);
+            int color_y = y_offset;
             int color_y_offset = (int)(Theme::DIALOG_LINE_HEIGHT * 1.5);
             int color_w = Theme::DIALOG_LINE_HEIGHT;
             int color_h = Theme::DIALOG_LINE_HEIGHT;
@@ -168,6 +204,11 @@ namespace showmidi
             owner_->addAndMakeVisible(timeout2SecButton_);
             owner_->addAndMakeVisible(timeout5SecButton_);
             owner_->addAndMakeVisible(timeout10SecButton_);
+            if (!manager_.isPlugin())
+            {
+                owner_->addAndMakeVisible(windowRegular_);
+                owner_->addAndMakeVisible(windowAlwaysOnTop_);
+            }
             owner_->addAndMakeVisible(loadThemeButton_);
             owner_->addAndMakeVisible(saveThemeButton_);
             owner_->addAndMakeVisible(randomThemeButton_);
@@ -216,12 +257,14 @@ namespace showmidi
             g.setColour(theme.colorData);
             g.drawRect(Rectangle<int>{0, 0, getWidth(), getHeight()});
             
+            auto y_offset = theme.linePosition(1);
+
             // middle c
             
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
             g.drawText("Middle C",
-                       23, theme.linePosition(1),
+                       23, y_offset,
                        getWidth(), theme.labelHeight(),
                        Justification::centredLeft, true);
             
@@ -235,10 +278,12 @@ namespace showmidi
             
             // note format
             
+            y_offset += theme.linePosition(3);
+            
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
             g.drawText("Note Format",
-                       23, theme.linePosition(4),
+                       23, y_offset,
                        getWidth(), theme.labelHeight(),
                        Justification::centredLeft, true);
             
@@ -250,10 +295,12 @@ namespace showmidi
             
             // number format
             
+            y_offset += theme.linePosition(3);
+            
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
             g.drawText("Number Format",
-                       23, theme.linePosition(7),
+                       23, y_offset,
                        getWidth(), theme.labelHeight(),
                        Justification::centredLeft, true);
             
@@ -265,10 +312,12 @@ namespace showmidi
             
             // timeout delay
             
+            y_offset += theme.linePosition(3);
+            
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
             g.drawText("Timeout Delay",
-                       23, theme.linePosition(10),
+                       23, y_offset,
                        getWidth(), theme.labelHeight(),
                        Justification::centredLeft, true);
             
@@ -280,12 +329,34 @@ namespace showmidi
             setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 10; });
             timeout10SecButton_.drawName(g, Justification::centredLeft);
             
+            if (!manager_.isPlugin())
+            {
+                // window position
+                
+                y_offset += theme.linePosition(3);
+                
+                g.setColour(theme.colorData);
+                g.setFont(theme.fontLabel());
+                g.drawText("Window Position",
+                           23, y_offset,
+                           getWidth(), theme.labelHeight(),
+                           Justification::centredLeft, true);
+                
+                g.setColour(theme.colorData.withAlpha(0.7f));
+                setSettingOptionFont(g, [&settings] () { return settings.getWindowPosition() == WindowPosition::windowRegular; });
+                windowRegular_.drawName(g, Justification::centredLeft);
+                setSettingOptionFont(g, [&settings] () { return settings.getWindowPosition() == WindowPosition::windowAlwaysOnTop; });
+                windowAlwaysOnTop_.drawName(g, Justification::centredLeft);
+            }
+
             // active theme
+            
+            y_offset += theme.linePosition(3);
             
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
             g.drawText("Active Theme",
-                       23, theme.linePosition(13),
+                       23, y_offset,
                        getWidth(), theme.labelHeight(),
                        Justification::centredLeft, true);
             
@@ -410,6 +481,16 @@ namespace showmidi
                 settings.setTimeoutDelay(10);
                 repaint();
             }
+            else if (buttonThatWasClicked == &windowRegular_)
+            {
+                settings.setWindowPosition(WindowPosition::windowRegular);
+                repaint();
+            }
+            else if (buttonThatWasClicked == &windowAlwaysOnTop_)
+            {
+                settings.setWindowPosition(WindowPosition::windowAlwaysOnTop);
+                repaint();
+            }
             else if (buttonThatWasClicked == &loadThemeButton_)
             {
                 loadThemeChooser_->launchAsync(FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
@@ -487,6 +568,8 @@ namespace showmidi
             {
                 owner_->setVisible(false);
             }
+            
+            manager_.applySettings();
         }
         
         void popupColorSelector(Value& colorValue, Button* colorButton, Colour& color)
@@ -554,6 +637,8 @@ namespace showmidi
         PaintedButton timeout2SecButton_;
         PaintedButton timeout5SecButton_;
         PaintedButton timeout10SecButton_;
+        PaintedButton windowRegular_;
+        PaintedButton windowAlwaysOnTop_;
         PaintedButton loadThemeButton_;
         PaintedButton saveThemeButton_;
         PaintedButton randomThemeButton_;
