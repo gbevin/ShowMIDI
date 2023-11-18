@@ -1,6 +1,5 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
-#define VERSION "0.7.0"
-#define PWD "C:\Users\gbevin\source\repos\showmidi"
+
 #define MyAppName "ShowMIDI"
 #define MyAppPublisher "Uwyn"
 #define MyAppURL "https://www.uwyn.com"
@@ -34,8 +33,8 @@ DisableWelcomePage= no
 DisableProgramGroupPage=no
 UsePreviousSetupType = no
 
-WizardImageFile=wizard_image*.bmp
-WizardSmallImageFile=wizard_icon*.bmp
+WizardImageFile=Assets/wizard_image*.bmp
+WizardSmallImageFile=Assets/wizard_icon*.bmp
 WizardImageStretch=no
 
 [Types]
