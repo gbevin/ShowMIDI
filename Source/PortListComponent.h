@@ -26,7 +26,7 @@ namespace showmidi
     class PortListComponent : public Component
     {
     public:        
-        PortListComponent(SettingsManager&);
+        PortListComponent(SettingsManager*);
         ~PortListComponent() override;
         
         int getVisibleHeight() const;

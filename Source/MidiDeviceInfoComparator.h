@@ -22,7 +22,7 @@ namespace showmidi
     class MidiDeviceInfoComparator
     {
     public:
-        static int compareElements(MidiDeviceInfo first, MidiDeviceInfo second)
+        static int compareElements(MidiDeviceInfo& first, MidiDeviceInfo& second)
         {
             return (first.name.toLowerCase() < second.name.toLowerCase()) ? -1 : ((second.name.toLowerCase() < first.name.toLowerCase()) ? 1 : 0);
         }

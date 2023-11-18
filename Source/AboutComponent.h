@@ -36,8 +36,8 @@ namespace showmidi
     private:
         Theme& theme_;
         
-        PaintedButton websiteButton_;
-        PaintedButton closeButton_;
+        std::unique_ptr<PaintedButton> websiteButton_;
+        std::unique_ptr<PaintedButton> closeButton_;
         
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AboutComponent)
     };

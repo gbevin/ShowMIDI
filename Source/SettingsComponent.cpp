@@ -27,28 +27,39 @@ namespace showmidi
 {
     struct SettingsComponent::Pimpl : public Button::Listener, public Value::Listener
     {
-        Pimpl(SettingsComponent* owner, SettingsManager& manager) : owner_(owner), manager_(manager),
-            middleCOct2Button_("oct 2"),
-            middleCOct3Button_("oct 3"),
-            middleCOct4Button_("oct 4"),
-            notesNameButton_("name"),
-            notesNumberButton_("number"),
-            numbersDecButton_("decimal"),
-            numbersHexButton_("hexadecimal"),
-            timeout2SecButton_("2 sec"),
-            timeout5SecButton_("5 sec"),
-            timeout10SecButton_("10 sec"),
-            windowRegular_("regular"),
-            windowAlwaysOnTop_("always on top"),
-            loadThemeButton_("load"),
-            saveThemeButton_("save"),
-            randomThemeButton_("random"),
-            closeButton_{ "close" }
+        Pimpl(SettingsComponent* owner, SettingsManager* manager) : owner_(owner), manager_(manager)
         {
-            auto& theme = manager_.getSettings().getTheme();
+            auto& theme = manager_->getSettings().getTheme();
+            
+            middleCOct2Button_ = std::make_unique<PaintedButton>("oct 2");
+            middleCOct3Button_ = std::make_unique<PaintedButton>("oct 3");
+            middleCOct4Button_ = std::make_unique<PaintedButton>("oct 4");
+            notesNameButton_ = std::make_unique<PaintedButton>("name");
+            notesNumberButton_ = std::make_unique<PaintedButton>("number");
+            numbersDecButton_ = std::make_unique<PaintedButton>("decimal");
+            numbersHexButton_ = std::make_unique<PaintedButton>("hexadecimal");
+            timeout2SecButton_ = std::make_unique<PaintedButton>("2 sec");
+            timeout5SecButton_ = std::make_unique<PaintedButton>("5 sec");
+            timeout10SecButton_ = std::make_unique<PaintedButton>("10 sec");
+            windowRegularButton_ = std::make_unique<PaintedButton>("regular");
+            windowAlwaysOnTopButton_ = std::make_unique<PaintedButton>("always on top");
+            loadThemeButton_ = std::make_unique<PaintedButton>("load");
+            saveThemeButton_ = std::make_unique<PaintedButton>("save");
+            randomThemeButton_ = std::make_unique<PaintedButton>("random");
+            colorBackgroundButton_ = std::make_unique<PaintedButton>();
+            colorSidebarButton_ = std::make_unique<PaintedButton>();
+            colorSeperatorButton_ = std::make_unique<PaintedButton>();
+            colorTrackButton_ = std::make_unique<PaintedButton>();
+            colorLabelButton_ = std::make_unique<PaintedButton>();
+            colorDataButton_ = std::make_unique<PaintedButton>();
+            colorPositiveButton_ = std::make_unique<PaintedButton>();
+            colorNegativeButton_ = std::make_unique<PaintedButton>();
+            colorControllerButton_ = std::make_unique<PaintedButton>();
+            closeButton_ = std::make_unique<PaintedButton>("close");
+
             
             int height;
-            if (manager_.isPlugin())
+            if (manager_->isPlugin())
             {
                 height = theme.linePosition(21.5);
             }
@@ -58,31 +69,31 @@ namespace showmidi
             }
             owner_->setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, height);
             
-            middleCOct2Button_.addListener(this);
-            middleCOct3Button_.addListener(this);
-            middleCOct4Button_.addListener(this);
-            notesNameButton_.addListener(this);
-            notesNumberButton_.addListener(this);
-            numbersDecButton_.addListener(this);
-            numbersHexButton_.addListener(this);
-            timeout2SecButton_.addListener(this);
-            timeout5SecButton_.addListener(this);
-            timeout10SecButton_.addListener(this);
-            windowRegular_.addListener(this);
-            windowAlwaysOnTop_.addListener(this);
-            loadThemeButton_.addListener(this);
-            saveThemeButton_.addListener(this);
-            randomThemeButton_.addListener(this);
-            colorBackgroundButton_.addListener(this);
-            colorSidebarButton_.addListener(this);
-            colorSeperatorButton_.addListener(this);
-            colorTrackButton_.addListener(this);
-            colorLabelButton_.addListener(this);
-            colorDataButton_.addListener(this);
-            colorPositiveButton_.addListener(this);
-            colorNegativeButton_.addListener(this);
-            colorControllerButton_.addListener(this);
-            closeButton_.addListener(this);
+            middleCOct2Button_->addListener(this);
+            middleCOct3Button_->addListener(this);
+            middleCOct4Button_->addListener(this);
+            notesNameButton_->addListener(this);
+            notesNumberButton_->addListener(this);
+            numbersDecButton_->addListener(this);
+            numbersHexButton_->addListener(this);
+            timeout2SecButton_->addListener(this);
+            timeout5SecButton_->addListener(this);
+            timeout10SecButton_->addListener(this);
+            windowRegularButton_->addListener(this);
+            windowAlwaysOnTopButton_->addListener(this);
+            loadThemeButton_->addListener(this);
+            saveThemeButton_->addListener(this);
+            randomThemeButton_->addListener(this);
+            colorBackgroundButton_->addListener(this);
+            colorSidebarButton_->addListener(this);
+            colorSeperatorButton_->addListener(this);
+            colorTrackButton_->addListener(this);
+            colorLabelButton_->addListener(this);
+            colorDataButton_->addListener(this);
+            colorPositiveButton_->addListener(this);
+            colorNegativeButton_->addListener(this);
+            colorControllerButton_->addListener(this);
+            closeButton_->addListener(this);
             
             colorValueBackground_.addListener(this);
             colorValueSidebar_.addListener(this);
@@ -100,51 +111,51 @@ namespace showmidi
             
             // middle c
             
-            middleCOct2Button_.setBoundsForTouch(left_margin, y_offset,
+            middleCOct2Button_->setBoundsForTouch(left_margin, y_offset,
                                                  getWidth(), theme.labelHeight());
-            middleCOct3Button_.setBoundsForTouch(left_margin + button_spacing, y_offset,
+            middleCOct3Button_->setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                  getWidth(), theme.labelHeight());
-            middleCOct4Button_.setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
+            middleCOct4Button_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
                                                  getWidth(), theme.labelHeight());
             
             // note format
             
             y_offset += theme.linePosition(3);
             
-            notesNameButton_.setBoundsForTouch(left_margin, y_offset,
+            notesNameButton_->setBoundsForTouch(left_margin, y_offset,
                                                getWidth(), theme.labelHeight());
-            notesNumberButton_.setBoundsForTouch(left_margin + button_spacing, y_offset,
+            notesNumberButton_->setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                  getWidth(), theme.labelHeight());
             
             // number format
             
             y_offset += theme.linePosition(3);
             
-            numbersDecButton_.setBoundsForTouch(left_margin, y_offset,
+            numbersDecButton_->setBoundsForTouch(left_margin, y_offset,
                                                 getWidth(), theme.labelHeight());
-            numbersHexButton_.setBoundsForTouch(left_margin + button_spacing, y_offset,
+            numbersHexButton_->setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                 getWidth(), theme.labelHeight());
             
             // timeout delay
             
             y_offset += theme.linePosition(3);
             
-            timeout2SecButton_.setBoundsForTouch(left_margin, y_offset,
+            timeout2SecButton_->setBoundsForTouch(left_margin, y_offset,
                                                  getWidth(), theme.labelHeight());
-            timeout5SecButton_.setBoundsForTouch(left_margin + button_spacing, y_offset,
+            timeout5SecButton_->setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                  getWidth(), theme.labelHeight());
-            timeout10SecButton_.setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
+            timeout10SecButton_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
                                                   getWidth(), theme.labelHeight());
             
-            if (!manager_.isPlugin())
+            if (!manager_->isPlugin())
             {
                 // window position
                 
                 y_offset += theme.linePosition(3);
                 
-                windowRegular_.setBoundsForTouch(left_margin, y_offset,
+                windowRegularButton_->setBoundsForTouch(left_margin, y_offset,
                                                  getWidth(), theme.labelHeight());
-                windowAlwaysOnTop_.setBoundsForTouch(left_margin + button_spacing, y_offset,
+                windowAlwaysOnTopButton_->setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                      getWidth(), theme.labelHeight());
             }
 
@@ -152,11 +163,11 @@ namespace showmidi
             
             y_offset += theme.linePosition(3);
             
-            loadThemeButton_.setBoundsForTouch(left_margin, y_offset,
+            loadThemeButton_->setBoundsForTouch(left_margin, y_offset,
                                                getWidth(), theme.labelHeight());
-            saveThemeButton_.setBoundsForTouch(left_margin + button_spacing, y_offset,
+            saveThemeButton_->setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                getWidth(), theme.labelHeight());
-            randomThemeButton_.setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
+            randomThemeButton_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
                                                  getWidth(), theme.labelHeight());
 
             // theme colours
@@ -170,58 +181,58 @@ namespace showmidi
             int color_w = Theme::DIALOG_LINE_HEIGHT;
             int color_h = Theme::DIALOG_LINE_HEIGHT;
             
-            colorBackgroundButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
+            colorBackgroundButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x += color_x_offset;
-            colorSidebarButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
+            colorSidebarButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x += color_x_offset;
-            colorSeperatorButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
+            colorSeperatorButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x += color_x_offset;
-            colorTrackButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
+            colorTrackButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x += color_x_offset;
-            colorLabelButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
+            colorLabelButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x = 23;
             color_y += color_y_offset;
-            colorDataButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
+            colorDataButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x += color_x_offset;
-            colorPositiveButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
+            colorPositiveButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x += color_x_offset;
-            colorNegativeButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
+            colorNegativeButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x += color_x_offset;
-            colorControllerButton_.setBoundsForTouch(color_x, color_y, color_w, color_h);
+            colorControllerButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             
             // close button
             
-            closeButton_.setBoundsForTouch(90, getHeight() - theme.linePosition(1) - theme.labelHeight(),
+            closeButton_->setBoundsForTouch(90, getHeight() - theme.linePosition(1) - theme.labelHeight(),
                                            getWidth() - 180, theme.labelHeight());
             
-            owner_->addAndMakeVisible(middleCOct2Button_);
-            owner_->addAndMakeVisible(middleCOct3Button_);
-            owner_->addAndMakeVisible(middleCOct4Button_);
-            owner_->addAndMakeVisible(notesNameButton_);
-            owner_->addAndMakeVisible(notesNumberButton_);
-            owner_->addAndMakeVisible(numbersDecButton_);
-            owner_->addAndMakeVisible(numbersHexButton_);
-            owner_->addAndMakeVisible(timeout2SecButton_);
-            owner_->addAndMakeVisible(timeout5SecButton_);
-            owner_->addAndMakeVisible(timeout10SecButton_);
-            if (!manager_.isPlugin())
+            owner_->addAndMakeVisible(middleCOct2Button_.get());
+            owner_->addAndMakeVisible(middleCOct3Button_.get());
+            owner_->addAndMakeVisible(middleCOct4Button_.get());
+            owner_->addAndMakeVisible(notesNameButton_.get());
+            owner_->addAndMakeVisible(notesNumberButton_.get());
+            owner_->addAndMakeVisible(numbersDecButton_.get());
+            owner_->addAndMakeVisible(numbersHexButton_.get());
+            owner_->addAndMakeVisible(timeout2SecButton_.get());
+            owner_->addAndMakeVisible(timeout5SecButton_.get());
+            owner_->addAndMakeVisible(timeout10SecButton_.get());
+            if (!manager_->isPlugin())
             {
-                owner_->addAndMakeVisible(windowRegular_);
-                owner_->addAndMakeVisible(windowAlwaysOnTop_);
+                owner_->addAndMakeVisible(windowRegularButton_.get());
+                owner_->addAndMakeVisible(windowAlwaysOnTopButton_.get());
             }
-            owner_->addAndMakeVisible(loadThemeButton_);
-            owner_->addAndMakeVisible(saveThemeButton_);
-            owner_->addAndMakeVisible(randomThemeButton_);
-            owner_->addAndMakeVisible(colorBackgroundButton_);
-            owner_->addAndMakeVisible(colorSidebarButton_);
-            owner_->addAndMakeVisible(colorSeperatorButton_);
-            owner_->addAndMakeVisible(colorTrackButton_);
-            owner_->addAndMakeVisible(colorLabelButton_);
-            owner_->addAndMakeVisible(colorDataButton_);
-            owner_->addAndMakeVisible(colorPositiveButton_);
-            owner_->addAndMakeVisible(colorNegativeButton_);
-            owner_->addAndMakeVisible(colorControllerButton_);
-            owner_->addAndMakeVisible(closeButton_);
+            owner_->addAndMakeVisible(loadThemeButton_.get());
+            owner_->addAndMakeVisible(saveThemeButton_.get());
+            owner_->addAndMakeVisible(randomThemeButton_.get());
+            owner_->addAndMakeVisible(colorBackgroundButton_.get());
+            owner_->addAndMakeVisible(colorSidebarButton_.get());
+            owner_->addAndMakeVisible(colorSeperatorButton_.get());
+            owner_->addAndMakeVisible(colorTrackButton_.get());
+            owner_->addAndMakeVisible(colorLabelButton_.get());
+            owner_->addAndMakeVisible(colorDataButton_.get());
+            owner_->addAndMakeVisible(colorPositiveButton_.get());
+            owner_->addAndMakeVisible(colorNegativeButton_.get());
+            owner_->addAndMakeVisible(colorControllerButton_.get());
+            owner_->addAndMakeVisible(closeButton_.get());
             
             loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
             saveThemeChooser_ = std::make_unique<FileChooser>("Please choose where to save the theme...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
@@ -244,12 +255,12 @@ namespace showmidi
         
         void setSettingOptionFont(Graphics& g, std::function<bool()> condition)
         {
-            g.setFont(manager_.getSettings().getTheme().fontData().withStyle(condition() ? Font::underlined : Font::plain));
+            g.setFont(manager_->getSettings().getTheme().fontData().withStyle(condition() ? Font::underlined : Font::plain));
         }
         
         void paint(Graphics& g)
         {
-            auto& settings = manager_.getSettings();
+            auto& settings = manager_->getSettings();
             auto& theme = settings.getTheme();
             
             g.fillAll(theme.colorBackground);
@@ -270,11 +281,11 @@ namespace showmidi
             
             g.setColour(theme.colorData.withAlpha(0.7f));
             setSettingOptionFont(g, [&settings] () { return settings.getOctaveMiddleC() == 2; });
-            middleCOct2Button_.drawName(g, Justification::centredLeft);
+            middleCOct2Button_->drawName(g, Justification::centredLeft);
             setSettingOptionFont(g, [&settings] () { return settings.getOctaveMiddleC() == 3; });
-            middleCOct3Button_.drawName(g, Justification::centredLeft);
+            middleCOct3Button_->drawName(g, Justification::centredLeft);
             setSettingOptionFont(g, [&settings] () { return settings.getOctaveMiddleC() == 4; });
-            middleCOct4Button_.drawName(g, Justification::centredLeft);
+            middleCOct4Button_->drawName(g, Justification::centredLeft);
             
             // note format
             
@@ -289,9 +300,9 @@ namespace showmidi
             
             g.setColour(theme.colorData.withAlpha(0.7f));
             setSettingOptionFont(g, [&settings] () { return settings.getNoteFormat() == NoteFormat::formatName; });
-            notesNameButton_.drawName(g, Justification::centredLeft);
+            notesNameButton_->drawName(g, Justification::centredLeft);
             setSettingOptionFont(g, [&settings] () { return settings.getNoteFormat() == NoteFormat::formatNumber; });
-            notesNumberButton_.drawName(g, Justification::centredLeft);
+            notesNumberButton_->drawName(g, Justification::centredLeft);
             
             // number format
             
@@ -306,9 +317,9 @@ namespace showmidi
             
             g.setColour(theme.colorData.withAlpha(0.7f));
             setSettingOptionFont(g, [&settings] () { return settings.getNumberFormat() == NumberFormat::formatDecimal; });
-            numbersDecButton_.drawName(g, Justification::centredLeft);
+            numbersDecButton_->drawName(g, Justification::centredLeft);
             setSettingOptionFont(g, [&settings] () { return settings.getNumberFormat() == NumberFormat::formatHexadecimal; });
-            numbersHexButton_.drawName(g, Justification::centredLeft);
+            numbersHexButton_->drawName(g, Justification::centredLeft);
             
             // timeout delay
             
@@ -323,13 +334,13 @@ namespace showmidi
             
             g.setColour(theme.colorData.withAlpha(0.7f));
             setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 2; });
-            timeout2SecButton_.drawName(g, Justification::centredLeft);
+            timeout2SecButton_->drawName(g, Justification::centredLeft);
             setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 5; });
-            timeout5SecButton_.drawName(g, Justification::centredLeft);
+            timeout5SecButton_->drawName(g, Justification::centredLeft);
             setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 10; });
-            timeout10SecButton_.drawName(g, Justification::centredLeft);
+            timeout10SecButton_->drawName(g, Justification::centredLeft);
             
-            if (!manager_.isPlugin())
+            if (!manager_->isPlugin())
             {
                 // window position
                 
@@ -344,9 +355,9 @@ namespace showmidi
                 
                 g.setColour(theme.colorData.withAlpha(0.7f));
                 setSettingOptionFont(g, [&settings] () { return settings.getWindowPosition() == WindowPosition::windowRegular; });
-                windowRegular_.drawName(g, Justification::centredLeft);
+                windowRegularButton_->drawName(g, Justification::centredLeft);
                 setSettingOptionFont(g, [&settings] () { return settings.getWindowPosition() == WindowPosition::windowAlwaysOnTop; });
-                windowAlwaysOnTop_.drawName(g, Justification::centredLeft);
+                windowAlwaysOnTopButton_->drawName(g, Justification::centredLeft);
             }
 
             // active theme
@@ -362,136 +373,136 @@ namespace showmidi
             
             g.setColour(theme.colorData.withAlpha(0.7f));
             g.setFont(theme.fontData());
-            loadThemeButton_.drawName(g, Justification::centredLeft);
+            loadThemeButton_->drawName(g, Justification::centredLeft);
             
             g.setColour(theme.colorData.withAlpha(0.7f));
             g.setFont(theme.fontData());
-            saveThemeButton_.drawName(g, Justification::centredLeft);
+            saveThemeButton_->drawName(g, Justification::centredLeft);
             
             g.setColour(theme.colorData.withAlpha(0.7f));
             g.setFont(theme.fontData());
-            randomThemeButton_.drawName(g, Justification::centredLeft);
+            randomThemeButton_->drawName(g, Justification::centredLeft);
             
             // theme colours
             
             g.setColour(theme.colorBackground);
-            g.fillEllipse(colorBackgroundButton_.getBoundsForDrawing());
+            g.fillEllipse(colorBackgroundButton_->getBoundsForDrawing());
             g.setColour(theme.colorBackground.contrasting());
-            g.drawEllipse(colorBackgroundButton_.getBoundsForDrawing(), 1);
+            g.drawEllipse(colorBackgroundButton_->getBoundsForDrawing(), 1);
             
             g.setColour(theme.colorSidebar);
-            g.fillEllipse(colorSidebarButton_.getBoundsForDrawing());
+            g.fillEllipse(colorSidebarButton_->getBoundsForDrawing());
             g.setColour(theme.colorSidebar.contrasting());
-            g.drawEllipse(colorSidebarButton_.getBoundsForDrawing(), 1);
+            g.drawEllipse(colorSidebarButton_->getBoundsForDrawing(), 1);
             
             g.setColour(theme.colorSeperator);
-            g.fillEllipse(colorSeperatorButton_.getBoundsForDrawing());
+            g.fillEllipse(colorSeperatorButton_->getBoundsForDrawing());
             g.setColour(theme.colorSeperator.contrasting());
-            g.drawEllipse(colorSeperatorButton_.getBoundsForDrawing(), 1);
+            g.drawEllipse(colorSeperatorButton_->getBoundsForDrawing(), 1);
             
             g.setColour(theme.colorTrack);
-            g.fillEllipse(colorTrackButton_.getBoundsForDrawing());
+            g.fillEllipse(colorTrackButton_->getBoundsForDrawing());
             g.setColour(theme.colorTrack.contrasting());
-            g.drawEllipse(colorTrackButton_.getBoundsForDrawing(), 1);
+            g.drawEllipse(colorTrackButton_->getBoundsForDrawing(), 1);
             
             g.setColour(theme.colorLabel);
-            g.fillEllipse(colorLabelButton_.getBoundsForDrawing());
+            g.fillEllipse(colorLabelButton_->getBoundsForDrawing());
             g.setColour(theme.colorLabel.contrasting());
-            g.drawEllipse(colorLabelButton_.getBoundsForDrawing(), 1);
+            g.drawEllipse(colorLabelButton_->getBoundsForDrawing(), 1);
             
             g.setColour(theme.colorData);
-            g.fillEllipse(colorDataButton_.getBoundsForDrawing());
+            g.fillEllipse(colorDataButton_->getBoundsForDrawing());
             g.setColour(theme.colorData.contrasting());
-            g.drawEllipse(colorDataButton_.getBoundsForDrawing(), 1);
+            g.drawEllipse(colorDataButton_->getBoundsForDrawing(), 1);
             
             g.setColour(theme.colorPositive);
-            g.fillEllipse(colorPositiveButton_.getBoundsForDrawing());
+            g.fillEllipse(colorPositiveButton_->getBoundsForDrawing());
             g.setColour(theme.colorPositive.contrasting());
-            g.drawEllipse(colorPositiveButton_.getBoundsForDrawing(), 1);
+            g.drawEllipse(colorPositiveButton_->getBoundsForDrawing(), 1);
             
             g.setColour(theme.colorNegative);
-            g.fillEllipse(colorNegativeButton_.getBoundsForDrawing());
+            g.fillEllipse(colorNegativeButton_->getBoundsForDrawing());
             g.setColour(theme.colorNegative.contrasting());
-            g.drawEllipse(colorNegativeButton_.getBoundsForDrawing(), 1);
+            g.drawEllipse(colorNegativeButton_->getBoundsForDrawing(), 1);
             
             g.setColour(theme.colorController);
-            g.fillEllipse(colorControllerButton_.getBoundsForDrawing());
+            g.fillEllipse(colorControllerButton_->getBoundsForDrawing());
             g.setColour(theme.colorController.contrasting());
-            g.drawEllipse(colorControllerButton_.getBoundsForDrawing(), 1);
+            g.drawEllipse(colorControllerButton_->getBoundsForDrawing(), 1);
             
             // close button
             
             g.setColour(theme.colorController);
             g.setFont(theme.fontLabel());
-            closeButton_.drawName(g, Justification::centred);
+            closeButton_->drawName(g, Justification::centred);
         }
         
         void buttonClicked(Button* buttonThatWasClicked)
         {
-            auto& settings = manager_.getSettings();
+            auto& settings = manager_->getSettings();
             auto& theme = settings.getTheme();
             
-            if (buttonThatWasClicked == &middleCOct2Button_)
+            if (buttonThatWasClicked == middleCOct2Button_.get())
             {
                 settings.setOctaveMiddleC(2);
                 repaint();
             }
-            else if (buttonThatWasClicked == &middleCOct3Button_)
+            else if (buttonThatWasClicked == middleCOct3Button_.get())
             {
                 settings.setOctaveMiddleC(3);
                 repaint();
             }
-            else if (buttonThatWasClicked == &middleCOct4Button_)
+            else if (buttonThatWasClicked == middleCOct4Button_.get())
             {
                 settings.setOctaveMiddleC(4);
                 repaint();
             }
-            else if (buttonThatWasClicked == &notesNameButton_)
+            else if (buttonThatWasClicked == notesNameButton_.get())
             {
                 settings.setNoteFormat(NoteFormat::formatName);
                 repaint();
             }
-            else if (buttonThatWasClicked == &notesNumberButton_)
+            else if (buttonThatWasClicked == notesNumberButton_.get())
             {
                 settings.setNoteFormat(NoteFormat::formatNumber);
                 repaint();
             }
-            else if (buttonThatWasClicked == &numbersDecButton_)
+            else if (buttonThatWasClicked == numbersDecButton_.get())
             {
                 settings.setNumberFormat(NumberFormat::formatDecimal);
                 repaint();
             }
-            else if (buttonThatWasClicked == &numbersHexButton_)
+            else if (buttonThatWasClicked == numbersHexButton_.get())
             {
                 settings.setNumberFormat(NumberFormat::formatHexadecimal);
                 repaint();
             }
-            else if (buttonThatWasClicked == &timeout2SecButton_)
+            else if (buttonThatWasClicked == timeout2SecButton_.get())
             {
                 settings.setTimeoutDelay(2);
                 repaint();
             }
-            else if (buttonThatWasClicked == &timeout5SecButton_)
+            else if (buttonThatWasClicked == timeout5SecButton_.get())
             {
                 settings.setTimeoutDelay(5);
                 repaint();
             }
-            else if (buttonThatWasClicked == &timeout10SecButton_)
+            else if (buttonThatWasClicked == timeout10SecButton_.get())
             {
                 settings.setTimeoutDelay(10);
                 repaint();
             }
-            else if (buttonThatWasClicked == &windowRegular_)
+            else if (buttonThatWasClicked == windowRegularButton_.get())
             {
                 settings.setWindowPosition(WindowPosition::windowRegular);
                 repaint();
             }
-            else if (buttonThatWasClicked == &windowAlwaysOnTop_)
+            else if (buttonThatWasClicked == windowAlwaysOnTopButton_.get())
             {
                 settings.setWindowPosition(WindowPosition::windowAlwaysOnTop);
                 repaint();
             }
-            else if (buttonThatWasClicked == &loadThemeButton_)
+            else if (buttonThatWasClicked == loadThemeButton_.get())
             {
                 loadThemeChooser_->launchAsync(FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
                 {
@@ -501,11 +512,11 @@ namespace showmidi
                         return;
                     }
 
-                    manager_.getSettings().getTheme().parseXml(file.loadFileAsString());
-                    manager_.storeSettings();
+                    manager_->getSettings().getTheme().parseXml(file.loadFileAsString());
+                    manager_->storeSettings();
                 });
             }
-            else if (buttonThatWasClicked == &saveThemeButton_)
+            else if (buttonThatWasClicked == saveThemeButton_.get())
             {
                 saveThemeChooser_->launchAsync(FileBrowserComponent::saveMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
                 {
@@ -516,60 +527,60 @@ namespace showmidi
                     }
                     
                     TemporaryFile temp_file(file, File::createTempFile("svg"));
-                    temp_file.getFile().appendText(manager_.getSettings().getTheme().generateXml(), false, false, "\r\n");
+                    temp_file.getFile().appendText(manager_->getSettings().getTheme().generateXml(), false, false, "\r\n");
                     temp_file.overwriteTargetFileWithTemporary();
                 });
             }
-            else if (buttonThatWasClicked == &randomThemeButton_)
+            else if (buttonThatWasClicked == randomThemeButton_.get())
             {
-                manager_.getSettings().getTheme().randomize();
-                manager_.storeSettings();
+                manager_->getSettings().getTheme().randomize();
+                manager_->storeSettings();
             }
-            else if (buttonThatWasClicked == &colorBackgroundButton_)
+            else if (buttonThatWasClicked == colorBackgroundButton_.get())
             {
                 popupColorSelector(colorValueBackground_, buttonThatWasClicked, theme.colorBackground);
             }
-            else if (buttonThatWasClicked == &colorSidebarButton_)
+            else if (buttonThatWasClicked == colorSidebarButton_.get())
             {
                 popupColorSelector(colorValueSidebar_, buttonThatWasClicked, theme.colorSidebar);
             }
-            else if (buttonThatWasClicked == &colorSeperatorButton_)
+            else if (buttonThatWasClicked == colorSeperatorButton_.get())
             {
                 popupColorSelector(colorValueSeperator_, buttonThatWasClicked, theme.colorSeperator);
             }
-            else if (buttonThatWasClicked == &colorTrackButton_)
+            else if (buttonThatWasClicked == colorTrackButton_.get())
             {
                 popupColorSelector(colorValueTrack_, buttonThatWasClicked, theme.colorTrack);
             }
-            else if (buttonThatWasClicked == &colorLabelButton_)
+            else if (buttonThatWasClicked == colorLabelButton_.get())
             {
                 popupColorSelector(colorValueLabel_, buttonThatWasClicked, theme.colorLabel);
             }
-            else if (buttonThatWasClicked == &colorDataButton_)
+            else if (buttonThatWasClicked == colorDataButton_.get())
             {
                 popupColorSelector(colorValueData_, buttonThatWasClicked, theme.colorData);
             }
-            else if (buttonThatWasClicked == &colorPositiveButton_)
+            else if (buttonThatWasClicked == colorPositiveButton_.get())
             {
                 popupColorSelector(colorValuePositive_, buttonThatWasClicked, theme.colorPositive);
             }
-            else if (buttonThatWasClicked == &colorNegativeButton_)
+            else if (buttonThatWasClicked == colorNegativeButton_.get())
             {
                 popupColorSelector(colorValueNegative_, buttonThatWasClicked, theme.colorNegative);
             }
-            else if (buttonThatWasClicked == &colorControllerButton_)
+            else if (buttonThatWasClicked == colorControllerButton_.get())
             {
                 popupColorSelector(colorValueController_, buttonThatWasClicked, theme.colorController);
             }
-            else if (buttonThatWasClicked == &colorSidebarButton_)
+            else if (buttonThatWasClicked == colorSidebarButton_.get())
             {
             }
-            else if (buttonThatWasClicked == &closeButton_)
+            else if (buttonThatWasClicked == closeButton_.get())
             {
                 owner_->setVisible(false);
             }
             
-            manager_.applySettings();
+            manager_->applySettings();
         }
         
         void popupColorSelector(Value& colorValue, Button* colorButton, Colour& color)
@@ -582,7 +593,7 @@ namespace showmidi
         
         void valueChanged(Value& value)
         {
-            auto& theme = manager_.getSettings().getTheme();
+            auto& theme = manager_->getSettings().getTheme();
             
             if (value.refersToSameSourceAs(colorValueBackground_))
             {
@@ -621,37 +632,37 @@ namespace showmidi
                 theme.colorController = Colour::fromString(value.toString());
             }
             
-            manager_.applySettings();
+            manager_->applySettings();
         }
         
         SettingsComponent* const owner_;
-        SettingsManager& manager_;
+        SettingsManager* const manager_;
         
-        PaintedButton middleCOct2Button_;
-        PaintedButton middleCOct3Button_;
-        PaintedButton middleCOct4Button_;
-        PaintedButton notesNameButton_;
-        PaintedButton notesNumberButton_;
-        PaintedButton numbersDecButton_;
-        PaintedButton numbersHexButton_;
-        PaintedButton timeout2SecButton_;
-        PaintedButton timeout5SecButton_;
-        PaintedButton timeout10SecButton_;
-        PaintedButton windowRegular_;
-        PaintedButton windowAlwaysOnTop_;
-        PaintedButton loadThemeButton_;
-        PaintedButton saveThemeButton_;
-        PaintedButton randomThemeButton_;
-        PaintedButton colorBackgroundButton_;
-        PaintedButton colorSidebarButton_;
-        PaintedButton colorSeperatorButton_;
-        PaintedButton colorTrackButton_;
-        PaintedButton colorLabelButton_;
-        PaintedButton colorDataButton_;
-        PaintedButton colorPositiveButton_;
-        PaintedButton colorNegativeButton_;
-        PaintedButton colorControllerButton_;
-        PaintedButton closeButton_;
+        std::unique_ptr<PaintedButton> middleCOct2Button_;
+        std::unique_ptr<PaintedButton> middleCOct3Button_;
+        std::unique_ptr<PaintedButton> middleCOct4Button_;
+        std::unique_ptr<PaintedButton> notesNameButton_;
+        std::unique_ptr<PaintedButton> notesNumberButton_;
+        std::unique_ptr<PaintedButton> numbersDecButton_;
+        std::unique_ptr<PaintedButton> numbersHexButton_;
+        std::unique_ptr<PaintedButton> timeout2SecButton_;
+        std::unique_ptr<PaintedButton> timeout5SecButton_;
+        std::unique_ptr<PaintedButton> timeout10SecButton_;
+        std::unique_ptr<PaintedButton> windowRegularButton_;
+        std::unique_ptr<PaintedButton> windowAlwaysOnTopButton_;
+        std::unique_ptr<PaintedButton> loadThemeButton_;
+        std::unique_ptr<PaintedButton> saveThemeButton_;
+        std::unique_ptr<PaintedButton> randomThemeButton_;
+        std::unique_ptr<PaintedButton> colorBackgroundButton_;
+        std::unique_ptr<PaintedButton> colorSidebarButton_;
+        std::unique_ptr<PaintedButton> colorSeperatorButton_;
+        std::unique_ptr<PaintedButton> colorTrackButton_;
+        std::unique_ptr<PaintedButton> colorLabelButton_;
+        std::unique_ptr<PaintedButton> colorDataButton_;
+        std::unique_ptr<PaintedButton> colorPositiveButton_;
+        std::unique_ptr<PaintedButton> colorNegativeButton_;
+        std::unique_ptr<PaintedButton> colorControllerButton_;
+        std::unique_ptr<PaintedButton> closeButton_;
         
         Value colorValueBackground_;
         Value colorValueSidebar_;
@@ -669,7 +680,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SettingsComponent::SettingsComponent(SettingsManager& m) : pimpl_(new Pimpl(this, m)) {}
+    SettingsComponent::SettingsComponent(SettingsManager* m) : pimpl_(new Pimpl(this, m)) {}
     SettingsComponent::~SettingsComponent() = default;
     
     void SettingsComponent::paint(Graphics& g) { pimpl_->paint(g); }

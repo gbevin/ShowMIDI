@@ -27,29 +27,35 @@ namespace showmidi
     {
         static constexpr int DEFAULT_WINDOW_HEIGHT = 600;
         
-        Pimpl(MainLayoutComponent* owner, SettingsManager& settings, PauseManager& pause, MainLayoutType type, Component* content) :
+        Pimpl(MainLayoutComponent* owner, SettingsManager* settings, PauseManager* pause, MainLayoutType type, Component* content) :
             owner_(owner),
             settingsManager_(settings),
             pauseManager_(pause),
             layoutType_(type)
         {
+            sidebar_ = std::make_unique<SidebarComponent>(
+                settingsManager_,
+                layoutType_ == MainLayoutType::layoutStandalone ? SidebarType::sidebarExpandable : SidebarType::sidebarFixed,
+                this);
+            viewport_ = std::make_unique<Viewport>();
+
             owner_->setWantsKeyboardFocus(true);
             owner_->addKeyListener(this);
             
-            sidebar_.setBounds(0, 0, getSidebarWidth(), DEFAULT_WINDOW_HEIGHT);
-            owner_->addAndMakeVisible(sidebar_);
+            sidebar_->setBounds(0, 0, getSidebarWidth(), DEFAULT_WINDOW_HEIGHT);
+            owner_->addAndMakeVisible(sidebar_.get());
 
             auto default_width = MidiDeviceComponent::getStandardWidth() + Theme::SCROLLBAR_THICKNESS;
             if (type == MainLayoutType::layoutStandalone)
             {
                 default_width += Theme::MIDI_DEVICE_SPACING * 2;
             }
-            viewport_.setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
-            viewport_.setScrollBarsShown(true, true);
-            viewport_.setScrollBarThickness(Theme::SCROLLBAR_THICKNESS);
-            viewport_.setViewedComponent(content, false);
-            viewport_.setBounds(sidebar_.getWidth(), 0, default_width, DEFAULT_WINDOW_HEIGHT);
-            owner_->addAndMakeVisible(viewport_);
+            viewport_->setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
+            viewport_->setScrollBarsShown(true, true);
+            viewport_->setScrollBarThickness(Theme::SCROLLBAR_THICKNESS);
+            viewport_->setViewedComponent(content, false);
+            viewport_->setBounds(sidebar_->getWidth(), 0, default_width, DEFAULT_WINDOW_HEIGHT);
+            owner_->addAndMakeVisible(viewport_.get());
         }
         
         ~Pimpl()
@@ -61,7 +67,7 @@ namespace showmidi
         {
             if (key.getKeyCode() == KeyPress::spaceKey)
             {
-                pauseManager_.togglePaused();
+                pauseManager_->togglePaused();
                 return true;
             }
             
@@ -85,51 +91,50 @@ namespace showmidi
         {
             for (auto file : files)
             {
-                settingsManager_.getSettings().getTheme().parseXml(File(file).loadFileAsString());
+                settingsManager_->getSettings().getTheme().parseXml(File(file).loadFileAsString());
             }
             
             owner_->repaint();
             
-            settingsManager_.storeSettings();
+            settingsManager_->storeSettings();
         }
 
         void resized()
         {
-            sidebar_.setBounds(0, 0, getSidebarWidth(), owner_->getHeight());
-            viewport_.setBounds(getSidebarWidth(), 0, owner_->getWidth() - getSidebarWidth(), owner_->getHeight());
+            sidebar_->setBounds(0, 0, getSidebarWidth(), owner_->getHeight());
+            viewport_->setBounds(getSidebarWidth(), 0, owner_->getWidth() - getSidebarWidth(), owner_->getHeight());
         }
         
         int getSidebarWidth()
         {
-            return sidebar_.getActiveWidth();
+            return sidebar_->getActiveWidth();
         }
         
         void sidebarChangedWidth() override
         {
             if (layoutType_ == MainLayoutType::layoutStandalone)
             {
-                SMApp.setWindowWidthForMainLayout(viewport_.getWidth());
+                SMApp.setWindowWidthForMainLayout(viewport_->getWidth());
             }
         }
 
         MainLayoutComponent* const owner_;
-        SettingsManager& settingsManager_;
-        PauseManager& pauseManager_;
+        SettingsManager* const settingsManager_;
+        PauseManager* const pauseManager_;
+        
         const MainLayoutType layoutType_;
-        SidebarComponent sidebar_ {
-            settingsManager_,
-            layoutType_ == MainLayoutType::layoutStandalone ? SidebarType::sidebarExpandable : SidebarType::sidebarFixed,
-            *this };
-        Viewport viewport_;
+        
+        std::unique_ptr<SidebarComponent> sidebar_;
+        std::unique_ptr<Viewport> viewport_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MainLayoutComponent::MainLayoutComponent(SettingsManager& s, PauseManager& p, MainLayoutType t, Component* c) : pimpl_(new Pimpl(this, s, p, t, c))
+    MainLayoutComponent::MainLayoutComponent(SettingsManager* s, PauseManager* p, MainLayoutType t, Component* c) : pimpl_(new Pimpl(this, s, p, t, c))
     {
-        pimpl_->sidebar_.setup();
+        pimpl_->sidebar_->setup();
         
-        setSize(pimpl_->sidebar_.getWidth() + pimpl_->viewport_.getWidth(), Pimpl::DEFAULT_WINDOW_HEIGHT);
+        setSize(pimpl_->sidebar_->getWidth() + pimpl_->viewport_->getWidth(), Pimpl::DEFAULT_WINDOW_HEIGHT);
     }
     
     MainLayoutComponent::~MainLayoutComponent() = default;

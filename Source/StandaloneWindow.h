@@ -34,7 +34,7 @@ namespace showmidi
         
         struct Pimpl;
     private:
-        std::unique_ptr<Pimpl> pimpl_ { nullptr };
+        std::unique_ptr<Pimpl> pimpl_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StandaloneWindow)
     };

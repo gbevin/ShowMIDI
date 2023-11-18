@@ -33,7 +33,7 @@ namespace showmidi
     class MainLayoutComponent : public Component, public FileDragAndDropTarget
     {
     public:
-        MainLayoutComponent(SettingsManager&, PauseManager&, MainLayoutType, Component*);
+        MainLayoutComponent(SettingsManager*, PauseManager*, MainLayoutType, Component*);
         virtual ~MainLayoutComponent();
         
         bool isInterestedInFileDrag(const StringArray&);
@@ -45,7 +45,7 @@ namespace showmidi
 
         struct Pimpl;
     private:
-        std::unique_ptr<Pimpl> pimpl_ { nullptr };
+        std::unique_ptr<Pimpl> pimpl_;
         
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainLayoutComponent)
     };

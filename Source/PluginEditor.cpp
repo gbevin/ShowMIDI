@@ -37,23 +37,25 @@ namespace showmidi
             GrabKeyboardFocus
         };
         
-        Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor& p) :
+        Pimpl(ShowMIDIPluginAudioProcessorEditor* owner, ShowMIDIPluginAudioProcessor* p) :
             owner_(owner),
-            audioProcessor_(p),
-            midiDevice_(*this, "ShowMIDI")
+            audioProcessor_(p)
         {
             Desktop::getInstance().setDefaultLookAndFeel(&lookAndFeel_);
             
+            midiDevice_ = std::make_unique<MidiDeviceComponent>(this, "ShowMIDI");
+            layout_ = std::make_unique<MainLayoutComponent>(this, this, MainLayoutType::layoutPlugin, midiDevice_.get());
+            
             owner_->setResizable(true, true);
-            owner_->getConstrainer()->setMinimumWidth(layout_.getSidebarWidth() + MidiDeviceComponent::getStandardWidth() + Theme::SCROLLBAR_THICKNESS);
+            owner_->getConstrainer()->setMinimumWidth(layout_->getSidebarWidth() + MidiDeviceComponent::getStandardWidth() + Theme::SCROLLBAR_THICKNESS);
             owner_->getConstrainer()->setMaximumWidth(owner_->getConstrainer()->getMaximumWidth());
             owner_->getConstrainer()->setMinimumHeight(120);
             
-            midiDevice_.setBounds(0, 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
+            midiDevice_->setBounds(0, 0, MidiDeviceComponent::getStandardWidth(), DEFAULT_EDITOR_HEIGHT);
 
-            owner_->addAndMakeVisible(layout_);
+            owner_->addAndMakeVisible(layout_.get());
 
-            owner_->setSize(layout_.getWidth(), DEFAULT_EDITOR_HEIGHT);
+            owner_->setSize(layout_->getWidth(), DEFAULT_EDITOR_HEIGHT);
             owner_->setWantsKeyboardFocus(true);
             
             // 30Hz
@@ -72,7 +74,7 @@ namespace showmidi
 
         void handleIncomingMidiMessage(const MidiMessage& msg)
         {
-            midiDevice_.handleIncomingMidiMessage(msg);
+            midiDevice_->handleIncomingMidiMessage(msg);
         }
         
         void togglePaused() override
@@ -84,7 +86,7 @@ namespace showmidi
         {
             paused_ = paused;
             
-            midiDevice_.setPaused(paused);
+            midiDevice_->setPaused(paused);
         }
         
         void timerCallback(int timerID) override
@@ -112,19 +114,19 @@ namespace showmidi
         void renderDevices()
         {
             auto height = owner_->getParentHeight();
-            midiDevice_.render();
-            height = std::max(height, midiDevice_.getVisibleHeight());
-            midiDevice_.setSize(MidiDeviceComponent::getStandardWidth(), height);
+            midiDevice_->render();
+            height = std::max(height, midiDevice_->getVisibleHeight());
+            midiDevice_->setSize(MidiDeviceComponent::getStandardWidth(), height);
         }
         
         void paint(Graphics& g)
         {
-            g.fillAll(audioProcessor_.getSettings().getTheme().colorSidebar);
+            g.fillAll(audioProcessor_->getSettings().getTheme().colorSidebar);
         }
         
         void resized(int height)
         {
-            layout_.setBounds(0, 0, layout_.getWidth(), height);
+            layout_->setBounds(0, 0, layout_->getWidth(), height);
         }
         
         bool isPlugin() override
@@ -134,7 +136,7 @@ namespace showmidi
 
         Settings& getSettings() override
         {
-            return audioProcessor_.getSettings();
+            return audioProcessor_->getSettings();
         }
         
         void applySettings() override
@@ -144,7 +146,7 @@ namespace showmidi
 
         void storeSettings() override
         {
-            audioProcessor_.getSettings().storeTheme();
+            audioProcessor_->getSettings().storeTheme();
             owner_->repaint();
         }
         
@@ -156,10 +158,10 @@ namespace showmidi
         UwynLookAndFeel lookAndFeel_;
         
         ShowMIDIPluginAudioProcessorEditor* const owner_;
-        ShowMIDIPluginAudioProcessor& audioProcessor_;
+        ShowMIDIPluginAudioProcessor* const audioProcessor_;
         
-        MidiDeviceComponent midiDevice_;
-        MainLayoutComponent layout_ { *this, *this, MainLayoutType::layoutPlugin, &midiDevice_ };
+        std::unique_ptr<MidiDeviceComponent> midiDevice_;
+        std::unique_ptr<MainLayoutComponent> layout_;
         
         MidiDevicesListeners midiDevicesListeners_;
 
@@ -168,7 +170,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    ShowMIDIPluginAudioProcessorEditor::ShowMIDIPluginAudioProcessorEditor(ShowMIDIPluginAudioProcessor& p) : AudioProcessorEditor(&p), pimpl_(new Pimpl(this, p)) {
+    ShowMIDIPluginAudioProcessorEditor::ShowMIDIPluginAudioProcessorEditor(ShowMIDIPluginAudioProcessor* p) : AudioProcessorEditor(p), pimpl_(new Pimpl(this, p)) {
     }
 
     ShowMIDIPluginAudioProcessorEditor::~ShowMIDIPluginAudioProcessorEditor() = default;

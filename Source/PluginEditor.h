@@ -26,7 +26,7 @@ namespace showmidi
     class ShowMIDIPluginAudioProcessorEditor : public AudioProcessorEditor
     {
     public:
-        ShowMIDIPluginAudioProcessorEditor(ShowMIDIPluginAudioProcessor&);
+        ShowMIDIPluginAudioProcessorEditor(ShowMIDIPluginAudioProcessor*);
         ~ShowMIDIPluginAudioProcessorEditor() override;
         
         void handleIncomingMidiMessage(const MidiMessage&);
@@ -36,7 +36,7 @@ namespace showmidi
 
         struct Pimpl;
     private:
-        std::unique_ptr<Pimpl> pimpl_ { nullptr };
+        std::unique_ptr<Pimpl> pimpl_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ShowMIDIPluginAudioProcessorEditor)
     };

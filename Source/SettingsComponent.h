@@ -26,7 +26,7 @@ namespace showmidi
     class SettingsComponent : public Component
     {
     public:
-        SettingsComponent(SettingsManager&);
+        SettingsComponent(SettingsManager*);
         ~SettingsComponent();
         
         void paint(Graphics&) override;

@@ -27,17 +27,17 @@ namespace showmidi
 {
     struct PortListComponent::Pimpl : public MouseListener, public MidiDevicesListener
     {
-        Pimpl(PortListComponent* owner, SettingsManager& manager) :
+        Pimpl(PortListComponent* owner, SettingsManager* manager) :
             owner_(owner),
             manager_(manager)
         {
             owner_->addMouseListener(this, false);
-            manager_.getMidiDevicesListeners().add(this);
+            manager_->getMidiDevicesListeners().add(this);
         }
         
         ~Pimpl()
         {
-            manager_.getMidiDevicesListeners().remove(this);
+            manager_->getMidiDevicesListeners().remove(this);
             owner_->removeMouseListener(this);
         }
         
@@ -49,7 +49,7 @@ namespace showmidi
         
         void paint(Graphics& g)
         {
-            auto& settings = manager_.getSettings();
+            auto& settings = manager_->getSettings();
             auto& theme = settings.getTheme();
             g.setFont(theme.fontLabel());
             
@@ -116,7 +116,7 @@ namespace showmidi
             if (port < midiDevices_.size())
             {
                 auto port_info = midiDevices_[port];
-                auto& settings = manager_.getSettings();
+                auto& settings = manager_->getSettings();
                 settings.setMidiDeviceVisible(port_info.identifier, !settings.isMidiDeviceVisible(port_info.identifier));
                 owner_->repaint();
             }
@@ -128,7 +128,8 @@ namespace showmidi
         }
 
         PortListComponent* const owner_;
-        SettingsManager& manager_;
+        SettingsManager* const manager_;
+        
         Array<MidiDeviceInfo> midiDevices_;
         CriticalSection midiDevicesLock_;
 
@@ -140,7 +141,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    PortListComponent::PortListComponent(SettingsManager& m) : pimpl_(new Pimpl(this, m)) {}
+    PortListComponent::PortListComponent(SettingsManager* m) : pimpl_(new Pimpl(this, m)) {}
     PortListComponent::~PortListComponent() = default;
     
     int PortListComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }

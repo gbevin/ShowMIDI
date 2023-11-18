@@ -27,8 +27,8 @@ namespace showmidi
     class MidiDeviceComponent : public Component, public FileDragAndDropTarget
     {
     public:
-        MidiDeviceComponent(SettingsManager&, const String&);
-        MidiDeviceComponent(SettingsManager&, const MidiDeviceInfo&);
+        MidiDeviceComponent(SettingsManager*, const String&);
+        MidiDeviceComponent(SettingsManager*, const MidiDeviceInfo&);
         ~MidiDeviceComponent() override;
         
         static int getStandardWidth();

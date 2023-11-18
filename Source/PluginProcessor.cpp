@@ -106,7 +106,7 @@ namespace showmidi
     
     AudioProcessorEditor* ShowMIDIPluginAudioProcessor::createEditor()
     {
-        return new ShowMIDIPluginAudioProcessorEditor(*this);
+        return new ShowMIDIPluginAudioProcessorEditor(this);
     }
     
     void ShowMIDIPluginAudioProcessor::getStateInformation(MemoryBlock& destData)

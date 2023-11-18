@@ -216,7 +216,7 @@ namespace showmidi
                         MidiDeviceComponent* component = midiDevices_.getReference(info.identifier);
                         if (component == nullptr)
                         {
-                            component = new MidiDeviceComponent(SMApp, info);
+                            component = new MidiDeviceComponent(&SMApp, info);
                             component->setPaused(paused_);
                             midiDevices_.set(info.identifier, component);
                         }

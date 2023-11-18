@@ -23,18 +23,18 @@ namespace showmidi
 {
     struct MidiDeviceComponent::Pimpl : public MidiInputCallback
     {
-        Pimpl(MidiDeviceComponent* owner, SettingsManager& manager, const String& name) :
+        Pimpl(MidiDeviceComponent* owner, SettingsManager* manager, const String& name) :
             owner_(owner),
             settingsManager_(manager),
-            theme_(manager.getSettings().getTheme()),
+            theme_(manager->getSettings().getTheme()),
             deviceInfo_({ name, ""})
         {
         }
         
-        Pimpl(MidiDeviceComponent* owner, SettingsManager& manager, const MidiDeviceInfo info) :
+        Pimpl(MidiDeviceComponent* owner, SettingsManager* manager, const MidiDeviceInfo info) :
             owner_(owner),
             settingsManager_(manager),
-            theme_(manager.getSettings().getTheme()),
+            theme_(manager->getSettings().getTheme()),
             deviceInfo_(info)
         {
             auto midi_input = MidiInput::openDevice(info.identifier, this);
@@ -731,7 +731,7 @@ namespace showmidi
         
         bool isExpired(const Time& currentTime, Time& messageTime)
         {
-            auto delay = settingsManager_.getSettings().getTimeoutDelay();
+            auto delay = settingsManager_->getSettings().getTimeoutDelay();
             return (currentTime - messageTime).inSeconds() > delay;
         }
         
@@ -742,7 +742,7 @@ namespace showmidi
         
         String output7Bit(int v)
         {
-            if (settingsManager_.getSettings().getNumberFormat() == NumberFormat::formatHexadecimal)
+            if (settingsManager_->getSettings().getNumberFormat() == NumberFormat::formatHexadecimal)
             {
                 return output7BitAsHex(v);
             }
@@ -759,7 +759,7 @@ namespace showmidi
         
         String output14Bit(int v)
         {
-            if (settingsManager_.getSettings().getNumberFormat() == NumberFormat::formatHexadecimal)
+            if (settingsManager_->getSettings().getNumberFormat() == NumberFormat::formatHexadecimal)
             {
                 return output14BitAsHex(v);
             }
@@ -771,13 +771,13 @@ namespace showmidi
         
         String outputNote(int noteNumber)
         {
-            if (settingsManager_.getSettings().getNoteFormat() == NoteFormat::formatNumber)
+            if (settingsManager_->getSettings().getNoteFormat() == NoteFormat::formatNumber)
             {
                 return output7Bit(noteNumber);
             }
             else
             {
-                auto octave = settingsManager_.getSettings().getOctaveMiddleC();
+                auto octave = settingsManager_->getSettings().getOctaveMiddleC();
                 return MidiMessage::getMidiNoteName(noteNumber, true, true, octave);
             }
         }
@@ -821,15 +821,15 @@ namespace showmidi
             
             owner_->getParentComponent()->repaint();
             
-            settingsManager_.storeSettings();
+            settingsManager_->storeSettings();
         }
 
         MidiDeviceComponent* const owner_;
         
-        SettingsManager& settingsManager_;
+        SettingsManager* const settingsManager_;
         Theme& theme_;
         MidiDeviceInfo deviceInfo_;
-        std::unique_ptr<MidiInput> midiIn_ { nullptr };
+        std::unique_ptr<MidiInput> midiIn_;
         std::atomic_bool dirty_ { true };
         Time lastRender_;
         bool paused_ { false };
@@ -844,8 +844,8 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MidiDeviceComponent::MidiDeviceComponent(SettingsManager& manager, const String& name) : pimpl_(new Pimpl(this, manager, name)) {}
-    MidiDeviceComponent::MidiDeviceComponent(SettingsManager& manager, const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, manager, info)) {}
+    MidiDeviceComponent::MidiDeviceComponent(SettingsManager* manager, const String& name) : pimpl_(new Pimpl(this, manager, name)) {}
+    MidiDeviceComponent::MidiDeviceComponent(SettingsManager* manager, const MidiDeviceInfo& info) : pimpl_(new Pimpl(this, manager, info)) {}
     MidiDeviceComponent::~MidiDeviceComponent() = default;
 
     int MidiDeviceComponent::getStandardWidth()         { return Pimpl::getStandardWidth(); }

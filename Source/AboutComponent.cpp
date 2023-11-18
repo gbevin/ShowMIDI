@@ -22,22 +22,23 @@
 
 namespace showmidi
 {
-    AboutComponent::AboutComponent(Theme& theme) : theme_(theme),
-        websiteButton_("https://uwyn.com"),
-        closeButton_{ "close" }
+    AboutComponent::AboutComponent(Theme& theme) : theme_(theme)
     {
+        websiteButton_ = std::make_unique<PaintedButton>("https://uwyn.com");
+        closeButton_ = std::make_unique<PaintedButton>("close");
+
         setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme_.linePosition(8));
 
-        websiteButton_.addListener(this);
-        closeButton_.addListener(this);
+        websiteButton_->addListener(this);
+        closeButton_->addListener(this);
         
-        websiteButton_.setBoundsForTouch(0, theme_.linePosition(4),
+        websiteButton_->setBoundsForTouch(0, theme_.linePosition(4),
                                          getWidth(), theme_.labelHeight());
-        addAndMakeVisible(websiteButton_);
+        addAndMakeVisible(websiteButton_.get());
         
-        closeButton_.setBoundsForTouch(0, getHeight() - theme_.linePosition(1) - theme_.labelHeight(),
+        closeButton_->setBoundsForTouch(0, getHeight() - theme_.linePosition(1) - theme_.labelHeight(),
                                        getWidth(), theme_.labelHeight());
-        addAndMakeVisible(closeButton_);
+        addAndMakeVisible(closeButton_.get());
     }
     
     void AboutComponent::paint(Graphics& g)
@@ -59,22 +60,22 @@ namespace showmidi
         
         g.setColour(theme_.colorData.withAlpha(0.7f));
         g.setFont(theme_.fontData());
-        websiteButton_.drawName(g, Justification::centred);
+        websiteButton_->drawName(g, Justification::centred);
         
         // close button
         
         g.setColour(theme_.colorController);
         g.setFont(theme_.fontLabel());
-        closeButton_.drawName(g, Justification::centred);
+        closeButton_->drawName(g, Justification::centred);
     }
     
     void AboutComponent::buttonClicked(Button* buttonThatWasClicked)
     {
-        if (buttonThatWasClicked == &websiteButton_)
+        if (buttonThatWasClicked == websiteButton_.get())
         {
-            URL(websiteButton_.getName()).launchInDefaultBrowser();
+            URL(websiteButton_->getName()).launchInDefaultBrowser();
         }
-        else if (buttonThatWasClicked == &closeButton_)
+        else if (buttonThatWasClicked == closeButton_.get())
         {
             setVisible(false);
         }

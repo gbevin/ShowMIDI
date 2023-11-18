@@ -30,9 +30,11 @@ namespace showmidi
     {
         Pimpl(StandaloneWindow* owner) : owner_(owner)
         {
+            main_ = std::make_unique<StandaloneDevicesComponent>();
+            layout_ = std::make_unique<MainLayoutComponent>(&SMApp, main_.get(), MainLayoutType::layoutStandalone, main_.get());
             owner_->setUsingNativeTitleBar(true);
             
-            owner_->setContentNonOwned(&layout_, true);
+            owner_->setContentNonOwned(layout_.get(), true);
 #if JUCE_IOS
             owner_->setFullScreen(true);
 #else
@@ -52,8 +54,8 @@ namespace showmidi
         }
         
         StandaloneWindow* const owner_;
-        StandaloneDevicesComponent main_;
-        MainLayoutComponent layout_ { SMApp, main_, MainLayoutType::layoutStandalone, &main_ };
+        std::unique_ptr<StandaloneDevicesComponent> main_;
+        std::unique_ptr<MainLayoutComponent> layout_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
@@ -71,10 +73,10 @@ namespace showmidi
     {
         if (pimpl_.get() && isVisible())
         {
-            pimpl_->layout_.setBounds(0, 0, getWidth(), getHeight());
+            pimpl_->layout_->setBounds(0, 0, getWidth(), getHeight());
         }
     };
     
     void StandaloneWindow::closeButtonPressed() { pimpl_->closeButtonPressed(); }
-    int StandaloneWindow::getSidebarWidth()     { return pimpl_->layout_.getSidebarWidth(); }
+    int StandaloneWindow::getSidebarWidth()     { return pimpl_->layout_->getSidebarWidth(); }
 }

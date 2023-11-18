@@ -34,27 +34,34 @@ namespace showmidi
         static constexpr int Y_PORTLIST = 48;
         static constexpr int PORTLIST_BOTTOM_MARGIN = 36;
 
-        Pimpl(SidebarComponent* owner, SettingsManager& manager, SidebarType type, SidebarListener& listener) :
+        Pimpl(SidebarComponent* owner, SettingsManager* manager, SidebarType type, SidebarListener* listener) :
             owner_(owner),
             manager_(manager),
             sidebarType_(type),
-            listener_(listener),
-            settings_(manager),
-            about_(manager.getSettings().getTheme())
+            listener_(listener)
         {
-            collapsedButton_.addListener(this);
-            expandedButton_.addListener(this);
-            helpButton_.addListener(this);
-            settingsButton_.addListener(this);
+            
+            collapsedButton_ = std::make_unique<PaintedButton>();
+            expandedButton_ = std::make_unique<PaintedButton>();
+            helpButton_ = std::make_unique<PaintedButton>();
+            settingsButton_ = std::make_unique<PaintedButton>();
+            
+            settings_ = std::make_unique<SettingsComponent>(manager);
+            about_ = std::make_unique<AboutComponent>(manager->getSettings().getTheme());
 
-            owner_->addChildComponent(collapsedButton_);
-            owner_->addChildComponent(expandedButton_);
-            owner_->addAndMakeVisible(helpButton_);
-            owner_->addChildComponent(settingsButton_);
+            collapsedButton_->addListener(this);
+            expandedButton_->addListener(this);
+            helpButton_->addListener(this);
+            settingsButton_->addListener(this);
+
+            owner_->addChildComponent(collapsedButton_.get());
+            owner_->addChildComponent(expandedButton_.get());
+            owner_->addAndMakeVisible(helpButton_.get());
+            owner_->addChildComponent(settingsButton_.get());
                         
             if (sidebarType_ == SidebarType::sidebarExpandable)
             {
-                collapsedButton_.setVisible(true);
+                collapsedButton_->setVisible(true);
                 
                 portList_ = std::make_unique<PortListComponent>(manager_);
                 
@@ -67,106 +74,106 @@ namespace showmidi
             }
             else
             {
-                settingsButton_.setVisible(true);
+                settingsButton_->setVisible(true);
             }
         }
         
         void setup()
         {
-            owner_->getParentComponent()->addChildComponent(about_);
-            owner_->getParentComponent()->addChildComponent(settings_);
+            owner_->getParentComponent()->addChildComponent(about_.get());
+            owner_->getParentComponent()->addChildComponent(settings_.get());
         }
 
         void buttonClicked(Button* button)
         {
-            if (button == &collapsedButton_)
+            if (button == collapsedButton_.get())
             {
                 expanded_ = true;
-                collapsedButton_.setVisible(false);
-                expandedButton_.setVisible(true);
-                settingsButton_.setVisible(true);
+                collapsedButton_->setVisible(false);
+                expandedButton_->setVisible(true);
+                settingsButton_->setVisible(true);
                 if (portViewport_.get())
                 {
                     portViewport_->setVisible(true);
                 }
                 
-                settings_.setVisible(false);
-                about_.setVisible(false);
+                settings_->setVisible(false);
+                about_->setVisible(false);
                 
-                listener_.sidebarChangedWidth();
+                listener_->sidebarChangedWidth();
             }
-            else if (button == &expandedButton_)
+            else if (button == expandedButton_.get())
             {
                 expanded_ = false;
-                collapsedButton_.setVisible(true);
-                expandedButton_.setVisible(false);
-                settingsButton_.setVisible(false);
+                collapsedButton_->setVisible(true);
+                expandedButton_->setVisible(false);
+                settingsButton_->setVisible(false);
                 if (portViewport_.get())
                 {
                     portViewport_->setVisible(false);
                 }
                 
-                settings_.setVisible(false);
-                about_.setVisible(false);
+                settings_->setVisible(false);
+                about_->setVisible(false);
                 
-                listener_.sidebarChangedWidth();
+                listener_->sidebarChangedWidth();
             }
-            else if (button == &helpButton_)
+            else if (button == helpButton_.get())
             {
-                about_.setVisible(!about_.isVisible());
-                settings_.setVisible(false);
+                about_->setVisible(!about_->isVisible());
+                settings_->setVisible(false);
             }
-            else if (button == &settingsButton_)
+            else if (button == settingsButton_.get())
             {
-                settings_.setVisible(!settings_.isVisible());
-                about_.setVisible(false);
+                settings_->setVisible(!settings_->isVisible());
+                about_->setVisible(false);
             }
         }
 
         void paint(Graphics& g)
         {
-            auto& theme = manager_.getSettings().getTheme();
+            auto& theme = manager_->getSettings().getTheme();
             
             g.fillAll(theme.colorSidebar);
 
-            if (collapsedButton_.isVisible())
+            if (collapsedButton_->isVisible())
             {
                 auto collapsed_svg = collapsedSvg_->createCopy();
                 collapsed_svg->replaceColour(Colours::black, theme.colorData);
-                collapsedButton_.drawDrawable(g, *collapsed_svg);
+                collapsedButton_->drawDrawable(g, *collapsed_svg);
             }
 
-            if (expandedButton_.isVisible())
+            if (expandedButton_->isVisible())
             {
                 auto expanded_svg = expandedSvg_->createCopy();
                 expanded_svg->replaceColour(Colours::black, theme.colorData);
-                expandedButton_.drawDrawable(g, *expanded_svg);
+                expandedButton_->drawDrawable(g, *expanded_svg);
             }
 
             auto help_svg = helpSvg_->createCopy();
             help_svg->replaceColour(Colours::black, theme.colorData);
-            helpButton_.drawDrawable(g, *help_svg);
+            helpButton_->drawDrawable(g, *help_svg);
 
-            if (settingsButton_.isVisible())
+            if (settingsButton_->isVisible())
             {
                 auto settings_svg = settingsSvg_->createCopy();
                 settings_svg->replaceColour(Colours::black, theme.colorData);
-                settingsButton_.drawDrawable(g, *settings_svg);
+                settingsButton_->drawDrawable(g, *settings_svg);
             }
         }
         
         void resized()
         {
-            collapsedButton_.setBoundsForTouch(X_COLLAPSED, Y_COLLAPSED,
+            collapsedButton_->setBoundsForTouch(X_COLLAPSED, Y_COLLAPSED,
                                                collapsedSvg_->getWidth(), collapsedSvg_->getHeight());
 
-            expandedButton_.setBoundsForTouch(X_EXPANDED, Y_EXPANDED,
+            expandedButton_->setBoundsForTouch(X_EXPANDED, Y_EXPANDED,
                                               expandedSvg_->getWidth(), expandedSvg_->getHeight());
 
-            helpButton_.setBoundsForTouch(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
+            helpButton_->setBoundsForTouch(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
                                           helpSvg_->getWidth(), helpSvg_->getHeight());
             
-            settingsButton_.setBoundsForTouch(owner_->getWidth() - expandedSvg_->getWidth() - X_SETTINGS, Y_SETTINGS,
+            settingsButton_->setBoundsForTouch(owner_->getWidth() - expandedSvg_->getWidth() - X_SETTINGS, Y_SETTINGS,
                                               settingsSvg_->getWidth(), settingsSvg_->getHeight());
 
             if (portViewport_.get())
@@ -174,8 +181,8 @@ namespace showmidi
                 portViewport_->setBounds(0, Y_PORTLIST, owner_->getWidth(), owner_->getHeight() - Y_PORTLIST - PORTLIST_BOTTOM_MARGIN);
                 portList_->setSize(owner_->getWidth() - portViewport_->getScrollBarThickness(), std::max(portViewport_->getHeight(), portList_->getVisibleHeight()));
             }
-            about_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_.getHeight());
-            settings_.setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
+            about_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_->getHeight());
+            settings_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
         }
         
         int getActiveWidth()
@@ -189,9 +196,9 @@ namespace showmidi
         }
 
         SidebarComponent* const owner_;
-        SettingsManager& manager_;
+        SettingsManager* const manager_;
         const SidebarType sidebarType_;
-        SidebarListener& listener_;
+        SidebarListener* const listener_;
         
         bool expanded_ = false;
         
@@ -200,19 +207,19 @@ namespace showmidi
         std::unique_ptr<Drawable> helpSvg_ = Drawable::createFromImageData(BinaryData::help_svg, BinaryData::help_svgSize);
         std::unique_ptr<Drawable> settingsSvg_ = Drawable::createFromImageData(BinaryData::settings_svg, BinaryData::settings_svgSize);
 
-        PaintedButton collapsedButton_;
-        PaintedButton expandedButton_;
-        PaintedButton helpButton_;
-        PaintedButton settingsButton_;
+        std::unique_ptr<PaintedButton> collapsedButton_;
+        std::unique_ptr<PaintedButton> expandedButton_;
+        std::unique_ptr<PaintedButton> helpButton_;
+        std::unique_ptr<PaintedButton> settingsButton_;
         std::unique_ptr<Viewport> portViewport_;
         std::unique_ptr<PortListComponent> portList_;
-        SettingsComponent settings_;
-        AboutComponent about_;
+        std::unique_ptr<SettingsComponent> settings_;
+        std::unique_ptr<AboutComponent> about_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SidebarComponent::SidebarComponent(SettingsManager& m, SidebarType t, SidebarListener& l) : pimpl_(new Pimpl(this, m, t, l)) {}
+    SidebarComponent::SidebarComponent(SettingsManager* m, SidebarType t, SidebarListener* l) : pimpl_(new Pimpl(this, m, t, l)) {}
     SidebarComponent::~SidebarComponent() = default;
 
     void SidebarComponent::setup() { pimpl_->setup(); }
