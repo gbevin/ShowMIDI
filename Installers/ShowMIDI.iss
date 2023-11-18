@@ -1,5 +1,6 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
-
+#define VERSION "0.7.0"
+#define PWD "C:\Users\gbevin\source\repos\showmidi"
 #define MyAppName "ShowMIDI"
 #define MyAppPublisher "Uwyn"
 #define MyAppURL "https://www.uwyn.com"
@@ -47,12 +48,77 @@ Name: "VST3"; Description: "VST3"; Types: custom;
 Name: "CLAP"; Description: "CLAP"; Types: custom;
 Name: "LV2"; Description: "LV2"; Types: custom;
 
+
+[Code]
+var CPage: TInputDirWizardPage;
+
+procedure InitializeWizard;
+begin
+  CPage := CreateInputDirPage(wpSelectComponents,
+    'Confirm Plugin Directories', 'Where should the plugins be installed?',
+    'To continue, click Next. ' +
+      'If you would like to select a different folder, click Browse.',
+    False, 'New Folder');
+
+  CPage.Add('VST');
+  CPage.Add('VST3');
+  CPage.Add('CLAP');
+  CPage.Add('LV2');
+
+  CPage.Values[0] := ExpandConstant('{reg:HKLM\SOFTWARE\VST,VSTPluginsPath|{#VSTFolder}}');
+  CPage.Values[1] := ExpandConstant('{#VST3Folder}');
+  CPage.Values[2] := ExpandConstant('{#CLAPFolder}');
+  CPage.Values[3] := ExpandConstant('{#LV2Folder}');
+end;
+
+procedure CurPageChanged(PageID: Integer);
+begin
+  if PageID = CPage.ID then
+  begin
+    CPage.PromptLabels[0].Enabled := WizardIsComponentSelected('VST');
+    CPage.Edits[0].Enabled := CPage.PromptLabels[0].Enabled;
+    CPage.Buttons[0].Enabled := CPage.PromptLabels[0].Enabled;
+
+    CPage.PromptLabels[1].Enabled := WizardIsComponentSelected('VST3');
+    CPage.Edits[1].Enabled := CPage.PromptLabels[1].Enabled;
+    CPage.Buttons[1].Enabled := CPage.PromptLabels[1].Enabled;
+
+    CPage.PromptLabels[2].Enabled := WizardIsComponentSelected('CLAP');
+    CPage.Edits[2].Enabled := CPage.PromptLabels[2].Enabled;
+    CPage.Buttons[2].Enabled := CPage.PromptLabels[2].Enabled;
+
+    CPage.PromptLabels[3].Enabled := WizardIsComponentSelected('LV2');
+    CPage.Edits[3].Enabled := CPage.PromptLabels[3].Enabled;
+    CPage.Buttons[3].Enabled := CPage.PromptLabels[3].Enabled;
+  end;
+end;
+
+function GetVstDir(Param: String): String;
+begin
+  Result := CPage.Values[0];
+end;
+
+function GetVst3Dir(Param: String): String;
+begin
+  Result := CPage.Values[1];
+end;
+
+function GetClapDir(Param: String): String;
+begin
+  Result := CPage.Values[2];
+end;
+
+function GetLv2Dir(Param: String): String;
+begin
+  Result := CPage.Values[3];
+end;
+
 [Files]
 Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\Standalone Plugin\ShowMIDI.exe"; DestDir: "{app}"; Components: "Standalone"; Flags: ignoreversion
-Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST\ShowMIDI.dll"; DestDir: "{#VSTFolder}"; Components: "VST"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST3\ShowMIDI.vst3\*"; DestDir: "{#VST3Folder}\ShowMIDI.vst3"; Components: "VST3"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#PWD}\Builds\VisualStudio2022\x64\clap\ShowMIDI_artefacts\Release\ShowMIDI.clap"; DestDir: "{#CLAPFolder}"; Components: "CLAP"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\LV2 Plugin\ShowMIDI.lv2\*"; DestDir: "{#LV2Folder}\ShowMIDI.lv2"; Components: "LV2"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST\ShowMIDI.dll"; DestDir: "{code:GetVstDir}"; Components: "VST"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\VST3\ShowMIDI.vst3\*"; DestDir: "{code:GetVst3Dir}\ShowMIDI.vst3"; Components: "VST3"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PWD}\Builds\VisualStudio2022\x64\clap\ShowMIDI_artefacts\Release\ShowMIDI.clap"; DestDir: "{code:GetClapDir}"; Components: "CLAP"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "{#PWD}\Builds\VisualStudio2022\x64\Release\LV2 Plugin\ShowMIDI.lv2\*"; DestDir: "{code:GetLv2Dir}\ShowMIDI.lv2"; Components: "LV2"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\ShowMIDI"; Filename: "{app}\ShowMIDI.exe"; WorkingDir: "{app}"
