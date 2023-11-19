@@ -3,6 +3,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist>
   <dict>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
     <key>LSRequiresIPhoneOS</key>
     <true/>
     <key>UIViewControllerBasedStatusBarAppearance</key>
@@ -29,10 +31,8 @@
     <string></string>
     <key>NSHighResolutionCapable</key>
     <true/>
-    <key>UIStatusBarHidden</key>
-    <true/>
     <key>UIRequiresFullScreen</key>
-    <true/>
+    <false/>
     <key>UISupportedInterfaceOrientations</key>
     <array>
       <string>UIInterfaceOrientationLandscapeLeft</string>

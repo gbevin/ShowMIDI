@@ -51,10 +51,10 @@ namespace showmidi
         {
             if (mainWindow_ != nullptr)
             {
-                width += mainWindow_->getSidebarWidth();
 #if JUCE_IOS
-                mainWindow_->setBounds(0, 0, width, Desktop::getInstance().getDisplays().getPrimaryDisplay()->totalArea.getHeight());
+                mainWindow_->updatePosition();
 #else
+                width += mainWindow_->getSidebarWidth();
                 mainWindow_->setSize(width, mainWindow_->getHeight());
 #endif
             }

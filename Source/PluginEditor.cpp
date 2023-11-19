@@ -113,7 +113,15 @@ namespace showmidi
         
         void renderDevices()
         {
-            auto height = owner_->getParentHeight();
+            int height;
+            if (owner_->getParentComponent())
+            {
+                height = owner_->getParentHeight();
+            }
+            else
+            {
+                height = owner_->getHeight();
+            }
             midiDevice_->render();
             height = std::max(height, midiDevice_->getVisibleHeight());
             midiDevice_->setSize(MidiDeviceComponent::getStandardWidth(), height);

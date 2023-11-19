@@ -64,13 +64,39 @@ namespace showmidi
         DocumentWindow(name, SMApp.getSettings().getTheme().colorBackground, DocumentWindow::allButtons),
         pimpl_(new Pimpl(this))
     {
+        updatePosition();
         setVisible(true);
     }
     
     StandaloneWindow::~StandaloneWindow() = default;
     
+    void StandaloneWindow::updatePosition()
+    {
+#if JUCE_IOS
+        auto display = Desktop::getInstance().getDisplays().getPrimaryDisplay();
+        auto& user_area = display->userArea;
+        auto& safe_insets = display->safeAreaInsets;
+        setBounds(user_area.getX() + safe_insets.getLeft(), user_area.getY() + safe_insets.getTop(),
+                  user_area.getWidth() - safe_insets.getLeftAndRight(), user_area.getHeight() - safe_insets.getTopAndBottom());
+        if (pimpl_.get() && isVisible())
+        {
+            pimpl_->layout_->setBounds(0, 0, getWidth(), getHeight());
+            pimpl_->layout_->resized();
+        }
+#endif
+    }
+
+    void StandaloneWindow::moved()
+    {
+        DocumentWindow::moved();
+        
+        updatePosition();
+    };
+    
     void StandaloneWindow::resized()
     {
+        DocumentWindow::resized();
+        
         if (pimpl_.get() && isVisible())
         {
             pimpl_->layout_->setBounds(0, 0, getWidth(), getHeight());

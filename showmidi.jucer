@@ -9,9 +9,10 @@
               pluginName="ShowMIDI" pluginManufacturer="Uwyn" pluginManufacturerCode="Uwyn"
               pluginCode="shmi" pluginAUIsSandboxSafe="1" pluginVSTNumMidiInputs="1"
               pluginVSTNumMidiOutputs="1" pluginDesc="Visualize MIDI activity"
-              defines="JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1">
+              defines="JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" postExportShellCommandPosix="%%1%%/Scripts/auv3_aum_size.sh %%1%%">
   <MAINGROUP id="BsIwV1" name="ShowMIDI">
     <GROUP id="{8CB228DE-9289-566C-FA68-A725D7D623F1}" name="Assets">
+      <FILE id="rP673S" name="appicon-ios.png" compile="0" resource="1" file="Assets/appicon-ios.png"/>
       <FILE id="eY2NXn" name="appicon.png" compile="0" resource="1" file="Assets/appicon.png"/>
       <FILE id="FUuUaF" name="collapsed.svg" compile="0" resource="1" file="Assets/collapsed.svg"/>
       <FILE id="ubQN3v" name="expanded.svg" compile="0" resource="1" file="Assets/expanded.svg"/>
@@ -197,9 +198,10 @@
       </MODULEPATHS>
     </VS2022>
     <XCODE_IPHONE targetFolder="Builds/iOS" extraDefs="JUCE_SILENCE_XCODE_15_LINKER_WARNING=1"
-                  smallIcon="eY2NXn" bigIcon="eY2NXn" buildNumber="9" iPadScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
+                  smallIcon="rP673S" bigIcon="rP673S" buildNumber="9" iPadScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
                   iosScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
-                  UIStatusBarHidden="1" iosDevelopmentTeamID="AGZT8GVS7G">
+                  UIStatusBarHidden="0" iosDevelopmentTeamID="AGZT8GVS7G" UIRequiresFullScreen="0"
+                  iosContentSharing="0" customPList="&lt;plist&gt;&#10;  &lt;dict&gt;&#10;      &#9;&lt;key&gt;ITSAppUsesNonExemptEncryption&lt;/key&gt;&#10;      &#9;&lt;false/&gt;&#10;  &#9;&lt;/dict&gt;&#10;&lt;/plist&gt;">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="ShowMIDI" enablePluginBinaryCopyStep="0"
                        fastMath="1"/>

@@ -145,6 +145,7 @@
 		60D631FC0F78AC6C198E73A8 /* Main.cpp */ /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../Source/Main.cpp; sourceTree = SOURCE_ROOT; };
 		643B5F105EE95C3831C1513D /* AppConfig.h */ /* AppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = SOURCE_ROOT; };
 		656E427836DF54D372F75761 /* SettingsManager.h */ /* SettingsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SettingsManager.h; path = ../../Source/SettingsManager.h; sourceTree = SOURCE_ROOT; };
+		6942622DD840B2BD0E5810BC /* appicon-ios.png */ /* appicon-ios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appicon-ios.png"; path = "../../Assets/appicon-ios.png"; sourceTree = SOURCE_ROOT; };
 		6B3C4CF0B1689E7148204025 /* Foundation.framework */ /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6D77D2AB326BCCADE9CE1367 /* PopupColourSelector.h */ /* PopupColourSelector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PopupColourSelector.h; path = ../../Source/PopupColourSelector.h; sourceTree = SOURCE_ROOT; };
 		6D931ECF33778E1C1138B74D /* Info-Standalone_Plugin.plist */ /* Info-Standalone_Plugin.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-Standalone_Plugin.plist"; path = "Info-Standalone_Plugin.plist"; sourceTree = SOURCE_ROOT; };
@@ -427,6 +428,7 @@
 		EB21C47AF1DF9D221BA31E3F /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				6942622DD840B2BD0E5810BC,
 				3149C8B2F0D4F13D1598BD0B,
 				8B4BBB72CD42AFE31F80F07A,
 				B115D12C99CF013E5E832275,
@@ -768,7 +770,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_NDEBUG=1",
 					"NDEBUG=1",
-					"JUCE_CONTENT_SHARING=1",
 					"JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1",
 					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_IPHONE_5BC26AE3=1",
@@ -871,7 +872,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_NDEBUG=1",
 					"NDEBUG=1",
-					"JUCE_CONTENT_SHARING=1",
 					"JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1",
 					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_IPHONE_5BC26AE3=1",
@@ -973,7 +973,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_DEBUG=1",
 					"DEBUG=1",
-					"JUCE_CONTENT_SHARING=1",
 					"JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1",
 					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_IPHONE_5BC26AE3=1",
@@ -1024,7 +1023,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_DEBUG=1",
 					"DEBUG=1",
-					"JUCE_CONTENT_SHARING=1",
 					"JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1",
 					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_IPHONE_5BC26AE3=1",
@@ -1072,7 +1070,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_NDEBUG=1",
 					"NDEBUG=1",
-					"JUCE_CONTENT_SHARING=1",
 					"JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1",
 					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_IPHONE_5BC26AE3=1",
@@ -1122,7 +1119,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_DEBUG=1",
 					"DEBUG=1",
-					"JUCE_CONTENT_SHARING=1",
 					"JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1",
 					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_IPHONE_5BC26AE3=1",
@@ -1174,7 +1170,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_DEBUG=1",
 					"DEBUG=1",
-					"JUCE_CONTENT_SHARING=1",
 					"JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1",
 					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_IPHONE_5BC26AE3=1",
@@ -1224,7 +1219,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_NDEBUG=1",
 					"NDEBUG=1",
-					"JUCE_CONTENT_SHARING=1",
 					"JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1",
 					"JUCE_SILENCE_XCODE_15_LINKER_WARNING=1",
 					"JUCER_XCODE_IPHONE_5BC26AE3=1",

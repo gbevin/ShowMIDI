@@ -3399,6 +3399,7 @@
     <ClInclude Include="..\..\JuceLibraryCode\JucePluginDefines.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Assets\appicon-ios.png"/>
     <None Include="..\..\Assets\appicon.png"/>
     <None Include="..\..\Assets\collapsed.svg"/>
     <None Include="..\..\Assets\expanded.svg"/>

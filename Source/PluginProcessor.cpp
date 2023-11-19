@@ -21,7 +21,7 @@
 
 namespace showmidi
 {
-    ShowMIDIPluginAudioProcessor::ShowMIDIPluginAudioProcessor()
+    ShowMIDIPluginAudioProcessor::ShowMIDIPluginAudioProcessor() : AudioProcessor(BusesProperties())
     {
     }
     

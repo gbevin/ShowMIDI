@@ -178,8 +178,8 @@ namespace showmidi
 
             if (portViewport_.get())
             {
-                portViewport_->setBounds(0, Y_PORTLIST, owner_->getWidth(), owner_->getHeight() - Y_PORTLIST - PORTLIST_BOTTOM_MARGIN);
-                portList_->setSize(owner_->getWidth() - portViewport_->getScrollBarThickness(), std::max(portViewport_->getHeight(), portList_->getVisibleHeight()));
+                portViewport_->setBounds(0, Y_PORTLIST, EXPANDED_WIDTH, owner_->getHeight() - Y_PORTLIST - PORTLIST_BOTTOM_MARGIN);
+                portList_->setSize(EXPANDED_WIDTH - portViewport_->getScrollBarThickness(), std::max(portViewport_->getHeight(), portList_->getVisibleHeight()));
             }
             about_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_->getHeight());
             settings_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);

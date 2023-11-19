@@ -61,7 +61,11 @@ namespace showmidi
             int height;
             if (manager_->isPlugin())
             {
+#if JUCE_IOS
+                height = theme.linePosition(14.5);
+#else
                 height = theme.linePosition(21.5);
+#endif
             }
             else
             {
@@ -220,18 +224,21 @@ namespace showmidi
                 owner_->addAndMakeVisible(windowRegularButton_.get());
                 owner_->addAndMakeVisible(windowAlwaysOnTopButton_.get());
             }
-            owner_->addAndMakeVisible(loadThemeButton_.get());
-            owner_->addAndMakeVisible(saveThemeButton_.get());
-            owner_->addAndMakeVisible(randomThemeButton_.get());
-            owner_->addAndMakeVisible(colorBackgroundButton_.get());
-            owner_->addAndMakeVisible(colorSidebarButton_.get());
-            owner_->addAndMakeVisible(colorSeperatorButton_.get());
-            owner_->addAndMakeVisible(colorTrackButton_.get());
-            owner_->addAndMakeVisible(colorLabelButton_.get());
-            owner_->addAndMakeVisible(colorDataButton_.get());
-            owner_->addAndMakeVisible(colorPositiveButton_.get());
-            owner_->addAndMakeVisible(colorNegativeButton_.get());
-            owner_->addAndMakeVisible(colorControllerButton_.get());
+            if (SystemStats::getOperatingSystemType() != SystemStats::iOS || !manager_->isPlugin())
+            {
+                owner_->addAndMakeVisible(loadThemeButton_.get());
+                owner_->addAndMakeVisible(saveThemeButton_.get());
+                owner_->addAndMakeVisible(randomThemeButton_.get());
+                owner_->addAndMakeVisible(colorBackgroundButton_.get());
+                owner_->addAndMakeVisible(colorSidebarButton_.get());
+                owner_->addAndMakeVisible(colorSeperatorButton_.get());
+                owner_->addAndMakeVisible(colorTrackButton_.get());
+                owner_->addAndMakeVisible(colorLabelButton_.get());
+                owner_->addAndMakeVisible(colorDataButton_.get());
+                owner_->addAndMakeVisible(colorPositiveButton_.get());
+                owner_->addAndMakeVisible(colorNegativeButton_.get());
+                owner_->addAndMakeVisible(colorControllerButton_.get());
+            }
             owner_->addAndMakeVisible(closeButton_.get());
             
             loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
@@ -360,75 +367,78 @@ namespace showmidi
                 windowAlwaysOnTopButton_->drawName(g, Justification::centredLeft);
             }
 
-            // active theme
-            
-            y_offset += theme.linePosition(3);
-            
-            g.setColour(theme.colorData);
-            g.setFont(theme.fontLabel());
-            g.drawText("Active Theme",
-                       23, y_offset,
-                       getWidth(), theme.labelHeight(),
-                       Justification::centredLeft, true);
-            
-            g.setColour(theme.colorData.withAlpha(0.7f));
-            g.setFont(theme.fontData());
-            loadThemeButton_->drawName(g, Justification::centredLeft);
-            
-            g.setColour(theme.colorData.withAlpha(0.7f));
-            g.setFont(theme.fontData());
-            saveThemeButton_->drawName(g, Justification::centredLeft);
-            
-            g.setColour(theme.colorData.withAlpha(0.7f));
-            g.setFont(theme.fontData());
-            randomThemeButton_->drawName(g, Justification::centredLeft);
-            
-            // theme colours
-            
-            g.setColour(theme.colorBackground);
-            g.fillEllipse(colorBackgroundButton_->getBoundsForDrawing());
-            g.setColour(theme.colorBackground.contrasting());
-            g.drawEllipse(colorBackgroundButton_->getBoundsForDrawing(), 1);
-            
-            g.setColour(theme.colorSidebar);
-            g.fillEllipse(colorSidebarButton_->getBoundsForDrawing());
-            g.setColour(theme.colorSidebar.contrasting());
-            g.drawEllipse(colorSidebarButton_->getBoundsForDrawing(), 1);
-            
-            g.setColour(theme.colorSeperator);
-            g.fillEllipse(colorSeperatorButton_->getBoundsForDrawing());
-            g.setColour(theme.colorSeperator.contrasting());
-            g.drawEllipse(colorSeperatorButton_->getBoundsForDrawing(), 1);
-            
-            g.setColour(theme.colorTrack);
-            g.fillEllipse(colorTrackButton_->getBoundsForDrawing());
-            g.setColour(theme.colorTrack.contrasting());
-            g.drawEllipse(colorTrackButton_->getBoundsForDrawing(), 1);
-            
-            g.setColour(theme.colorLabel);
-            g.fillEllipse(colorLabelButton_->getBoundsForDrawing());
-            g.setColour(theme.colorLabel.contrasting());
-            g.drawEllipse(colorLabelButton_->getBoundsForDrawing(), 1);
-            
-            g.setColour(theme.colorData);
-            g.fillEllipse(colorDataButton_->getBoundsForDrawing());
-            g.setColour(theme.colorData.contrasting());
-            g.drawEllipse(colorDataButton_->getBoundsForDrawing(), 1);
-            
-            g.setColour(theme.colorPositive);
-            g.fillEllipse(colorPositiveButton_->getBoundsForDrawing());
-            g.setColour(theme.colorPositive.contrasting());
-            g.drawEllipse(colorPositiveButton_->getBoundsForDrawing(), 1);
-            
-            g.setColour(theme.colorNegative);
-            g.fillEllipse(colorNegativeButton_->getBoundsForDrawing());
-            g.setColour(theme.colorNegative.contrasting());
-            g.drawEllipse(colorNegativeButton_->getBoundsForDrawing(), 1);
-            
-            g.setColour(theme.colorController);
-            g.fillEllipse(colorControllerButton_->getBoundsForDrawing());
-            g.setColour(theme.colorController.contrasting());
-            g.drawEllipse(colorControllerButton_->getBoundsForDrawing(), 1);
+            if (SystemStats::getOperatingSystemType() != SystemStats::iOS || !manager_->isPlugin())
+            {
+                // active theme
+                
+                y_offset += theme.linePosition(3);
+                
+                g.setColour(theme.colorData);
+                g.setFont(theme.fontLabel());
+                g.drawText("Active Theme",
+                           23, y_offset,
+                           getWidth(), theme.labelHeight(),
+                           Justification::centredLeft, true);
+                
+                g.setColour(theme.colorData.withAlpha(0.7f));
+                g.setFont(theme.fontData());
+                loadThemeButton_->drawName(g, Justification::centredLeft);
+                
+                g.setColour(theme.colorData.withAlpha(0.7f));
+                g.setFont(theme.fontData());
+                saveThemeButton_->drawName(g, Justification::centredLeft);
+                
+                g.setColour(theme.colorData.withAlpha(0.7f));
+                g.setFont(theme.fontData());
+                randomThemeButton_->drawName(g, Justification::centredLeft);
+                
+                // theme colours
+                
+                g.setColour(theme.colorBackground);
+                g.fillEllipse(colorBackgroundButton_->getBoundsForDrawing());
+                g.setColour(theme.colorBackground.contrasting());
+                g.drawEllipse(colorBackgroundButton_->getBoundsForDrawing(), 1);
+                
+                g.setColour(theme.colorSidebar);
+                g.fillEllipse(colorSidebarButton_->getBoundsForDrawing());
+                g.setColour(theme.colorSidebar.contrasting());
+                g.drawEllipse(colorSidebarButton_->getBoundsForDrawing(), 1);
+                
+                g.setColour(theme.colorSeperator);
+                g.fillEllipse(colorSeperatorButton_->getBoundsForDrawing());
+                g.setColour(theme.colorSeperator.contrasting());
+                g.drawEllipse(colorSeperatorButton_->getBoundsForDrawing(), 1);
+                
+                g.setColour(theme.colorTrack);
+                g.fillEllipse(colorTrackButton_->getBoundsForDrawing());
+                g.setColour(theme.colorTrack.contrasting());
+                g.drawEllipse(colorTrackButton_->getBoundsForDrawing(), 1);
+                
+                g.setColour(theme.colorLabel);
+                g.fillEllipse(colorLabelButton_->getBoundsForDrawing());
+                g.setColour(theme.colorLabel.contrasting());
+                g.drawEllipse(colorLabelButton_->getBoundsForDrawing(), 1);
+                
+                g.setColour(theme.colorData);
+                g.fillEllipse(colorDataButton_->getBoundsForDrawing());
+                g.setColour(theme.colorData.contrasting());
+                g.drawEllipse(colorDataButton_->getBoundsForDrawing(), 1);
+                
+                g.setColour(theme.colorPositive);
+                g.fillEllipse(colorPositiveButton_->getBoundsForDrawing());
+                g.setColour(theme.colorPositive.contrasting());
+                g.drawEllipse(colorPositiveButton_->getBoundsForDrawing(), 1);
+                
+                g.setColour(theme.colorNegative);
+                g.fillEllipse(colorNegativeButton_->getBoundsForDrawing());
+                g.setColour(theme.colorNegative.contrasting());
+                g.drawEllipse(colorNegativeButton_->getBoundsForDrawing(), 1);
+                
+                g.setColour(theme.colorController);
+                g.fillEllipse(colorControllerButton_->getBoundsForDrawing());
+                g.setColour(theme.colorController.contrasting());
+                g.drawEllipse(colorControllerButton_->getBoundsForDrawing(), 1);
+            }
             
             // close button
             
