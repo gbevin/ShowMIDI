@@ -124,6 +124,7 @@ namespace showmidi
             owner_->addAndMakeVisible(closeButton_.get());
 
             loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg", true, false, manager_->getTopLevelComponent());
+            
             MessageManager::callAsync([this] {
                 updateDimensions();
                 resized();
