@@ -19,16 +19,43 @@
 
 #include <JuceHeader.h>
 
+#include "DetectDevice.h"
+
 namespace showmidi
 {
+    static constexpr int EXPANDED_WIDTH = 200;
+    static constexpr int EXPANDED_WIDTH_NARROW = 122;
+    
     Theme Theme::getDefault()
     {
         return Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT;
     }
 
+    int Theme::lineHeight()
+    {
+#if JUCE_IOS
+        auto orientation = Desktop::getInstance().getCurrentOrientation();
+        if (isiPhone() && (orientation == Desktop::rotatedClockwise || orientation == Desktop::rotatedAntiClockwise))
+        {
+            return 16;
+        }
+#endif
+        return 22;
+    }
+    
+    int Theme::getSidebarExpandedWidth()
+    {
+        auto orientation = Desktop::getInstance().getCurrentOrientation();
+        if (isiPhone() && (orientation == Desktop::upright || orientation == Desktop::upsideDown))
+        {
+            return EXPANDED_WIDTH_NARROW;
+        }
+        return EXPANDED_WIDTH;
+    }
+
     int Theme::linePosition(float number)
     {
-        return (int)(DIALOG_LINE_HEIGHT * number);
+        return (int)(lineHeight() * number);
     }
 
     Font Theme::fontLabel()

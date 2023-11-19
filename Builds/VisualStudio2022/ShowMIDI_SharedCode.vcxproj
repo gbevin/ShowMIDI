@@ -2425,6 +2425,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\AboutComponent.h"/>
     <ClInclude Include="..\..\Source\ChannelState.h"/>
+    <ClInclude Include="..\..\Source\DetectDevice.h"/>
     <ClInclude Include="..\..\Source\MainLayoutComponent.h"/>
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h"/>
     <ClInclude Include="..\..\Source\MidiDeviceInfoComparator.h"/>

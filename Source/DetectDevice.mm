@@ -15,27 +15,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
+#include "DetectDevice.h"
 
-#include "JuceHeader.h"
+#define JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED = 1
+#include "juce_core/system/juce_TargetPlatform.h"
 
-#include "SettingsManager.h"
+#if JUCE_IOS
+#import <UIKit/UIKit.h>
+#endif
 
 namespace showmidi
 {
-    class SettingsComponent : public Component
+    bool isiPhone()
     {
-    public:
-        SettingsComponent(SettingsManager*);
-        ~SettingsComponent();
-        
-        void paint(Graphics&) override;
-        void resized() override;
-        
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SettingsComponent)
-    };
+#if JUCE_IOS
+        return [UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPhone;
+#endif
+        return false;
+    }
 }

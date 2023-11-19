@@ -29,8 +29,6 @@ namespace showmidi
     {
         Pimpl(SettingsComponent* owner, SettingsManager* manager) : owner_(owner), manager_(manager)
         {
-            auto& theme = manager_->getSettings().getTheme();
-            
             middleCOct2Button_ = std::make_unique<PaintedButton>("oct 2");
             middleCOct3Button_ = std::make_unique<PaintedButton>("oct 3");
             middleCOct4Button_ = std::make_unique<PaintedButton>("oct 4");
@@ -57,19 +55,7 @@ namespace showmidi
             colorNegativeButton_ = std::make_unique<PaintedButton>();
             colorControllerButton_ = std::make_unique<PaintedButton>();
             closeButton_ = std::make_unique<PaintedButton>("close");
-
-            
-            int height;
-            if (manager_->isPlugin() || SystemStats::getOperatingSystemType() == SystemStats::iOS)
-            {
-                height = theme.linePosition(21.5);
-            }
-            else
-            {
-                height = theme.linePosition(24.5);
-            }
-            owner_->setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, height);
-            
+                        
             middleCOct2Button_->addListener(this);
             middleCOct3Button_->addListener(this);
             middleCOct4Button_->addListener(this);
@@ -106,6 +92,77 @@ namespace showmidi
             colorValuePositive_.addListener(this);
             colorValueNegative_.addListener(this);
             colorValueController_.addListener(this);
+            
+            resized();
+            
+            owner_->addAndMakeVisible(middleCOct2Button_.get());
+            owner_->addAndMakeVisible(middleCOct3Button_.get());
+            owner_->addAndMakeVisible(middleCOct4Button_.get());
+            owner_->addAndMakeVisible(notesNameButton_.get());
+            owner_->addAndMakeVisible(notesNumberButton_.get());
+            owner_->addAndMakeVisible(numbersDecButton_.get());
+            owner_->addAndMakeVisible(numbersHexButton_.get());
+            owner_->addAndMakeVisible(timeout2SecButton_.get());
+            owner_->addAndMakeVisible(timeout5SecButton_.get());
+            owner_->addAndMakeVisible(timeout10SecButton_.get());
+            if (!manager_->isPlugin() && SystemStats::getOperatingSystemType() != SystemStats::iOS)
+            {
+                owner_->addAndMakeVisible(windowRegularButton_.get());
+                owner_->addAndMakeVisible(windowAlwaysOnTopButton_.get());
+            }
+            owner_->addAndMakeVisible(loadThemeButton_.get());
+            owner_->addAndMakeVisible(saveThemeButton_.get());
+            owner_->addAndMakeVisible(randomThemeButton_.get());
+            owner_->addAndMakeVisible(resetThemeButton_.get());
+            owner_->addAndMakeVisible(colorBackgroundButton_.get());
+            owner_->addAndMakeVisible(colorSidebarButton_.get());
+            owner_->addAndMakeVisible(colorSeperatorButton_.get());
+            owner_->addAndMakeVisible(colorTrackButton_.get());
+            owner_->addAndMakeVisible(colorLabelButton_.get());
+            owner_->addAndMakeVisible(colorDataButton_.get());
+            owner_->addAndMakeVisible(colorPositiveButton_.get());
+            owner_->addAndMakeVisible(colorNegativeButton_.get());
+            owner_->addAndMakeVisible(colorControllerButton_.get());
+            owner_->addAndMakeVisible(closeButton_.get());
+
+            loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg", true, false, manager_->getTopLevelComponent());
+        }
+
+        int getWidth()
+        {
+            return owner_->getWidth();
+        }
+        
+        int getHeight()
+        {
+            return owner_->getHeight();
+        }
+        
+        void repaint()
+        {
+            owner_->repaint();
+        }
+        
+        void setSettingOptionFont(Graphics& g, std::function<bool()> condition)
+        {
+            g.setFont(manager_->getSettings().getTheme().fontData().withStyle(condition() ? Font::underlined : Font::plain));
+        }
+        
+        void resized()
+        {
+            auto& settings = manager_->getSettings();
+            auto& theme = settings.getTheme();
+
+            int height;
+            if (manager_->isPlugin() || SystemStats::getOperatingSystemType() == SystemStats::iOS)
+            {
+                height = theme.linePosition(21.5);
+            }
+            else
+            {
+                height = theme.linePosition(24.5);
+            }
+            owner_->setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, height);
 
             auto left_margin = 23;
             auto button_spacing = 70;
@@ -179,11 +236,11 @@ namespace showmidi
             y_offset += theme.linePosition(2);
 
             int color_x = 23;
-            int color_x_offset = (int)(Theme::DIALOG_LINE_HEIGHT * 1.5);
+            int color_x_offset = (int)(theme.lineHeight() * 1.5);
             int color_y = y_offset;
-            int color_y_offset = (int)(Theme::DIALOG_LINE_HEIGHT * 1.5);
-            int color_w = Theme::DIALOG_LINE_HEIGHT;
-            int color_h = Theme::DIALOG_LINE_HEIGHT;
+            int color_y_offset = (int)(theme.lineHeight() * 1.5);
+            int color_w = theme.lineHeight();
+            int color_h = theme.lineHeight();
             
             colorBackgroundButton_->setBoundsForTouch(color_x, color_y, color_w, color_h);
             color_x += color_x_offset;
@@ -208,60 +265,8 @@ namespace showmidi
             
             closeButton_->setBoundsForTouch(90, getHeight() - theme.linePosition(1) - theme.labelHeight(),
                                            getWidth() - 180, theme.labelHeight());
-            
-            owner_->addAndMakeVisible(middleCOct2Button_.get());
-            owner_->addAndMakeVisible(middleCOct3Button_.get());
-            owner_->addAndMakeVisible(middleCOct4Button_.get());
-            owner_->addAndMakeVisible(notesNameButton_.get());
-            owner_->addAndMakeVisible(notesNumberButton_.get());
-            owner_->addAndMakeVisible(numbersDecButton_.get());
-            owner_->addAndMakeVisible(numbersHexButton_.get());
-            owner_->addAndMakeVisible(timeout2SecButton_.get());
-            owner_->addAndMakeVisible(timeout5SecButton_.get());
-            owner_->addAndMakeVisible(timeout10SecButton_.get());
-            if (!manager_->isPlugin() && SystemStats::getOperatingSystemType() != SystemStats::iOS)
-            {
-                owner_->addAndMakeVisible(windowRegularButton_.get());
-                owner_->addAndMakeVisible(windowAlwaysOnTopButton_.get());
-            }
-            owner_->addAndMakeVisible(loadThemeButton_.get());
-            owner_->addAndMakeVisible(saveThemeButton_.get());
-            owner_->addAndMakeVisible(randomThemeButton_.get());
-            owner_->addAndMakeVisible(resetThemeButton_.get());
-            owner_->addAndMakeVisible(colorBackgroundButton_.get());
-            owner_->addAndMakeVisible(colorSidebarButton_.get());
-            owner_->addAndMakeVisible(colorSeperatorButton_.get());
-            owner_->addAndMakeVisible(colorTrackButton_.get());
-            owner_->addAndMakeVisible(colorLabelButton_.get());
-            owner_->addAndMakeVisible(colorDataButton_.get());
-            owner_->addAndMakeVisible(colorPositiveButton_.get());
-            owner_->addAndMakeVisible(colorNegativeButton_.get());
-            owner_->addAndMakeVisible(colorControllerButton_.get());
-            owner_->addAndMakeVisible(closeButton_.get());
 
-            loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg", true, false, manager_->getTopLevelComponent());
         }
-
-        int getWidth()
-        {
-            return owner_->getWidth();
-        }
-        
-        int getHeight()
-        {
-            return owner_->getHeight();
-        }
-        
-        void repaint()
-        {
-            owner_->repaint();
-        }
-        
-        void setSettingOptionFont(Graphics& g, std::function<bool()> condition)
-        {
-            g.setFont(manager_->getSettings().getTheme().fontData().withStyle(condition() ? Font::underlined : Font::plain));
-        }
-        
         void paint(Graphics& g)
         {
             auto& settings = manager_->getSettings();
@@ -705,4 +710,11 @@ namespace showmidi
     SettingsComponent::~SettingsComponent() = default;
     
     void SettingsComponent::paint(Graphics& g) { pimpl_->paint(g); }
+    void SettingsComponent::resized()
+    {
+        if (pimpl_.get())
+        {
+            pimpl_->resized();
+        }
+    }
 }

@@ -31,7 +31,6 @@ namespace showmidi
     struct SidebarComponent::Pimpl : public Button::Listener, public PauseListener
     {
         static constexpr int COLLAPSED_WIDTH = 36;
-        static constexpr int EXPANDED_WIDTH = 200;
         static constexpr int Y_PORTLIST = 48;
         static constexpr int PORTLIST_BOTTOM_MARGIN = 36;
 
@@ -234,18 +233,23 @@ namespace showmidi
 
             if (portViewport_.get())
             {
-                portViewport_->setBounds(0, Y_PORTLIST, EXPANDED_WIDTH, owner_->getHeight() - Y_PORTLIST - PORTLIST_BOTTOM_MARGIN);
-                portList_->setSize(EXPANDED_WIDTH - portViewport_->getScrollBarThickness(), std::max(portViewport_->getHeight(), portList_->getVisibleHeight()));
+                portViewport_->setBounds(0, Y_PORTLIST, getActiveWidth(), owner_->getHeight() - Y_PORTLIST - PORTLIST_BOTTOM_MARGIN);
+                portList_->setSize(getActiveWidth() - portViewport_->getScrollBarThickness(), std::max(portViewport_->getHeight(), portList_->getVisibleHeight()));
             }
+            
             about_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_->getHeight());
+            settings_->resized();
+
             settings_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
+            settings_->resized();
         }
         
         int getActiveWidth()
         {
             if (expanded_)
             {
-                return EXPANDED_WIDTH;
+                auto& theme = settingsManager_->getSettings().getTheme();
+                return theme.getSidebarExpandedWidth();
             }
             
             return COLLAPSED_WIDTH;

@@ -23,13 +23,14 @@ namespace showmidi
 {
     struct Theme
     {
-        static constexpr int DIALOG_LINE_HEIGHT = 22;
         static constexpr int MIDI_DEVICE_SPACING = 2;
         static constexpr int SCROLLBAR_THICKNESS = 8;
         
         static Theme getDefault();
         
+        int lineHeight();
         int linePosition(float);
+        int getSidebarExpandedWidth();
         
         Font fontLabel();
         int labelHeight();

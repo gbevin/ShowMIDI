@@ -17,25 +17,7 @@
  */
 #pragma once
 
-#include "JuceHeader.h"
-
-#include "SettingsManager.h"
-
 namespace showmidi
 {
-    class SettingsComponent : public Component
-    {
-    public:
-        SettingsComponent(SettingsManager*);
-        ~SettingsComponent();
-        
-        void paint(Graphics&) override;
-        void resized() override;
-        
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SettingsComponent)
-    };
+    bool isiPhone();
 }

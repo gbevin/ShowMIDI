@@ -39,6 +39,8 @@
       <FILE id="LVHKOA" name="AboutComponent.h" compile="0" resource="0"
             file="Source/AboutComponent.h"/>
       <FILE id="xPnPHy" name="ChannelState.h" compile="0" resource="0" file="Source/ChannelState.h"/>
+      <FILE id="yFIEJF" name="DetectDevice.h" compile="0" resource="0" file="Source/DetectDevice.h"/>
+      <FILE id="pGRBGi" name="DetectDevice.mm" compile="1" resource="0" file="Source/DetectDevice.mm"/>
       <FILE id="S4SSUV" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="o0k9jO" name="MainLayoutComponent.cpp" compile="1" resource="0"
             file="Source/MainLayoutComponent.cpp"/>
