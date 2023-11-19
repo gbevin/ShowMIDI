@@ -46,6 +46,7 @@ namespace showmidi
             loadThemeButton_ = std::make_unique<PaintedButton>("load");
             saveThemeButton_ = std::make_unique<PaintedButton>("save");
             randomThemeButton_ = std::make_unique<PaintedButton>("random");
+            resetThemeButton_ = std::make_unique<PaintedButton>("reset");
             colorBackgroundButton_ = std::make_unique<PaintedButton>();
             colorSidebarButton_ = std::make_unique<PaintedButton>();
             colorSeperatorButton_ = std::make_unique<PaintedButton>();
@@ -84,6 +85,7 @@ namespace showmidi
             loadThemeButton_->addListener(this);
             saveThemeButton_->addListener(this);
             randomThemeButton_->addListener(this);
+            resetThemeButton_->addListener(this);
             colorBackgroundButton_->addListener(this);
             colorSidebarButton_->addListener(this);
             colorSeperatorButton_->addListener(this);
@@ -165,9 +167,11 @@ namespace showmidi
             
             loadThemeButton_->setBoundsForTouch(left_margin, y_offset,
                                                getWidth(), theme.labelHeight());
-            saveThemeButton_->setBoundsForTouch(left_margin + button_spacing, y_offset,
+            saveThemeButton_->setBoundsForTouch(left_margin + 45, y_offset,
                                                getWidth(), theme.labelHeight());
-            randomThemeButton_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
+            randomThemeButton_->setBoundsForTouch(left_margin + 90, y_offset,
+                                                 getWidth(), theme.labelHeight());
+            resetThemeButton_->setBoundsForTouch(left_margin + 150, y_offset,
                                                  getWidth(), theme.labelHeight());
 
             // theme colours
@@ -223,6 +227,7 @@ namespace showmidi
             owner_->addAndMakeVisible(loadThemeButton_.get());
             owner_->addAndMakeVisible(saveThemeButton_.get());
             owner_->addAndMakeVisible(randomThemeButton_.get());
+            owner_->addAndMakeVisible(resetThemeButton_.get());
             owner_->addAndMakeVisible(colorBackgroundButton_.get());
             owner_->addAndMakeVisible(colorSidebarButton_.get());
             owner_->addAndMakeVisible(colorSeperatorButton_.get());
@@ -381,6 +386,10 @@ namespace showmidi
             g.setColour(theme.colorData.withAlpha(0.7f));
             g.setFont(theme.fontData());
             randomThemeButton_->drawName(g, Justification::centredLeft);
+            
+            g.setColour(theme.colorData.withAlpha(0.7f));
+            g.setFont(theme.fontData());
+            resetThemeButton_->drawName(g, Justification::centredLeft);
             
             // theme colours
             
@@ -542,6 +551,11 @@ namespace showmidi
                 manager_->getSettings().getTheme().randomize();
                 manager_->storeSettings();
             }
+            else if (buttonThatWasClicked == resetThemeButton_.get())
+            {
+                manager_->getSettings().getTheme().reset();
+                manager_->storeSettings();
+            }
             else if (buttonThatWasClicked == colorBackgroundButton_.get())
             {
                 popupColorSelector(colorValueBackground_, buttonThatWasClicked, theme.colorBackground);
@@ -659,6 +673,7 @@ namespace showmidi
         std::unique_ptr<PaintedButton> loadThemeButton_;
         std::unique_ptr<PaintedButton> saveThemeButton_;
         std::unique_ptr<PaintedButton> randomThemeButton_;
+        std::unique_ptr<PaintedButton> resetThemeButton_;
         std::unique_ptr<PaintedButton> colorBackgroundButton_;
         std::unique_ptr<PaintedButton> colorSidebarButton_;
         std::unique_ptr<PaintedButton> colorSeperatorButton_;

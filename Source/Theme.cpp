@@ -21,6 +21,11 @@
 
 namespace showmidi
 {
+    Theme Theme::getDefault()
+    {
+        return Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT;
+    }
+
     int Theme::linePosition(float number)
     {
         return (int)(DIALOG_LINE_HEIGHT * number);
@@ -162,5 +167,10 @@ namespace showmidi
         colorPositive = randomColor();
         colorNegative = randomColor();
         colorController = randomColor();
+    };
+
+    void Theme::reset()
+    {
+        *this = Theme::getDefault();
     }
 }

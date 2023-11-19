@@ -145,7 +145,7 @@ namespace showmidi
         auto& props = getGlobalProperties();
         if (!props.containsKey(THEME))
         {
-            theme_ = Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT;
+            theme_ = Theme::getDefault();
         }
         else
         {

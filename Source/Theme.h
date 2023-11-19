@@ -26,7 +26,9 @@ namespace showmidi
         static constexpr int DIALOG_LINE_HEIGHT = 22;
         static constexpr int MIDI_DEVICE_SPACING = 2;
         static constexpr int SCROLLBAR_THICKNESS = 8;
-
+        
+        static Theme getDefault();
+        
         int linePosition(float);
         
         Font fontLabel();
@@ -38,6 +40,7 @@ namespace showmidi
         void parseXml(const String&);
         
         void randomize();
+        void reset();
         
         static String convertSvgColor(const String&);
 
