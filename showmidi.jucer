@@ -16,7 +16,8 @@
       <FILE id="eY2NXn" name="appicon.png" compile="0" resource="1" file="Assets/appicon.png"/>
       <FILE id="FUuUaF" name="collapsed.svg" compile="0" resource="1" file="Assets/collapsed.svg"/>
       <FILE id="ubQN3v" name="expanded.svg" compile="0" resource="1" file="Assets/expanded.svg"/>
-      <FILE id="lTbJOc" name="help.svg" compile="0" resource="1" file="Assets/help.svg"/>
+      <FILE id="lTbJOc" name="help.svg" compile="0" resource="1" file="Assets/help.svg"
+            xcodeResource="0"/>
       <FILE id="PqCEx8" name="hidden.svg" compile="0" resource="1" file="Assets/hidden.svg"/>
       <FILE id="tNdVNi" name="pause.svg" compile="0" resource="1" file="Assets/pause.svg"/>
       <FILE id="QxH7X9" name="play.svg" compile="0" resource="1" file="Assets/play.svg"/>
@@ -208,14 +209,15 @@
                   smallIcon="rP673S" bigIcon="rP673S" buildNumber="10" iPadScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
                   iosScreenOrientation="UIInterfaceOrientationLandscapeLeft,UIInterfaceOrientationLandscapeRight,UIInterfaceOrientationPortrait,UIInterfaceOrientationPortraitUpsideDown"
                   UIStatusBarHidden="0" iosDevelopmentTeamID="AGZT8GVS7G" UIRequiresFullScreen="0"
-                  iosContentSharing="1" customPList="&lt;plist&gt;&#10;  &lt;dict&gt;&#10;      &#9;&lt;key&gt;ITSAppUsesNonExemptEncryption&lt;/key&gt;&#10;      &#9;&lt;false/&gt;&#10;  &#9;&lt;/dict&gt;&#10;&lt;/plist&gt;"
+                  iosContentSharing="1" customPList="&lt;plist&gt;&#10;  &lt;dict&gt;&#10;    &lt;key&gt;ITSAppUsesNonExemptEncryption&lt;/key&gt;&#10;    &lt;false/&gt;&#10;  &#9;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                   UIFileSharingEnabled="1" UISupportsDocumentBrowser="1" iosAppGroups="1"
                   iosAppGroupsId="group.com.uwyn.showmidi" iCloudPermissions="1"
-                  customLaunchStoryboard="Assets/LaunchScreen.storyboard">
+                  customLaunchStoryboard="Interface/Base.lproj/LaunchScreen.storyboard"
+                  customXcodeResourceFolders="Interface/Base.lproj/launch-screen-logo@2x.png">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="ShowMIDI" enablePluginBinaryCopyStep="0"
                        fastMath="1"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="ShowMIDI"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="ShowMIDI" fastMath="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
