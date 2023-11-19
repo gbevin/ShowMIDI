@@ -45,11 +45,13 @@ namespace showmidi
     
     int Theme::getSidebarExpandedWidth()
     {
+#if JUCE_IOS
         auto orientation = Desktop::getInstance().getCurrentOrientation();
         if (isiPhone() && (orientation == Desktop::upright || orientation == Desktop::upsideDown))
         {
             return EXPANDED_WIDTH_NARROW;
         }
+#endif
         return EXPANDED_WIDTH;
     }
 
