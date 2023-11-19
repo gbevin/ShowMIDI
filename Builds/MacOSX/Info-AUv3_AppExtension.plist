@@ -20,11 +20,11 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.7.0</string>
+    <string>0.8.0</string>
     <key>CFBundleVersion</key>
-    <string>10</string>
+    <string>11</string>
     <key>NSHumanReadableCopyright</key>
-    <string></string>
+    <string>&#169;2023 Uwyn LLC</string>
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>LSApplicationCategoryType</key>
@@ -53,7 +53,7 @@
             <key>subtype</key>
             <string>shmi</string>
             <key>version</key>
-            <integer>1792</integer>
+            <integer>2048</integer>
             <key>sandboxSafe</key>
             <true/>
             <key>tags</key>

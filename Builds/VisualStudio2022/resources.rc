@@ -9,17 +9,18 @@
 #include <windows.h>
 
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION  0,7,0,0
+FILEVERSION  0,8,0,0
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
     BLOCK "040904E4"
     BEGIN
       VALUE "CompanyName",  "Uwyn\0"
+      VALUE "LegalCopyright",  "©2023 Uwyn LLC\0"
       VALUE "FileDescription",  "ShowMIDI\0"
-      VALUE "FileVersion",  "0.7.0\0"
+      VALUE "FileVersion",  "0.8.0\0"
       VALUE "ProductName",  "ShowMIDI\0"
-      VALUE "ProductVersion",  "0.7.0\0"
+      VALUE "ProductVersion",  "0.8.0\0"
     END
   END
 
