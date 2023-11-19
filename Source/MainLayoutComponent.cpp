@@ -34,7 +34,7 @@ namespace showmidi
             layoutType_(type)
         {
             sidebar_ = std::make_unique<SidebarComponent>(
-                settingsManager_,
+                settingsManager_, pauseManager_,
                 layoutType_ == MainLayoutType::layoutStandalone ? SidebarType::sidebarExpandable : SidebarType::sidebarFixed,
                 this);
             viewport_ = std::make_unique<Viewport>();

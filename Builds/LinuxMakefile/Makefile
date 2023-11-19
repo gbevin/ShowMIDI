@@ -154,6 +154,7 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/MidiDeviceComponent_1b687947.o \
   $(JUCE_OBJDIR)/MidiDevicesListener_5b057db1.o \
   $(JUCE_OBJDIR)/PaintedButton_d5a3e6f0.o \
+  $(JUCE_OBJDIR)/PauseListener_6d0de32b.o \
   $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
   $(JUCE_OBJDIR)/PluginSettings_526d8cff.o \
@@ -321,6 +322,11 @@ $(JUCE_OBJDIR)/MidiDevicesListener_5b057db1.o: ../../Source/MidiDevicesListener.
 $(JUCE_OBJDIR)/PaintedButton_d5a3e6f0.o: ../../Source/PaintedButton.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling PaintedButton.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PauseListener_6d0de32b.o: ../../Source/PauseListener.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling PauseListener.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o: ../../Source/PluginEditor.cpp

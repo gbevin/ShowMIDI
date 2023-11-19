@@ -145,6 +145,7 @@
     <ClCompile Include="..\..\Source\MidiDeviceComponent.cpp"/>
     <ClCompile Include="..\..\Source\MidiDevicesListener.cpp"/>
     <ClCompile Include="..\..\Source\PaintedButton.cpp"/>
+    <ClCompile Include="..\..\Source\PauseListener.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginSettings.cpp"/>
@@ -2429,6 +2430,7 @@
     <ClInclude Include="..\..\Source\MidiDeviceInfoComparator.h"/>
     <ClInclude Include="..\..\Source\MidiDevicesListener.h"/>
     <ClInclude Include="..\..\Source\PaintedButton.h"/>
+    <ClInclude Include="..\..\Source\PauseListener.h"/>
     <ClInclude Include="..\..\Source\PauseManager.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
@@ -3405,6 +3407,8 @@
     <None Include="..\..\Assets\expanded.svg"/>
     <None Include="..\..\Assets\help.svg"/>
     <None Include="..\..\Assets\hidden.svg"/>
+    <None Include="..\..\Assets\pause.svg"/>
+    <None Include="..\..\Assets\play.svg"/>
     <None Include="..\..\Assets\settings.svg"/>
     <None Include="..\..\Assets\visible.svg"/>
     <None Include="..\..\Fonts\JetBrainsMono-Italic.ttf"/>

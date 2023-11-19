@@ -77,11 +77,22 @@ namespace showmidi
             midiDevice_->handleIncomingMidiMessage(msg);
         }
         
+        bool isPaused() override
+        {
+            return paused_;
+        }
+        
         void togglePaused() override
         {
             setPaused(!paused_);
+            pauseListeners_.broadcast(paused_);
         }
         
+        PauseListeners& getPauseListeners() override
+        {
+            return pauseListeners_;
+        }
+
         void setPaused(bool paused)
         {
             paused_ = paused;
@@ -183,6 +194,7 @@ namespace showmidi
         MidiDevicesListeners midiDevicesListeners_;
 
         bool paused_ { false };
+        PauseListeners pauseListeners_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };

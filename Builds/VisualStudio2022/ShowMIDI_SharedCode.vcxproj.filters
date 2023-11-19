@@ -619,6 +619,9 @@
     <ClCompile Include="..\..\Source\PaintedButton.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\PauseListener.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\PluginEditor.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
@@ -3106,6 +3109,9 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PaintedButton.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\PauseListener.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PauseManager.h">
@@ -6030,6 +6036,12 @@
       <Filter>ShowMIDI\Assets</Filter>
     </None>
     <None Include="..\..\Assets\hidden.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\pause.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\play.svg">
       <Filter>ShowMIDI\Assets</Filter>
     </None>
     <None Include="..\..\Assets\settings.svg">

@@ -19,6 +19,7 @@
 
 #include "AboutComponent.h"
 #include "PaintedButton.h"
+#include "PauseListener.h"
 #include "PortListComponent.h"
 #include "SettingsComponent.h"
 
@@ -27,43 +28,51 @@ namespace showmidi
     SidebarListener::SidebarListener() {}
     SidebarListener::~SidebarListener() {}
 
-    struct SidebarComponent::Pimpl : public Button::Listener
+    struct SidebarComponent::Pimpl : public Button::Listener, public PauseListener
     {
         static constexpr int COLLAPSED_WIDTH = 36;
         static constexpr int EXPANDED_WIDTH = 200;
         static constexpr int Y_PORTLIST = 48;
         static constexpr int PORTLIST_BOTTOM_MARGIN = 36;
 
-        Pimpl(SidebarComponent* owner, SettingsManager* manager, SidebarType type, SidebarListener* listener) :
+        Pimpl(SidebarComponent* owner, SettingsManager* settings, PauseManager* pause, SidebarType type, SidebarListener* listener) :
             owner_(owner),
-            manager_(manager),
+            settingsManager_(settings),
+            pauseManager_(pause),
             sidebarType_(type),
             listener_(listener)
         {
+            pauseManager_->getPauseListeners().add(this);
             
             collapsedButton_ = std::make_unique<PaintedButton>();
             expandedButton_ = std::make_unique<PaintedButton>();
             helpButton_ = std::make_unique<PaintedButton>();
             settingsButton_ = std::make_unique<PaintedButton>();
+            playButton_ = std::make_unique<PaintedButton>();
+            pauseButton_ = std::make_unique<PaintedButton>();
             
-            settings_ = std::make_unique<SettingsComponent>(manager);
-            about_ = std::make_unique<AboutComponent>(manager->getSettings().getTheme());
+            settings_ = std::make_unique<SettingsComponent>(settingsManager_);
+            about_ = std::make_unique<AboutComponent>(settingsManager_->getSettings().getTheme());
 
             collapsedButton_->addListener(this);
             expandedButton_->addListener(this);
             helpButton_->addListener(this);
             settingsButton_->addListener(this);
+            playButton_->addListener(this);
+            pauseButton_->addListener(this);
 
             owner_->addChildComponent(collapsedButton_.get());
             owner_->addChildComponent(expandedButton_.get());
             owner_->addAndMakeVisible(helpButton_.get());
             owner_->addChildComponent(settingsButton_.get());
+            owner_->addAndMakeVisible(playButton_.get());
+            owner_->addChildComponent(pauseButton_.get());
                         
             if (sidebarType_ == SidebarType::sidebarExpandable)
             {
                 collapsedButton_->setVisible(true);
                 
-                portList_ = std::make_unique<PortListComponent>(manager_);
+                portList_ = std::make_unique<PortListComponent>(settingsManager_);
                 
                 portViewport_ = std::make_unique<Viewport>();
                 portViewport_->setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
@@ -78,10 +87,22 @@ namespace showmidi
             }
         }
         
+        ~Pimpl()
+        {
+            pauseManager_->getPauseListeners().remove(this);
+        }
+
         void setup()
         {
             owner_->getParentComponent()->addChildComponent(about_.get());
             owner_->getParentComponent()->addChildComponent(settings_.get());
+        }
+        
+        void pauseChanged(bool state)
+        {
+            playButton_->setVisible(!state);
+            pauseButton_->setVisible(state);
+            owner_->repaint();
         }
 
         void buttonClicked(Button* button)
@@ -118,6 +139,10 @@ namespace showmidi
                 
                 listener_->sidebarChangedWidth();
             }
+            else if (button == playButton_.get() || button == pauseButton_.get())
+            {
+                pauseManager_->togglePaused();
+            }
             else if (button == helpButton_.get())
             {
                 about_->setVisible(!about_->isVisible());
@@ -132,7 +157,7 @@ namespace showmidi
 
         void paint(Graphics& g)
         {
-            auto& theme = manager_->getSettings().getTheme();
+            auto& theme = settingsManager_->getSettings().getTheme();
             
             g.fillAll(theme.colorSidebar);
 
@@ -148,6 +173,20 @@ namespace showmidi
                 auto expanded_svg = expandedSvg_->createCopy();
                 expanded_svg->replaceColour(Colours::black, theme.colorData);
                 expandedButton_->drawDrawable(g, *expanded_svg);
+            }
+
+            if (playButton_->isVisible())
+            {
+                auto play_svg = playSvg_->createCopy();
+                play_svg->replaceColour(Colours::black, theme.colorData);
+                playButton_->drawDrawable(g, *play_svg);
+            }
+
+            if (pauseButton_->isVisible())
+            {
+                auto pause_svg = pauseSvg_->createCopy();
+                pause_svg->replaceColour(Colours::black, theme.colorData);
+                pauseButton_->drawDrawable(g, *pause_svg);
             }
 
             auto help_svg = helpSvg_->createCopy();
@@ -169,6 +208,23 @@ namespace showmidi
 
             expandedButton_->setBoundsForTouch(X_EXPANDED, Y_EXPANDED,
                                               expandedSvg_->getWidth(), expandedSvg_->getHeight());
+
+            if (expanded_)
+            {
+                playButton_->setBoundsForTouch(X_PLAY_EXPANDED, Y_PLAY_EXPANDED,
+                                               playSvg_->getWidth(), playSvg_->getHeight());
+                
+                pauseButton_->setBoundsForTouch(X_PLAY_EXPANDED, Y_PLAY_EXPANDED,
+                                                pauseSvg_->getWidth(), pauseSvg_->getHeight());
+            }
+            else
+            {
+                playButton_->setBoundsForTouch(X_PLAY_COLLAPSED, Y_PLAY_COLLAPSED,
+                                               playSvg_->getWidth(), playSvg_->getHeight());
+                
+                pauseButton_->setBoundsForTouch(X_PLAY_COLLAPSED, Y_PLAY_COLLAPSED,
+                                                pauseSvg_->getWidth(), pauseSvg_->getHeight());
+            }
 
             helpButton_->setBoundsForTouch(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
                                           helpSvg_->getWidth(), helpSvg_->getHeight());
@@ -196,7 +252,9 @@ namespace showmidi
         }
 
         SidebarComponent* const owner_;
-        SettingsManager* const manager_;
+        SettingsManager* const settingsManager_;
+        PauseManager* const pauseManager_;
+
         const SidebarType sidebarType_;
         SidebarListener* const listener_;
         
@@ -206,11 +264,15 @@ namespace showmidi
         std::unique_ptr<Drawable> expandedSvg_ = Drawable::createFromImageData(BinaryData::expanded_svg, BinaryData::expanded_svgSize);
         std::unique_ptr<Drawable> helpSvg_ = Drawable::createFromImageData(BinaryData::help_svg, BinaryData::help_svgSize);
         std::unique_ptr<Drawable> settingsSvg_ = Drawable::createFromImageData(BinaryData::settings_svg, BinaryData::settings_svgSize);
+        std::unique_ptr<Drawable> playSvg_ = Drawable::createFromImageData(BinaryData::play_svg, BinaryData::play_svgSize);
+        std::unique_ptr<Drawable> pauseSvg_ = Drawable::createFromImageData(BinaryData::pause_svg, BinaryData::pause_svgSize);
 
         std::unique_ptr<PaintedButton> collapsedButton_;
         std::unique_ptr<PaintedButton> expandedButton_;
         std::unique_ptr<PaintedButton> helpButton_;
         std::unique_ptr<PaintedButton> settingsButton_;
+        std::unique_ptr<PaintedButton> playButton_;
+        std::unique_ptr<PaintedButton> pauseButton_;
         std::unique_ptr<Viewport> portViewport_;
         std::unique_ptr<PortListComponent> portList_;
         std::unique_ptr<SettingsComponent> settings_;
@@ -219,7 +281,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SidebarComponent::SidebarComponent(SettingsManager* m, SidebarType t, SidebarListener* l) : pimpl_(new Pimpl(this, m, t, l)) {}
+    SidebarComponent::SidebarComponent(SettingsManager* s, PauseManager* p, SidebarType t, SidebarListener* l) : pimpl_(new Pimpl(this, s, p, t, l)) {}
     SidebarComponent::~SidebarComponent() = default;
 
     void SidebarComponent::setup() { pimpl_->setup(); }

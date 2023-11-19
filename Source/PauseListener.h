@@ -17,29 +17,22 @@
  */
 #pragma once
 
-#include <JuceHeader.h>
-
-#include "PauseManager.h"
-#include "Theme.h"
+#include "JuceHeader.h"
 
 namespace showmidi
 {
-    class StandaloneDevicesComponent : public Component, public PauseManager
+    class PauseListener
     {
     public:
-        StandaloneDevicesComponent();
-        ~StandaloneDevicesComponent() override;
+        PauseListener();
+        virtual ~PauseListener();
         
-        void paint(Graphics&) override;
-        
-        bool isPaused() override;
-        void togglePaused() override;
-        PauseListeners& getPauseListeners() override;
-
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StandaloneDevicesComponent)
+        virtual void pauseChanged(bool) = 0;
+    };
+    
+    class PauseListeners : public ListenerList<PauseListener>
+    {
+    public:
+        void broadcast(bool);
     };
 }

@@ -15,31 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
-
-#include <JuceHeader.h>
-
-#include "PauseManager.h"
-#include "Theme.h"
+#include "PauseListener.h"
 
 namespace showmidi
 {
-    class StandaloneDevicesComponent : public Component, public PauseManager
+    PauseListener::PauseListener()  { }
+    PauseListener::~PauseListener() { }
+
+    void PauseListeners::broadcast(bool state)
     {
-    public:
-        StandaloneDevicesComponent();
-        ~StandaloneDevicesComponent() override;
-        
-        void paint(Graphics&) override;
-        
-        bool isPaused() override;
-        void togglePaused() override;
-        PauseListeners& getPauseListeners() override;
-
-        struct Pimpl;
-    private:
-        std::unique_ptr<Pimpl> pimpl_;
-
-        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (StandaloneDevicesComponent)
-    };
+        call([state] (PauseListener& l) { l.pauseChanged(state); });
+    }
 }

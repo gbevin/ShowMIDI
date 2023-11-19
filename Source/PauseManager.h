@@ -19,6 +19,8 @@
 
 #include <JuceHeader.h>
 
+#include "PauseListener.h"
+
 namespace showmidi
 {
     class PauseManager
@@ -26,6 +28,8 @@ namespace showmidi
     public:
         virtual ~PauseManager() {};
         
+        virtual bool isPaused() = 0;
         virtual void togglePaused() = 0;
+        virtual PauseListeners& getPauseListeners() = 0;
     };
 }

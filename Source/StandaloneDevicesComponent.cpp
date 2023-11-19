@@ -87,11 +87,22 @@ namespace showmidi
             }
         }
         
+        bool isPaused()
+        {
+            return paused_;
+        }
+        
         void togglePaused()
         {
             setPaused(!paused_);
+            pauseListeners_.broadcast(paused_);
         }
         
+        PauseListeners& getPauseListeners()
+        {
+            return pauseListeners_;
+        }
+
         void setPaused(bool paused)
         {
             SMApp.setWindowTitle(String("ShowMIDI") + (paused ? " (paused)" : ""));
@@ -242,9 +253,12 @@ namespace showmidi
         }
 
         StandaloneDevicesComponent* const owner_;
+        
         HashMap<const String, MidiDeviceComponent*> midiDevices_;
         CriticalSection midiDevicesLock_;
+        
         bool paused_ { false };
+        PauseListeners pauseListeners_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
@@ -252,6 +266,8 @@ namespace showmidi
     StandaloneDevicesComponent::StandaloneDevicesComponent() : pimpl_(new Pimpl(this)) {}
     StandaloneDevicesComponent::~StandaloneDevicesComponent() = default;
     
-    void StandaloneDevicesComponent::paint(Graphics& g) { pimpl_->paint(g); }
-    void StandaloneDevicesComponent::togglePaused()     { pimpl_->togglePaused(); }
+    void StandaloneDevicesComponent::paint(Graphics& g)             { pimpl_->paint(g); }
+    bool StandaloneDevicesComponent::isPaused()                     { return pimpl_->isPaused(); }
+    void StandaloneDevicesComponent::togglePaused()                 { pimpl_->togglePaused(); }
+    PauseListeners& StandaloneDevicesComponent::getPauseListeners() { return pimpl_->getPauseListeners(); }
 }

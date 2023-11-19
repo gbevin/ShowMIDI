@@ -19,6 +19,7 @@
 
 #include <JuceHeader.h>
 
+#include "PauseManager.h"
 #include "SettingsManager.h"
 
 namespace showmidi
@@ -41,7 +42,7 @@ namespace showmidi
     class SidebarComponent : public Component
     {
     public:        
-        static constexpr int X_COLLAPSED = 12;
+        static constexpr int X_COLLAPSED = 14;
         static constexpr int Y_COLLAPSED = 13;
 
         static constexpr int X_EXPANDED = 12;
@@ -50,10 +51,16 @@ namespace showmidi
         static constexpr int X_SETTINGS = 11;
         static constexpr int Y_SETTINGS = 13;
 
+        static constexpr int X_PLAY_COLLAPSED = 12;
+        static constexpr int Y_PLAY_COLLAPSED = 44;
+
+        static constexpr int X_PLAY_EXPANDED = 40;
+        static constexpr int Y_PLAY_EXPANDED = 11;
+
         static constexpr int X_HELP = 11;
         static constexpr int Y_HELP = 12;
 
-        SidebarComponent(SettingsManager*, SidebarType, SidebarListener*);
+        SidebarComponent(SettingsManager*, PauseManager*, SidebarType, SidebarListener*);
         ~SidebarComponent() override;
         
         void setup();

@@ -18,6 +18,8 @@
       <FILE id="ubQN3v" name="expanded.svg" compile="0" resource="1" file="Assets/expanded.svg"/>
       <FILE id="lTbJOc" name="help.svg" compile="0" resource="1" file="Assets/help.svg"/>
       <FILE id="PqCEx8" name="hidden.svg" compile="0" resource="1" file="Assets/hidden.svg"/>
+      <FILE id="tNdVNi" name="pause.svg" compile="0" resource="1" file="Assets/pause.svg"/>
+      <FILE id="QxH7X9" name="play.svg" compile="0" resource="1" file="Assets/play.svg"/>
       <FILE id="TUbRHp" name="settings.svg" compile="0" resource="1" file="Assets/settings.svg"/>
       <FILE id="ulYhep" name="visible.svg" compile="0" resource="1" file="Assets/visible.svg"/>
     </GROUP>
@@ -55,6 +57,9 @@
       <FILE id="j0c4oQ" name="PaintedButton.cpp" compile="1" resource="0"
             file="Source/PaintedButton.cpp"/>
       <FILE id="kJ6zgy" name="PaintedButton.h" compile="0" resource="0" file="Source/PaintedButton.h"/>
+      <FILE id="fx7ghZ" name="PauseListener.cpp" compile="1" resource="0"
+            file="Source/PauseListener.cpp"/>
+      <FILE id="HfaxVx" name="PauseListener.h" compile="0" resource="0" file="Source/PauseListener.h"/>
       <FILE id="GYtqwL" name="PauseManager.h" compile="0" resource="0" file="Source/PauseManager.h"/>
       <FILE id="mgqWKI" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
