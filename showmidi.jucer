@@ -203,7 +203,8 @@
                   UIStatusBarHidden="0" iosDevelopmentTeamID="AGZT8GVS7G" UIRequiresFullScreen="0"
                   iosContentSharing="1" customPList="&lt;plist&gt;&#10;  &lt;dict&gt;&#10;      &#9;&lt;key&gt;ITSAppUsesNonExemptEncryption&lt;/key&gt;&#10;      &#9;&lt;false/&gt;&#10;  &#9;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                   UIFileSharingEnabled="1" UISupportsDocumentBrowser="1" iosAppGroups="1"
-                  iosAppGroupsId="group.com.uwyn.showmidi" iCloudPermissions="1">
+                  iosAppGroupsId="group.com.uwyn.showmidi" iCloudPermissions="1"
+                  customLaunchStoryboard="Assets/LaunchScreen.storyboard">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="ShowMIDI" enablePluginBinaryCopyStep="0"
                        fastMath="1"/>
