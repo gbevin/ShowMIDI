@@ -93,9 +93,6 @@ namespace showmidi
             colorValueNegative_.addListener(this);
             colorValueController_.addListener(this);
             
-            updateDimensions();
-            resized();
-            
             owner_->addAndMakeVisible(middleCOct2Button_.get());
             owner_->addAndMakeVisible(middleCOct3Button_.get());
             owner_->addAndMakeVisible(middleCOct4Button_.get());
@@ -127,6 +124,10 @@ namespace showmidi
             owner_->addAndMakeVisible(closeButton_.get());
 
             loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg", true, false, manager_->getTopLevelComponent());
+            MessageManager::callAsync([this] {
+                updateDimensions();
+                resized();
+             });
         }
 
         int getWidth()
@@ -716,19 +717,6 @@ namespace showmidi
     SettingsComponent::~SettingsComponent() = default;
     
     void SettingsComponent::paint(Graphics& g) { pimpl_->paint(g); }
-    void SettingsComponent::resized()
-    {
-        if (pimpl_.get())
-        {
-            pimpl_->resized();
-        }
-    }
-    
-    void SettingsComponent::updateDimensions()
-    {
-        if (pimpl_.get())
-        {
-            pimpl_->updateDimensions();
-        }
-    }
+    void SettingsComponent::resized()          { pimpl_->resized(); }
+    void SettingsComponent::updateDimensions() { pimpl_->updateDimensions(); }
 }

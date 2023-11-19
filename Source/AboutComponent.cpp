@@ -27,14 +27,16 @@ namespace showmidi
         websiteButton_ = std::make_unique<PaintedButton>("https://uwyn.com");
         closeButton_ = std::make_unique<PaintedButton>("close");
 
-        updateDimensions();
-        resized();
-
         websiteButton_->addListener(this);
         closeButton_->addListener(this);
         
         addAndMakeVisible(websiteButton_.get());
         addAndMakeVisible(closeButton_.get());
+
+        MessageManager::callAsync([this] {
+            updateDimensions();
+            resized();
+        });
     }
     
     void AboutComponent::paint(Graphics& g)
