@@ -93,6 +93,7 @@ namespace showmidi
             colorValueNegative_.addListener(this);
             colorValueController_.addListener(this);
             
+            updateDimensions();
             resized();
             
             owner_->addAndMakeVisible(middleCOct2Button_.get());
@@ -148,10 +149,9 @@ namespace showmidi
             g.setFont(manager_->getSettings().getTheme().fontData().withStyle(condition() ? Font::underlined : Font::plain));
         }
         
-        void resized()
+        void updateDimensions()
         {
-            auto& settings = manager_->getSettings();
-            auto& theme = settings.getTheme();
+            auto& theme = manager_->getSettings().getTheme();
 
             int height;
             if (manager_->isPlugin() || SystemStats::getOperatingSystemType() == SystemStats::iOS)
@@ -163,6 +163,12 @@ namespace showmidi
                 height = theme.linePosition(24.5);
             }
             owner_->setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, height);
+        }
+
+        void resized()
+        {
+            auto& settings = manager_->getSettings();
+            auto& theme = settings.getTheme();
 
             auto left_margin = 23;
             auto button_spacing = 70;
@@ -715,6 +721,14 @@ namespace showmidi
         if (pimpl_.get())
         {
             pimpl_->resized();
+        }
+    }
+    
+    void SettingsComponent::updateDimensions()
+    {
+        if (pimpl_.get())
+        {
+            pimpl_->updateDimensions();
         }
     }
 }

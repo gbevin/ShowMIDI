@@ -30,9 +30,12 @@ namespace showmidi
         AboutComponent(Theme&);
         
         void paint(Graphics&) override;
+        void resized() override;
         
         void buttonClicked(Button*) override;
         
+        void updateDimensions();
+
     private:
         Theme& theme_;
         

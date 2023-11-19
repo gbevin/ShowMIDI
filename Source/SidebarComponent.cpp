@@ -237,11 +237,11 @@ namespace showmidi
                 portList_->setSize(getActiveWidth() - portViewport_->getScrollBarThickness(), std::max(portViewport_->getHeight(), portList_->getVisibleHeight()));
             }
             
+            about_->updateDimensions();
             about_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_->getHeight());
-            settings_->resized();
 
+            settings_->updateDimensions();
             settings_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
-            settings_->resized();
         }
         
         int getActiveWidth()

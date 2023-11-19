@@ -32,6 +32,8 @@ namespace showmidi
         void paint(Graphics&) override;
         void resized() override;
         
+        void updateDimensions();
+        
         struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_;

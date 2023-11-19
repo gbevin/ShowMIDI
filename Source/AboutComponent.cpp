@@ -27,17 +27,13 @@ namespace showmidi
         websiteButton_ = std::make_unique<PaintedButton>("https://uwyn.com");
         closeButton_ = std::make_unique<PaintedButton>("close");
 
-        setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme_.linePosition(8));
+        updateDimensions();
+        resized();
 
         websiteButton_->addListener(this);
         closeButton_->addListener(this);
         
-        websiteButton_->setBoundsForTouch(0, theme_.linePosition(4),
-                                         getWidth(), theme_.labelHeight());
         addAndMakeVisible(websiteButton_.get());
-        
-        closeButton_->setBoundsForTouch(0, getHeight() - theme_.linePosition(1) - theme_.labelHeight(),
-                                       getWidth(), theme_.labelHeight());
         addAndMakeVisible(closeButton_.get());
     }
     
@@ -69,6 +65,14 @@ namespace showmidi
         closeButton_->drawName(g, Justification::centred);
     }
     
+    void AboutComponent::resized()
+    {
+        websiteButton_->setBoundsForTouch(0, theme_.linePosition(4),
+                                         getWidth(), theme_.labelHeight());
+        closeButton_->setBoundsForTouch(0, getHeight() - theme_.linePosition(1) - theme_.labelHeight(),
+                                       getWidth(), theme_.labelHeight());
+    }
+    
     void AboutComponent::buttonClicked(Button* buttonThatWasClicked)
     {
         if (buttonThatWasClicked == websiteButton_.get())
@@ -79,5 +83,10 @@ namespace showmidi
         {
             setVisible(false);
         }
+    }
+    
+    void AboutComponent::updateDimensions()
+    {
+        setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, theme_.linePosition(8));
     }
 }
