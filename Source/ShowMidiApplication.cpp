@@ -121,6 +121,11 @@ namespace showmidi
     {
         return false;
     }
+    
+    Component* ShowMidiApplication::getTopLevelComponent()
+    {
+        return nullptr;
+    }
 
     Settings& ShowMidiApplication::getSettings()
     {

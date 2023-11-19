@@ -30,6 +30,7 @@ namespace showmidi
         virtual ~SettingsManager() {};
         
         virtual bool isPlugin() = 0;
+        virtual Component* getTopLevelComponent() = 0;
         
         virtual Settings& getSettings() = 0;
         virtual void applySettings() = 0;

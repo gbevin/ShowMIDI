@@ -59,13 +59,9 @@ namespace showmidi
 
             
             int height;
-            if (manager_->isPlugin())
+            if (manager_->isPlugin() || SystemStats::getOperatingSystemType() == SystemStats::iOS)
             {
-#if JUCE_IOS
-                height = theme.linePosition(14.5);
-#else
                 height = theme.linePosition(21.5);
-#endif
             }
             else
             {
@@ -151,7 +147,7 @@ namespace showmidi
             timeout10SecButton_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
                                                   getWidth(), theme.labelHeight());
             
-            if (!manager_->isPlugin())
+            if (!manager_->isPlugin() && SystemStats::getOperatingSystemType() != SystemStats::iOS)
             {
                 // window position
                 
@@ -219,30 +215,27 @@ namespace showmidi
             owner_->addAndMakeVisible(timeout2SecButton_.get());
             owner_->addAndMakeVisible(timeout5SecButton_.get());
             owner_->addAndMakeVisible(timeout10SecButton_.get());
-            if (!manager_->isPlugin())
+            if (!manager_->isPlugin() && SystemStats::getOperatingSystemType() != SystemStats::iOS)
             {
                 owner_->addAndMakeVisible(windowRegularButton_.get());
                 owner_->addAndMakeVisible(windowAlwaysOnTopButton_.get());
             }
-            if (SystemStats::getOperatingSystemType() != SystemStats::iOS || !manager_->isPlugin())
-            {
-                owner_->addAndMakeVisible(loadThemeButton_.get());
-                owner_->addAndMakeVisible(saveThemeButton_.get());
-                owner_->addAndMakeVisible(randomThemeButton_.get());
-                owner_->addAndMakeVisible(colorBackgroundButton_.get());
-                owner_->addAndMakeVisible(colorSidebarButton_.get());
-                owner_->addAndMakeVisible(colorSeperatorButton_.get());
-                owner_->addAndMakeVisible(colorTrackButton_.get());
-                owner_->addAndMakeVisible(colorLabelButton_.get());
-                owner_->addAndMakeVisible(colorDataButton_.get());
-                owner_->addAndMakeVisible(colorPositiveButton_.get());
-                owner_->addAndMakeVisible(colorNegativeButton_.get());
-                owner_->addAndMakeVisible(colorControllerButton_.get());
-            }
+            owner_->addAndMakeVisible(loadThemeButton_.get());
+            owner_->addAndMakeVisible(saveThemeButton_.get());
+            owner_->addAndMakeVisible(randomThemeButton_.get());
+            owner_->addAndMakeVisible(colorBackgroundButton_.get());
+            owner_->addAndMakeVisible(colorSidebarButton_.get());
+            owner_->addAndMakeVisible(colorSeperatorButton_.get());
+            owner_->addAndMakeVisible(colorTrackButton_.get());
+            owner_->addAndMakeVisible(colorLabelButton_.get());
+            owner_->addAndMakeVisible(colorDataButton_.get());
+            owner_->addAndMakeVisible(colorPositiveButton_.get());
+            owner_->addAndMakeVisible(colorNegativeButton_.get());
+            owner_->addAndMakeVisible(colorControllerButton_.get());
             owner_->addAndMakeVisible(closeButton_.get());
-            
-            loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
-            saveThemeChooser_ = std::make_unique<FileChooser>("Please choose where to save the theme...", File::getSpecialLocation(File::userHomeDirectory), "*.svg");
+
+            loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg", true, false, manager_->getTopLevelComponent());
+            saveThemeChooser_ = std::make_unique<FileChooser>("Please choose where to save the theme...", File::getSpecialLocation(File::userHomeDirectory), "*.svg", true, false, manager_->getTopLevelComponent());
         }
 
         int getWidth()
@@ -347,7 +340,7 @@ namespace showmidi
             setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 10; });
             timeout10SecButton_->drawName(g, Justification::centredLeft);
             
-            if (!manager_->isPlugin())
+            if (!manager_->isPlugin() && SystemStats::getOperatingSystemType() != SystemStats::iOS)
             {
                 // window position
                 
@@ -367,78 +360,75 @@ namespace showmidi
                 windowAlwaysOnTopButton_->drawName(g, Justification::centredLeft);
             }
 
-            if (SystemStats::getOperatingSystemType() != SystemStats::iOS || !manager_->isPlugin())
-            {
-                // active theme
-                
-                y_offset += theme.linePosition(3);
-                
-                g.setColour(theme.colorData);
-                g.setFont(theme.fontLabel());
-                g.drawText("Active Theme",
-                           23, y_offset,
-                           getWidth(), theme.labelHeight(),
-                           Justification::centredLeft, true);
-                
-                g.setColour(theme.colorData.withAlpha(0.7f));
-                g.setFont(theme.fontData());
-                loadThemeButton_->drawName(g, Justification::centredLeft);
-                
-                g.setColour(theme.colorData.withAlpha(0.7f));
-                g.setFont(theme.fontData());
-                saveThemeButton_->drawName(g, Justification::centredLeft);
-                
-                g.setColour(theme.colorData.withAlpha(0.7f));
-                g.setFont(theme.fontData());
-                randomThemeButton_->drawName(g, Justification::centredLeft);
-                
-                // theme colours
-                
-                g.setColour(theme.colorBackground);
-                g.fillEllipse(colorBackgroundButton_->getBoundsForDrawing());
-                g.setColour(theme.colorBackground.contrasting());
-                g.drawEllipse(colorBackgroundButton_->getBoundsForDrawing(), 1);
-                
-                g.setColour(theme.colorSidebar);
-                g.fillEllipse(colorSidebarButton_->getBoundsForDrawing());
-                g.setColour(theme.colorSidebar.contrasting());
-                g.drawEllipse(colorSidebarButton_->getBoundsForDrawing(), 1);
-                
-                g.setColour(theme.colorSeperator);
-                g.fillEllipse(colorSeperatorButton_->getBoundsForDrawing());
-                g.setColour(theme.colorSeperator.contrasting());
-                g.drawEllipse(colorSeperatorButton_->getBoundsForDrawing(), 1);
-                
-                g.setColour(theme.colorTrack);
-                g.fillEllipse(colorTrackButton_->getBoundsForDrawing());
-                g.setColour(theme.colorTrack.contrasting());
-                g.drawEllipse(colorTrackButton_->getBoundsForDrawing(), 1);
-                
-                g.setColour(theme.colorLabel);
-                g.fillEllipse(colorLabelButton_->getBoundsForDrawing());
-                g.setColour(theme.colorLabel.contrasting());
-                g.drawEllipse(colorLabelButton_->getBoundsForDrawing(), 1);
-                
-                g.setColour(theme.colorData);
-                g.fillEllipse(colorDataButton_->getBoundsForDrawing());
-                g.setColour(theme.colorData.contrasting());
-                g.drawEllipse(colorDataButton_->getBoundsForDrawing(), 1);
-                
-                g.setColour(theme.colorPositive);
-                g.fillEllipse(colorPositiveButton_->getBoundsForDrawing());
-                g.setColour(theme.colorPositive.contrasting());
-                g.drawEllipse(colorPositiveButton_->getBoundsForDrawing(), 1);
-                
-                g.setColour(theme.colorNegative);
-                g.fillEllipse(colorNegativeButton_->getBoundsForDrawing());
-                g.setColour(theme.colorNegative.contrasting());
-                g.drawEllipse(colorNegativeButton_->getBoundsForDrawing(), 1);
-                
-                g.setColour(theme.colorController);
-                g.fillEllipse(colorControllerButton_->getBoundsForDrawing());
-                g.setColour(theme.colorController.contrasting());
-                g.drawEllipse(colorControllerButton_->getBoundsForDrawing(), 1);
-            }
+            // active theme
+            
+            y_offset += theme.linePosition(3);
+            
+            g.setColour(theme.colorData);
+            g.setFont(theme.fontLabel());
+            g.drawText("Active Theme",
+                       23, y_offset,
+                       getWidth(), theme.labelHeight(),
+                       Justification::centredLeft, true);
+            
+            g.setColour(theme.colorData.withAlpha(0.7f));
+            g.setFont(theme.fontData());
+            loadThemeButton_->drawName(g, Justification::centredLeft);
+            
+            g.setColour(theme.colorData.withAlpha(0.7f));
+            g.setFont(theme.fontData());
+            saveThemeButton_->drawName(g, Justification::centredLeft);
+            
+            g.setColour(theme.colorData.withAlpha(0.7f));
+            g.setFont(theme.fontData());
+            randomThemeButton_->drawName(g, Justification::centredLeft);
+            
+            // theme colours
+            
+            g.setColour(theme.colorBackground);
+            g.fillEllipse(colorBackgroundButton_->getBoundsForDrawing());
+            g.setColour(theme.colorBackground.contrasting());
+            g.drawEllipse(colorBackgroundButton_->getBoundsForDrawing(), 1);
+            
+            g.setColour(theme.colorSidebar);
+            g.fillEllipse(colorSidebarButton_->getBoundsForDrawing());
+            g.setColour(theme.colorSidebar.contrasting());
+            g.drawEllipse(colorSidebarButton_->getBoundsForDrawing(), 1);
+            
+            g.setColour(theme.colorSeperator);
+            g.fillEllipse(colorSeperatorButton_->getBoundsForDrawing());
+            g.setColour(theme.colorSeperator.contrasting());
+            g.drawEllipse(colorSeperatorButton_->getBoundsForDrawing(), 1);
+            
+            g.setColour(theme.colorTrack);
+            g.fillEllipse(colorTrackButton_->getBoundsForDrawing());
+            g.setColour(theme.colorTrack.contrasting());
+            g.drawEllipse(colorTrackButton_->getBoundsForDrawing(), 1);
+            
+            g.setColour(theme.colorLabel);
+            g.fillEllipse(colorLabelButton_->getBoundsForDrawing());
+            g.setColour(theme.colorLabel.contrasting());
+            g.drawEllipse(colorLabelButton_->getBoundsForDrawing(), 1);
+            
+            g.setColour(theme.colorData);
+            g.fillEllipse(colorDataButton_->getBoundsForDrawing());
+            g.setColour(theme.colorData.contrasting());
+            g.drawEllipse(colorDataButton_->getBoundsForDrawing(), 1);
+            
+            g.setColour(theme.colorPositive);
+            g.fillEllipse(colorPositiveButton_->getBoundsForDrawing());
+            g.setColour(theme.colorPositive.contrasting());
+            g.drawEllipse(colorPositiveButton_->getBoundsForDrawing(), 1);
+            
+            g.setColour(theme.colorNegative);
+            g.fillEllipse(colorNegativeButton_->getBoundsForDrawing());
+            g.setColour(theme.colorNegative.contrasting());
+            g.drawEllipse(colorNegativeButton_->getBoundsForDrawing(), 1);
+            
+            g.setColour(theme.colorController);
+            g.fillEllipse(colorControllerButton_->getBoundsForDrawing());
+            g.setColour(theme.colorController.contrasting());
+            g.drawEllipse(colorControllerButton_->getBoundsForDrawing(), 1);
             
             // close button
             
@@ -516,29 +506,35 @@ namespace showmidi
             {
                 loadThemeChooser_->launchAsync(FileBrowserComponent::openMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
                 {
-                    File file(chooser.getResult());
-                    if (file.getFullPathName().isEmpty())
+                    if (chooser.getURLResults().isEmpty())
                     {
                         return;
                     }
 
-                    manager_->getSettings().getTheme().parseXml(file.loadFileAsString());
+                    auto url = chooser.getURLResult();
+                    std::unique_ptr<InputStream> stream(URLInputSource(url).createInputStream());
+                    auto content = stream->readEntireStreamAsString();
+                    manager_->getSettings().getTheme().parseXml(content);
                     manager_->storeSettings();
                 });
             }
             else if (buttonThatWasClicked == saveThemeButton_.get())
             {
-                saveThemeChooser_->launchAsync(FileBrowserComponent::saveMode | FileBrowserComponent::canSelectFiles, [this] (const FileChooser& chooser)
+                saveThemeChooser_->launchAsync(FileBrowserComponent::saveMode | FileBrowserComponent::canSelectFiles | FileBrowserComponent::warnAboutOverwriting, [this] (const FileChooser& chooser)
                 {
-                    File file(chooser.getResult());
-                    if (file.getFullPathName().isEmpty())
+                    if (chooser.getURLResults().isEmpty())
                     {
                         return;
                     }
+
+                    auto url = chooser.getURLResult();
+                    if (url.getLocalFile().existsAsFile())
+                    {
+                        url.getLocalFile().deleteFile();
+                    }
                     
-                    TemporaryFile temp_file(file, File::createTempFile("svg"));
-                    temp_file.getFile().appendText(manager_->getSettings().getTheme().generateXml(), false, false, "\r\n");
-                    temp_file.overwriteTargetFileWithTemporary();
+                    auto outputStream = url.createOutputStream();
+                    outputStream->writeText(manager_->getSettings().getTheme().generateXml(), false, false, nullptr);
                 });
             }
             else if (buttonThatWasClicked == randomThemeButton_.get())
@@ -597,7 +593,7 @@ namespace showmidi
         {
             colorValue.setValue(color.toDisplayString(true));
             CallOutBox::launchAsynchronously(std::make_unique<PopupColourSelector>(colorValue),
-                                             colorButton->getScreenBounds(), nullptr);
+                                             colorButton->getScreenBounds(), manager_->getTopLevelComponent());
 
         }
         

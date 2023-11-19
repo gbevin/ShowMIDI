@@ -141,6 +141,15 @@ namespace showmidi
         {
             return true;
         }
+        
+        Component* getTopLevelComponent() override
+        {
+#if JUCE_IOS
+            return owner_;
+#else
+            return nullptr;
+#endif
+        }
 
         Settings& getSettings() override
         {

@@ -49,16 +49,16 @@ namespace showmidi
     String Theme::generateXml()
     {
         String result = R"(<svg width="96px" height="64px" xmlns="http://www.w3.org/2000/svg" baseProfile="full" version="1.1">
-          <rect width='96' height='64'  id='background' fill='#{background}'></rect>
-          <circle cx='24' cy='24' r='8' id='sidebar'    fill='#{sidebar}'></circle>
-          <circle cx='40' cy='24' r='8' id='seperator'  fill='#{seperator}'></circle>
-          <circle cx='56' cy='24' r='8' id='track'      fill='#{track}'></circle>
-          <circle cx='72' cy='24' r='8' id='label'      fill='#{label}'></circle>
-          <circle cx='24' cy='40' r='8' id='data'       fill='#{data}'></circle>
-          <circle cx='40' cy='40' r='8' id='positive'   fill='#{positive}'></circle>
-          <circle cx='56' cy='40' r='8' id='negative'   fill='#{negative}'></circle>
-          <circle cx='72' cy='40' r='8' id='controller' fill='#{controller}'></circle>
-        </svg>)";
+  <rect width='96' height='64'  id='background' fill='#{background}'></rect>
+  <circle cx='24' cy='24' r='8' id='sidebar'    fill='#{sidebar}'></circle>
+  <circle cx='40' cy='24' r='8' id='seperator'  fill='#{seperator}'></circle>
+  <circle cx='56' cy='24' r='8' id='track'      fill='#{track}'></circle>
+  <circle cx='72' cy='24' r='8' id='label'      fill='#{label}'></circle>
+  <circle cx='24' cy='40' r='8' id='data'       fill='#{data}'></circle>
+  <circle cx='40' cy='40' r='8' id='positive'   fill='#{positive}'></circle>
+  <circle cx='56' cy='40' r='8' id='negative'   fill='#{negative}'></circle>
+  <circle cx='72' cy='40' r='8' id='controller' fill='#{controller}'></circle>
+</svg>)";
         result = result.replace("{background}",  colorBackground.toDisplayString(false));
         result = result.replace("{sidebar}",     colorSidebar.toDisplayString(false));
         result = result.replace("{seperator}",   colorSeperator.toDisplayString(false));

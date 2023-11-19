@@ -61,6 +61,7 @@ namespace showmidi
         void setWindowWidthForMainLayout(int);
         
         bool isPlugin() override;
+        Component* getTopLevelComponent() override;
         Settings& getSettings() override;
         void applySettings() override;
         void storeSettings() override;
