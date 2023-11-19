@@ -235,7 +235,6 @@ namespace showmidi
             owner_->addAndMakeVisible(closeButton_.get());
 
             loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg", true, false, manager_->getTopLevelComponent());
-            saveThemeChooser_ = std::make_unique<FileChooser>("Please choose where to save the theme...", File::getSpecialLocation(File::userHomeDirectory), "*.svg", true, false, manager_->getTopLevelComponent());
         }
 
         int getWidth()
@@ -520,6 +519,7 @@ namespace showmidi
             }
             else if (buttonThatWasClicked == saveThemeButton_.get())
             {
+                saveThemeChooser_.reset(new FileChooser("Please choose where to save the theme...", File::getSpecialLocation(File::userHomeDirectory).getChildFile("theme.svg"), "*.svg", true, false, manager_->getTopLevelComponent()));
                 saveThemeChooser_->launchAsync(FileBrowserComponent::saveMode | FileBrowserComponent::canSelectFiles | FileBrowserComponent::warnAboutOverwriting, [this] (const FileChooser& chooser)
                 {
                     if (chooser.getURLResults().isEmpty())
