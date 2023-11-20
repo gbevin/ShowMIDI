@@ -33,10 +33,8 @@ namespace showmidi
         addAndMakeVisible(websiteButton_.get());
         addAndMakeVisible(closeButton_.get());
 
-        MessageManager::callAsync([this] {
-            updateDimensions();
-            resized();
-        });
+        updateDimensions();
+        resized();
     }
     
     void AboutComponent::paint(Graphics& g)

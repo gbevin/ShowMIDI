@@ -124,11 +124,6 @@ namespace showmidi
             owner_->addAndMakeVisible(closeButton_.get());
 
             loadThemeChooser_ = std::make_unique<FileChooser>("Please choose which theme to load...", File::getSpecialLocation(File::userHomeDirectory), "*.svg", true, false, manager_->getTopLevelComponent());
-            
-            MessageManager::callAsync([this] {
-                updateDimensions();
-                resized();
-             });
         }
 
         int getWidth()
@@ -714,7 +709,10 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SettingsComponent::SettingsComponent(SettingsManager* m) : pimpl_(new Pimpl(this, m)) {}
+    SettingsComponent::SettingsComponent(SettingsManager* m) : pimpl_(new Pimpl(this, m)) {
+        updateDimensions();
+        resized();
+    }
     SettingsComponent::~SettingsComponent() = default;
     
     void SettingsComponent::paint(Graphics& g) { pimpl_->paint(g); }
