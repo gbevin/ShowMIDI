@@ -15,6 +15,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShowMIDI - VST3", "ShowMIDI_VST3.vcxproj", "{4DDDB4C1-B624-AEE2-D2A5-B7B55FF21687}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A34E9471-D4CC-86F7-7BFE-6B029AD9E991} = {A34E9471-D4CC-86F7-7BFE-6B029AD9E991}
+		{56E0C9E0-23F9-584B-A4D0-272AC6BD51E4} = {56E0C9E0-23F9-584B-A4D0-272AC6BD51E4}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShowMIDI - LV2 Plugin", "ShowMIDI_LV2Plugin.vcxproj", "{D992E02F-C650-25EF-7465-C0912FE66ECF}"
@@ -26,6 +27,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShowMIDI - Shared Code", "ShowMIDI_SharedCode.vcxproj", "{A34E9471-D4CC-86F7-7BFE-6B029AD9E991}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShowMIDI - LV2 Manifest Helper", "ShowMIDI_LV2ManifestHelper.vcxproj", "{AA384ABD-77F9-8A67-6540-43791D7F3919}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShowMIDI - VST3 Manifest Helper", "ShowMIDI_VST3ManifestHelper.vcxproj", "{56E0C9E0-23F9-584B-A4D0-272AC6BD51E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +60,10 @@ Global
 		{AA384ABD-77F9-8A67-6540-43791D7F3919}.Debug|x64.Build.0 = Debug|x64
 		{AA384ABD-77F9-8A67-6540-43791D7F3919}.Release|x64.ActiveCfg = Release|x64
 		{AA384ABD-77F9-8A67-6540-43791D7F3919}.Release|x64.Build.0 = Release|x64
+		{56E0C9E0-23F9-584B-A4D0-272AC6BD51E4}.Debug|x64.ActiveCfg = Debug|x64
+		{56E0C9E0-23F9-584B-A4D0-272AC6BD51E4}.Debug|x64.Build.0 = Debug|x64
+		{56E0C9E0-23F9-584B-A4D0-272AC6BD51E4}.Release|x64.ActiveCfg = Release|x64
+		{56E0C9E0-23F9-584B-A4D0-272AC6BD51E4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
