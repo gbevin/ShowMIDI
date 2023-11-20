@@ -37,9 +37,7 @@
 		2BE136F9771FD33F0C7A6703 /* MidiDevicesListener.cpp */ = {isa = PBXBuildFile; fileRef = 522F4183B107213ABBA95E54; };
 		353E878E2C4866F8F792ABB8 /* PropertiesSettings.cpp */ = {isa = PBXBuildFile; fileRef = 8EEF02F4B9640EBAC9C1B340; };
 		368701CC81BCD114F89A6FEE /* include_juce_graphics.mm */ = {isa = PBXBuildFile; fileRef = F0823A50303AB62A3DC1CF36; };
-		3756B71F35763F40D8418F1C /* UserNotifications.framework */ = {isa = PBXBuildFile; fileRef = AEC15CFC452928D6467CBE0A; settings = { ATTRIBUTES = (Weak, ); }; };
 		4408F5269D7071063662550F /* include_juce_audio_plugin_client_ARA.cpp */ = {isa = PBXBuildFile; fileRef = FDB11BB7D46CFB537BD77891; };
-		489E608DB817050A5D5D3162 /* MetalKit.framework */ = {isa = PBXBuildFile; fileRef = B14489F06D2BD531D0FFF376; settings = { ATTRIBUTES = (Weak, ); }; };
 		49275756321FDB8F7DC25D31 /* AboutComponent.cpp */ = {isa = PBXBuildFile; fileRef = 80ABD3BDC42C5FE92F7FE42C; };
 		4E05314F084EC2ACBAE987AC /* Images.xcassets */ = {isa = PBXBuildFile; fileRef = 1C6731403A5CDD50BA00A1BF; };
 		5505CB9BAFC6EF519382AF36 /* Shared Code */ = {isa = PBXBuildFile; fileRef = 769B7E29896F9663B5117831; };
@@ -76,7 +74,6 @@
 		C1FD2601A91E6873B440D961 /* include_juce_gui_basics.mm */ = {isa = PBXBuildFile; fileRef = E9709AF951C28033427F76C6; };
 		C2FD810ECCF40E9DF8DB3B9B /* include_juce_audio_formats.mm */ = {isa = PBXBuildFile; fileRef = 701B09DB73C2B2CAEB125133; };
 		D15701538FF51592C7A4571C /* SidebarComponent.cpp */ = {isa = PBXBuildFile; fileRef = D443EB07355FF2F422FE3CBA; };
-		D655D2371FA9FE4CF61AB094 /* Metal.framework */ = {isa = PBXBuildFile; fileRef = 8D2448D40030D125D995FF67; settings = { ATTRIBUTES = (Weak, ); }; };
 		D782D07214CD0BF4CAEBDD92 /* PluginProcessor.cpp */ = {isa = PBXBuildFile; fileRef = 2343ECC7F67FA6AD9E72214D; };
 		DC59E80EFE3853979939FEB8 /* include_juce_audio_utils.mm */ = {isa = PBXBuildFile; fileRef = A9B7C49820B6A87EA4DDB498; };
 		E41A5EC6AAC70E19B4327840 /* CoreAudioKit.framework */ = {isa = PBXBuildFile; fileRef = D836C4B412BD0316C8041F6C; };
@@ -172,7 +169,6 @@
 		84B181AE7A602CF26F9C4158 /* include_juce_audio_plugin_client_Standalone.cpp */ /* include_juce_audio_plugin_client_Standalone.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_plugin_client_Standalone.cpp; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_Standalone.cpp; sourceTree = SOURCE_ROOT; };
 		88AAC6E05E409AD97864C094 /* PaintedButton.h */ /* PaintedButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PaintedButton.h; path = ../../Source/PaintedButton.h; sourceTree = SOURCE_ROOT; };
 		8B4BBB72CD42AFE31F80F07A /* collapsed.svg */ /* collapsed.svg */ = {isa = PBXFileReference; lastKnownFileType = file.svg; name = collapsed.svg; path = ../../Assets/collapsed.svg; sourceTree = SOURCE_ROOT; };
-		8D2448D40030D125D995FF67 /* Metal.framework */ /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		8EEF02F4B9640EBAC9C1B340 /* PropertiesSettings.cpp */ /* PropertiesSettings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropertiesSettings.cpp; path = ../../Source/PropertiesSettings.cpp; sourceTree = SOURCE_ROOT; };
 		91922844A98C0F88905D5F95 /* PauseListener.h */ /* PauseListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PauseListener.h; path = ../../Source/PauseListener.h; sourceTree = SOURCE_ROOT; };
 		93CD70970B7171379643BDD4 /* juce_data_structures */ /* juce_data_structures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_data_structures; path = ../../JUCE/modules/juce_data_structures; sourceTree = SOURCE_ROOT; };
@@ -185,9 +181,7 @@
 		A9DE540E8FB3BA18341A110B /* PluginSettings.cpp */ /* PluginSettings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginSettings.cpp; path = ../../Source/PluginSettings.cpp; sourceTree = SOURCE_ROOT; };
 		ADE94E7D50890D80709CA60D /* JetBrainsMono-SemiBoldItalic.ttf */ /* JetBrainsMono-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file.ttf; name = "JetBrainsMono-SemiBoldItalic.ttf"; path = "../../Fonts/JetBrainsMono-SemiBoldItalic.ttf"; sourceTree = SOURCE_ROOT; };
 		ADFC4D4C01DA373375788BEB /* Icon.icns */ /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = file.icns; name = Icon.icns; path = Icon.icns; sourceTree = SOURCE_ROOT; };
-		AEC15CFC452928D6467CBE0A /* UserNotifications.framework */ /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		B115D12C99CF013E5E832275 /* expanded.svg */ /* expanded.svg */ = {isa = PBXFileReference; lastKnownFileType = file.svg; name = expanded.svg; path = ../../Assets/expanded.svg; sourceTree = SOURCE_ROOT; };
-		B14489F06D2BD531D0FFF376 /* MetalKit.framework */ /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
 		B29AD572554995864888DF39 /* Accelerate.framework */ /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		B4130BDAEE02831DBC6CE268 /* ShowMidiApplication.h */ /* ShowMidiApplication.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ShowMidiApplication.h; path = ../../Source/ShowMidiApplication.h; sourceTree = SOURCE_ROOT; };
 		B422824DB8787454029C457F /* UIKit.framework */ /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -247,9 +241,6 @@
 				1B94A63C6E60F8CAAD9E41C9,
 				63D741B6640E608A0F5DBBC3,
 				AC28EC40C013E7EAAFB784DE,
-				D655D2371FA9FE4CF61AB094,
-				489E608DB817050A5D5D3162,
-				3756B71F35763F40D8418F1C,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,9 +262,6 @@
 				1B94A63C6E60F8CAAD9E41C9,
 				63D741B6640E608A0F5DBBC3,
 				AC28EC40C013E7EAAFB784DE,
-				D655D2371FA9FE4CF61AB094,
-				489E608DB817050A5D5D3162,
-				3756B71F35763F40D8418F1C,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,9 +342,6 @@
 				F3350340A2A48DC2084FBD90,
 				B422824DB8787454029C457F,
 				7044C8187C93F03ACA494C1E,
-				8D2448D40030D125D995FF67,
-				B14489F06D2BD531D0FFF376,
-				AEC15CFC452928D6467CBE0A,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -494,8 +479,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				96CB7DB0D04B918E54FAA560,
 				6CC888CD4ED8D330A87A6EAA,
+				96CB7DB0D04B918E54FAA560,
 			);
 			name = "ShowMIDI - Standalone Plugin";
 			productName = ShowMIDI;
@@ -541,7 +526,6 @@
 		59C1E84DE320FBAD9D225753 = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = "Uwyn";
 				TargetAttributes = {
@@ -794,7 +778,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_ENTITLEMENTS = "Standalone_Plugin.entitlements";
@@ -827,14 +811,14 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
+					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-Standalone_Plugin.plist;
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
-				OTHER_LDFLAGS = "-lShowMIDI";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client";
+				OTHER_LDFLAGS = "-lShowMIDI -weak_framework Metal -weak_framework MetalKit -weak_framework UserNotifications";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -883,7 +867,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "ShowMIDI";
 				SDKROOT = iphoneos;
@@ -898,7 +882,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_ENTITLEMENTS = "AUv3_AppExtension.entitlements";
@@ -931,14 +915,14 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
+					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-AUv3_AppExtension.plist;
 				INFOPLIST_PREPROCESS = NO;
 				LLVM_LTO = YES;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
-				OTHER_LDFLAGS = "-lShowMIDI";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client";
+				OTHER_LDFLAGS = "-lShowMIDI -weak_framework Metal -weak_framework MetalKit -weak_framework UserNotifications";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi.showmidiAUv3;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -987,7 +971,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				PRODUCT_NAME = "ShowMIDI";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1001,7 +985,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_ENTITLEMENTS = "Shared_Code.entitlements";
@@ -1035,11 +1019,12 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
+					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
 				INSTALL_PATH = "@executable_path/Frameworks";
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client";
+				OTHER_LDFLAGS = "-weak_framework Metal -weak_framework MetalKit -weak_framework UserNotifications";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1053,7 +1038,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_ENTITLEMENTS = "All.entitlements";
@@ -1086,11 +1071,11 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
+					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
-				OTHER_LDFLAGS = "-lShowMIDI";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client";
+				OTHER_LDFLAGS = "-lShowMIDI -weak_framework Metal -weak_framework MetalKit -weak_framework UserNotifications";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1103,7 +1088,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_ENTITLEMENTS = "All.entitlements";
@@ -1136,12 +1121,12 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
+					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
 				LLVM_LTO = YES;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
-				OTHER_LDFLAGS = "-lShowMIDI";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client";
+				OTHER_LDFLAGS = "-lShowMIDI -weak_framework Metal -weak_framework MetalKit -weak_framework UserNotifications";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1154,7 +1139,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_ENTITLEMENTS = "Standalone_Plugin.entitlements";
@@ -1187,13 +1172,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
+					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-Standalone_Plugin.plist;
 				INFOPLIST_PREPROCESS = NO;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
-				OTHER_LDFLAGS = "-lShowMIDI";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client";
+				OTHER_LDFLAGS = "-lShowMIDI -weak_framework Metal -weak_framework MetalKit -weak_framework UserNotifications";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1206,7 +1191,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_ENTITLEMENTS = "AUv3_AppExtension.entitlements";
@@ -1239,13 +1224,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
+					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-AUv3_AppExtension.plist;
 				INFOPLIST_PREPROCESS = NO;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
-				OTHER_LDFLAGS = "-lShowMIDI";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client";
+				OTHER_LDFLAGS = "-lShowMIDI -weak_framework Metal -weak_framework MetalKit -weak_framework UserNotifications";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi.showmidiAUv3;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1258,7 +1243,7 @@
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_ENTITLEMENTS = "Shared_Code.entitlements";
@@ -1292,12 +1277,13 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../JUCE/modules",
-					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU",
+					"$(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
 				INSTALL_PATH = "@executable_path/Frameworks";
 				LLVM_LTO = YES;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client/AU";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../JUCE/modules/juce_audio_plugin_client";
+				OTHER_LDFLAGS = "-weak_framework Metal -weak_framework MetalKit -weak_framework UserNotifications";
 				PRODUCT_BUNDLE_IDENTIFIER = com.uwyn.showmidi;
 				PRODUCT_NAME = "ShowMIDI";
 				PROVISIONING_PROFILE_SPECIFIER = "";

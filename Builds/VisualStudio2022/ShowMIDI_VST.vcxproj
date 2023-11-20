@@ -76,7 +76,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lilv\src;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lilv;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sratom;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sord\src;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sord;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\serd;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lv2;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK;..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK;..\..\libs\vst2;..\..\JuceLibraryCode;..\..\JUCE\modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -121,7 +121,7 @@
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lilv\src;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lilv;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sratom;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sord\src;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sord;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\serd;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lv2;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK;..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK;..\..\libs\vst2;..\..\JuceLibraryCode;..\..\JUCE\modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

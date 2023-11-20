@@ -42,7 +42,7 @@
   </ImportGroup>
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <TargetExt>.dll</TargetExt>
+    <TargetExt>.vst3</TargetExt>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionDir)$(Platform)\$(Configuration)\VST3\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\VST3\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ShowMIDI</TargetName>
@@ -76,14 +76,14 @@
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lilv\src;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lilv;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sratom;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sord\src;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sord;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\serd;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lv2;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK;..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK;..\..\libs\vst2;..\..\JuceLibraryCode;..\..\JUCE\modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.8.0;JUCE_APP_VERSION_HEX=0x800;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=1;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\ShowMIDI.dll</OutputFile>
+      <OutputFile>$(OutDir)\ShowMIDI.vst3</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>libcmt.lib; msvcrt.lib;;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -99,18 +99,6 @@
     <Lib>
       <AdditionalDependencies>ShowMIDI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
-    <PreBuildEvent>
-      <Command>if not exist &quot;$(OutDir)\\ShowMIDI.vst3\&quot; del /s /q &quot;$(OutDir)\\ShowMIDI.vst3&quot; &amp;&amp; mkdir &quot;$(OutDir)\\ShowMIDI.vst3&quot;
-if not exist &quot;$(OutDir)\\ShowMIDI.vst3\Contents\&quot; del /s /q &quot;$(OutDir)\\ShowMIDI.vst3\Contents&quot; &amp;&amp; mkdir &quot;$(OutDir)\\ShowMIDI.vst3\Contents&quot;
-if not exist &quot;$(OutDir)\\ShowMIDI.vst3\Contents\x86_64-win\&quot; del /s /q &quot;$(OutDir)\\ShowMIDI.vst3\Contents\x86_64-win&quot; &amp;&amp; mkdir &quot;$(OutDir)\\ShowMIDI.vst3\Contents\x86_64-win&quot;
-</Command>
-    </PreBuildEvent>
-    <PostBuildEvent>
-      <Command>copy /Y &quot;$(OutDir)\ShowMIDI.dll&quot; &quot;$(OutDir)\ShowMIDI.vst3\Contents\x86_64-win\ShowMIDI.vst3&quot;
-del /s /q &quot;$(OutDir)/ShowMIDI.vst3\Contents\moduleinfo.json&quot;
-if not exist &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources\&quot; del /s /q &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources&quot; &amp;&amp; mkdir &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources&quot;
-&quot;$(SolutionDir)$(Platform)\$(Configuration)\VST3 Manifest Helper\juce_vst3_helper.exe&quot; -create -version &quot;0.8.0&quot; -path &quot;$(OutDir)/ShowMIDI.vst3&quot; -output &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources\moduleinfo.json&quot;</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -133,14 +121,14 @@ if not exist &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources\&quot; del /s /q &
       <WarningLevel>Level4</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lilv\src;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lilv;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sratom;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sord\src;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\sord;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\serd;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK\lv2;..\..\JUCE\modules\juce_audio_processors\format_types\LV2_SDK;..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK;..\..\libs\vst2;..\..\JuceLibraryCode;..\..\JUCE\modules;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1;JUCER_VS2022_78A503E=1;JUCE_APP_VERSION=0.8.0;JUCE_APP_VERSION_HEX=0x800;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=1;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <OutputFile>$(OutDir)\ShowMIDI.dll</OutputFile>
+      <OutputFile>$(OutDir)\ShowMIDI.vst3</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -159,18 +147,6 @@ if not exist &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources\&quot; del /s /q &
     <Lib>
       <AdditionalDependencies>ShowMIDI.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
-    <PreBuildEvent>
-      <Command>if not exist &quot;$(OutDir)\\ShowMIDI.vst3\&quot; del /s /q &quot;$(OutDir)\\ShowMIDI.vst3&quot; &amp;&amp; mkdir &quot;$(OutDir)\\ShowMIDI.vst3&quot;
-if not exist &quot;$(OutDir)\\ShowMIDI.vst3\Contents\&quot; del /s /q &quot;$(OutDir)\\ShowMIDI.vst3\Contents&quot; &amp;&amp; mkdir &quot;$(OutDir)\\ShowMIDI.vst3\Contents&quot;
-if not exist &quot;$(OutDir)\\ShowMIDI.vst3\Contents\x86_64-win\&quot; del /s /q &quot;$(OutDir)\\ShowMIDI.vst3\Contents\x86_64-win&quot; &amp;&amp; mkdir &quot;$(OutDir)\\ShowMIDI.vst3\Contents\x86_64-win&quot;
-</Command>
-    </PreBuildEvent>
-    <PostBuildEvent>
-      <Command>copy /Y &quot;$(OutDir)\ShowMIDI.dll&quot; &quot;$(OutDir)\ShowMIDI.vst3\Contents\x86_64-win\ShowMIDI.vst3&quot;
-del /s /q &quot;$(OutDir)/ShowMIDI.vst3\Contents\moduleinfo.json&quot;
-if not exist &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources\&quot; del /s /q &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources&quot; &amp;&amp; mkdir &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources&quot;
-&quot;$(SolutionDir)$(Platform)\$(Configuration)\VST3 Manifest Helper\juce_vst3_helper.exe&quot; -create -version &quot;0.8.0&quot; -path &quot;$(OutDir)/ShowMIDI.vst3&quot; -output &quot;$(OutDir)/ShowMIDI.vst3\Contents\Resources\moduleinfo.json&quot;</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\JUCE\modules\juce_audio_plugin_client\VST3\juce_VST3ManifestHelper.cpp">
