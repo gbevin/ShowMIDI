@@ -1104,6 +1104,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_core\containers\juce_DynamicObject.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_core\containers\juce_Enumerate_test.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_core\containers\juce_FixedSizeFunction_test.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2457,8 +2460,10 @@
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMP.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMPacket.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMPackets.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMPBytesOnGroup.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMPConversion.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMPConverters.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMPDeviceInfo.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMPDispatcher.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMPFactory.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\midi\ump\juce_UMPIterator.h"/>
@@ -2915,6 +2920,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_ArrayBase.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_DynamicObject.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_ElementComparator.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_Enumerate.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_FixedSizeFunction.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_HashMap.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\containers\juce_LinkedListPointer.h"/>

@@ -217,9 +217,9 @@
                   customXcodeResourceFolders="Interface/Base.lproj/launch-screen-logo@2x.png">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="ShowMIDI" enablePluginBinaryCopyStep="0"
-                       fastMath="1" iosCompatibility="12.0"/>
+                       fastMath="1" iosCompatibility="12.0" iosDeploymentTarget="12.0"/>
         <CONFIGURATION isDebug="0" name="Release" targetName="ShowMIDI" fastMath="1"
-                       iosCompatibility="12.0"/>
+                       iosCompatibility="12.0" iosDeploymentTarget="12.0"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
