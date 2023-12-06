@@ -24,8 +24,10 @@
 namespace showmidi
 {
     static constexpr int EXPANDED_WIDTH = 200;
+#if JUCE_IOS
     static constexpr int EXPANDED_WIDTH_NARROW = 122;
-    
+#endif
+
     Theme Theme::getDefault()
     {
         return Desktop::getInstance().isDarkModeActive() ? THEME_DARK : THEME_LIGHT;
