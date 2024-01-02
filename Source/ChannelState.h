@@ -25,12 +25,16 @@ namespace showmidi
         int value_ { 0 };
     };
     
-    struct Note : public ChannelMessage
+    struct NoteOn : public ChannelMessage
     {
-        bool on_ { false };
         int number_ { -1 };
         int polyPressure_ { 0 };
         Time polyPressureTime_;
+    };
+    
+    struct NoteOff : public ChannelMessage
+    {
+        int number_ { -1 };
     };
     
     struct Notes
@@ -39,7 +43,8 @@ namespace showmidi
         {
             for (int i = 0; i < 128; ++i)
             {
-                note_[i].number_ = i;
+                noteOn_[i].number_ = i;
+                noteOff_[i].number_ = i;
             }
         }
         
@@ -59,12 +64,14 @@ namespace showmidi
             time_ = other.time_;
             for (int i = 0; i < 128; ++i)
             {
-                note_[i] = other.note_[i];
+                noteOn_[i] = other.noteOn_[i];
+                noteOff_[i] = other.noteOff_[i];
             }
         }
 
         Time time_;
-        Note note_[128];
+        NoteOn noteOn_[128];
+        NoteOff noteOff_[128];
     };
     
     struct ControlChange : public ChannelMessage

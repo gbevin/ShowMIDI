@@ -13,11 +13,11 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.8.0</string>
+	<string>0.9.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>12</string>
+	<string>13</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
@@ -50,7 +50,7 @@
 					<key>type</key>
 					<string>aumi</string>
 					<key>version</key>
-					<integer>2048</integer>
+					<integer>2304</integer>
 				</dict>
 			</array>
 		</dict>

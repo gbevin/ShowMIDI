@@ -63,15 +63,13 @@ namespace showmidi
             channel1.pitchBend_.value_ = 9256;
             channel1.pitchBend_.time_ = t;
             channel1.notes_.time_ = t;
-            channel1.notes_.note_[61].on_ = true;
-            channel1.notes_.note_[61].value_ = 127;
-            channel1.notes_.note_[61].polyPressure_ = 0;
-            channel1.notes_.note_[61].time_ = t;
-            channel1.notes_.note_[79].on_ = true;
-            channel1.notes_.note_[79].value_ = 38;
-            channel1.notes_.note_[79].polyPressure_ = 120;
-            channel1.notes_.note_[79].polyPressureTime_ = t;
-            channel1.notes_.note_[79].time_ = t;
+            channel1.notes_.noteOn_[61].value_ = 127;
+            channel1.notes_.noteOn_[61].polyPressure_ = 0;
+            channel1.notes_.noteOn_[61].time_ = t;
+            channel1.notes_.noteOn_[79].value_ = 38;
+            channel1.notes_.noteOn_[79].polyPressure_ = 120;
+            channel1.notes_.noteOn_[79].polyPressureTime_ = t;
+            channel1.notes_.noteOn_[79].time_ = t;
             channel1.channelPressure_.value_ = 76;
             channel1.channelPressure_.time_ = t;
             channel1.controlChanges_.time_ = t;
@@ -88,15 +86,15 @@ namespace showmidi
             channel16.pitchBend_.value_ = 0;
             channel16.pitchBend_.time_ = t;
             channel16.notes_.time_ = t;
-            channel16.notes_.note_[61].on_ = true;
-            channel16.notes_.note_[61].value_ = 127;
-            channel16.notes_.note_[61].polyPressure_ = 73;
-            channel16.notes_.note_[61].polyPressureTime_ = t;
-            channel16.notes_.note_[61].time_ = t;
-            channel16.notes_.note_[79].on_ = false;
-            channel16.notes_.note_[79].value_ = 127;
-            channel16.notes_.note_[79].polyPressure_ = 0;
-            channel16.notes_.note_[79].time_ = t;
+            channel16.notes_.noteOn_[61].value_ = 127;
+            channel16.notes_.noteOn_[61].polyPressure_ = 73;
+            channel16.notes_.noteOn_[61].polyPressureTime_ = t;
+            channel16.notes_.noteOn_[61].time_ = t;
+            channel16.notes_.noteOn_[79].value_ = 127;
+            channel16.notes_.noteOn_[79].polyPressure_ = 0;
+            channel16.notes_.noteOn_[79].time_ = t;
+            channel16.notes_.noteOff_[79].value_ = 127;
+            channel16.notes_.noteOff_[79].time_ = t;
             channel16.channelPressure_.value_ = 76;
             channel16.channelPressure_.time_ = t;
             channel16.controlChanges_.time_ = t;
@@ -125,25 +123,36 @@ namespace showmidi
             ChannelMessage* channel_message = nullptr;
             
             auto& channel = channels_.channel_[msg.getChannel() - 1];
-            if (msg.isNoteOnOrOff())
+            if (msg.isNoteOn())
             {
                 auto& notes = channel.notes_;
                 notes.time_ = t;
                 
-                auto& note = notes.note_[msg.getNoteNumber()];
-                note.on_ = msg.isNoteOn();
-                note.value_ = msg.getVelocity();
-                channel_message = &note;
+                auto& note_off = notes.noteOff_[msg.getNoteNumber()];
+                note_off.time_ = Time();
+
+                auto& note_on = notes.noteOn_[msg.getNoteNumber()];
+                note_on.value_ = msg.getVelocity();
+                channel_message = &note_on;
+            }
+            else if (msg.isNoteOff())
+            {
+                auto& notes = channel.notes_;
+                notes.time_ = t;
+                
+                auto& note_off = notes.noteOff_[msg.getNoteNumber()];
+                note_off.value_ = msg.getVelocity();
+                channel_message = &note_off;
             }
             else if (msg.isAftertouch())
             {
                 auto& notes = channel.notes_;
                 notes.time_ = t;
                 
-                auto& note = notes.note_[msg.getNoteNumber()];
-                note.polyPressure_ = msg.getAfterTouchValue();
-                note.polyPressureTime_ = t;
-                channel_message = &note;
+                auto& note_on = notes.noteOn_[msg.getNoteNumber()];
+                note_on.polyPressure_ = msg.getAfterTouchValue();
+                note_on.polyPressureTime_ = t;
+                channel_message = &note_on;
             }
             else if (msg.isController())
             {
@@ -565,13 +574,15 @@ namespace showmidi
             {
                 for (int i = 0; i < 128; ++i)
                 {
-                    auto& note = notes.note_[i];
-                    if (!isExpired(state.time_, note.time_))
+                    auto& note_on = notes.noteOn_[i];
+                    auto& note_off = notes.noteOff_[i];
+                    
+                    if (!isExpired(state.time_, note_on.time_))
                     {
-                        if (note.on_)
+                        if (isExpired(state.time_, note_off.time_))
                         {
                             channel.time_ = state.time_;
-                            note.time_ = state.time_;
+                            note_on.time_ = state.time_;
                             notes.time_ = state.time_;
                         }
                         
@@ -584,7 +595,7 @@ namespace showmidi
                         
                         // draw note text
                         
-                        auto note_color = note.on_ ? theme_.colorPositive : theme_.colorNegative;
+                        auto note_color = !isExpired(state.time_, note_off.time_) ? theme_.colorNegative : theme_.colorPositive;
                         g.setColour(note_color);
                         g.setFont(theme_.fontLabel());
                         g.drawText(outputNote(i),
@@ -595,14 +606,14 @@ namespace showmidi
                         int note_width = getStandardWidth() - X_ON_OFF - X_NOTE_DATA;
                         g.setColour(theme_.colorLabel);
                         g.setFont(theme_.fontLabel());
-                        g.drawText(note.on_ ? "ON" : "OFF",
+                        g.drawText("ON",
                                    X_ON_OFF, y_offset,
                                    note_width, theme_.labelHeight(),
                                    Justification::centredLeft);
                         
                         g.setColour(theme_.colorData);
                         g.setFont(theme_.fontData());
-                        g.drawText(output7Bit(note.value_),
+                        g.drawText(output7Bit(note_on.value_),
                                    X_ON_OFF, y_offset,
                                    note_width, theme_.dataHeight(),
                                    Justification::centredRight);
@@ -615,13 +626,15 @@ namespace showmidi
                         g.fillRect(X_ON_OFF, y_offset,
                                    note_width, HEIGHT_INDICATOR);
                         
-                        g.setColour(note_color);
+                        auto velocity_color = theme_.colorPositive;
+
+                        g.setColour(velocity_color);
                         g.fillRect(X_ON_OFF, y_offset,
-                                   (note_width * note.value_) / 127, HEIGHT_INDICATOR);
+                                   (note_width * note_on.value_) / 127, HEIGHT_INDICATOR);
                         
                         y_offset += HEIGHT_INDICATOR;
                         
-                        if (!isExpired(state.time_, note.polyPressureTime_))
+                        if (!isExpired(state.time_, note_on.polyPressureTime_))
                         {
                             // draw polypressure text
                             
@@ -637,7 +650,7 @@ namespace showmidi
                             
                             g.setColour(theme_.colorData);
                             g.setFont(theme_.fontData());
-                            g.drawText(output7Bit(note.polyPressure_),
+                            g.drawText(output7Bit(note_on.polyPressure_),
                                        X_PP, y_offset,
                                        pp_width, theme_.dataHeight(),
                                        Justification::centredRight);
@@ -652,10 +665,65 @@ namespace showmidi
                             
                             g.setColour(note_color);
                             g.fillRect(X_PP, y_offset,
-                                       (pp_width * note.polyPressure_) / 127, HEIGHT_INDICATOR);
+                                       (pp_width * note_on.polyPressure_) / 127, HEIGHT_INDICATOR);
                             
                             y_offset += HEIGHT_INDICATOR;
                         }
+                    }
+                    
+                    if (!isExpired(state.time_, note_off.time_))
+                    {
+                        if (y_offset == -1)
+                        {
+                            y_offset = state.offset_;
+                        }
+                        
+                        y_offset += Y_NOTE;
+                        
+                        // draw note text
+                        
+                        auto note_color = theme_.colorNegative;
+
+                        if (isExpired(state.time_, note_on.time_))
+                        {
+                            g.setColour(note_color);
+                            g.setFont(theme_.fontLabel());
+                            g.drawText(outputNote(i),
+                                       X_NOTE, y_offset,
+                                       getStandardWidth() - X_NOTE - X_NOTE_DATA, theme_.labelHeight(),
+                                       Justification::centredLeft);
+                        }
+                        
+                        int note_width = getStandardWidth() - X_ON_OFF - X_NOTE_DATA;
+                        g.setColour(theme_.colorLabel);
+                        g.setFont(theme_.fontLabel());
+                        g.drawText("OFF",
+                                   X_ON_OFF, y_offset,
+                                   note_width, theme_.labelHeight(),
+                                   Justification::centredLeft);
+                        
+                        g.setColour(theme_.colorData);
+                        g.setFont(theme_.fontData());
+                        g.drawText(output7Bit(note_off.value_),
+                                   X_ON_OFF, y_offset,
+                                   note_width, theme_.dataHeight(),
+                                   Justification::centredRight);
+                        
+                        y_offset += theme_.labelHeight();
+                        
+                        // draw velocity indicator
+                        
+                        g.setColour(theme_.colorTrack);
+                        g.fillRect(X_ON_OFF, y_offset,
+                                   note_width, HEIGHT_INDICATOR);
+                        
+                        auto velocity_color = theme_.colorNegative;
+
+                        g.setColour(velocity_color);
+                        g.fillRect(X_ON_OFF, y_offset,
+                                   (note_width * note_off.value_) / 127, HEIGHT_INDICATOR);
+                        
+                        y_offset += HEIGHT_INDICATOR;
                     }
                 }
             }
