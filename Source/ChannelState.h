@@ -186,8 +186,43 @@ namespace showmidi
         int lastDataLsb_ { 0 };
     };
     
+    struct Sysex
+    {
+        static constexpr int MAX_SYSEX_DATA = 20;
+        
+        Sysex()
+        {
+        }
+        
+        Sysex(const Sysex& other)
+        {
+            deepCopy(other);
+        }
+        
+        Sysex& operator=(Sysex other)
+        {
+            deepCopy(other);
+            return *this;
+        }
+        
+        Time time_;
+        
+        uint8 data_[MAX_SYSEX_DATA] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        unsigned int length_ { 0 };
+        
+        void deepCopy(const Sysex& other)
+        {
+            time_ = other.time_;
+            length_ = other.length_;
+            memcpy(data_, other.data_, MAX_SYSEX_DATA);
+        }
+
+    };
+    
     struct ActiveChannels
     {
+        Sysex sysex_;
+        
         ActiveChannels()
         {
             for (int i = 0; i < 16; ++i)
@@ -209,6 +244,8 @@ namespace showmidi
         
         void deepCopy(const ActiveChannels& other)
         {
+            sysex_ = other.sysex_;
+            
             for (int i = 0; i < 16; ++i)
             {
                 channel_[i] = other.channel_[i];

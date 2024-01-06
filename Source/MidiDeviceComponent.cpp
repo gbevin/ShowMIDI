@@ -54,6 +54,14 @@ namespace showmidi
             
             deviceInfo_ = {"MIDI Instrument Name", deviceInfo_.identifier};
             
+            auto& sysex = channels_.sysex_;
+            sysex.time_ = t;
+            sysex.length_ = 0xc;
+            uint8_t data[Sysex::MAX_SYSEX_DATA] = {
+                0x1, 0x2, 0xa, 0x7f, 0x0, 0xfe, 0x0, 0xaa, 0x1, 0x7e,
+                0x1, 0x2, 0xa, 0x7f, 0x0, 0xfe, 0x0, 0xaa, 0x1, 0x7e};
+            memcpy(sysex.data_, data, Sysex::MAX_SYSEX_DATA);
+            
             auto& channel1 = channels_.channel_[0];
             channel1.mpeManager_ = true;
             channel1.mpeMember_ = MpeMember::mpeLower;
@@ -113,12 +121,22 @@ namespace showmidi
         
         void handleIncomingMidiMessage(MidiInput*, const MidiMessage& msg)
         {
+            const auto t = Time::getCurrentTime();
+            
+            if (msg.isSysEx()) {
+                auto& sysex = channels_.sysex_;
+                sysex.time_ = t;
+                sysex.length_ = msg.getSysExDataSize();
+                memset(sysex.data_, 0, Sysex::MAX_SYSEX_DATA);
+                memcpy(sysex.data_, msg.getSysExData(), std::min(msg.getSysExDataSize(), Sysex::MAX_SYSEX_DATA));
+                dirty_ = true;
+                return;
+            }
+            
             if (msg.getChannel() <= 0)
             {
                 return;
             }
-            
-            const auto t = Time::getCurrentTime();
             
             ChannelMessage* channel_message = nullptr;
             
@@ -260,11 +278,20 @@ namespace showmidi
             }
         }
         
-        static constexpr int STANDARD_WIDTH = 252;
+        static constexpr int STANDARD_WIDTH = 254;
+        static constexpr int X_MID = 151;
         
         static constexpr int X_PORT = 48;
         static constexpr int Y_PORT = 12;
         
+        static constexpr int X_SYSEX = 23;
+        static constexpr int Y_SYSEX = 12;
+        static constexpr int X_SYSEX_LENGTH = 24;
+        static constexpr int Y_SYSEX_PADDING = 8;
+        static constexpr int X_SYSEX_DATA = 75;
+        static constexpr int X_SYSEX_DATA_WIDTH = 31;
+        static constexpr int SYSEX_DATA_PER_ROW = 5;
+
         static constexpr int X_CHANNEL = 23;
         static constexpr int X_CHANNEL_MPE = 84;
         static constexpr int X_CHANNEL_MPE_TYPE = 110;
@@ -273,7 +300,7 @@ namespace showmidi
         
         static constexpr int X_SEPERATOR = 1;
         static constexpr int Y_SEPERATOR = 2;
-        static constexpr int WIDTH_SEPERATOR = 204;
+        static constexpr int WIDTH_SEPERATOR = STANDARD_WIDTH - 48;
         static constexpr int HEIGHT_SEPERATOR = 1;
         
         static constexpr int X_PRGM = 24;
@@ -292,13 +319,13 @@ namespace showmidi
         static constexpr int X_NOTE = 48;
         static constexpr int Y_NOTE = 7;
         static constexpr int X_ON_OFF = 84;
-        static constexpr int X_NOTE_DATA = 108;
+        static constexpr int X_NOTE_DATA = X_MID - 6;
         
         static constexpr int X_PP = 84;
         static constexpr int Y_PP = 7;
-        static constexpr int X_PP_DATA = 108;
+        static constexpr int X_PP_DATA = X_MID - 6;
         
-        static constexpr int X_CC = 156;
+        static constexpr int X_CC = X_MID + 6;
         static constexpr int Y_CC = 7;
         static constexpr int X_CC_DATA = 24;
         
@@ -337,6 +364,10 @@ namespace showmidi
                        Justification::centredLeft);
             
             state.offset_ = Y_PORT + theme_.labelHeight();
+            
+            if (!isExpired(t, channels->sysex_.time_)) {
+                paintSysex(g, state, channels->sysex_);
+            }
             
             for (int channel_index = 0; channel_index < 16; ++channel_index)
             {
@@ -388,6 +419,60 @@ namespace showmidi
         int getVisibleHeight() const
         {
             return lastHeight_;
+        }
+        
+        void paintSysex(Graphics& g, ChannelPaintState& state, Sysex& sysex)
+        {
+            state.offset_ += Y_SYSEX;
+            
+            int sysex_width = getStandardWidth() - X_SYSEX - X_SYSEX_LENGTH;
+
+            // draw syxex header and length
+            g.setColour(theme_.colorData);
+            g.setFont(theme_.fontLabel());
+            g.drawText(String("SYSEX"),
+                       X_SYSEX, state.offset_,
+                       getStandardWidth() - X_SYSEX, theme_.labelHeight(),
+                       Justification::centredLeft);
+            
+            g.setColour(theme_.colorLabel);
+            g.setFont(theme_.fontLabel());
+            g.drawText(output14Bit(sysex.length_),
+                       X_SYSEX, state.offset_,
+                       sysex_width, theme_.dataHeight(),
+                       Justification::centredRight);
+            
+            state.offset_ += theme_.labelHeight();
+            
+            // draw sysex data
+
+            g.setColour(theme_.colorData);
+            g.setFont(theme_.fontLabel());
+            
+            int data_x = 0;
+            
+            for (int i = 0; i < Sysex::MAX_SYSEX_DATA && i < sysex.length_;) {
+                int i_row = i + SYSEX_DATA_PER_ROW;
+                
+                data_x = X_SYSEX_DATA;
+                for (; i < i_row && i < sysex.length_; ++i) {
+                    g.drawText(output7Bit(sysex.data_[i]),
+                               data_x, state.offset_,
+                               X_SYSEX_DATA_WIDTH, theme_.dataHeight(),
+                               Justification::centredRight);
+                    data_x += X_SYSEX_DATA_WIDTH;
+                }
+                
+                state.offset_ += theme_.labelHeight();
+            }
+
+            // draw seperator
+            
+            g.setColour(theme_.colorSeperator);
+            state.offset_ += Y_SEPERATOR;
+            g.drawRect(X_CHANNEL + X_SEPERATOR, state.offset_,
+                       WIDTH_SEPERATOR, HEIGHT_SEPERATOR);
+            state.offset_ += HEIGHT_SEPERATOR + Y_SYSEX_PADDING;
         }
         
         void paintChannelHeader(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
@@ -600,10 +685,10 @@ namespace showmidi
                         g.setFont(theme_.fontLabel());
                         g.drawText(outputNote(i),
                                    X_NOTE, y_offset,
-                                   getStandardWidth() - X_NOTE - X_NOTE_DATA, theme_.labelHeight(),
+                                   X_NOTE_DATA - X_NOTE, theme_.labelHeight(),
                                    Justification::centredLeft);
                         
-                        int note_width = getStandardWidth() - X_ON_OFF - X_NOTE_DATA;
+                        int note_width = X_NOTE_DATA - X_ON_OFF;
                         g.setColour(theme_.colorLabel);
                         g.setFont(theme_.fontLabel());
                         g.drawText("ON",
@@ -640,7 +725,7 @@ namespace showmidi
                             
                             y_offset += Y_PP;
                             
-                            int pp_width = getStandardWidth() - X_PP - X_PP_DATA;
+                            int pp_width = X_PP_DATA - X_PP;
                             g.setColour(theme_.colorLabel);
                             g.setFont(theme_.fontLabel());
                             g.drawText("PP",
@@ -690,11 +775,11 @@ namespace showmidi
                             g.setFont(theme_.fontLabel());
                             g.drawText(outputNote(i),
                                        X_NOTE, y_offset,
-                                       getStandardWidth() - X_NOTE - X_NOTE_DATA, theme_.labelHeight(),
+                                       X_NOTE_DATA - X_NOTE, theme_.labelHeight(),
                                        Justification::centredLeft);
                         }
                         
-                        int note_width = getStandardWidth() - X_ON_OFF - X_NOTE_DATA;
+                        int note_width = X_NOTE_DATA - X_ON_OFF;
                         g.setColour(theme_.colorLabel);
                         g.setFont(theme_.fontLabel());
                         g.drawText("OFF",
