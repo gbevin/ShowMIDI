@@ -208,7 +208,7 @@ namespace showmidi
         Time time_;
         
         uint8 data_[MAX_SYSEX_DATA] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        unsigned int length_ { 0 };
+        int length_ { 0 };
         
         void deepCopy(const Sysex& other)
         {
