@@ -61,7 +61,11 @@ namespace showmidi
                 0x1, 0x2, 0xa, 0x7f, 0x0, 0xfe, 0x0, 0xaa, 0x1, 0x7e,
                 0x1, 0x2, 0xa, 0x7f, 0x0, 0xfe, 0x0, 0xaa, 0x1, 0x7e};
             memcpy(sysex.data_, data, Sysex::MAX_SYSEX_DATA);
-            
+
+            auto& clock = channels_.clock_;
+            clock.time_ = t;
+            clock.bpm_ = 111.1;
+
             auto& channel1 = channels_.channel_[0];
             channel1.mpeManager_ = true;
             channel1.mpeMember_ = MpeMember::mpeLower;
@@ -123,7 +127,8 @@ namespace showmidi
         {
             const auto t = Time::getCurrentTime();
             
-            if (msg.isSysEx()) {
+            if (msg.isSysEx())
+            {
                 auto& sysex = channels_.sysex_;
                 sysex.time_ = t;
                 sysex.length_ = msg.getSysExDataSize();
@@ -133,6 +138,66 @@ namespace showmidi
                 return;
             }
             
+            if (msg.isMidiClock())
+            {
+                auto ts_secs = msg.getTimeStamp();
+                
+                // keep a queue of MIDI clock timestamps, never exceeding TIMESTAMP_QUEUE_SIZE
+                midiTimeStamps_.push_front(ts_secs);
+                while (midiTimeStamps_.size() > TIMESTAMP_QUEUE_SIZE)
+                {
+                    midiTimeStamps_.pop_back();
+                }
+                
+                // calculate the average across all the queued timestamps
+                // this will be used to filter out outliers
+                auto avg_ts = 0.0;
+                for (auto i = 0; i < midiTimeStamps_.size(); i++)
+                {
+                    avg_ts += midiTimeStamps_[i];
+                }
+                avg_ts /= midiTimeStamps_.size();
+                
+                // only keep timestamps that are within 1% deviation of the average
+                std::vector<double> keep;
+                for (auto i = 0; i < midiTimeStamps_.size(); i++)
+                {
+                    if (fabs(avg_ts - midiTimeStamps_[i]) < avg_ts * 0.01)
+                    {
+                        keep.push_back(midiTimeStamps_[i]);
+                    }
+                }
+                
+                // if we have at least four valid timestamps, calculate the bpm
+                if (keep.size() > 4)
+                {
+                    auto sum = 0.0;
+                    auto size = (int) keep.size() - 1;
+                    for (auto i = 0; i < size; i++)
+                    {
+                        sum += fabs(keep[i] - keep[i + 1]);
+                    }
+                    sum /= size;
+                    
+                    auto bpm = round(600.0 / sum / 24.0) / 10.0;
+                    bpm = std::min(std::max(bpm, BPM_MIN), BPM_MAX);
+                    
+                    if (keep.size() > TIMESTAMP_QUEUE_SIZE / 2)
+                    {
+                        auto& clock = channels_.clock_;
+                        clock.time_ = t;
+                        clock.bpm_ = bpm;
+                        dirty_ = true;
+                    }
+                }
+                return;
+            }
+            else if (msg.isMidiStart() || msg.isMidiContinue() || msg.isMidiStop())
+            {
+                midiTimeStamps_.clear();
+                return;
+            }
+
             if (msg.getChannel() <= 0)
             {
                 return;
@@ -278,12 +343,21 @@ namespace showmidi
             }
         }
         
+        static constexpr int TIMESTAMP_QUEUE_SIZE = 48;
+        static constexpr double BPM_MIN = 20.0;
+        static constexpr double BPM_MAX = 360.0;
+
         static constexpr int STANDARD_WIDTH = 254;
         static constexpr int X_MID = 151;
         
         static constexpr int X_PORT = 48;
         static constexpr int Y_PORT = 12;
         
+        static constexpr int X_CLOCK = 23;
+        static constexpr int Y_CLOCK = 12;
+        static constexpr int X_CLOCK_LENGTH = 24;
+        static constexpr int Y_CLOCK_PADDING = 8;
+
         static constexpr int X_SYSEX = 23;
         static constexpr int Y_SYSEX = 12;
         static constexpr int X_SYSEX_LENGTH = 24;
@@ -365,6 +439,10 @@ namespace showmidi
             
             state.offset_ = Y_PORT + theme_.labelHeight();
             
+            if (!isExpired(t, channels->clock_.time_)) {
+                paintClock(g, state, channels->clock_);
+            }
+
             if (!isExpired(t, channels->sysex_.time_)) {
                 paintSysex(g, state, channels->sysex_);
             }
@@ -421,6 +499,45 @@ namespace showmidi
             return lastHeight_;
         }
         
+        void paintClock(Graphics& g, ChannelPaintState& state, Clock& clock)
+        {
+            state.offset_ += Y_CLOCK;
+            
+            int tempo_width = getStandardWidth() - X_CLOCK - X_CLOCK_LENGTH;
+
+            // draw tempo header and length
+            g.setColour(theme_.colorData);
+            g.setFont(theme_.fontLabel());
+            g.drawText(String("CLOCK"),
+                       X_CLOCK, state.offset_,
+                       getStandardWidth() - X_CLOCK, theme_.labelHeight(),
+                       Justification::centredLeft);
+            
+            g.setColour(theme_.colorController);
+            g.setFont(theme_.fontLabel());
+            g.drawText("BPM",
+                       X_PARAM, state.offset_,
+                       tempo_width, theme_.labelHeight(),
+                       Justification::centredLeft);
+            
+            g.setColour(theme_.colorData);
+            g.setFont(theme_.fontData());
+            g.drawText(outputBpm(clock.bpm_),
+                       X_CLOCK, state.offset_,
+                       tempo_width, theme_.dataHeight(),
+                       Justification::centredRight);
+            
+            state.offset_ += theme_.labelHeight();
+
+            // draw seperator
+            
+            g.setColour(theme_.colorSeperator);
+            state.offset_ += Y_SEPERATOR;
+            g.drawRect(X_CHANNEL + X_SEPERATOR, state.offset_,
+                       WIDTH_SEPERATOR, HEIGHT_SEPERATOR);
+            state.offset_ += HEIGHT_SEPERATOR + Y_CLOCK_PADDING;
+        }
+
         void paintSysex(Graphics& g, ChannelPaintState& state, Sysex& sysex)
         {
             state.offset_ += Y_SYSEX;
@@ -935,6 +1052,11 @@ namespace showmidi
             }
         }
         
+        String outputBpm(double bpm)
+        {
+            return String(bpm, 1);
+        }
+
         void resized()
         {
             dirty_ = true;
@@ -988,6 +1110,7 @@ namespace showmidi
         bool paused_ { false };
         
         ActiveChannels channels_;
+        std::deque<double> midiTimeStamps_;
         
         Time pausedTime_;
         ActiveChannels pausedChannels_;

@@ -216,12 +216,40 @@ namespace showmidi
             length_ = other.length_;
             memcpy(data_, other.data_, MAX_SYSEX_DATA);
         }
-
+    };
+    
+    struct Clock
+    {
+        Clock()
+        {
+        }
+        
+        Clock(const Clock& other)
+        {
+            deepCopy(other);
+        }
+        
+        Clock& operator=(Clock other)
+        {
+            deepCopy(other);
+            return *this;
+        }
+        
+        Time time_;
+        
+        double bpm_ { 0.0 };
+        
+        void deepCopy(const Clock& other)
+        {
+            time_ = other.time_;
+            bpm_ = other.bpm_;
+        }
     };
     
     struct ActiveChannels
     {
         Sysex sysex_;
+        Clock clock_;
         
         ActiveChannels()
         {
@@ -245,6 +273,7 @@ namespace showmidi
         void deepCopy(const ActiveChannels& other)
         {
             sysex_ = other.sysex_;
+            clock_ = other.clock_;
             
             for (int i = 0; i < 16; ++i)
             {
