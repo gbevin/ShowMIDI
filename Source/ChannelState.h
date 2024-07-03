@@ -235,13 +235,19 @@ namespace showmidi
             return *this;
         }
         
-        Time time_;
+        Time timeBpm_;
+        Time timeStart_;
+        Time timeContinue_;
+        Time timeStop_;
         
         double bpm_ { 0.0 };
         
         void deepCopy(const Clock& other)
         {
-            time_ = other.time_;
+            timeBpm_ = other.timeBpm_;
+            timeStart_ = other.timeStart_;
+            timeContinue_ = other.timeContinue_;
+            timeStop_ = other.timeStop_;
             bpm_ = other.bpm_;
         }
     };

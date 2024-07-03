@@ -63,8 +63,11 @@ namespace showmidi
             memcpy(sysex.data_, data, Sysex::MAX_SYSEX_DATA);
 
             auto& clock = channels_.clock_;
-            clock.time_ = t;
             clock.bpm_ = 111.1;
+            clock.timeBpm_ = t;
+            clock.timeStart_ = t;
+            clock.timeContinue_ = t;
+            clock.timeStop_ = t;
 
             auto& channel1 = channels_.channel_[0];
             channel1.mpeManager_ = true;
@@ -185,9 +188,9 @@ namespace showmidi
                     if (keep.size() > TIMESTAMP_QUEUE_SIZE / 2)
                     {
                         auto& clock = channels_.clock_;
-                        if ((t - clock.time_).inSeconds() > 0.5)
+                        if ((t - clock.timeBpm_).inSeconds() > 0.5)
                         {
-                            clock.time_ = t;
+                            clock.timeBpm_ = t;
                             if (fabs(clock.bpm_ - bpm) >= 0.1)
                             {
                                 clock.bpm_ = bpm;
@@ -198,8 +201,21 @@ namespace showmidi
                 }
                 return;
             }
-            else if (msg.isMidiStart() || msg.isMidiContinue() || msg.isMidiStop())
+            else if (msg.isMidiStart())
             {
+                channels_.clock_.timeStart_ = t;
+                midiTimeStamps_.clear();
+                return;
+            }
+            else if (msg.isMidiContinue())
+            {
+                channels_.clock_.timeContinue_ = t;
+                midiTimeStamps_.clear();
+                return;
+            }
+            else if (msg.isMidiStop())
+            {
+                channels_.clock_.timeStop_ = t;
                 midiTimeStamps_.clear();
                 return;
             }
@@ -361,7 +377,7 @@ namespace showmidi
         
         static constexpr int X_CLOCK = 23;
         static constexpr int Y_CLOCK = 12;
-        static constexpr int X_CLOCK_LENGTH = 24;
+        static constexpr int X_CLOCK_BPM = 24;
         static constexpr int Y_CLOCK_PADDING = 8;
 
         static constexpr int X_SYSEX = 23;
@@ -445,9 +461,7 @@ namespace showmidi
             
             state.offset_ = Y_PORT + theme_.labelHeight();
             
-            if (!isExpired(t, channels->clock_.time_)) {
-                paintClock(g, state, channels->clock_);
-            }
+            paintClock(g, state, t, channels->clock_);
 
             if (!isExpired(t, channels->sysex_.time_)) {
                 paintSysex(g, state, channels->sysex_);
@@ -505,13 +519,25 @@ namespace showmidi
             return lastHeight_;
         }
         
-        void paintClock(Graphics& g, ChannelPaintState& state, Clock& clock)
+        void paintClock(Graphics& g, ChannelPaintState& state, Time& t, Clock& clock)
         {
+            auto show_bpm = !isExpired(t, clock.timeBpm_);
+            auto show_start = !isExpired(t, clock.timeStart_);
+            auto show_continue = !isExpired(t, clock.timeContinue_);
+            auto show_stop = !isExpired(t, clock.timeStop_);
+            auto show_transport = show_start || show_continue || show_stop;
+            auto show_clock = show_bpm || show_transport;
+            if (!show_clock)
+            {
+                return;
+            }
+            
             state.offset_ += Y_CLOCK;
             
-            int tempo_width = getStandardWidth() - X_CLOCK - X_CLOCK_LENGTH;
+            int clock_width = getStandardWidth() - X_PARAM - X_CLOCK_BPM;
 
-            // draw tempo header and length
+            // draw clock header
+            
             g.setColour(theme_.colorData);
             g.setFont(theme_.fontLabel());
             g.drawText(String("CLOCK"),
@@ -519,22 +545,63 @@ namespace showmidi
                        getStandardWidth() - X_CLOCK, theme_.labelHeight(),
                        Justification::centredLeft);
             
-            g.setColour(theme_.colorController);
-            g.setFont(theme_.fontLabel());
-            g.drawText("BPM",
-                       X_PARAM, state.offset_,
-                       tempo_width, theme_.labelHeight(),
-                       Justification::centredLeft);
-            
-            g.setColour(theme_.colorData);
-            g.setFont(theme_.fontData());
-            g.drawText(outputBpm(clock.bpm_),
-                       X_CLOCK, state.offset_,
-                       tempo_width, theme_.dataHeight(),
-                       Justification::centredRight);
-            
-            state.offset_ += theme_.labelHeight();
+            // draw BPM
+            if (show_bpm)
+            {
+                g.setColour(theme_.colorController);
+                g.setFont(theme_.fontLabel());
+                g.drawText("BPM",
+                           X_PARAM, state.offset_,
+                           clock_width, theme_.labelHeight(),
+                           Justification::centredLeft);
+                
+                g.setColour(theme_.colorData);
+                g.setFont(theme_.fontData());
+                g.drawText(outputBpm(clock.bpm_),
+                           X_PARAM, state.offset_,
+                           clock_width, theme_.dataHeight(),
+                           Justification::centredRight);
+                
+                state.offset_ += theme_.labelHeight();
+            }
 
+            // draw transport
+            
+            if (show_transport)
+            {
+                if (show_start)
+                {
+                    g.setColour(theme_.colorPositive);
+                    g.setFont(theme_.fontLabel());
+                    g.drawText("START",
+                               X_PARAM, state.offset_,
+                               clock_width, theme_.labelHeight(),
+                               Justification::centredLeft);
+                }
+                
+                if (show_continue)
+                {
+                    g.setColour(theme_.colorPositive);
+                    g.setFont(theme_.fontLabel());
+                    g.drawText("CONT",
+                               X_PARAM, state.offset_,
+                               clock_width, theme_.labelHeight(),
+                               Justification::centred);
+                }
+                
+                if (show_stop)
+                {
+                    g.setColour(theme_.colorNegative);
+                    g.setFont(theme_.fontLabel());
+                    g.drawText("STOP",
+                               X_PARAM, state.offset_,
+                               clock_width, theme_.dataHeight(),
+                               Justification::centredRight);
+                }
+                
+                state.offset_ += theme_.labelHeight();
+            }
+            
             // draw seperator
             
             g.setColour(theme_.colorSeperator);
