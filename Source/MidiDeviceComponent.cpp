@@ -179,15 +179,21 @@ namespace showmidi
                     }
                     sum /= size;
                     
-                    auto bpm = round(600.0 / sum / 24.0) / 10.0;
+                    auto bpm = int((600.0 / sum / 24.0) + 0.5) / 10.0;
                     bpm = std::min(std::max(bpm, BPM_MIN), BPM_MAX);
                     
                     if (keep.size() > TIMESTAMP_QUEUE_SIZE / 2)
                     {
                         auto& clock = channels_.clock_;
-                        clock.time_ = t;
-                        clock.bpm_ = bpm;
-                        dirty_ = true;
+                        if ((t - clock.time_).inSeconds() > 0.5)
+                        {
+                            clock.time_ = t;
+                            if (fabs(clock.bpm_ - bpm) >= 0.1)
+                            {
+                                clock.bpm_ = bpm;
+                                dirty_ = true;
+                            }
+                        }
                     }
                 }
                 return;
