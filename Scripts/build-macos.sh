@@ -17,7 +17,7 @@ rm -rfv $BUILD_DIR
 
 # build release artifacts
 echo "Building all ProJucer artifacts"
-xcodebuild -project ./Builds/MacOSX/showmidi.xcodeproj -config Release SYMROOT=build -scheme "ShowMIDI - All"
+xcodebuild -project ./Builds/MacOSX/showmidi.xcodeproj -destination "generic/platform=macOS,name=Any Mac" -config Release SYMROOT=build -scheme "ShowMIDI - All"
 
 echo "Building CLAP plugin"
 cmake -BBuilds/MacOSX/build/clap -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
