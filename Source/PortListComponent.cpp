@@ -117,7 +117,18 @@ namespace showmidi
             {
                 auto port_info = midiDevices_[port];
                 auto& settings = manager_->getSettings();
-                settings.setMidiDeviceVisible(port_info.identifier, !settings.isMidiDeviceVisible(port_info.identifier));
+                auto visible = !settings.isMidiDeviceVisible(port_info.identifier);
+                if (event.mods.isAltDown())
+                {
+                    for (auto device : midiDevices_)
+                    {
+                        settings.setMidiDeviceVisible(device.identifier, visible);
+                    }
+                }
+                else
+                {
+                    settings.setMidiDeviceVisible(port_info.identifier, visible);
+                }
                 owner_->repaint();
             }
         }
