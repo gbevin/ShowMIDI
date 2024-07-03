@@ -24,9 +24,9 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>0.9.0</string>
+    <string>1.0.0</string>
     <key>CFBundleVersion</key>
-    <string>13</string>
+    <string>14</string>
     <key>NSHumanReadableCopyright</key>
     <string>&#169;2023 Uwyn LLC</string>
     <key>NSHighResolutionCapable</key>

@@ -39,7 +39,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.9.0" "-DJUCE_APP_VERSION_HEX=0x900" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK -I../../libs/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.0" "-DJUCE_APP_VERSION_HEX=0x10000" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK -I../../libs/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
 
   JUCE_CPPFLAGS_VST :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_CFLAGS_VST := -fPIC -fvisibility=hidden
@@ -78,7 +78,7 @@ ifeq ($(CONFIG),Debug)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) $(shell $(PKG_CONFIG) --libs alsa freetype2) -fvisibility=hidden -lrt -ldl -lpthread $(LDFLAGS)
 
-  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(TARGET) $(JUCE_OBJDIR)
+  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_VST) $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3) $(JUCE_OUTDIR)/$(JUCE_TARGET_STANDALONE_PLUGIN) $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_PLUGIN) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_MANIFEST_HELPER) $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3_MANIFEST_HELPER) $(JUCE_OBJDIR)
 endif
 
 ifeq ($(CONFIG),Release)
@@ -91,7 +91,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=0.9.0" "-DJUCE_APP_VERSION_HEX=0x900" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK -I../../libs/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.0" "-DJUCE_APP_VERSION_HEX=0x10000" $(shell $(PKG_CONFIG) --cflags alsa freetype2) -pthread -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors/format_types/VST3_SDK -I../../libs/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
 
   JUCE_CPPFLAGS_VST :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_CFLAGS_VST := -fPIC -fvisibility=hidden
@@ -130,7 +130,7 @@ ifeq ($(CONFIG),Release)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) $(shell $(PKG_CONFIG) --libs alsa freetype2) -fvisibility=hidden -lrt -ldl -lpthread $(LDFLAGS)
 
-  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(TARGET) $(JUCE_OBJDIR)
+  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_VST) $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3) $(JUCE_OUTDIR)/$(JUCE_TARGET_STANDALONE_PLUGIN) $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_PLUGIN) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_MANIFEST_HELPER) $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3_MANIFEST_HELPER) $(JUCE_OBJDIR)
 endif
 
 OBJECTS_ALL := \
@@ -223,7 +223,7 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3) : $(OBJECTS_VST3) $(JUCE_OBJDIR)/execinfo.cmd
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3) $(OBJECTS_VST3) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE) $(JUCE_LDFLAGS) $(shell cat $(JUCE_OBJDIR)/execinfo.cmd) $(JUCE_LDFLAGS_VST3) $(RESOURCES) $(TARGET_ARCH)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)/$(JUCE_VST3DIR)/Contents/Resources
 	-$(V_AT)rm -f $(JUCE_OUTDIR)/$(JUCE_VST3DIR)/Contents/moduleinfo.json
-	$(V_AT) $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3_MANIFEST_HELPER) -create -version "0.9.0" -path $(JUCE_OUTDIR)/$(JUCE_VST3DIR) -output $(JUCE_OUTDIR)/$(JUCE_VST3DIR)/Contents/Resources/moduleinfo.json
+	$(V_AT) $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3_MANIFEST_HELPER) -create -version "1.0.0" -path $(JUCE_OUTDIR)/$(JUCE_VST3DIR) -output $(JUCE_OUTDIR)/$(JUCE_VST3DIR)/Contents/Resources/moduleinfo.json
 	-$(V_AT)[ ! "$(JUCE_VST3DESTDIR)" ] || (mkdir -p $(JUCE_VST3DESTDIR) && cp -R $(JUCE_COPYCMD_VST3))
 
 $(JUCE_OUTDIR)/$(JUCE_TARGET_STANDALONE_PLUGIN) : $(OBJECTS_STANDALONE_PLUGIN) $(JUCE_OBJDIR)/execinfo.cmd $(RESOURCES) $(JUCE_OUTDIR)/$(JUCE_TARGET_SHARED_CODE)
@@ -495,7 +495,12 @@ clean:
 
 strip:
 	@echo Stripping ShowMIDI
-	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(TARGET)
+	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(JUCE_TARGET_VST)
+	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3)
+	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(JUCE_TARGET_STANDALONE_PLUGIN)
+	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_PLUGIN)
+	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(JUCE_TARGET_LV2_MANIFEST_HELPER)
+	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(JUCE_TARGET_VST3_MANIFEST_HELPER)
 
 -include $(OBJECTS_VST:%.o=%.d)
 -include $(OBJECTS_VST3:%.o=%.d)
