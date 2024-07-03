@@ -90,9 +90,15 @@ namespace showmidi
             channel1.controlChanges_.time_ = t;
             channel1.controlChanges_.controlChange_[74].value_ = 127;
             channel1.controlChanges_.controlChange_[74].time_ = t;
+            channel1.controlChanges_.controlChange_[7].value_ = 64;
+            channel1.controlChanges_.controlChange_[7].time_ = t;
+            channel1.controlChanges_.controlChange_[39].value_ = 32;
+            channel1.controlChanges_.controlChange_[39].time_ = t;
             channel1.rpns_.time_ = t;
             channel1.rpns_.param_[0] = { t, 5000 };
             channel1.rpns_.param_[6] = { t, 10 };
+            channel1.hrccs_.time_ = t;
+            channel1.hrccs_.param_[7] = { t, 64 << 7 | 32 };
             
             auto& channel16 = channels_.channel_[15];
             channel16.time_ = t;
@@ -267,6 +273,7 @@ namespace showmidi
                 auto number = msg.getControllerNumber();
                 auto value = msg.getControllerValue();
                 channel_message = &control_changes.controlChange_[number];
+                channel_message->time_ = t;
                 channel_message->value_ = value;
                 
                 switch (number)
@@ -326,6 +333,19 @@ namespace showmidi
                         break;
                     case 101:
                         channel.lastRpnMsb_ = value;
+                        break;
+                    default:
+                        if (number >= 32 && number < 64)
+                        {
+                            auto msb = number - 32;
+                            if (control_changes.controlChange_[msb].time_.toMilliseconds() > 0)
+                            {
+                                auto& hrcc = channel.hrccs_;
+                                hrcc.time_ = t;
+                                hrcc.param_[msb].time_ = t;
+                                hrcc.param_[msb].value_ = (control_changes.controlChange_[msb].value_ << 7) + value;
+                            }
+                        }
                         break;
                 }
             }
@@ -476,6 +496,7 @@ namespace showmidi
                     
                     paintProgramChange(g, state, channel_messages);
                     state.offset_ = paintPitchBend(g, state, channel_messages);
+                    state.offset_ = paintParameters(g, state, "HRCC", channel_messages.hrccs_);
                     state.offset_ = paintParameters(g, state, "RPN", channel_messages.rpns_);
                     state.offset_ = paintParameters(g, state, "NRPN", channel_messages.nrpns_);
                     int notes_bottom = paintNotes(g, state, channel_messages);

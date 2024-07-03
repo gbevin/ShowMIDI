@@ -173,6 +173,7 @@ namespace showmidi
         ProgramChange programChange_;
         ChannelPressure channelPressure_;
         PitchBend pitchBend_;
+        Parameters hrccs_;
         Parameters rpns_;
         Parameters nrpns_;
         bool mpeManager_ { false };
