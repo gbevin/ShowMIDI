@@ -272,9 +272,6 @@ namespace showmidi
                 
                 auto number = msg.getControllerNumber();
                 auto value = msg.getControllerValue();
-                channel_message = &control_changes.controlChange_[number];
-                channel_message->time_ = t;
-                channel_message->value_ = value;
                 
                 switch (number)
                 {
@@ -335,19 +332,53 @@ namespace showmidi
                         channel.lastRpnMsb_ = value;
                         break;
                     default:
-                        if (number >= 32 && number < 64)
+                        // Support for 14-bit high resolution control changes as per MIDI 1.0 Detailed Specification v4.2.1:
+                        // 1. both MSB and LSB need to be transmitted initially
+                        // 2. subsequent fine adjustment can use only the LSB value and reuse the previous MSB value
+                        // 3. subsequent major adjustment must retransmit MSB, upon MSB reception the concept of LSB should be set to 0
+                        // Additional personal interpretations:
+                        // 4. for bullet 3: LSB is only set to 0 when MSB value is different
+                        // 5. for bullet 3: if previous MSB value was lower, then LSB is 0, otherwise LSB is 127
+                        if (number >= 0 && number < 32)
+                        {
+                            auto lsb = number + 32;
+                            // see bullet 1 above
+                            if (control_changes.controlChange_[number].time_.toMilliseconds() > 0 &&
+                                control_changes.controlChange_[lsb].time_.toMilliseconds() > 0 &&
+                                // see bullet 4 above
+                                control_changes.controlChange_[number].value_ != value)
+                            {
+                                auto& hrcc = channel.hrccs_;
+                                hrcc.time_ = t;
+                                hrcc.param_[number].time_ = t;
+                                // see bullet 5 above
+                                auto lsb_value = 0;
+                                if (control_changes.controlChange_[number].value_ > value)
+                                {
+                                    lsb_value = 127;
+                                }
+                                // see bullets 3, 4, 5 above
+                                hrcc.param_[number].value_ = (value << 7) + lsb_value;
+                            }
+                        }
+                        else if (number >= 32 && number < 64)
                         {
                             auto msb = number - 32;
+                            // see bullet 1 above
                             if (control_changes.controlChange_[msb].time_.toMilliseconds() > 0)
                             {
                                 auto& hrcc = channel.hrccs_;
                                 hrcc.time_ = t;
                                 hrcc.param_[msb].time_ = t;
+                                // see bullet 2 above
                                 hrcc.param_[msb].value_ = (control_changes.controlChange_[msb].value_ << 7) + value;
                             }
                         }
                         break;
                 }
+                
+                channel_message = &control_changes.controlChange_[number];
+                channel_message->value_ = value;
             }
             else if (msg.isProgramChange())
             {
