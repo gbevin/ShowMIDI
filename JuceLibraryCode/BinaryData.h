@@ -14,11 +14,17 @@ namespace BinaryData
     extern const char*   appicon_png;
     const int            appicon_pngSize = 87300;
 
+    extern const char*   bar_svg;
+    const int            bar_svgSize = 1174;
+
     extern const char*   collapsed_svg;
     const int            collapsed_svgSize = 864;
 
     extern const char*   expanded_svg;
     const int            expanded_svgSize = 825;
+
+    extern const char*   graph_svg;
+    const int            graph_svgSize = 1196;
 
     extern const char*   help_svg;
     const int            help_svgSize = 1676;
@@ -51,7 +57,7 @@ namespace BinaryData
     const int            JetBrainsMonoSemiBoldItalic_ttfSize = 279828;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 14;
+    const int namedResourceListSize = 16;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

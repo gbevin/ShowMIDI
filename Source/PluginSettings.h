@@ -29,6 +29,9 @@ namespace showmidi
         PluginSettings();
         ~PluginSettings();
         
+        Visualization getVisualization();
+        void setVisualization(Visualization);
+        
         int getOctaveMiddleC();
         void setOctaveMiddleC(int);
         

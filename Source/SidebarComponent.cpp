@@ -49,6 +49,8 @@ namespace showmidi
             settingsButton_ = std::make_unique<PaintedButton>();
             playButton_ = std::make_unique<PaintedButton>();
             pauseButton_ = std::make_unique<PaintedButton>();
+            barButton_ = std::make_unique<PaintedButton>();
+            graphButton_ = std::make_unique<PaintedButton>();
             
             settings_ = std::make_unique<SettingsComponent>(settingsManager_);
             about_ = std::make_unique<AboutComponent>(settingsManager_->getSettings().getTheme());
@@ -59,6 +61,8 @@ namespace showmidi
             settingsButton_->addListener(this);
             playButton_->addListener(this);
             pauseButton_->addListener(this);
+            barButton_->addListener(this);
+            graphButton_->addListener(this);
 
             owner_->addChildComponent(collapsedButton_.get());
             owner_->addChildComponent(expandedButton_.get());
@@ -66,6 +70,10 @@ namespace showmidi
             owner_->addChildComponent(settingsButton_.get());
             owner_->addAndMakeVisible(playButton_.get());
             owner_->addChildComponent(pauseButton_.get());
+            owner_->addChildComponent(barButton_.get());
+            owner_->addChildComponent(graphButton_.get());
+            
+            updateSettings();
                         
             if (sidebarType_ == SidebarType::sidebarExpandable)
             {
@@ -95,6 +103,20 @@ namespace showmidi
         {
             owner_->getParentComponent()->addChildComponent(about_.get());
             owner_->getParentComponent()->addChildComponent(settings_.get());
+        }
+        
+        void updateSettings()
+        {
+            if (settingsManager_->getSettings().getVisualization() == Visualization::visualizationBar)
+            {
+                barButton_->setVisible(true);
+                graphButton_->setVisible(false);
+            }
+            else
+            {
+                barButton_->setVisible(false);
+                graphButton_->setVisible(true);
+            }
         }
         
         void pauseChanged(bool state)
@@ -142,6 +164,16 @@ namespace showmidi
             {
                 pauseManager_->togglePaused();
             }
+            else if (button == barButton_.get())
+            {
+                settingsManager_->getSettings().setVisualization(Visualization::visualizationGraph);
+                updateSettings();
+            }
+            else if (button == graphButton_.get())
+            {
+                settingsManager_->getSettings().setVisualization(Visualization::visualizationBar);
+                updateSettings();
+            }
             else if (button == helpButton_.get())
             {
                 about_->setVisible(!about_->isVisible());
@@ -188,6 +220,20 @@ namespace showmidi
                 pauseButton_->drawDrawable(g, *pause_svg);
             }
 
+            if (barButton_->isVisible())
+            {
+                auto bar_svg = barSvg_->createCopy();
+                bar_svg->replaceColour(Colours::black, theme.colorData);
+                barButton_->drawDrawable(g, *bar_svg);
+            }
+
+            if (graphButton_->isVisible())
+            {
+                auto graph_svg = graphSvg_->createCopy();
+                graph_svg->replaceColour(Colours::black, theme.colorData);
+                graphButton_->drawDrawable(g, *graph_svg);
+            }
+
             auto help_svg = helpSvg_->createCopy();
             help_svg->replaceColour(Colours::black, theme.colorData);
             helpButton_->drawDrawable(g, *help_svg);
@@ -215,6 +261,12 @@ namespace showmidi
                 
                 pauseButton_->setBoundsForTouch(X_PLAY_EXPANDED, Y_PLAY_EXPANDED,
                                                 pauseSvg_->getWidth(), pauseSvg_->getHeight());
+                
+                barButton_->setBoundsForTouch(X_VISUALIZATION_EXPANDED, Y_VISUALIZATION_EXPANDED,
+                                               barSvg_->getWidth(), barSvg_->getHeight());
+                
+                graphButton_->setBoundsForTouch(X_VISUALIZATION_EXPANDED, Y_VISUALIZATION_EXPANDED,
+                                                graphSvg_->getWidth(), graphSvg_->getHeight());
             }
             else
             {
@@ -223,6 +275,12 @@ namespace showmidi
                 
                 pauseButton_->setBoundsForTouch(X_PLAY_COLLAPSED, Y_PLAY_COLLAPSED,
                                                 pauseSvg_->getWidth(), pauseSvg_->getHeight());
+                
+                barButton_->setBoundsForTouch(X_VISUALIZATION_COLLAPSED, Y_VISUALIZATION_COLLAPSED,
+                                               barSvg_->getWidth(), barSvg_->getHeight());
+                
+                graphButton_->setBoundsForTouch(X_VISUALIZATION_COLLAPSED, Y_VISUALIZATION_COLLAPSED,
+                                                graphSvg_->getWidth(), graphSvg_->getHeight());
             }
 
             helpButton_->setBoundsForTouch(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
@@ -270,6 +328,8 @@ namespace showmidi
         std::unique_ptr<Drawable> settingsSvg_ = Drawable::createFromImageData(BinaryData::settings_svg, BinaryData::settings_svgSize);
         std::unique_ptr<Drawable> playSvg_ = Drawable::createFromImageData(BinaryData::play_svg, BinaryData::play_svgSize);
         std::unique_ptr<Drawable> pauseSvg_ = Drawable::createFromImageData(BinaryData::pause_svg, BinaryData::pause_svgSize);
+        std::unique_ptr<Drawable> barSvg_ = Drawable::createFromImageData(BinaryData::bar_svg, BinaryData::bar_svgSize);
+        std::unique_ptr<Drawable> graphSvg_ = Drawable::createFromImageData(BinaryData::graph_svg, BinaryData::graph_svgSize);
 
         std::unique_ptr<PaintedButton> collapsedButton_;
         std::unique_ptr<PaintedButton> expandedButton_;
@@ -277,6 +337,8 @@ namespace showmidi
         std::unique_ptr<PaintedButton> settingsButton_;
         std::unique_ptr<PaintedButton> playButton_;
         std::unique_ptr<PaintedButton> pauseButton_;
+        std::unique_ptr<PaintedButton> barButton_;
+        std::unique_ptr<PaintedButton> graphButton_;
         std::unique_ptr<Viewport> portViewport_;
         std::unique_ptr<PortListComponent> portList_;
         std::unique_ptr<SettingsComponent> settings_;

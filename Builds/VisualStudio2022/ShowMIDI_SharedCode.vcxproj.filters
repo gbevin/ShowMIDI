@@ -6110,10 +6110,16 @@
     <None Include="..\..\Assets\appicon.png">
       <Filter>ShowMIDI\Assets</Filter>
     </None>
+    <None Include="..\..\Assets\bar.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
     <None Include="..\..\Assets\collapsed.svg">
       <Filter>ShowMIDI\Assets</Filter>
     </None>
     <None Include="..\..\Assets\expanded.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
+    <None Include="..\..\Assets\graph.svg">
       <Filter>ShowMIDI\Assets</Filter>
     </None>
     <None Include="..\..\Assets\help.svg">

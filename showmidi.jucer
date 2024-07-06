@@ -15,8 +15,10 @@
     <GROUP id="{8CB228DE-9289-566C-FA68-A725D7D623F1}" name="Assets">
       <FILE id="rP673S" name="appicon-ios.png" compile="0" resource="1" file="Assets/appicon-ios.png"/>
       <FILE id="eY2NXn" name="appicon.png" compile="0" resource="1" file="Assets/appicon.png"/>
+      <FILE id="AgfUwM" name="bar.svg" compile="0" resource="1" file="Assets/bar.svg"/>
       <FILE id="FUuUaF" name="collapsed.svg" compile="0" resource="1" file="Assets/collapsed.svg"/>
       <FILE id="ubQN3v" name="expanded.svg" compile="0" resource="1" file="Assets/expanded.svg"/>
+      <FILE id="mAP3cO" name="graph.svg" compile="0" resource="1" file="Assets/graph.svg"/>
       <FILE id="lTbJOc" name="help.svg" compile="0" resource="1" file="Assets/help.svg"
             xcodeResource="0"/>
       <FILE id="PqCEx8" name="hidden.svg" compile="0" resource="1" file="Assets/hidden.svg"/>
@@ -138,7 +140,7 @@
                JUCE_USE_FLAC="0" JUCE_USE_OGGVORBIS="0" JUCE_USE_MP3AUDIOFORMAT="0"
                JUCE_USE_WINDOWS_MEDIA_FORMAT="0" JUCE_WEB_BROWSER="0" JUCE_USE_CURL="0"/>
   <EXPORTFORMATS>
-    <XCODE_MAC targetFolder="Builds/MacOSX" extraDefs="JUCE_SILENCE_XCODE_15_LINKER_WARNING=1&#10;JUCE_COREGRAPHICS_RENDER_WITH_MULTIPLE_PAINT_CALLS=1"
+    <XCODE_MAC targetFolder="Builds/MacOSX" extraDefs="JUCE_SILENCE_XCODE_15_LINKER_WARNING=1&#10;JUCE_COREGRAPHICS_RENDER_WITH_MULTIPLE_PAINT_CALLS=1&#10;SHOW_TEST_DATA=0"
                smallIcon="eY2NXn" bigIcon="eY2NXn" buildNumber="15" xcodeValidArchs="arm64,arm64e,x86_64"
                appSandbox="1" hardenedRuntime="1" customPList="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&#10;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&#10;&lt;plist version=&quot;1.0&quot;&gt;&#10;&lt;dict&gt;&#10;&#9;&lt;key&gt;ITSAppUsesNonExemptEncryption&lt;/key&gt;&#10;&#9;&lt;false/&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;&#10;"
                iosDevelopmentTeamID="AGZT8GVS7G" applicationCategory="public.app-category.music"

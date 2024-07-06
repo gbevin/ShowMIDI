@@ -3451,8 +3451,10 @@
   <ItemGroup>
     <None Include="..\..\Assets\appicon-ios.png"/>
     <None Include="..\..\Assets\appicon.png"/>
+    <None Include="..\..\Assets\bar.svg"/>
     <None Include="..\..\Assets\collapsed.svg"/>
     <None Include="..\..\Assets\expanded.svg"/>
+    <None Include="..\..\Assets\graph.svg"/>
     <None Include="..\..\Assets\help.svg"/>
     <None Include="..\..\Assets\hidden.svg"/>
     <None Include="..\..\Assets\pause.svg"/>

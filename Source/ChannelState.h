@@ -19,17 +19,22 @@
 
 namespace showmidi
 {
-    struct ChannelMessage
+    struct TimedValue
     {
         Time time_;
         int value_ { 0 };
     };
     
+    struct ChannelMessage
+    {
+        TimedValue current_;
+        std::deque<TimedValue> history_;
+    };
+    
     struct NoteOn : public ChannelMessage
     {
         int number_ { -1 };
-        int polyPressure_ { 0 };
-        Time polyPressureTime_;
+        ChannelMessage polyPressure_;
     };
     
     struct NoteOff : public ChannelMessage

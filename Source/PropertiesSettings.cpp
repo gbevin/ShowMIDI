@@ -19,6 +19,7 @@
 
 namespace showmidi
 {
+    const String PropertiesSettings::VISUALIZATION = { "visualization" };
     const String PropertiesSettings::OCTAVE_MIDDLE_C = { "octaveMiddleC" };
     const String PropertiesSettings::NOTE_FORMAT = { "noteFormat" };
     const String PropertiesSettings::NUMBER_FORMAT = { "numberFormat" };
@@ -37,6 +38,17 @@ namespace showmidi
         flush();
     }
     
+    Visualization PropertiesSettings::getVisualization()
+    {
+        return (Visualization)getGlobalProperties().getIntValue(VISUALIZATION, DEFAULT_VISUALIZATION);
+    }
+    
+    void PropertiesSettings::setVisualization(Visualization visualization)
+    {
+        getGlobalProperties().setValue(VISUALIZATION, visualization);
+        flush();
+    }
+
     int PropertiesSettings::getOctaveMiddleC()
     {
         return getGlobalProperties().getIntValue(OCTAVE_MIDDLE_C, DEFAULT_OCTAVE_MIDDLE_C);

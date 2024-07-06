@@ -23,6 +23,7 @@ namespace showmidi
     PluginSettings::PluginSettings()
     {
         PropertiesSettings properties_settings;
+        settings_.setProperty(PropertiesSettings::VISUALIZATION, properties_settings.getVisualization(), nullptr);
         settings_.setProperty(PropertiesSettings::OCTAVE_MIDDLE_C, properties_settings.getOctaveMiddleC(), nullptr);
         settings_.setProperty(PropertiesSettings::NOTE_FORMAT, properties_settings.getNoteFormat(), nullptr);
         settings_.setProperty(PropertiesSettings::NUMBER_FORMAT, properties_settings.getNumberFormat(), nullptr);
@@ -36,6 +37,16 @@ namespace showmidi
     {
     }
     
+    Visualization PluginSettings::getVisualization()
+    {
+        return (Visualization)(int)settings_.getProperty(PropertiesSettings::VISUALIZATION, PropertiesSettings::DEFAULT_VISUALIZATION);
+    }
+    
+    void PluginSettings::setVisualization(Visualization visualization)
+    {
+        settings_.setProperty(PropertiesSettings::VISUALIZATION, visualization, nullptr);
+    }
+
     int PluginSettings::getOctaveMiddleC()
     {
         return settings_.getProperty(PropertiesSettings::OCTAVE_MIDDLE_C, PropertiesSettings::DEFAULT_OCTAVE_MIDDLE_C);

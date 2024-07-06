@@ -26,6 +26,7 @@ namespace showmidi
     class PropertiesSettings : public Settings
     {
     public:
+        static const String VISUALIZATION;
         static const String OCTAVE_MIDDLE_C;
         static const String NOTE_FORMAT;
         static const String NUMBER_FORMAT;
@@ -36,6 +37,9 @@ namespace showmidi
         
         PropertiesSettings();
         ~PropertiesSettings();
+        
+        Visualization getVisualization();
+        void setVisualization(Visualization);
         
         int getOctaveMiddleC();
         void setOctaveMiddleC(int);

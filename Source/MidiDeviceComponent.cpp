@@ -73,27 +73,35 @@ namespace showmidi
             channel1.mpeManager_ = true;
             channel1.mpeMember_ = MpeMember::mpeLower;
             channel1.time_ = t;
-            channel1.programChange_.value_ = 0;
-            channel1.programChange_.time_ = t;
-            channel1.pitchBend_.value_ = 9256;
-            channel1.pitchBend_.time_ = t;
+            channel1.programChange_.current_.value_ = 0;
+            channel1.programChange_.current_.time_ = t;
+            channel1.pitchBend_.current_.value_ = 9256;
+            channel1.pitchBend_.current_.time_ = t;
             channel1.notes_.time_ = t;
-            channel1.notes_.noteOn_[61].value_ = 127;
-            channel1.notes_.noteOn_[61].polyPressure_ = 0;
-            channel1.notes_.noteOn_[61].time_ = t;
-            channel1.notes_.noteOn_[79].value_ = 38;
-            channel1.notes_.noteOn_[79].polyPressure_ = 120;
-            channel1.notes_.noteOn_[79].polyPressureTime_ = t;
-            channel1.notes_.noteOn_[79].time_ = t;
-            channel1.channelPressure_.value_ = 76;
-            channel1.channelPressure_.time_ = t;
+            channel1.notes_.noteOn_[61].current_.value_ = 127;
+            channel1.notes_.noteOn_[61].current_.time_ = t;
+            channel1.notes_.noteOn_[61].polyPressure_.current_.value_ = 0;
+            channel1.notes_.noteOn_[79].current_.value_ = 38;
+            channel1.notes_.noteOn_[79].current_.time_ = t;
+            channel1.notes_.noteOn_[79].polyPressure_.current_.value_ = 120;
+            channel1.notes_.noteOn_[79].polyPressure_.current_.time_ = t;
+            channel1.channelPressure_.current_.value_ = 76;
+            channel1.channelPressure_.current_.time_ = t;
             channel1.controlChanges_.time_ = t;
-            channel1.controlChanges_.controlChange_[74].value_ = 127;
-            channel1.controlChanges_.controlChange_[74].time_ = t;
-            channel1.controlChanges_.controlChange_[7].value_ = 64;
-            channel1.controlChanges_.controlChange_[7].time_ = t;
-            channel1.controlChanges_.controlChange_[39].value_ = 32;
-            channel1.controlChanges_.controlChange_[39].time_ = t;
+            channel1.controlChanges_.controlChange_[74].current_.value_ = 127;
+            channel1.controlChanges_.controlChange_[74].current_.time_ = t;
+            auto& cc74_history = channel1.controlChanges_.controlChange_[74].history_;
+            auto cc74_t = t.toMilliseconds();
+            cc74_history.push_back({Time(cc74_t -= 100), 100});
+            cc74_history.push_back({Time(cc74_t -= 100), 99});
+            cc74_history.push_back({Time(cc74_t -= 100), 95});
+            cc74_history.push_back({Time(cc74_t -= 700), 90});
+            cc74_history.push_back({Time(cc74_t -= 1000), 80});
+            cc74_history.push_back({Time(cc74_t -= 3000), 30});
+            channel1.controlChanges_.controlChange_[7].current_.value_ = 64;
+            channel1.controlChanges_.controlChange_[7].current_.time_ = Time(t.toMilliseconds() - 500);
+            channel1.controlChanges_.controlChange_[39].current_.value_ = 32;
+            channel1.controlChanges_.controlChange_[39].current_.time_ = t;
             channel1.rpns_.time_ = t;
             channel1.rpns_.param_[0] = { t, 5000 };
             channel1.rpns_.param_[6] = { t, 10 };
@@ -102,29 +110,29 @@ namespace showmidi
             
             auto& channel16 = channels_.channel_[15];
             channel16.time_ = t;
-            channel16.programChange_.value_ = 127;
-            channel16.programChange_.time_ = t;
-            channel16.pitchBend_.value_ = 0;
-            channel16.pitchBend_.time_ = t;
+            channel16.programChange_.current_.value_ = 127;
+            channel16.programChange_.current_.time_ = t;
+            channel16.pitchBend_.current_.value_ = 0;
+            channel16.pitchBend_.current_.time_ = t;
             channel16.notes_.time_ = t;
-            channel16.notes_.noteOn_[61].value_ = 127;
-            channel16.notes_.noteOn_[61].polyPressure_ = 73;
-            channel16.notes_.noteOn_[61].polyPressureTime_ = t;
-            channel16.notes_.noteOn_[61].time_ = t;
-            channel16.notes_.noteOn_[79].value_ = 127;
-            channel16.notes_.noteOn_[79].polyPressure_ = 0;
-            channel16.notes_.noteOn_[79].time_ = t;
-            channel16.notes_.noteOff_[79].value_ = 127;
-            channel16.notes_.noteOff_[79].time_ = t;
-            channel16.channelPressure_.value_ = 76;
-            channel16.channelPressure_.time_ = t;
+            channel16.notes_.noteOn_[61].current_.value_ = 127;
+            channel16.notes_.noteOn_[61].current_.time_ = t;
+            channel16.notes_.noteOn_[61].polyPressure_.current_.value_ = 73;
+            channel16.notes_.noteOn_[61].polyPressure_.current_.time_ = t;
+            channel16.notes_.noteOn_[79].current_.value_ = 127;
+            channel16.notes_.noteOn_[79].current_.time_ = t;
+            channel16.notes_.noteOn_[79].polyPressure_.current_.value_ = 0;
+            channel16.notes_.noteOff_[79].current_.value_ = 127;
+            channel16.notes_.noteOff_[79].current_.time_ = t;
+            channel16.channelPressure_.current_.value_ = 76;
+            channel16.channelPressure_.current_.time_ = t;
             channel16.controlChanges_.time_ = t;
-            channel16.controlChanges_.controlChange_[1].value_ = 124;
-            channel16.controlChanges_.controlChange_[1].time_ = t;
-            channel16.controlChanges_.controlChange_[45].value_ = 89;
-            channel16.controlChanges_.controlChange_[45].time_ = t;
-            channel16.controlChanges_.controlChange_[127].value_ = 100;
-            channel16.controlChanges_.controlChange_[127].time_ = t;
+            channel16.controlChanges_.controlChange_[1].current_.value_ = 124;
+            channel16.controlChanges_.controlChange_[1].current_.time_ = t;
+            channel16.controlChanges_.controlChange_[45].current_.value_ = 89;
+            channel16.controlChanges_.controlChange_[45].current_.time_ = t;
+            channel16.controlChanges_.controlChange_[127].current_.value_ = 100;
+            channel16.controlChanges_.controlChange_[127].current_.time_ = t;
         }
         
         ~Pimpl()
@@ -240,10 +248,10 @@ namespace showmidi
                 notes.time_ = t;
                 
                 auto& note_off = notes.noteOff_[msg.getNoteNumber()];
-                note_off.time_ = Time();
+                note_off.current_.time_ = Time();
 
                 auto& note_on = notes.noteOn_[msg.getNoteNumber()];
-                note_on.value_ = msg.getVelocity();
+                note_on.current_.value_ = msg.getVelocity();
                 channel_message = &note_on;
             }
             else if (msg.isNoteOff())
@@ -252,7 +260,7 @@ namespace showmidi
                 notes.time_ = t;
                 
                 auto& note_off = notes.noteOff_[msg.getNoteNumber()];
-                note_off.value_ = msg.getVelocity();
+                note_off.current_.value_ = msg.getVelocity();
                 channel_message = &note_off;
             }
             else if (msg.isAftertouch())
@@ -261,9 +269,9 @@ namespace showmidi
                 notes.time_ = t;
                 
                 auto& note_on = notes.noteOn_[msg.getNoteNumber()];
-                note_on.polyPressure_ = msg.getAfterTouchValue();
-                note_on.polyPressureTime_ = t;
-                channel_message = &note_on;
+                channel_message = &note_on.polyPressure_;
+                collectHistory(channel_message);
+                channel_message->current_.value_ = msg.getAfterTouchValue();
             }
             else if (msg.isController())
             {
@@ -286,14 +294,18 @@ namespace showmidi
                     case 38:
                         if (channel.lastRpnMsb_ != 127 || channel.lastRpnLsb_ != 127)
                         {
+                            const std::lock_guard<std::mutex> lock(paramsLock_);
+                            
                             channel.lastDataLsb_ = value;
                             
                             int rpn_number = (channel.lastRpnMsb_ << 7) + channel.lastRpnLsb_;
                             int rpn_value = (channel.lastDataMsb_ << 7) + channel.lastDataLsb_;
                             auto& rpns = channel.rpns_;
+                            collectHistory(&rpns.param_[rpn_number]);
+                            
                             rpns.time_ = t;
-                            rpns.param_[rpn_number].time_ = t;
-                            rpns.param_[rpn_number].value_ = rpn_value;
+                            rpns.param_[rpn_number].current_.time_ = t;
+                            rpns.param_[rpn_number].current_.value_ = rpn_value;
                             
                             // handle MPE activation message
                             if (rpn_number == 6 && channel.lastDataMsb_ <= 0xf)
@@ -303,14 +315,18 @@ namespace showmidi
                         }
                         else if (channel.lastNrpnMsb_ != 127 || channel.lastNrpnLsb_ != 127)
                         {
+                            const std::lock_guard<std::mutex> lock(paramsLock_);
+                            
                             channel.lastDataLsb_ = value;
                             
                             int nrpn_number = (channel.lastNrpnMsb_ << 7) + channel.lastNrpnLsb_;
                             int nrpn_value = (channel.lastDataMsb_ << 7) + channel.lastDataLsb_;
                             auto& nrpns = channel.nrpns_;
+                            collectHistory(&nrpns.param_[nrpn_number]);
+                            
                             nrpns.time_ = t;
-                            nrpns.param_[nrpn_number].time_ = t;
-                            nrpns.param_[nrpn_number].value_ = nrpn_value;
+                            nrpns.param_[nrpn_number].current_.time_ = t;
+                            nrpns.param_[nrpn_number].current_.value_ = nrpn_value;
                         }
                         break;
                     case 98:
@@ -343,64 +359,84 @@ namespace showmidi
                         {
                             auto lsb = number + 32;
                             // see bullet 1 above
-                            if (control_changes.controlChange_[number].time_.toMilliseconds() > 0 &&
-                                control_changes.controlChange_[lsb].time_.toMilliseconds() > 0 &&
+                            if (control_changes.controlChange_[number].current_.time_.toMilliseconds() > 0 &&
+                                control_changes.controlChange_[lsb].current_.time_.toMilliseconds() > 0 &&
                                 // see bullet 4 above
-                                control_changes.controlChange_[number].value_ != value)
+                                control_changes.controlChange_[number].current_.value_ != value)
                             {
+                                const std::lock_guard<std::mutex> lock(paramsLock_);
+                                
                                 auto& hrcc = channel.hrccs_;
+                                collectHistory(&hrcc.param_[number]);
+                                
                                 hrcc.time_ = t;
-                                hrcc.param_[number].time_ = t;
+                                hrcc.param_[number].current_.time_ = t;
                                 // see bullet 5 above
                                 auto lsb_value = 0;
-                                if (control_changes.controlChange_[number].value_ > value)
+                                if (control_changes.controlChange_[number].current_.value_ > value)
                                 {
                                     lsb_value = 127;
                                 }
                                 // see bullets 3, 4, 5 above
-                                hrcc.param_[number].value_ = (value << 7) + lsb_value;
+                                hrcc.param_[number].current_.value_ = (value << 7) + lsb_value;
                             }
                         }
                         else if (number >= 32 && number < 64)
                         {
                             auto msb = number - 32;
                             // see bullet 1 above
-                            if (control_changes.controlChange_[msb].time_.toMilliseconds() > 0)
+                            if (control_changes.controlChange_[msb].current_.time_.toMilliseconds() > 0)
                             {
+                                const std::lock_guard<std::mutex> lock(paramsLock_);
+                                
                                 auto& hrcc = channel.hrccs_;
+                                collectHistory(&hrcc.param_[number]);
+                                
                                 hrcc.time_ = t;
-                                hrcc.param_[msb].time_ = t;
+                                hrcc.param_[msb].current_.time_ = t;
                                 // see bullet 2 above
-                                hrcc.param_[msb].value_ = (control_changes.controlChange_[msb].value_ << 7) + value;
+                                hrcc.param_[msb].current_.value_ = (control_changes.controlChange_[msb].current_.value_ << 7) + value;
                             }
                         }
                         break;
                 }
                 
                 channel_message = &control_changes.controlChange_[number];
-                channel_message->value_ = value;
+                collectHistory(channel_message);
+                channel_message->current_.value_ = value;
             }
             else if (msg.isProgramChange())
             {
                 channel_message = &channel.programChange_;
-                channel_message->value_ = msg.getProgramChangeNumber();
+                channel_message->current_.value_ = msg.getProgramChangeNumber();
             }
             else if (msg.isChannelPressure())
             {
                 channel_message = &channel.channelPressure_;
-                channel_message->value_ = msg.getChannelPressureValue();
+                collectHistory(channel_message);
+                channel_message->current_.value_ = msg.getChannelPressureValue();
             }
             else if (msg.isPitchWheel())
             {
                 channel_message = &channel.pitchBend_;
-                channel_message->value_ = msg.getPitchWheelValue();
+                collectHistory(channel_message);
+                channel_message->current_.value_ = msg.getPitchWheelValue();
             }
             
             if (channel_message != nullptr)
             {
-                channel_message->time_ = t;
+                channel_message->current_.time_ = t;
                 channel.time_ = t;
                 dirty_ = true;
+            }
+        }
+        
+        void collectHistory(ChannelMessage* message)
+        {
+            if (message->current_.time_.toMilliseconds() > 0)
+            {
+                const std::lock_guard<std::mutex> lock(historyLock_);
+                message->history_.push_front(message->current_);
             }
         }
         
@@ -409,12 +445,14 @@ namespace showmidi
             const auto t = Time::getCurrentTime();
             
             bool expected = true;
-            if (dirty_.compare_exchange_strong(expected, false) || (t - lastRender_).inMilliseconds() > 200)
+            if (dirty_.compare_exchange_strong(expected, false) || (t - lastRender_).inMilliseconds() >= RENDER_TIME_UNIT_MS)
             {
                 lastRender_ = t;
                 owner_->repaint();
             }
         }
+        
+        static constexpr int RENDER_TIME_UNIT_MS = 100;
         
         static constexpr int TIMESTAMP_QUEUE_SIZE = 48;
         static constexpr double BPM_MIN = 20.0;
@@ -512,7 +550,7 @@ namespace showmidi
             
             state.offset_ = Y_PORT + theme_.labelHeight();
             
-            paintClock(g, state, t, channels->clock_);
+            paintClock(g, state, channels->clock_);
 
             if (!isExpired(t, channels->sysex_.time_)) {
                 paintSysex(g, state, channels->sysex_);
@@ -548,10 +586,12 @@ namespace showmidi
         
         void pruneParameters(Time t, Parameters& params)
         {
+            const std::lock_guard<std::mutex> lock(paramsLock_);
+            
             auto it_param = params.param_.begin();
             while (it_param != params.param_.end())
             {
-                if (isExpired(t, it_param->second.time_))
+                if (isExpired(t, it_param->second.current_.time_))
                 {
                     it_param = params.param_.erase(it_param);
                 }
@@ -572,12 +612,12 @@ namespace showmidi
             return lastHeight_;
         }
         
-        void paintClock(Graphics& g, ChannelPaintState& state, Time& t, Clock& clock)
+        void paintClock(Graphics& g, ChannelPaintState& state, Clock& clock)
         {
-            auto show_bpm = !isExpired(t, clock.timeBpm_);
-            auto show_start = !isExpired(t, clock.timeStart_);
-            auto show_continue = !isExpired(t, clock.timeContinue_);
-            auto show_stop = !isExpired(t, clock.timeStop_);
+            auto show_bpm = !isExpired(state.time_, clock.timeBpm_);
+            auto show_start = !isExpired(state.time_, clock.timeStart_);
+            auto show_continue = !isExpired(state.time_, clock.timeContinue_);
+            auto show_stop = !isExpired(state.time_, clock.timeStop_);
             auto show_transport = show_start || show_continue || show_stop;
             auto show_clock = show_bpm || show_transport;
             if (!show_clock)
@@ -767,13 +807,13 @@ namespace showmidi
         void paintProgramChange(Graphics& g, ChannelPaintState& state, ActiveChannel& channel)
         {
             auto& program_change = channel.programChange_;
-            if (!isExpired(state.time_, program_change.time_))
+            if (!isExpired(state.time_, program_change.current_.time_))
             {
                 // write the texts
                 
                 g.setColour(theme_.colorLabel);
                 g.setFont(theme_.fontLabel());
-                g.drawText(String("PRGM ") + output7Bit(program_change.value_),
+                g.drawText(String("PRGM ") + output7Bit(program_change.current_.value_),
                            0, state.offset_ - Y_CHANNEL_PADDING - Y_SEPERATOR - HEIGHT_SEPERATOR - theme_.labelHeight(),
                            getStandardWidth() - X_PRGM, theme_.labelHeight(),
                            Justification::centredRight);
@@ -785,27 +825,21 @@ namespace showmidi
             int y_offset = state.offset_;
             
             auto& pitch_bend = channel.pitchBend_;
-            if (!isExpired(state.time_, pitch_bend.time_))
+            if (!isExpired(state.time_, pitch_bend.current_.time_))
             {
                 y_offset += Y_PB;
                 
                 Colour pb_color = theme_.colorLabel;
-                
-                int pb_width = getStandardWidth() - X_PB - X_PB_DATA;
-                int pb_range = pb_width / 2;
-                
-                int indicator_x = X_PB + pb_range + 1;
-                int indicator_width = (pb_range * (pitch_bend.value_ - 0x2000)) / 0x2000;
-                if (pitch_bend.value_ > 0x2000)
+                if (pitch_bend.current_.value_ > 0x2000)
                 {
                     pb_color = theme_.colorPositive;
                 }
-                else if (pitch_bend.value_ < 0x2000)
+                else if (pitch_bend.current_.value_ < 0x2000)
                 {
                     pb_color = theme_.colorNegative;
-                    indicator_x = X_PB + pb_range + indicator_width;
-                    indicator_width = abs(indicator_width);
                 }
+                
+                int pb_width = getStandardWidth() - X_PB - X_PB_DATA;
                 
                 // draw the pitch bend text
                 
@@ -818,7 +852,7 @@ namespace showmidi
                 
                 g.setColour(theme_.colorData);
                 g.setFont(theme_.fontData());
-                g.drawText(output14Bit(pitch_bend.value_),
+                g.drawText(output14Bit(pitch_bend.current_.value_),
                            X_PB, y_offset,
                            pb_width, theme_.dataHeight(),
                            Justification::centredRight);
@@ -827,15 +861,11 @@ namespace showmidi
                 
                 // draw pitchbend indicator
                 
-                g.setColour(theme_.colorTrack);
-                g.fillRect(X_PB, y_offset,
-                           pb_width, HEIGHT_INDICATOR);
-                
-                g.setColour(pb_color);
-                g.fillRect(indicator_x, y_offset,
-                           indicator_width, HEIGHT_INDICATOR);
-                
-                y_offset += HEIGHT_INDICATOR;
+                paintVisualization(g, state, y_offset, pitch_bend, 0x2000, 0x3FFF,
+                                   true, theme_.colorPositive, theme_.colorNegative,
+                                   X_PB, y_offset,
+                                   pb_width, HEIGHT_INDICATOR + (Y_PB + theme_.labelHeight() + HEIGHT_INDICATOR) * 2);
+
             }
             
             return y_offset;
@@ -847,9 +877,11 @@ namespace showmidi
 
             if (!isExpired(state.time_, parameters.time_))
             {
+                const std::lock_guard<std::mutex> lock(paramsLock_);
+                
                 for (auto& [number, param] : parameters.param_)
                 {
-                    if (!isExpired(state.time_, param.time_))
+                    if (!isExpired(state.time_, param.current_.time_))
                     {
                         y_offset += Y_PARAM;
                         
@@ -868,7 +900,7 @@ namespace showmidi
                         
                         g.setColour(theme_.colorData);
                         g.setFont(theme_.fontData());
-                        g.drawText(output14Bit(param.value_),
+                        g.drawText(output14Bit(param.current_.value_),
                                    X_PARAM, y_offset,
                                    param_width, theme_.dataHeight(),
                                    Justification::centredRight);
@@ -877,15 +909,10 @@ namespace showmidi
                         
                         // draw value indicator
 
-                        g.setColour(theme_.colorTrack);
-                        g.fillRect(X_PARAM, y_offset,
-                                   param_width, HEIGHT_INDICATOR);
-                        
-                        g.setColour(param_color);
-                        g.fillRect(X_PARAM, y_offset,
-                                   (param_width * param.value_) / 0x3FFF, HEIGHT_INDICATOR);
-                        
-                        y_offset += HEIGHT_INDICATOR;
+                        paintVisualization(g, state, y_offset, param, 0x2000, 0x3FFF,
+                                           false, param_color, param_color,
+                                           X_PARAM, y_offset,
+                                           param_width, HEIGHT_INDICATOR + (Y_PARAM + theme_.labelHeight() + HEIGHT_INDICATOR) * 2);
                     }
                 }
             }
@@ -905,12 +932,15 @@ namespace showmidi
                     auto& note_on = notes.noteOn_[i];
                     auto& note_off = notes.noteOff_[i];
                     
-                    if (!isExpired(state.time_, note_on.time_))
+                    auto note_on_expired = isExpired(state.time_, note_on.current_.time_);
+                    auto note_off_expired = isExpired(state.time_, note_off.current_.time_);
+                    auto polypressure_expired = isExpired(state.time_, note_on.polyPressure_.current_.time_);
+                    if (!note_on_expired || !polypressure_expired)
                     {
-                        if (isExpired(state.time_, note_off.time_))
+                        if (!note_on_expired && note_off_expired)
                         {
                             channel.time_ = state.time_;
-                            note_on.time_ = state.time_;
+                            note_on.current_.time_ = state.time_;
                             notes.time_ = state.time_;
                         }
                         
@@ -923,7 +953,7 @@ namespace showmidi
                         
                         // draw note text
                         
-                        auto note_color = !isExpired(state.time_, note_off.time_) ? theme_.colorNegative : theme_.colorPositive;
+                        auto note_color = !isExpired(state.time_, note_off.current_.time_) ? theme_.colorNegative : theme_.colorPositive;
                         g.setColour(note_color);
                         g.setFont(theme_.fontLabel());
                         g.drawText(outputNote(i),
@@ -931,42 +961,48 @@ namespace showmidi
                                    X_NOTE_DATA - X_NOTE, theme_.labelHeight(),
                                    Justification::centredLeft);
                         
-                        int note_width = X_NOTE_DATA - X_ON_OFF;
-                        g.setColour(theme_.colorLabel);
-                        g.setFont(theme_.fontLabel());
-                        g.drawText("ON",
-                                   X_ON_OFF, y_offset,
-                                   note_width, theme_.labelHeight(),
-                                   Justification::centredLeft);
+                        if (!note_on_expired)
+                        {
+                            int note_width = X_NOTE_DATA - X_ON_OFF;
+                            g.setColour(theme_.colorLabel);
+                            g.setFont(theme_.fontLabel());
+                            g.drawText("ON",
+                                       X_ON_OFF, y_offset,
+                                       note_width, theme_.labelHeight(),
+                                       Justification::centredLeft);
+                            
+                            g.setColour(theme_.colorData);
+                            g.setFont(theme_.fontData());
+                            g.drawText(output7Bit(note_on.current_.value_),
+                                       X_ON_OFF, y_offset,
+                                       note_width, theme_.dataHeight(),
+                                       Justification::centredRight);
+                            
+                            y_offset += theme_.labelHeight();
+                            
+                            // draw velocity indicator
+                            
+                            g.setColour(theme_.colorTrack);
+                            g.fillRect(X_ON_OFF, y_offset,
+                                       note_width, HEIGHT_INDICATOR);
+                            
+                            auto velocity_color = theme_.colorPositive;
+                            
+                            g.setColour(velocity_color);
+                            g.fillRect(X_ON_OFF, y_offset,
+                                       (note_width * note_on.current_.value_) / 127, HEIGHT_INDICATOR);
+                            
+                            y_offset += HEIGHT_INDICATOR;
+                        }
                         
-                        g.setColour(theme_.colorData);
-                        g.setFont(theme_.fontData());
-                        g.drawText(output7Bit(note_on.value_),
-                                   X_ON_OFF, y_offset,
-                                   note_width, theme_.dataHeight(),
-                                   Justification::centredRight);
-                        
-                        y_offset += theme_.labelHeight();
-                        
-                        // draw velocity indicator
-                        
-                        g.setColour(theme_.colorTrack);
-                        g.fillRect(X_ON_OFF, y_offset,
-                                   note_width, HEIGHT_INDICATOR);
-                        
-                        auto velocity_color = theme_.colorPositive;
-
-                        g.setColour(velocity_color);
-                        g.fillRect(X_ON_OFF, y_offset,
-                                   (note_width * note_on.value_) / 127, HEIGHT_INDICATOR);
-                        
-                        y_offset += HEIGHT_INDICATOR;
-                        
-                        if (!isExpired(state.time_, note_on.polyPressureTime_))
+                        if (!polypressure_expired)
                         {
                             // draw polypressure text
                             
-                            y_offset += Y_PP;
+                            if (!note_on_expired)
+                            {
+                                y_offset += Y_PP;
+                            }
                             
                             int pp_width = X_PP_DATA - X_PP;
                             g.setColour(theme_.colorLabel);
@@ -978,28 +1014,24 @@ namespace showmidi
                             
                             g.setColour(theme_.colorData);
                             g.setFont(theme_.fontData());
-                            g.drawText(output7Bit(note_on.polyPressure_),
+                            g.drawText(output7Bit(note_on.polyPressure_.current_.value_),
                                        X_PP, y_offset,
                                        pp_width, theme_.dataHeight(),
                                        Justification::centredRight);
                             
                             y_offset += theme_.labelHeight();
                             
-                            // draw velocity indicator
+                            // draw polypressure indicator
                             
-                            g.setColour(theme_.colorTrack);
-                            g.fillRect(X_PP, y_offset,
-                                       pp_width, HEIGHT_INDICATOR);
-                            
-                            g.setColour(note_color);
-                            g.fillRect(X_PP, y_offset,
-                                       (pp_width * note_on.polyPressure_) / 127, HEIGHT_INDICATOR);
-                            
-                            y_offset += HEIGHT_INDICATOR;
+                            paintVisualization(g, state, y_offset, note_on.polyPressure_, 0x40, 0x7f,
+                                               false, note_color, note_color,
+                                               X_PP, y_offset,
+                                               pp_width, HEIGHT_INDICATOR + Y_PP + theme_.labelHeight() + HEIGHT_INDICATOR);
+
                         }
                     }
                     
-                    if (!isExpired(state.time_, note_off.time_))
+                    if (!isExpired(state.time_, note_off.current_.time_))
                     {
                         if (y_offset == -1)
                         {
@@ -1012,7 +1044,7 @@ namespace showmidi
                         
                         auto note_color = theme_.colorNegative;
 
-                        if (isExpired(state.time_, note_on.time_))
+                        if (isExpired(state.time_, note_on.current_.time_))
                         {
                             g.setColour(note_color);
                             g.setFont(theme_.fontLabel());
@@ -1032,7 +1064,7 @@ namespace showmidi
                         
                         g.setColour(theme_.colorData);
                         g.setFont(theme_.fontData());
-                        g.drawText(output7Bit(note_off.value_),
+                        g.drawText(output7Bit(note_off.current_.value_),
                                    X_ON_OFF, y_offset,
                                    note_width, theme_.dataHeight(),
                                    Justification::centredRight);
@@ -1049,7 +1081,7 @@ namespace showmidi
 
                         g.setColour(velocity_color);
                         g.fillRect(X_ON_OFF, y_offset,
-                                   (note_width * note_off.value_) / 127, HEIGHT_INDICATOR);
+                                   (note_width * note_off.current_.value_) / 127, HEIGHT_INDICATOR);
                         
                         y_offset += HEIGHT_INDICATOR;
                     }
@@ -1063,9 +1095,9 @@ namespace showmidi
         {
             int y_offset = -1;
             
-            if (!isExpired(state.time_, channel.channelPressure_.time_))
+            if (!isExpired(state.time_, channel.channelPressure_.current_.time_))
             {
-                paintControlChangeEntry(g, state, y_offset, String("CP"), channel.channelPressure_.value_);
+                paintControlChangeEntry(g, state, y_offset, String("CP"), channel.channelPressure_);
             }
             
             auto& control_changes = channel.controlChanges_;
@@ -1074,9 +1106,9 @@ namespace showmidi
                 for (int i = 0; i < 128; ++i)
                 {
                     auto& cc = control_changes.controlChange_[i];
-                    if (!isExpired(state.time_, cc.time_))
+                    if (!isExpired(state.time_, cc.current_.time_))
                     {
-                        paintControlChangeEntry(g, state, y_offset, String("CC ") + output7Bit(cc.number_), cc.value_);
+                        paintControlChangeEntry(g, state, y_offset, String("CC ") + output7Bit(cc.number_), cc);
                     }
                 }
             }
@@ -1084,7 +1116,7 @@ namespace showmidi
             return y_offset;
         }
         
-        void paintControlChangeEntry(Graphics& g, ChannelPaintState& state, int& yOffset, const String& label, int value)
+        void paintControlChangeEntry(Graphics& g, ChannelPaintState& state, int& yOffset, const String& label, ChannelMessage& message)
         {
             if (yOffset == -1)
             {
@@ -1105,7 +1137,7 @@ namespace showmidi
             
             g.setColour(theme_.colorData);
             g.setFont(theme_.fontData());
-            g.drawText(output7Bit(value),
+            g.drawText(output7Bit(message.current_.value_),
                        X_CC, yOffset,
                        cc_width, theme_.dataHeight(),
                        Justification::centredRight);
@@ -1114,15 +1146,127 @@ namespace showmidi
             
             // draw value indicator
             
-            g.setColour(theme_.colorTrack);
-            g.fillRect(X_CC, yOffset,
-                       cc_width, HEIGHT_INDICATOR);
-            
-            g.setColour(theme_.colorController);
-            g.fillRect(X_CC, yOffset,
-                       (cc_width * value) / 127, HEIGHT_INDICATOR);
-            
-            yOffset += HEIGHT_INDICATOR;
+            paintVisualization(g, state, yOffset, message, 0x40, 0x7f,
+                               false, theme_.colorController, theme_.colorController,
+                               X_CC, yOffset,
+                               cc_width, HEIGHT_INDICATOR + Y_CC + theme_.labelHeight() + HEIGHT_INDICATOR);
+        }
+        
+        void paintVisualization(Graphics& g, ChannelPaintState& state, int& yOffset, ChannelMessage& message, int centerValue, int maxValue,
+                                bool bidirectional, Colour colourPositive, Colour colourNegative, int graphLeft, int graphTop, int graphWidth, int graphHeight)
+        {
+            // purge expired history entries
+            const std::lock_guard<std::mutex> lock(historyLock_);
+            const int64 graph_t = ((state.time_.toMilliseconds() + RENDER_TIME_UNIT_MS) / RENDER_TIME_UNIT_MS) * RENDER_TIME_UNIT_MS;
+            const int64 graph_expire = graph_t - graphWidth * RENDER_TIME_UNIT_MS - RENDER_TIME_UNIT_MS;
+            TimedValue last;
+            while (!message.history_.empty() && message.history_.back().time_.toMilliseconds() < graph_expire)
+            {
+                last = message.history_.back();
+                message.history_.pop_back();
+            }
+            if (last.time_.toMilliseconds() != 0 && message.history_.back().time_.toMilliseconds() - graph_expire >= RENDER_TIME_UNIT_MS)
+            {
+                message.history_.push_back({Time(graph_expire), last.value_});
+            }
+
+            // draw bar
+            if (settingsManager_->getSettings().getVisualization() == Visualization::visualizationBar)
+            {
+                g.setColour(theme_.colorTrack);
+                g.fillRect(graphLeft, yOffset,
+                           graphWidth, HEIGHT_INDICATOR);
+                
+                int indicator_x = graphLeft;
+                int indicator_width = (graphWidth * message.current_.value_) / maxValue;
+                int indicator_range = graphWidth / 2;
+                if (bidirectional)
+                {
+                    indicator_x = graphLeft + indicator_range + 1;
+                    indicator_width = (indicator_range * (message.current_.value_ - centerValue)) / centerValue;
+                }
+
+                if (message.current_.value_ >= centerValue)
+                {
+                    g.setColour(colourPositive);
+                }
+                else
+                {
+                    g.setColour(colourNegative);
+                    if (bidirectional)
+                    {
+                        indicator_x = graphLeft + indicator_range + indicator_width;
+                        indicator_width = abs(indicator_width);
+                    }
+                }
+                
+                g.fillRect(indicator_x, yOffset,
+                           indicator_width, HEIGHT_INDICATOR);
+                
+                yOffset += HEIGHT_INDICATOR;
+            }
+            // draw graph
+            else
+            {
+                g.setColour(theme_.colorTrack);
+                g.fillRect(graphLeft, graphTop,
+                           graphWidth, graphHeight);
+                
+                auto graph_total_width = 0;
+                
+                paintGraphEntry(g, message.current_, graph_t, graph_total_width, centerValue, maxValue,
+                                bidirectional, colourPositive, colourNegative, graphLeft, graphTop, graphWidth, graphHeight);
+                for (auto& tv : message.history_)
+                {
+                    paintGraphEntry(g, tv, graph_t, graph_total_width, centerValue, maxValue,
+                                    bidirectional, colourPositive, colourNegative, graphLeft, graphTop, graphWidth, graphHeight);
+                }
+                
+                yOffset += graphHeight;
+            }
+        }
+        
+        void paintGraphEntry(Graphics& g, TimedValue& tv, int64 graph_t, int& graphTotalWidth, int centerValue, int maxValue,
+                             bool bidirectional, Colour colourPositive, Colour colourNegative, int graphLeft, int graphTop, int graphWidth, int graphHeight)
+        {
+            auto graph_right = graphLeft + graphWidth;
+            auto graph_entry_width = std::min(graphWidth - graphTotalWidth, int(graph_t - tv.time_.toMilliseconds()) / RENDER_TIME_UNIT_MS- graphTotalWidth);
+            if (graph_entry_width > 0)
+            {
+                auto graph_entry_left = graph_right - graph_entry_width - graphTotalWidth;
+                auto graph_entry_height = (graphHeight * tv.value_) / maxValue;
+                auto graph_entry_top = graphTop + graphHeight - graph_entry_height;
+                int graph_entry_range = graphHeight / 2;
+                if (bidirectional)
+                {
+                    g.setColour(theme_.colorSeperator);
+                    g.fillRect(graphLeft, graphTop + graph_entry_range,
+                               graphWidth, HEIGHT_INDICATOR);
+
+                    graph_entry_height = abs(graphHeight * (tv.value_ - centerValue)) / (maxValue - 1.0);
+                }
+
+                if (tv.value_ >= centerValue)
+                {
+                    g.setColour(colourPositive);
+                    if (bidirectional)
+                    {
+                        graph_entry_top = graphTop + graph_entry_range - graph_entry_height;
+                    }
+                }
+                else
+                {
+                    g.setColour(colourNegative);
+                    if (bidirectional)
+                    {
+                        graph_entry_top = graphTop + graph_entry_range + 1;
+                    }
+                }
+                
+                g.fillRect(graph_entry_left, graph_entry_top,
+                           graph_entry_width, graph_entry_height);
+                graphTotalWidth += graph_entry_width;
+            }
         }
         
         bool isExpired(const Time& currentTime, Time& messageTime)
@@ -1237,6 +1381,8 @@ namespace showmidi
         
         ActiveChannels channels_;
         std::deque<double> midiTimeStamps_;
+        std::mutex paramsLock_;
+        std::mutex historyLock_;
         
         Time pausedTime_;
         ActiveChannels pausedChannels_;

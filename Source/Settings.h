@@ -23,6 +23,12 @@
 
 namespace showmidi
 {
+    enum Visualization
+    {
+        visualizationBar = 1,
+        visualizationGraph
+    };
+    
     enum NoteFormat
     {
         formatName = 1,
@@ -44,6 +50,7 @@ namespace showmidi
     class Settings
     {
     public:
+        static constexpr Visualization DEFAULT_VISUALIZATION { visualizationBar };
         static constexpr int DEFAULT_OCTAVE_MIDDLE_C { 3 };
         static constexpr NoteFormat DEFAULT_NOTE_FORMAT { formatName };
         static constexpr NumberFormat DEFAULT_NUMBER_FORMAT { formatDecimal };
@@ -52,6 +59,9 @@ namespace showmidi
 
         Settings() {};
         virtual ~Settings() {};
+        
+        virtual Visualization getVisualization() = 0;
+        virtual void setVisualization(Visualization) = 0;
         
         virtual int getOctaveMiddleC() = 0;
         virtual void setOctaveMiddleC(int) = 0;
