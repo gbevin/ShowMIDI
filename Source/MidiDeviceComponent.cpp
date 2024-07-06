@@ -103,10 +103,13 @@ namespace showmidi
             channel1.controlChanges_.controlChange_[39].current_.value_ = 32;
             channel1.controlChanges_.controlChange_[39].current_.time_ = t;
             channel1.rpns_.time_ = t;
-            channel1.rpns_.param_[0] = { t, 5000 };
-            channel1.rpns_.param_[6] = { t, 10 };
+            channel1.rpns_.param_[0].current_.time_ = t;
+            channel1.rpns_.param_[0].current_.value_ = 5000;
+            channel1.rpns_.param_[6].current_.time_ = t;
+            channel1.rpns_.param_[6].current_.value_ = 10;
             channel1.hrccs_.time_ = t;
-            channel1.hrccs_.param_[7] = { t, 64 << 7 | 32 };
+            channel1.hrccs_.param_[7].current_.time_ = t;
+            channel1.hrccs_.param_[7].current_.value_ = 64 << 7 | 32 ;
             
             auto& channel16 = channels_.channel_[15];
             channel16.time_ = t;
@@ -1367,6 +1370,14 @@ namespace showmidi
             paused_ = paused;
         }
         
+        void resetChannelData()
+        {
+            const std::lock_guard<std::mutex> lock1(paramsLock_);
+            const std::lock_guard<std::mutex> lock2(historyLock_);
+            channels_.reset();
+            pausedChannels_.reset();
+        }
+        
         bool isInterestedInFileDrag(const StringArray& files)
         {
             for (auto file : files)
@@ -1426,6 +1437,7 @@ namespace showmidi
     void MidiDeviceComponent::paint(Graphics& g)  { pimpl_->paint(g); }
     void MidiDeviceComponent::resized()           { pimpl_->resized(); }
     void MidiDeviceComponent::setPaused(bool p)   { pimpl_->setPaused(p); }
+    void MidiDeviceComponent::resetChannelData()  { pimpl_->resetChannelData(); }
 
     void MidiDeviceComponent::handleIncomingMidiMessage(const MidiMessage& m)   { pimpl_->handleIncomingMidiMessage(nullptr, m); };
     bool MidiDeviceComponent::isInterestedInFileDrag(const StringArray& f)      { return pimpl_->isInterestedInFileDrag(f); }

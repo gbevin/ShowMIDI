@@ -24,6 +24,7 @@
       <FILE id="PqCEx8" name="hidden.svg" compile="0" resource="1" file="Assets/hidden.svg"/>
       <FILE id="tNdVNi" name="pause.svg" compile="0" resource="1" file="Assets/pause.svg"/>
       <FILE id="QxH7X9" name="play.svg" compile="0" resource="1" file="Assets/play.svg"/>
+      <FILE id="QkVt7Z" name="reset.svg" compile="0" resource="1" file="Assets/reset.svg"/>
       <FILE id="TUbRHp" name="settings.svg" compile="0" resource="1" file="Assets/settings.svg"/>
       <FILE id="ulYhep" name="visible.svg" compile="0" resource="1" file="Assets/visible.svg"/>
     </GROUP>

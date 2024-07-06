@@ -38,6 +38,9 @@ namespace BinaryData
     extern const char*   play_svg;
     const int            play_svgSize = 1128;
 
+    extern const char*   reset_svg;
+    const int            reset_svgSize = 1510;
+
     extern const char*   settings_svg;
     const int            settings_svgSize = 2022;
 
@@ -57,7 +60,7 @@ namespace BinaryData
     const int            JetBrainsMonoSemiBoldItalic_ttfSize = 279828;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 16;
+    const int namedResourceListSize = 17;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

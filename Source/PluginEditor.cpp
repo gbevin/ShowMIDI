@@ -88,6 +88,11 @@ namespace showmidi
             pauseListeners_.broadcast(paused_);
         }
         
+        void resetChannelData() override
+        {
+            midiDevice_->resetChannelData();
+        }
+        
         PauseListeners& getPauseListeners() override
         {
             return pauseListeners_;

@@ -38,6 +38,7 @@ namespace showmidi
         void paint(Graphics&) override;
         void resized() override;
         void setPaused(bool);
+        void resetChannelData();
 
         void handleIncomingMidiMessage(const MidiMessage&);
         

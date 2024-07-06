@@ -98,6 +98,15 @@ namespace showmidi
             pauseListeners_.broadcast(paused_);
         }
         
+        void resetChannelData()
+        {
+            ScopedLock g(midiDevicesLock_);
+            for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
+            {
+                i.getValue()->resetChannelData();
+            }
+        }
+        
         PauseListeners& getPauseListeners()
         {
             return pauseListeners_;
@@ -270,4 +279,5 @@ namespace showmidi
     bool StandaloneDevicesComponent::isPaused()                     { return pimpl_->isPaused(); }
     void StandaloneDevicesComponent::togglePaused()                 { pimpl_->togglePaused(); }
     PauseListeners& StandaloneDevicesComponent::getPauseListeners() { return pimpl_->getPauseListeners(); }
+    void StandaloneDevicesComponent::resetChannelData()             { pimpl_->resetChannelData(); }
 }

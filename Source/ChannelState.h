@@ -23,18 +23,38 @@ namespace showmidi
     {
         Time time_;
         int value_ { 0 };
+        
+        void reset()
+        {
+            time_ = Time();
+            value_ = 0;
+        }
     };
     
     struct ChannelMessage
     {
+        virtual ~ChannelMessage() {}
+        
         TimedValue current_;
         std::deque<TimedValue> history_;
+        
+        virtual void reset()
+        {
+            current_.reset();
+            history_.clear();
+        }
     };
     
     struct NoteOn : public ChannelMessage
     {
         int number_ { -1 };
         ChannelMessage polyPressure_;
+        
+        void reset() override
+        {
+            ChannelMessage::reset();
+            polyPressure_.reset();
+        }
     };
     
     struct NoteOff : public ChannelMessage
@@ -71,6 +91,17 @@ namespace showmidi
             {
                 noteOn_[i] = other.noteOn_[i];
                 noteOff_[i] = other.noteOff_[i];
+            }
+        }
+        
+        void reset()
+        {
+            time_ = Time();
+            noteOnTime_ = Time();
+            for (int i = 0; i < 128; ++i)
+            {
+                noteOn_[i].reset();
+                noteOff_[i].reset();
             }
         }
 
@@ -112,6 +143,15 @@ namespace showmidi
             for (int i = 0; i < 128; ++i)
             {
                 controlChange_[i] = other.controlChange_[i];
+            }
+        }
+        
+        void reset()
+        {
+            time_ = Time();
+            for (int i = 0; i < 128; ++i)
+            {
+                controlChange_[i].reset();
             }
         }
 
@@ -161,6 +201,12 @@ namespace showmidi
 
         Time time_;
         std::map<int, Parameter> param_;
+        
+        void reset()
+        {
+            time_ = Time();
+            param_.clear();
+        }
     };
     
     enum MpeMember
@@ -191,6 +237,28 @@ namespace showmidi
         int lastNrpnLsb_ { 127 };
         int lastDataMsb_ { 0 };
         int lastDataLsb_ { 0 };
+        
+        void reset()
+        {
+            time_ = Time();
+            notes_.reset();
+            controlChanges_.reset();
+            programChange_.reset();
+            channelPressure_.reset();
+            pitchBend_.reset();
+            hrccs_.reset();
+            rpns_.reset();
+            nrpns_.reset();
+            mpeManager_ = false;
+            mpeMember_ = MpeMember::mpeNone;
+            
+            lastRpnMsb_ = 127;
+            lastRpnLsb_ = 127;
+            lastNrpnMsb_ = 127;
+            lastNrpnLsb_ = 127;
+            lastDataMsb_ = 0;
+            lastDataLsb_ = 0;
+        }
     };
     
     struct Sysex
@@ -213,7 +281,6 @@ namespace showmidi
         }
         
         Time time_;
-        
         uint8 data_[MAX_SYSEX_DATA] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         int length_ { 0 };
         
@@ -222,6 +289,13 @@ namespace showmidi
             time_ = other.time_;
             length_ = other.length_;
             memcpy(data_, other.data_, MAX_SYSEX_DATA);
+        }
+        
+        void reset()
+        {
+            time_ = Time();
+            memset(data_, 0, MAX_SYSEX_DATA);
+            length_ = 0;
         }
     };
     
@@ -256,6 +330,16 @@ namespace showmidi
             timeContinue_ = other.timeContinue_;
             timeStop_ = other.timeStop_;
             bpm_ = other.bpm_;
+        }
+        
+        void reset()
+        {
+            timeBpm_ = Time();
+            timeStart_ = Time();
+            timeContinue_ = Time();
+            timeStop_ = Time();
+            
+            bpm_ = 0.0;
         }
     };
     
@@ -295,6 +379,16 @@ namespace showmidi
         }
 
         ActiveChannel channel_[16];
+        
+        void reset()
+        {
+            sysex_.reset();
+            clock_.reset();
+            for (int i = 0; i < 16; ++i)
+            {
+                channel_[i].reset();
+            }
+        }
         
         void handleMpeActivation(Time t, ActiveChannel& channel, int range)
         {

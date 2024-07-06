@@ -3459,6 +3459,7 @@
     <None Include="..\..\Assets\hidden.svg"/>
     <None Include="..\..\Assets\pause.svg"/>
     <None Include="..\..\Assets\play.svg"/>
+    <None Include="..\..\Assets\reset.svg"/>
     <None Include="..\..\Assets\settings.svg"/>
     <None Include="..\..\Assets\visible.svg"/>
     <None Include="..\..\Fonts\JetBrainsMono-Italic.ttf"/>

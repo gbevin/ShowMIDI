@@ -49,7 +49,7 @@ namespace showmidi
         static constexpr int Y_EXPANDED = 13;
 
         static constexpr int X_SETTINGS = 11;
-        static constexpr int Y_SETTINGS = 13;
+        static constexpr int Y_SETTINGS = 11;
 
         static constexpr int X_PLAY_COLLAPSED = 12;
         static constexpr int Y_PLAY_COLLAPSED = 44;
@@ -62,6 +62,12 @@ namespace showmidi
 
         static constexpr int X_VISUALIZATION_EXPANDED = 68;
         static constexpr int Y_VISUALIZATION_EXPANDED = 11;
+
+        static constexpr int X_RESET_COLLAPSED = 11;
+        static constexpr int Y_RESET_COLLAPSED = 46;
+
+        static constexpr int X_RESET_EXPANDED = 39;
+        static constexpr int Y_RESET_EXPANDED = 11;
 
         static constexpr int X_HELP = 11;
         static constexpr int Y_HELP = 12;

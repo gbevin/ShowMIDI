@@ -6134,6 +6134,9 @@
     <None Include="..\..\Assets\play.svg">
       <Filter>ShowMIDI\Assets</Filter>
     </None>
+    <None Include="..\..\Assets\reset.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
     <None Include="..\..\Assets\settings.svg">
       <Filter>ShowMIDI\Assets</Filter>
     </None>

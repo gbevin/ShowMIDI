@@ -31,5 +31,6 @@ namespace showmidi
         virtual bool isPaused() = 0;
         virtual void togglePaused() = 0;
         virtual PauseListeners& getPauseListeners() = 0;
+        virtual void resetChannelData() = 0;
     };
 }

@@ -51,6 +51,7 @@ namespace showmidi
             pauseButton_ = std::make_unique<PaintedButton>();
             barButton_ = std::make_unique<PaintedButton>();
             graphButton_ = std::make_unique<PaintedButton>();
+            resetButton_ = std::make_unique<PaintedButton>();
             
             settings_ = std::make_unique<SettingsComponent>(settingsManager_);
             about_ = std::make_unique<AboutComponent>(settingsManager_->getSettings().getTheme());
@@ -63,6 +64,7 @@ namespace showmidi
             pauseButton_->addListener(this);
             barButton_->addListener(this);
             graphButton_->addListener(this);
+            resetButton_->addListener(this);
 
             owner_->addChildComponent(collapsedButton_.get());
             owner_->addChildComponent(expandedButton_.get());
@@ -72,6 +74,7 @@ namespace showmidi
             owner_->addChildComponent(pauseButton_.get());
             owner_->addChildComponent(barButton_.get());
             owner_->addChildComponent(graphButton_.get());
+            owner_->addAndMakeVisible(resetButton_.get());
             
             updateSettings();
                         
@@ -174,6 +177,10 @@ namespace showmidi
                 settingsManager_->getSettings().setVisualization(Visualization::visualizationBar);
                 updateSettings();
             }
+            else if (button == resetButton_.get())
+            {
+                pauseManager_->resetChannelData();
+            }
             else if (button == helpButton_.get())
             {
                 about_->setVisible(!about_->isVisible());
@@ -234,6 +241,13 @@ namespace showmidi
                 graphButton_->drawDrawable(g, *graph_svg);
             }
 
+            if (resetButton_->isVisible())
+            {
+                auto reset_svg = resetSvg_->createCopy();
+                reset_svg->replaceColour(Colours::black, theme.colorData);
+                resetButton_->drawDrawable(g, *reset_svg);
+            }
+
             auto help_svg = helpSvg_->createCopy();
             help_svg->replaceColour(Colours::black, theme.colorData);
             helpButton_->drawDrawable(g, *help_svg);
@@ -267,6 +281,9 @@ namespace showmidi
                 
                 graphButton_->setBoundsForTouch(X_VISUALIZATION_EXPANDED, Y_VISUALIZATION_EXPANDED,
                                                 graphSvg_->getWidth(), graphSvg_->getHeight());
+                
+                resetButton_->setBoundsForTouch(owner_->getWidth() - resetSvg_->getWidth() - X_RESET_EXPANDED, Y_RESET_EXPANDED,
+                                                resetSvg_->getWidth(), resetSvg_->getHeight());
             }
             else
             {
@@ -281,6 +298,9 @@ namespace showmidi
                 
                 graphButton_->setBoundsForTouch(X_VISUALIZATION_COLLAPSED, Y_VISUALIZATION_COLLAPSED,
                                                 graphSvg_->getWidth(), graphSvg_->getHeight());
+                
+                resetButton_->setBoundsForTouch(X_RESET_COLLAPSED, owner_->getHeight() - resetSvg_->getHeight() - Y_RESET_COLLAPSED,
+                                                resetSvg_->getWidth(), resetSvg_->getHeight());
             }
 
             helpButton_->setBoundsForTouch(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
@@ -330,6 +350,7 @@ namespace showmidi
         std::unique_ptr<Drawable> pauseSvg_ = Drawable::createFromImageData(BinaryData::pause_svg, BinaryData::pause_svgSize);
         std::unique_ptr<Drawable> barSvg_ = Drawable::createFromImageData(BinaryData::bar_svg, BinaryData::bar_svgSize);
         std::unique_ptr<Drawable> graphSvg_ = Drawable::createFromImageData(BinaryData::graph_svg, BinaryData::graph_svgSize);
+        std::unique_ptr<Drawable> resetSvg_ = Drawable::createFromImageData(BinaryData::reset_svg, BinaryData::reset_svgSize);
 
         std::unique_ptr<PaintedButton> collapsedButton_;
         std::unique_ptr<PaintedButton> expandedButton_;
@@ -339,6 +360,7 @@ namespace showmidi
         std::unique_ptr<PaintedButton> pauseButton_;
         std::unique_ptr<PaintedButton> barButton_;
         std::unique_ptr<PaintedButton> graphButton_;
+        std::unique_ptr<PaintedButton> resetButton_;
         std::unique_ptr<Viewport> portViewport_;
         std::unique_ptr<PortListComponent> portList_;
         std::unique_ptr<SettingsComponent> settings_;

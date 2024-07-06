@@ -35,6 +35,7 @@ namespace showmidi
         bool isPaused() override;
         void togglePaused() override;
         PauseListeners& getPauseListeners() override;
+        void resetChannelData() override;
 
         struct Pimpl;
     private:
