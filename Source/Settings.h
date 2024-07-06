@@ -55,6 +55,7 @@ namespace showmidi
         static constexpr NoteFormat DEFAULT_NOTE_FORMAT { formatName };
         static constexpr NumberFormat DEFAULT_NUMBER_FORMAT { formatDecimal };
         static constexpr int DEFAULT_TIMEOUT_DELAY { 2 };
+        static constexpr int DEFAULT_CONTROL_GRAPH_HEIGHT { 1 };
         static constexpr WindowPosition DEFAULT_WINDOW_POSITION { windowRegular };
 
         Settings() {};
@@ -77,6 +78,9 @@ namespace showmidi
         
         virtual WindowPosition getWindowPosition() = 0;
         virtual void setWindowPosition(WindowPosition) = 0;
+        
+        virtual int getControlGraphHeight() = 0;
+        virtual void setControlGraphHeight(int) = 0;
 
         virtual Theme& getTheme() = 0;
         virtual void storeTheme() = 0;

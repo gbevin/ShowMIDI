@@ -46,6 +46,9 @@ namespace showmidi
         
         WindowPosition getWindowPosition();
         void setWindowPosition(WindowPosition);
+        
+        int getControlGraphHeight();
+        void setControlGraphHeight(int);
 
         Theme& getTheme();
         void storeTheme();

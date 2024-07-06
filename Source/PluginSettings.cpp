@@ -96,6 +96,16 @@ namespace showmidi
     {
         settings_.setProperty(PropertiesSettings::WINDOW_POSITION, position, nullptr);
     }
+    
+    int PluginSettings::getControlGraphHeight()
+    {
+        return settings_.getProperty(PropertiesSettings::CONTROL_GRAPH_HEIGHT, PropertiesSettings::DEFAULT_CONTROL_GRAPH_HEIGHT);
+    }
+    
+    void PluginSettings::setControlGraphHeight(int height)
+    {
+        settings_.setProperty(PropertiesSettings::CONTROL_GRAPH_HEIGHT, height, nullptr);
+    }
 
     Theme& PluginSettings::getTheme()
     {

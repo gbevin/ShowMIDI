@@ -32,6 +32,7 @@ namespace showmidi
         static const String NUMBER_FORMAT;
         static const String TIMEOUT_DELAY;
         static const String WINDOW_POSITION;
+        static const String CONTROL_GRAPH_HEIGHT;
         static const String MIDI_DEVICE_VISIBLE_PREFIX;
         static const String THEME;
         
@@ -55,6 +56,9 @@ namespace showmidi
         
         WindowPosition getWindowPosition();
         void setWindowPosition(WindowPosition);
+        
+        int getControlGraphHeight();
+        void setControlGraphHeight(int);
 
         Theme& getTheme();
         void storeTheme();

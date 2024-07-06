@@ -25,6 +25,7 @@ namespace showmidi
     const String PropertiesSettings::NUMBER_FORMAT = { "numberFormat" };
     const String PropertiesSettings::TIMEOUT_DELAY = { "timeoutDelay" };
     const String PropertiesSettings::WINDOW_POSITION = { "windowPosition" };
+    const String PropertiesSettings::CONTROL_GRAPH_HEIGHT = { "controlGraphHeight" };
     const String PropertiesSettings::MIDI_DEVICE_VISIBLE_PREFIX = { "midiDevice:visible:" };
     const String PropertiesSettings::THEME = { "theme" };
 
@@ -101,6 +102,17 @@ namespace showmidi
     void PropertiesSettings::setWindowPosition(WindowPosition position)
     {
         getGlobalProperties().setValue(WINDOW_POSITION, position);
+        flush();
+    }
+    
+    int PropertiesSettings::getControlGraphHeight()
+    {
+        return getGlobalProperties().getIntValue(CONTROL_GRAPH_HEIGHT, DEFAULT_CONTROL_GRAPH_HEIGHT);
+    }
+    
+    void PropertiesSettings::setControlGraphHeight(int height)
+    {
+        getGlobalProperties().setValue(CONTROL_GRAPH_HEIGHT, height);
         flush();
     }
 

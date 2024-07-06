@@ -43,6 +43,9 @@ namespace showmidi
             windowAlwaysOnTopButton_ = std::make_unique<PaintedButton>("always on top");
             loadThemeButton_ = std::make_unique<PaintedButton>("load");
             saveThemeButton_ = std::make_unique<PaintedButton>("save");
+            graphHeight1Button_ = std::make_unique<PaintedButton>("compact");
+            graphHeight2Button_ = std::make_unique<PaintedButton>("medium");
+            graphHeight3Button_ = std::make_unique<PaintedButton>("large");
             randomThemeButton_ = std::make_unique<PaintedButton>("random");
             resetThemeButton_ = std::make_unique<PaintedButton>("reset");
             colorBackgroundButton_ = std::make_unique<PaintedButton>();
@@ -54,7 +57,7 @@ namespace showmidi
             colorPositiveButton_ = std::make_unique<PaintedButton>();
             colorNegativeButton_ = std::make_unique<PaintedButton>();
             colorControllerButton_ = std::make_unique<PaintedButton>();
-            closeButton_ = std::make_unique<PaintedButton>("close");
+            closeButton_ = std::make_unique<PaintedButton>("X");
                         
             middleCOct2Button_->addListener(this);
             middleCOct3Button_->addListener(this);
@@ -68,6 +71,9 @@ namespace showmidi
             timeout10SecButton_->addListener(this);
             windowRegularButton_->addListener(this);
             windowAlwaysOnTopButton_->addListener(this);
+            graphHeight1Button_->addListener(this);
+            graphHeight2Button_->addListener(this);
+            graphHeight3Button_->addListener(this);
             loadThemeButton_->addListener(this);
             saveThemeButton_->addListener(this);
             randomThemeButton_->addListener(this);
@@ -108,6 +114,9 @@ namespace showmidi
                 owner_->addAndMakeVisible(windowRegularButton_.get());
                 owner_->addAndMakeVisible(windowAlwaysOnTopButton_.get());
             }
+            owner_->addAndMakeVisible(graphHeight1Button_.get());
+            owner_->addAndMakeVisible(graphHeight2Button_.get());
+            owner_->addAndMakeVisible(graphHeight3Button_.get());
             owner_->addAndMakeVisible(loadThemeButton_.get());
             owner_->addAndMakeVisible(saveThemeButton_.get());
             owner_->addAndMakeVisible(randomThemeButton_.get());
@@ -153,11 +162,11 @@ namespace showmidi
             int height;
             if (manager_->isPlugin() || SystemStats::getOperatingSystemType() == SystemStats::iOS)
             {
-                height = theme.linePosition(21.5);
+                height = theme.linePosition(22.5);
             }
             else
             {
-                height = theme.linePosition(24.5);
+                height = theme.linePosition(25.5);
             }
             owner_->setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, height);
         }
@@ -220,6 +229,17 @@ namespace showmidi
                 windowAlwaysOnTopButton_->setBoundsForTouch(left_margin + button_spacing, y_offset,
                                                      getWidth(), theme.labelHeight());
             }
+            
+            // control graph height
+            
+            y_offset += theme.linePosition(3);
+            
+            graphHeight1Button_->setBoundsForTouch(left_margin, y_offset,
+                                                   getWidth(), theme.labelHeight());
+            graphHeight2Button_->setBoundsForTouch(left_margin + button_spacing, y_offset,
+                                                   getWidth(), theme.labelHeight());
+            graphHeight3Button_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
+                                                   getWidth(), theme.labelHeight());
 
             // active theme
             
@@ -266,8 +286,8 @@ namespace showmidi
             
             // close button
             
-            closeButton_->setBoundsForTouch(90, getHeight() - theme.linePosition(1) - theme.labelHeight(),
-                                           getWidth() - 180, theme.labelHeight());
+            closeButton_->setBoundsForTouch(getWidth() - 28, theme.linePosition(1) - theme.labelHeight(),
+                                            28, theme.labelHeight());
 
         }
         void paint(Graphics& g)
@@ -371,6 +391,25 @@ namespace showmidi
                 setSettingOptionFont(g, [&settings] () { return settings.getWindowPosition() == WindowPosition::windowAlwaysOnTop; });
                 windowAlwaysOnTopButton_->drawName(g, Justification::centredLeft);
             }
+            
+            // control graph height
+            
+            y_offset += theme.linePosition(3);
+            
+            g.setColour(theme.colorData);
+            g.setFont(theme.fontLabel());
+            g.drawText("Control Graph Height",
+                       23, y_offset,
+                       getWidth(), theme.labelHeight(),
+                       Justification::centredLeft, true);
+            
+            g.setColour(theme.colorData.withAlpha(0.7f));
+            setSettingOptionFont(g, [&settings] () { return settings.getControlGraphHeight() == 1; });
+            graphHeight1Button_->drawName(g, Justification::centredLeft);
+            setSettingOptionFont(g, [&settings] () { return settings.getControlGraphHeight() == 2; });
+            graphHeight2Button_->drawName(g, Justification::centredLeft);
+            setSettingOptionFont(g, [&settings] () { return settings.getControlGraphHeight() == 3; });
+            graphHeight3Button_->drawName(g, Justification::centredLeft);
 
             // active theme
             
@@ -516,6 +555,21 @@ namespace showmidi
             else if (buttonThatWasClicked == windowAlwaysOnTopButton_.get())
             {
                 settings.setWindowPosition(WindowPosition::windowAlwaysOnTop);
+                repaint();
+            }
+            else if (buttonThatWasClicked == graphHeight1Button_.get())
+            {
+                settings.setControlGraphHeight(1);
+                repaint();
+            }
+            else if (buttonThatWasClicked == graphHeight2Button_.get())
+            {
+                settings.setControlGraphHeight(2);
+                repaint();
+            }
+            else if (buttonThatWasClicked == graphHeight3Button_.get())
+            {
+                settings.setControlGraphHeight(3);
                 repaint();
             }
             else if (buttonThatWasClicked == loadThemeButton_.get())
@@ -678,6 +732,9 @@ namespace showmidi
         std::unique_ptr<PaintedButton> timeout10SecButton_;
         std::unique_ptr<PaintedButton> windowRegularButton_;
         std::unique_ptr<PaintedButton> windowAlwaysOnTopButton_;
+        std::unique_ptr<PaintedButton> graphHeight1Button_;
+        std::unique_ptr<PaintedButton> graphHeight2Button_;
+        std::unique_ptr<PaintedButton> graphHeight3Button_;
         std::unique_ptr<PaintedButton> loadThemeButton_;
         std::unique_ptr<PaintedButton> saveThemeButton_;
         std::unique_ptr<PaintedButton> randomThemeButton_;
