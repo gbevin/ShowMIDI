@@ -456,7 +456,7 @@ namespace showmidi
             }
         }
         
-        static constexpr int RENDER_TIME_UNIT_MS = 100;
+        static constexpr int RENDER_TIME_UNIT_MS = 50;
         
         static constexpr int TIMESTAMP_QUEUE_SIZE = 48;
         static constexpr double BPM_MIN = 20.0;
@@ -890,7 +890,7 @@ namespace showmidi
                 paintVisualization(g, state, y_offset, pitch_bend, 0x2000, 0x3FFF,
                                    true, theme_.colorPositive, theme_.colorNegative,
                                    X_PB, y_offset,
-                                   pb_width, HEIGHT_INDICATOR + (Y_PB + theme_.labelHeight() + HEIGHT_INDICATOR) * (settingsManager_->getSettings().getControlGraphHeight() * 2));
+                                   pb_width, HEIGHT_INDICATOR + (Y_PB + theme_.labelHeight() + HEIGHT_INDICATOR) * std::max(2, settingsManager_->getSettings().getControlGraphHeight()));
 
             }
             
@@ -938,7 +938,7 @@ namespace showmidi
                         paintVisualization(g, state, y_offset, param, 0x2000, 0x3FFF,
                                            false, param_color, param_color,
                                            X_PARAM, y_offset,
-                                           param_width, HEIGHT_INDICATOR + (Y_PARAM + theme_.labelHeight() + HEIGHT_INDICATOR) * (settingsManager_->getSettings().getControlGraphHeight() * 2));
+                                           param_width, HEIGHT_INDICATOR + (Y_PARAM + theme_.labelHeight() + HEIGHT_INDICATOR) * std::max(2, settingsManager_->getSettings().getControlGraphHeight()));
                     }
                 }
             }
