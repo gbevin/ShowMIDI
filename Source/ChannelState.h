@@ -97,7 +97,6 @@ namespace showmidi
         void reset()
         {
             time_ = Time();
-            noteOnTime_ = Time();
             for (int i = 0; i < 128; ++i)
             {
                 noteOn_[i].reset();
@@ -106,7 +105,6 @@ namespace showmidi
         }
 
         Time time_;
-        Time noteOnTime_;
         NoteOn noteOn_[128];
         NoteOff noteOff_[128];
     };

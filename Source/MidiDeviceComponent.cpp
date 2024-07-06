@@ -249,7 +249,6 @@ namespace showmidi
             {
                 auto& notes = channel.notes_;
                 notes.time_ = t;
-                notes.noteOnTime_ = t;
                 
                 auto& note_off = notes.noteOff_[msg.getNoteNumber()];
                 note_off.current_.time_ = Time();
@@ -560,27 +559,23 @@ namespace showmidi
                 paintSysex(g, state, channels->sysex_);
             }
             
-            std::vector<int> channel_order;
             for (auto channel_index = 0; channel_index < 16; ++channel_index)
             {
                 auto& channel_messages = channels->channel_[channel_index];
-                if (!isExpired(t, channel_messages.time_))
+                if (isExpired(t, channel_messages.time_))
                 {
-                    auto it = channel_order.begin();
-                    while (it != channel_order.end())
+                    auto existing = std::find(channelOrder_.begin(), channelOrder_.end(), channel_index);
+                    if (existing != channelOrder_.end())
                     {
-                        if (!isExpired(t, channel_messages.notes_.time_))
-                        {
-                            auto noteon_time = channel_messages.notes_.noteOnTime_.toMilliseconds();
-                            auto other_noteon_time = channels->channel_[*it].notes_.noteOnTime_.toMilliseconds();
-                            if (noteon_time != 0 && noteon_time >= other_noteon_time)
-                            {
-                                break;
-                            }
-                        }
-                        it++;
+                        channelOrder_.erase(existing);
                     }
-                    channel_order.insert(it, channel_index);
+                }
+                else {
+                    auto existing = std::find(channelOrder_.begin(), channelOrder_.end(), channel_index);
+                    if (existing == channelOrder_.end())
+                    {
+                        channelOrder_.insert(channelOrder_.begin(), channel_index);
+                    }
                 }
                 
                 pruneParameters(t, channel_messages.hrccs_);
@@ -588,7 +583,7 @@ namespace showmidi
                 pruneParameters(t, channel_messages.nrpns_);
             }
 
-            for (auto channel_index : channel_order)
+            for (auto channel_index : channelOrder_)
             {
                 auto& channel_messages = channels->channel_[channel_index];
                 
@@ -1408,6 +1403,7 @@ namespace showmidi
         SettingsManager* const settingsManager_;
         Theme& theme_;
         MidiDeviceInfo deviceInfo_;
+        std::vector<int> channelOrder_;
         std::unique_ptr<MidiInput> midiIn_;
         std::atomic_bool dirty_ { true };
         Time lastRender_;
