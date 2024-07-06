@@ -75,6 +75,7 @@ namespace showmidi
         }
 
         Time time_;
+        Time noteOnTime_;
         NoteOn noteOn_[128];
         NoteOff noteOff_[128];
     };

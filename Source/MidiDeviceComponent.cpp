@@ -246,6 +246,7 @@ namespace showmidi
             {
                 auto& notes = channel.notes_;
                 notes.time_ = t;
+                notes.noteOnTime_ = t;
                 
                 auto& note_off = notes.noteOff_[msg.getNoteNumber()];
                 note_off.current_.time_ = Time();
@@ -556,29 +557,51 @@ namespace showmidi
                 paintSysex(g, state, channels->sysex_);
             }
             
-            for (int channel_index = 0; channel_index < 16; ++channel_index)
+            std::vector<int> channel_order;
+            for (auto channel_index = 0; channel_index < 16; ++channel_index)
             {
                 auto& channel_messages = channels->channel_[channel_index];
                 if (!isExpired(t, channel_messages.time_))
                 {
-                    paintChannelHeader(g, state, channel_messages);
-                    
-                    paintProgramChange(g, state, channel_messages);
-                    state.offset_ = paintPitchBend(g, state, channel_messages);
-                    state.offset_ = paintParameters(g, state, "HRCC", channel_messages.hrccs_);
-                    state.offset_ = paintParameters(g, state, "RPN", channel_messages.rpns_);
-                    state.offset_ = paintParameters(g, state, "NRPN", channel_messages.nrpns_);
-                    int notes_bottom = paintNotes(g, state, channel_messages);
-                    int control_changes_bottom = paintControlChanges(g, state, channel_messages);
-                    
-                    state.offset_ = std::max(state.offset_, std::max(notes_bottom, control_changes_bottom));
-                    
-                    state.offset_ += Y_CHANNEL_MARGIN;
+                    auto it = channel_order.begin();
+                    while (it != channel_order.end())
+                    {
+                        if (!isExpired(t, channel_messages.notes_.time_))
+                        {
+                            auto noteon_time = channel_messages.notes_.noteOnTime_.toMilliseconds();
+                            auto other_noteon_time = channels->channel_[*it].notes_.noteOnTime_.toMilliseconds();
+                            if (noteon_time != 0 && noteon_time >= other_noteon_time)
+                            {
+                                break;
+                            }
+                        }
+                        it++;
+                    }
+                    channel_order.insert(it, channel_index);
                 }
                 
                 pruneParameters(t, channel_messages.hrccs_);
                 pruneParameters(t, channel_messages.rpns_);
                 pruneParameters(t, channel_messages.nrpns_);
+            }
+
+            for (auto channel_index : channel_order)
+            {
+                auto& channel_messages = channels->channel_[channel_index];
+                
+                paintChannelHeader(g, state, channel_messages);
+                
+                paintProgramChange(g, state, channel_messages);
+                state.offset_ = paintPitchBend(g, state, channel_messages);
+                state.offset_ = paintParameters(g, state, "HRCC", channel_messages.hrccs_);
+                state.offset_ = paintParameters(g, state, "RPN", channel_messages.rpns_);
+                state.offset_ = paintParameters(g, state, "NRPN", channel_messages.nrpns_);
+                int notes_bottom = paintNotes(g, state, channel_messages);
+                int control_changes_bottom = paintControlChanges(g, state, channel_messages);
+                
+                state.offset_ = std::max(state.offset_, std::max(notes_bottom, control_changes_bottom));
+                
+                state.offset_ += Y_CHANNEL_MARGIN;
             }
                         
             lastHeight_ = state.offset_;
