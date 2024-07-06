@@ -538,6 +538,7 @@ namespace showmidi
                     state.offset_ += Y_CHANNEL_MARGIN;
                 }
                 
+                pruneParameters(t, channel_messages.hrccs_);
                 pruneParameters(t, channel_messages.rpns_);
                 pruneParameters(t, channel_messages.nrpns_);
             }
