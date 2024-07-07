@@ -180,8 +180,8 @@ namespace showmidi
             auto& theme = settings.getTheme();
 
             auto left_margin = 23;
-            auto button_spacing = 70;
-            auto button_spacing4 = 44;
+            auto button_spacing = 73;
+            auto button_spacing4 = 45;
             auto y_offset = theme.linePosition(2);
             
             // middle c
@@ -222,7 +222,7 @@ namespace showmidi
             timeout10SecButton_->setBoundsForTouch(left_margin + button_spacing4 * 2, y_offset,
                                                   getWidth(), theme.labelHeight());
             timeoutNeverButton_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
-                                                 getWidth(), theme.labelHeight());
+                                                   getWidth(), theme.labelHeight());
 
             if (!manager_->isPlugin() && SystemStats::getOperatingSystemType() != SystemStats::iOS)
             {
@@ -253,11 +253,11 @@ namespace showmidi
             
             loadThemeButton_->setBoundsForTouch(left_margin, y_offset,
                                                getWidth(), theme.labelHeight());
-            saveThemeButton_->setBoundsForTouch(left_margin + 45, y_offset,
+            saveThemeButton_->setBoundsForTouch(left_margin + button_spacing4, y_offset,
                                                getWidth(), theme.labelHeight());
-            randomThemeButton_->setBoundsForTouch(left_margin + 90, y_offset,
+            randomThemeButton_->setBoundsForTouch(left_margin + button_spacing4 * 2, y_offset,
                                                  getWidth(), theme.labelHeight());
-            resetThemeButton_->setBoundsForTouch(left_margin + 150, y_offset,
+            resetThemeButton_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
                                                  getWidth(), theme.labelHeight());
 
             // theme colours
