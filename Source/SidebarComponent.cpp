@@ -53,6 +53,16 @@ namespace showmidi
             graphButton_ = std::make_unique<PaintedButton>();
             resetButton_ = std::make_unique<PaintedButton>();
             
+            collapsedButton_->setTooltip("Hide or Show the Sidebar");
+            expandedButton_->setTooltip("Hide or Show the Sidebar");
+            helpButton_->setTooltip("Show the Help Window");
+            settingsButton_->setTooltip("Show the Settings Window");
+            playButton_->setTooltip("Pause or Play the MIDI Data Stream [shortcut: spacebar]");
+            pauseButton_->setTooltip("Pause or Play the MIDI Data Stream [shortcut: spacebar]");
+            barButton_->setTooltip("Visualize Control Data as Line or Graph [shortcut: v]");
+            graphButton_->setTooltip("Visualize Control Data as Line or Graph [shortcut: v]");
+            resetButton_->setTooltip("Clears All Data [shortcut: backspace]");
+            
             settings_ = std::make_unique<SettingsComponent>(settingsManager_);
             about_ = std::make_unique<AboutComponent>(settingsManager_->getSettings().getTheme());
 
@@ -377,4 +387,5 @@ namespace showmidi
     void SidebarComponent::paint(Graphics& g) { pimpl_->paint(g); }
     void SidebarComponent::resized()          { pimpl_->resized(); }
     int SidebarComponent::getActiveWidth()    { return pimpl_->getActiveWidth(); }
+    void SidebarComponent::updateSettings()   { pimpl_->updateSettings(); }
 }

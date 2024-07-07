@@ -83,6 +83,8 @@ namespace showmidi
         
         int getActiveWidth();
         
+        void updateSettings();
+        
         struct Pimpl;
     private:
         std::unique_ptr<Pimpl> pimpl_;

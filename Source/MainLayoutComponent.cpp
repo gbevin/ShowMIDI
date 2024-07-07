@@ -70,6 +70,26 @@ namespace showmidi
                 deviceManager_->togglePaused();
                 return true;
             }
+            else if (key.getKeyCode() == KeyPress::deleteKey || key.getKeyCode() == KeyPress::backspaceKey)
+            {
+                deviceManager_->resetChannelData();
+                return true;
+            }
+            else if (key.getKeyCode() == 'v' || key.getKeyCode() == 'V')
+            {
+                auto& settings = settingsManager_->getSettings();
+                auto visualization = settings.getVisualization();
+                if (visualization == Visualization::visualizationBar)
+                {
+                    settings.setVisualization(Visualization::visualizationGraph);
+                }
+                else
+                {
+                    settings.setVisualization(Visualization::visualizationBar);
+                }
+                sidebar_->updateSettings();
+                return true;
+            }
             
             return false;
         }
@@ -121,6 +141,7 @@ namespace showmidi
         MainLayoutComponent* const owner_;
         SettingsManager* const settingsManager_;
         DeviceManager* const deviceManager_;
+        TooltipWindow const tooltipWindow_;
         
         const MainLayoutType layoutType_;
         
