@@ -1264,7 +1264,7 @@ namespace showmidi
                     g.fillRect(graphLeft, graphTop + graph_entry_range,
                                graphWidth, HEIGHT_INDICATOR);
 
-                    graph_entry_height = abs(graphHeight * (tv.value_ - centerValue)) / (maxValue - 1.0);
+                    graph_entry_height = abs(graphHeight * (tv.value_ - centerValue)) / (maxValue - 1);
                 }
 
                 if (tv.value_ >= centerValue)
