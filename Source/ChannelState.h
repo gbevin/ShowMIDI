@@ -33,12 +33,10 @@ namespace showmidi
     
     struct ChannelMessage
     {
-        virtual ~ChannelMessage() {}
-        
         TimedValue current_;
         std::deque<TimedValue> history_;
         
-        virtual void reset()
+        void resetChannelMessage()
         {
             current_.reset();
             history_.clear();
@@ -50,16 +48,21 @@ namespace showmidi
         int number_ { -1 };
         ChannelMessage polyPressure_;
         
-        void reset() override
+        void reset()
         {
-            ChannelMessage::reset();
-            polyPressure_.reset();
+            resetChannelMessage();
+            polyPressure_.resetChannelMessage();
         }
     };
     
     struct NoteOff : public ChannelMessage
     {
         int number_ { -1 };
+
+        void reset()
+        {
+            resetChannelMessage();
+        }
     };
     
     struct Notes
@@ -112,6 +115,11 @@ namespace showmidi
     struct ControlChange : public ChannelMessage
     {
         int number_ { -1 };
+
+        void reset()
+        {
+            resetChannelMessage();
+        }
     };
     
     struct ControlChanges
@@ -159,18 +167,34 @@ namespace showmidi
     
     struct ProgramChange : public ChannelMessage
     {
+        void reset()
+        {
+            resetChannelMessage();
+        }
     };
     
     struct ChannelPressure : public ChannelMessage
     {
+        void reset()
+        {
+            resetChannelMessage();
+        }
     };
     
     struct PitchBend : public ChannelMessage
     {
+        void reset()
+        {
+            resetChannelMessage();
+        }
     };
     
     struct Parameter : public ChannelMessage
     {
+        void reset()
+        {
+            resetChannelMessage();
+        }
     };
     
     struct Parameters
