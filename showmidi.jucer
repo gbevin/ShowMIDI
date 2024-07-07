@@ -46,6 +46,11 @@
       <FILE id="xPnPHy" name="ChannelState.h" compile="0" resource="0" file="Source/ChannelState.h"/>
       <FILE id="yFIEJF" name="DetectDevice.h" compile="0" resource="0" file="Source/DetectDevice.h"/>
       <FILE id="pGRBGi" name="DetectDevice.mm" compile="1" resource="0" file="Source/DetectDevice.mm"/>
+      <FILE id="fx7ghZ" name="DeviceListener.cpp" compile="1" resource="0"
+            file="Source/DeviceListener.cpp"/>
+      <FILE id="HfaxVx" name="DeviceListener.h" compile="0" resource="0"
+            file="Source/DeviceListener.h"/>
+      <FILE id="GYtqwL" name="DeviceManager.h" compile="0" resource="0" file="Source/DeviceManager.h"/>
       <FILE id="S4SSUV" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="o0k9jO" name="MainLayoutComponent.cpp" compile="1" resource="0"
             file="Source/MainLayoutComponent.cpp"/>
@@ -64,10 +69,6 @@
       <FILE id="j0c4oQ" name="PaintedButton.cpp" compile="1" resource="0"
             file="Source/PaintedButton.cpp"/>
       <FILE id="kJ6zgy" name="PaintedButton.h" compile="0" resource="0" file="Source/PaintedButton.h"/>
-      <FILE id="fx7ghZ" name="PauseListener.cpp" compile="1" resource="0"
-            file="Source/PauseListener.cpp"/>
-      <FILE id="HfaxVx" name="PauseListener.h" compile="0" resource="0" file="Source/PauseListener.h"/>
-      <FILE id="GYtqwL" name="PauseManager.h" compile="0" resource="0" file="Source/PauseManager.h"/>
       <FILE id="mgqWKI" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="BZ2So7" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>

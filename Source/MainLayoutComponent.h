@@ -19,7 +19,7 @@
 
 #include <JuceHeader.h>
 
-#include "PauseManager.h"
+#include "DeviceManager.h"
 #include "SettingsManager.h"
 
 namespace showmidi
@@ -33,7 +33,7 @@ namespace showmidi
     class MainLayoutComponent : public Component, public FileDragAndDropTarget
     {
     public:
-        MainLayoutComponent(SettingsManager*, PauseManager*, MainLayoutType, Component*);
+        MainLayoutComponent(SettingsManager*, DeviceManager*, MainLayoutType, Component*);
         virtual ~MainLayoutComponent();
         
         bool isInterestedInFileDrag(const StringArray&);

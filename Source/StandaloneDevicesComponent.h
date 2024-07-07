@@ -19,12 +19,12 @@
 
 #include <JuceHeader.h>
 
-#include "PauseManager.h"
+#include "DeviceManager.h"
 #include "Theme.h"
 
 namespace showmidi
 {
-    class StandaloneDevicesComponent : public Component, public PauseManager
+    class StandaloneDevicesComponent : public Component, public DeviceManager
     {
     public:
         StandaloneDevicesComponent();
@@ -34,7 +34,7 @@ namespace showmidi
         
         bool isPaused() override;
         void togglePaused() override;
-        PauseListeners& getPauseListeners() override;
+        DeviceListeners& getDeviceListeners() override;
         void resetChannelData() override;
 
         struct Pimpl;

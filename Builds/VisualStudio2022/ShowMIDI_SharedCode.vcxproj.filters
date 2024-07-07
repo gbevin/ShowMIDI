@@ -613,6 +613,9 @@
     <ClCompile Include="..\..\Source\DetectDevice.mm">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\DeviceListener.cpp">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
@@ -626,9 +629,6 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PaintedButton.cpp">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\PauseListener.cpp">
       <Filter>ShowMIDI\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\PluginEditor.cpp">
@@ -3147,6 +3147,12 @@
     <ClInclude Include="..\..\Source\DetectDevice.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\DeviceListener.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\DeviceManager.h">
+      <Filter>ShowMIDI\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\MainLayoutComponent.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
@@ -3160,12 +3166,6 @@
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PaintedButton.h">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PauseListener.h">
-      <Filter>ShowMIDI\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\PauseManager.h">
       <Filter>ShowMIDI\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\PluginEditor.h">

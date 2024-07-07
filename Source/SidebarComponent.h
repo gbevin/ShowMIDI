@@ -19,7 +19,7 @@
 
 #include <JuceHeader.h>
 
-#include "PauseManager.h"
+#include "DeviceManager.h"
 #include "SettingsManager.h"
 
 namespace showmidi
@@ -72,7 +72,7 @@ namespace showmidi
         static constexpr int X_HELP = 11;
         static constexpr int Y_HELP = 12;
 
-        SidebarComponent(SettingsManager*, PauseManager*, SidebarType, SidebarListener*);
+        SidebarComponent(SettingsManager*, DeviceManager*, SidebarType, SidebarListener*);
         ~SidebarComponent() override;
         
         void setup();

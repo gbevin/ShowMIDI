@@ -19,7 +19,7 @@
 
 #include "AboutComponent.h"
 #include "PaintedButton.h"
-#include "PauseListener.h"
+#include "DeviceListener.h"
 #include "PortListComponent.h"
 #include "SettingsComponent.h"
 
@@ -28,20 +28,20 @@ namespace showmidi
     SidebarListener::SidebarListener() {}
     SidebarListener::~SidebarListener() {}
 
-    struct SidebarComponent::Pimpl : public Button::Listener, public PauseListener
+    struct SidebarComponent::Pimpl : public Button::Listener, public DeviceListener
     {
         static constexpr int COLLAPSED_WIDTH = 36;
         static constexpr int Y_PORTLIST = 48;
         static constexpr int PORTLIST_BOTTOM_MARGIN = 36;
 
-        Pimpl(SidebarComponent* owner, SettingsManager* settings, PauseManager* pause, SidebarType type, SidebarListener* listener) :
+        Pimpl(SidebarComponent* owner, SettingsManager* settings, DeviceManager* deviceManager, SidebarType type, SidebarListener* listener) :
             owner_(owner),
             settingsManager_(settings),
-            pauseManager_(pause),
+            deviceManager_(deviceManager),
             sidebarType_(type),
             listener_(listener)
         {
-            pauseManager_->getPauseListeners().add(this);
+            deviceManager_->getDeviceListeners().add(this);
             
             collapsedButton_ = std::make_unique<PaintedButton>();
             expandedButton_ = std::make_unique<PaintedButton>();
@@ -99,7 +99,7 @@ namespace showmidi
         
         ~Pimpl()
         {
-            pauseManager_->getPauseListeners().remove(this);
+            deviceManager_->getDeviceListeners().remove(this);
         }
 
         void setup()
@@ -165,7 +165,7 @@ namespace showmidi
             }
             else if (button == playButton_.get() || button == pauseButton_.get())
             {
-                pauseManager_->togglePaused();
+                deviceManager_->togglePaused();
             }
             else if (button == barButton_.get())
             {
@@ -179,7 +179,7 @@ namespace showmidi
             }
             else if (button == resetButton_.get())
             {
-                pauseManager_->resetChannelData();
+                deviceManager_->resetChannelData();
             }
             else if (button == helpButton_.get())
             {
@@ -335,7 +335,7 @@ namespace showmidi
 
         SidebarComponent* const owner_;
         SettingsManager* const settingsManager_;
-        PauseManager* const pauseManager_;
+        DeviceManager* const deviceManager_;
 
         const SidebarType sidebarType_;
         SidebarListener* const listener_;
@@ -369,7 +369,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    SidebarComponent::SidebarComponent(SettingsManager* s, PauseManager* p, SidebarType t, SidebarListener* l) : pimpl_(new Pimpl(this, s, p, t, l)) {}
+    SidebarComponent::SidebarComponent(SettingsManager* s, DeviceManager* d, SidebarType t, SidebarListener* l) : pimpl_(new Pimpl(this, s, d, t, l)) {}
     SidebarComponent::~SidebarComponent() = default;
 
     void SidebarComponent::setup() { pimpl_->setup(); }

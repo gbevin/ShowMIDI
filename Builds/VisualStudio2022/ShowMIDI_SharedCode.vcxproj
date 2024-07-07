@@ -140,12 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\AboutComponent.cpp"/>
+    <ClCompile Include="..\..\Source\DeviceListener.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\Source\MainLayoutComponent.cpp"/>
     <ClCompile Include="..\..\Source\MidiDeviceComponent.cpp"/>
     <ClCompile Include="..\..\Source\MidiDevicesListener.cpp"/>
     <ClCompile Include="..\..\Source\PaintedButton.cpp"/>
-    <ClCompile Include="..\..\Source\PauseListener.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginSettings.cpp"/>
@@ -2462,13 +2462,13 @@
     <ClInclude Include="..\..\Source\AboutComponent.h"/>
     <ClInclude Include="..\..\Source\ChannelState.h"/>
     <ClInclude Include="..\..\Source\DetectDevice.h"/>
+    <ClInclude Include="..\..\Source\DeviceListener.h"/>
+    <ClInclude Include="..\..\Source\DeviceManager.h"/>
     <ClInclude Include="..\..\Source\MainLayoutComponent.h"/>
     <ClInclude Include="..\..\Source\MidiDeviceComponent.h"/>
     <ClInclude Include="..\..\Source\MidiDeviceInfoComparator.h"/>
     <ClInclude Include="..\..\Source\MidiDevicesListener.h"/>
     <ClInclude Include="..\..\Source\PaintedButton.h"/>
-    <ClInclude Include="..\..\Source\PauseListener.h"/>
-    <ClInclude Include="..\..\Source\PauseManager.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginSettings.h"/>

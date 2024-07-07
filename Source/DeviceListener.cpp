@@ -15,24 +15,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
-
-#include "JuceHeader.h"
+#include "DeviceListener.h"
 
 namespace showmidi
 {
-    class PauseListener
+    DeviceListener::DeviceListener()  { }
+    DeviceListener::~DeviceListener() { }
+
+    void DeviceListeners::broadcastPauseChange(bool state)
     {
-    public:
-        PauseListener();
-        virtual ~PauseListener();
-        
-        virtual void pauseChanged(bool) = 0;
-    };
-    
-    class PauseListeners : public ListenerList<PauseListener>
-    {
-    public:
-        void broadcast(bool);
-    };
+        call([state] (DeviceListener& l) { l.pauseChanged(state); });
+    }
 }

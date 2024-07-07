@@ -17,20 +17,22 @@
  */
 #pragma once
 
-#include <JuceHeader.h>
-
-#include "PauseListener.h"
+#include "JuceHeader.h"
 
 namespace showmidi
 {
-    class PauseManager
+    class DeviceListener
     {
     public:
-        virtual ~PauseManager() {};
+        DeviceListener();
+        virtual ~DeviceListener();
         
-        virtual bool isPaused() = 0;
-        virtual void togglePaused() = 0;
-        virtual PauseListeners& getPauseListeners() = 0;
-        virtual void resetChannelData() = 0;
+        virtual void pauseChanged(bool) = 0;
+    };
+    
+    class DeviceListeners : public ListenerList<DeviceListener>
+    {
+    public:
+        void broadcastPauseChange(bool);
     };
 }

@@ -27,14 +27,14 @@ namespace showmidi
     {
         static constexpr int DEFAULT_WINDOW_HEIGHT = 600;
         
-        Pimpl(MainLayoutComponent* owner, SettingsManager* settings, PauseManager* pause, MainLayoutType type, Component* content) :
+        Pimpl(MainLayoutComponent* owner, SettingsManager* settings, DeviceManager* deviceManager, MainLayoutType type, Component* content) :
             owner_(owner),
             settingsManager_(settings),
-            pauseManager_(pause),
+            deviceManager_(deviceManager),
             layoutType_(type)
         {
             sidebar_ = std::make_unique<SidebarComponent>(
-                settingsManager_, pauseManager_,
+                settingsManager_, deviceManager_,
                 layoutType_ == MainLayoutType::layoutStandalone ? SidebarType::sidebarExpandable : SidebarType::sidebarFixed,
                 this);
             viewport_ = std::make_unique<Viewport>();
@@ -67,7 +67,7 @@ namespace showmidi
         {
             if (key.getKeyCode() == KeyPress::spaceKey)
             {
-                pauseManager_->togglePaused();
+                deviceManager_->togglePaused();
                 return true;
             }
             
@@ -120,7 +120,7 @@ namespace showmidi
 
         MainLayoutComponent* const owner_;
         SettingsManager* const settingsManager_;
-        PauseManager* const pauseManager_;
+        DeviceManager* const deviceManager_;
         
         const MainLayoutType layoutType_;
         
@@ -130,7 +130,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    MainLayoutComponent::MainLayoutComponent(SettingsManager* s, PauseManager* p, MainLayoutType t, Component* c) : pimpl_(new Pimpl(this, s, p, t, c))
+    MainLayoutComponent::MainLayoutComponent(SettingsManager* s, DeviceManager* d, MainLayoutType t, Component* c) : pimpl_(new Pimpl(this, s, d, t, c))
     {
         pimpl_->sidebar_->setup();
         

@@ -149,12 +149,12 @@ OBJECTS_LV2_PLUGIN := \
 
 OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/AboutComponent_ebbe5b79.o \
+  $(JUCE_OBJDIR)/DeviceListener_54ddf7b3.o \
   $(JUCE_OBJDIR)/Main_90ebc5c2.o \
   $(JUCE_OBJDIR)/MainLayoutComponent_d0413b5b.o \
   $(JUCE_OBJDIR)/MidiDeviceComponent_1b687947.o \
   $(JUCE_OBJDIR)/MidiDevicesListener_5b057db1.o \
   $(JUCE_OBJDIR)/PaintedButton_d5a3e6f0.o \
-  $(JUCE_OBJDIR)/PauseListener_6d0de32b.o \
   $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o \
   $(JUCE_OBJDIR)/PluginProcessor_a059e380.o \
   $(JUCE_OBJDIR)/PluginSettings_526d8cff.o \
@@ -299,6 +299,11 @@ $(JUCE_OBJDIR)/AboutComponent_ebbe5b79.o: ../../Source/AboutComponent.cpp
 	@echo "Compiling AboutComponent.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/DeviceListener_54ddf7b3.o: ../../Source/DeviceListener.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling DeviceListener.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/Main_90ebc5c2.o: ../../Source/Main.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling Main.cpp"
@@ -322,11 +327,6 @@ $(JUCE_OBJDIR)/MidiDevicesListener_5b057db1.o: ../../Source/MidiDevicesListener.
 $(JUCE_OBJDIR)/PaintedButton_d5a3e6f0.o: ../../Source/PaintedButton.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling PaintedButton.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/PauseListener_6d0de32b.o: ../../Source/PauseListener.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling PauseListener.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PluginEditor_94d4fb09.o: ../../Source/PluginEditor.cpp

@@ -95,7 +95,7 @@ namespace showmidi
         void togglePaused()
         {
             setPaused(!paused_);
-            pauseListeners_.broadcast(paused_);
+            deviceListeners_.broadcastPauseChange(paused_);
         }
         
         void resetChannelData()
@@ -107,9 +107,9 @@ namespace showmidi
             }
         }
         
-        PauseListeners& getPauseListeners()
+        DeviceListeners& getDeviceListeners()
         {
-            return pauseListeners_;
+            return deviceListeners_;
         }
 
         void setPaused(bool paused)
@@ -267,7 +267,7 @@ namespace showmidi
         CriticalSection midiDevicesLock_;
         
         bool paused_ { false };
-        PauseListeners pauseListeners_;
+        DeviceListeners deviceListeners_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
@@ -275,9 +275,9 @@ namespace showmidi
     StandaloneDevicesComponent::StandaloneDevicesComponent() : pimpl_(new Pimpl(this)) {}
     StandaloneDevicesComponent::~StandaloneDevicesComponent() = default;
     
-    void StandaloneDevicesComponent::paint(Graphics& g)             { pimpl_->paint(g); }
-    bool StandaloneDevicesComponent::isPaused()                     { return pimpl_->isPaused(); }
-    void StandaloneDevicesComponent::togglePaused()                 { pimpl_->togglePaused(); }
-    PauseListeners& StandaloneDevicesComponent::getPauseListeners() { return pimpl_->getPauseListeners(); }
-    void StandaloneDevicesComponent::resetChannelData()             { pimpl_->resetChannelData(); }
+    void StandaloneDevicesComponent::paint(Graphics& g)                 { pimpl_->paint(g); }
+    bool StandaloneDevicesComponent::isPaused()                         { return pimpl_->isPaused(); }
+    void StandaloneDevicesComponent::togglePaused()                     { pimpl_->togglePaused(); }
+    DeviceListeners& StandaloneDevicesComponent::getDeviceListeners()   { return pimpl_->getDeviceListeners(); }
+    void StandaloneDevicesComponent::resetChannelData()                 { pimpl_->resetChannelData(); }
 }

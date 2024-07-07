@@ -27,7 +27,7 @@
 
 namespace showmidi
 {
-    struct ShowMIDIPluginAudioProcessorEditor::Pimpl : public MultiTimer, public SettingsManager, public PauseManager
+    struct ShowMIDIPluginAudioProcessorEditor::Pimpl : public MultiTimer, public SettingsManager, public DeviceManager
     {
         static constexpr int DEFAULT_EDITOR_HEIGHT = 600;
         
@@ -85,7 +85,7 @@ namespace showmidi
         void togglePaused() override
         {
             setPaused(!paused_);
-            pauseListeners_.broadcast(paused_);
+            deviceListeners_.broadcastPauseChange(paused_);
         }
         
         void resetChannelData() override
@@ -93,9 +93,9 @@ namespace showmidi
             midiDevice_->resetChannelData();
         }
         
-        PauseListeners& getPauseListeners() override
+        DeviceListeners& getDeviceListeners() override
         {
-            return pauseListeners_;
+            return deviceListeners_;
         }
 
         void setPaused(bool paused)
@@ -199,7 +199,7 @@ namespace showmidi
         MidiDevicesListeners midiDevicesListeners_;
 
         bool paused_ { false };
-        PauseListeners pauseListeners_;
+        DeviceListeners deviceListeners_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
