@@ -34,7 +34,7 @@ namespace showmidi
     struct ChannelMessage
     {
         TimedValue current_;
-        std::deque<TimedValue> history_;
+        std::vector<TimedValue> history_;
         
         void resetChannelMessage()
         {

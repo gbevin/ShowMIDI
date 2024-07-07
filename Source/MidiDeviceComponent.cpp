@@ -439,7 +439,7 @@ namespace showmidi
             if (message->current_.time_.toMilliseconds() > 0)
             {
                 const std::lock_guard<std::mutex> lock(historyLock_);
-                message->history_.push_front(message->current_);
+                message->history_.insert(message->history_.begin(), message->current_);
             }
         }
         
@@ -1186,7 +1186,8 @@ namespace showmidi
                 last = message.history_.back();
                 message.history_.pop_back();
             }
-            if (last.time_.toMilliseconds() != 0 && message.history_.back().time_.toMilliseconds() - graph_expire >= RENDER_TIME_UNIT_MS)
+            if ((!message.history_.empty() && last.time_.toMilliseconds() != 0 && message.history_.back().time_.toMilliseconds() - graph_expire >= RENDER_TIME_UNIT_MS) ||
+                (message.history_.empty() && last.time_.toMilliseconds() != 0 && message.current_.time_.toMilliseconds() - graph_expire >= RENDER_TIME_UNIT_MS))
             {
                 message.history_.push_back({Time(graph_expire), last.value_});
             }
@@ -1365,6 +1366,8 @@ namespace showmidi
         {
             if (paused)
             {
+                const std::lock_guard<std::mutex> lock1(paramsLock_);
+                const std::lock_guard<std::mutex> lock2(historyLock_);
                 pausedTime_ = Time::getCurrentTime();
                 pausedChannels_ = channels_;
             }
