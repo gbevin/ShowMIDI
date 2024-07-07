@@ -6113,6 +6113,9 @@
     <None Include="..\..\Assets\bar.svg">
       <Filter>ShowMIDI\Assets</Filter>
     </None>
+    <None Include="..\..\Assets\close.svg">
+      <Filter>ShowMIDI\Assets</Filter>
+    </None>
     <None Include="..\..\Assets\collapsed.svg">
       <Filter>ShowMIDI\Assets</Filter>
     </None>

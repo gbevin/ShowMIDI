@@ -58,7 +58,7 @@ namespace showmidi
             colorPositiveButton_ = std::make_unique<PaintedButton>();
             colorNegativeButton_ = std::make_unique<PaintedButton>();
             colorControllerButton_ = std::make_unique<PaintedButton>();
-            closeButton_ = std::make_unique<PaintedButton>("X");
+            closeButton_ = std::make_unique<PaintedButton>();
                         
             middleCOct2Button_->addListener(this);
             middleCOct3Button_->addListener(this);
@@ -292,7 +292,7 @@ namespace showmidi
             
             // close button
             
-            closeButton_->setBoundsForTouch(getWidth() - 28, theme.linePosition(1) - theme.labelHeight(),
+            closeButton_->setBoundsForTouch(getWidth() - 24, theme.linePosition(1) - theme.labelHeight() + 3,
                                             28, theme.labelHeight());
 
         }
@@ -495,9 +495,9 @@ namespace showmidi
             
             // close button
             
-            g.setColour(theme.colorController);
-            g.setFont(theme.fontLabel());
-            closeButton_->drawName(g, Justification::centred);
+            auto close_svg = closeSvg_->createCopy();
+            close_svg->replaceColour(Colours::black, theme.colorController);
+            closeButton_->drawDrawable(g, *close_svg);
         }
         
         void buttonClicked(Button* buttonThatWasClicked)
@@ -776,6 +776,8 @@ namespace showmidi
         
         std::unique_ptr<FileChooser> loadThemeChooser_;
         std::unique_ptr<FileChooser> saveThemeChooser_;
+
+        std::unique_ptr<Drawable> closeSvg_ = Drawable::createFromImageData(BinaryData::close_svg, BinaryData::close_svgSize);
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };

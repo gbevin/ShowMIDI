@@ -3452,6 +3452,7 @@
     <None Include="..\..\Assets\appicon-ios.png"/>
     <None Include="..\..\Assets\appicon.png"/>
     <None Include="..\..\Assets\bar.svg"/>
+    <None Include="..\..\Assets\close.svg"/>
     <None Include="..\..\Assets\collapsed.svg"/>
     <None Include="..\..\Assets\expanded.svg"/>
     <None Include="..\..\Assets\graph.svg"/>

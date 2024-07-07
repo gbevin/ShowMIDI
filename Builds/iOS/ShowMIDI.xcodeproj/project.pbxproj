@@ -171,6 +171,7 @@
 		7C75A0F1DB0EDE6AD443D6B2 /* PropertiesSettings.h */ /* PropertiesSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropertiesSettings.h; path = ../../Source/PropertiesSettings.h; sourceTree = SOURCE_ROOT; };
 		80ABD3BDC42C5FE92F7FE42C /* AboutComponent.cpp */ /* AboutComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AboutComponent.cpp; path = ../../Source/AboutComponent.cpp; sourceTree = SOURCE_ROOT; };
 		84B181AE7A602CF26F9C4158 /* include_juce_audio_plugin_client_Standalone.cpp */ /* include_juce_audio_plugin_client_Standalone.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_plugin_client_Standalone.cpp; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_Standalone.cpp; sourceTree = SOURCE_ROOT; };
+		857CDC7485F1A08FEB2ED994 /* close.svg */ /* close.svg */ = {isa = PBXFileReference; lastKnownFileType = file.svg; name = close.svg; path = ../../Assets/close.svg; sourceTree = SOURCE_ROOT; };
 		87FB76522871D7D5EE3A2D82 /* reset.svg */ /* reset.svg */ = {isa = PBXFileReference; lastKnownFileType = file.svg; name = reset.svg; path = ../../Assets/reset.svg; sourceTree = SOURCE_ROOT; };
 		88AAC6E05E409AD97864C094 /* PaintedButton.h */ /* PaintedButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PaintedButton.h; path = ../../Source/PaintedButton.h; sourceTree = SOURCE_ROOT; };
 		8B4BBB72CD42AFE31F80F07A /* collapsed.svg */ /* collapsed.svg */ = {isa = PBXFileReference; lastKnownFileType = file.svg; name = collapsed.svg; path = ../../Assets/collapsed.svg; sourceTree = SOURCE_ROOT; };
@@ -452,6 +453,7 @@
 				6942622DD840B2BD0E5810BC,
 				3149C8B2F0D4F13D1598BD0B,
 				6923FB3D37EB883BBF2ACCBC,
+				857CDC7485F1A08FEB2ED994,
 				8B4BBB72CD42AFE31F80F07A,
 				B115D12C99CF013E5E832275,
 				A55262498FFC8F4D6A9E3759,
