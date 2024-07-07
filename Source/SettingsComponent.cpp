@@ -36,9 +36,10 @@ namespace showmidi
             notesNumberButton_ = std::make_unique<PaintedButton>("number");
             numbersDecButton_ = std::make_unique<PaintedButton>("decimal");
             numbersHexButton_ = std::make_unique<PaintedButton>("hexadecimal");
-            timeout2SecButton_ = std::make_unique<PaintedButton>("2 sec");
-            timeout5SecButton_ = std::make_unique<PaintedButton>("5 sec");
-            timeout10SecButton_ = std::make_unique<PaintedButton>("10 sec");
+            timeout2SecButton_ = std::make_unique<PaintedButton>("2sec");
+            timeout5SecButton_ = std::make_unique<PaintedButton>("5sec");
+            timeout10SecButton_ = std::make_unique<PaintedButton>("10sec");
+            timeoutNeverButton_ = std::make_unique<PaintedButton>("never");
             windowRegularButton_ = std::make_unique<PaintedButton>("regular");
             windowAlwaysOnTopButton_ = std::make_unique<PaintedButton>("always on top");
             loadThemeButton_ = std::make_unique<PaintedButton>("load");
@@ -69,6 +70,7 @@ namespace showmidi
             timeout2SecButton_->addListener(this);
             timeout5SecButton_->addListener(this);
             timeout10SecButton_->addListener(this);
+            timeoutNeverButton_->addListener(this);
             windowRegularButton_->addListener(this);
             windowAlwaysOnTopButton_->addListener(this);
             graphHeight1Button_->addListener(this);
@@ -109,6 +111,7 @@ namespace showmidi
             owner_->addAndMakeVisible(timeout2SecButton_.get());
             owner_->addAndMakeVisible(timeout5SecButton_.get());
             owner_->addAndMakeVisible(timeout10SecButton_.get());
+            owner_->addAndMakeVisible(timeoutNeverButton_.get());
             if (!manager_->isPlugin() && SystemStats::getOperatingSystemType() != SystemStats::iOS)
             {
                 owner_->addAndMakeVisible(windowRegularButton_.get());
@@ -178,6 +181,7 @@ namespace showmidi
 
             auto left_margin = 23;
             auto button_spacing = 70;
+            auto button_spacing4 = 44;
             auto y_offset = theme.linePosition(2);
             
             // middle c
@@ -213,11 +217,13 @@ namespace showmidi
             
             timeout2SecButton_->setBoundsForTouch(left_margin, y_offset,
                                                  getWidth(), theme.labelHeight());
-            timeout5SecButton_->setBoundsForTouch(left_margin + button_spacing, y_offset,
+            timeout5SecButton_->setBoundsForTouch(left_margin + button_spacing4, y_offset,
                                                  getWidth(), theme.labelHeight());
-            timeout10SecButton_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
+            timeout10SecButton_->setBoundsForTouch(left_margin + button_spacing4 * 2, y_offset,
                                                   getWidth(), theme.labelHeight());
-            
+            timeoutNeverButton_->setBoundsForTouch(left_margin + button_spacing * 2, y_offset,
+                                                 getWidth(), theme.labelHeight());
+
             if (!manager_->isPlugin() && SystemStats::getOperatingSystemType() != SystemStats::iOS)
             {
                 // window position
@@ -371,7 +377,9 @@ namespace showmidi
             timeout5SecButton_->drawName(g, Justification::centredLeft);
             setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 10; });
             timeout10SecButton_->drawName(g, Justification::centredLeft);
-            
+            setSettingOptionFont(g, [&settings] () { return settings.getTimeoutDelay() == 0; });
+            timeoutNeverButton_->drawName(g, Justification::centredLeft);
+
             if (!manager_->isPlugin() && SystemStats::getOperatingSystemType() != SystemStats::iOS)
             {
                 // window position
@@ -545,6 +553,11 @@ namespace showmidi
             else if (buttonThatWasClicked == timeout10SecButton_.get())
             {
                 settings.setTimeoutDelay(10);
+                repaint();
+            }
+            else if (buttonThatWasClicked == timeoutNeverButton_.get())
+            {
+                settings.setTimeoutDelay(0);
                 repaint();
             }
             else if (buttonThatWasClicked == windowRegularButton_.get())
@@ -730,6 +743,7 @@ namespace showmidi
         std::unique_ptr<PaintedButton> timeout2SecButton_;
         std::unique_ptr<PaintedButton> timeout5SecButton_;
         std::unique_ptr<PaintedButton> timeout10SecButton_;
+        std::unique_ptr<PaintedButton> timeoutNeverButton_;
         std::unique_ptr<PaintedButton> windowRegularButton_;
         std::unique_ptr<PaintedButton> windowAlwaysOnTopButton_;
         std::unique_ptr<PaintedButton> graphHeight1Button_;

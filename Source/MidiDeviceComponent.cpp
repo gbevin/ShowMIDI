@@ -1292,7 +1292,15 @@ namespace showmidi
         
         bool isExpired(const Time& currentTime, Time& messageTime)
         {
+            if (messageTime.toMilliseconds() == 0)
+            {
+                return true;
+            }
             auto delay = settingsManager_->getSettings().getTimeoutDelay();
+            if (delay == 0)
+            {
+                return false;
+            }
             return (currentTime - messageTime).inSeconds() > delay;
         }
         
