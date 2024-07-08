@@ -57,7 +57,7 @@ Here's a tutorial video that shows you a quick overview of why I created ShowMID
 
 ## Download
 
-You can download pre-built binaries from the release section:
+You can download pre-built binaries from the release section: 
 https://github.com/gbevin/ShowMIDI/releases
 
 Since ShowMIDI is free and open-source, you can also easily build it yourself. Just take a look into the Builds directory when you download the sources.
