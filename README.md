@@ -102,7 +102,7 @@ ShowMIDI was created by Geert Bevin: https://uwyn.com
 
 The UI design was done by Stephen Petoniak: https://spetoniak.com
 
-## Building From Source on Linux
+## Building from Source on Linux
 
 ShowMIDI relies on Git submodules for compilation of external dependencies.
 
