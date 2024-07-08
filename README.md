@@ -6,7 +6,8 @@ All the heavy lifting is done by the wonderful JUCE library.
 
 The project website is https://github.com/gbevin/ShowMIDI
 
-<p><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-0.9.0.png" style="width: auto" /></p>
+<p><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-1.0.0-line.png" style="width: 640px" /></p>
+<p><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-1.0.0-graph.png" style="width: 640px" /></p>
 
 ## Community
 
@@ -23,6 +24,27 @@ Instead of wading through logs of MIDI messages to correlate relevant ones and i
 This animation shows the difference between a traditional MIDI monitor on the left and ShowMIDI on the right:
 
 <p><img src="https://uwyn.com/images/showmidi-animation-small.gif" width="640" /></p>
+
+ShowMIDI displays:
+
+* MIDI Devices
+* MIDI Channels (CH)
+* Note On with Velocity (ON)
+* Note Off with Velocity (OFF)
+* Control Change (CC)
+* Hi-Res 14-bit Control Change (HRCC)
+* Pitch Bend Change (PB)
+* Program Change (PRGM)
+* Channel Pressure (CP)
+* Polyphonic Key Pressure (PP)
+* Registered Parameter Number (RPN)
+* Non-Registered Parameter Number (NRPN)
+* MPE Configuration (MPE MGR, MPE LZ, MPE UZ)
+* Timing Clock as BPM (CLOCK BPM)
+* Clock Start (START)
+* Clock Continue (CONT)
+* Clock Stop (STOP)
+* System Exclusive (SYSEX)
 
 ## Video introduction
 
@@ -46,7 +68,15 @@ brew install gbevin/tools/showmidi
 
 To use it, simply double-click the application to launch it.
 
-To pause the MIDI data stream, press the spacebar, to un-pause, press it again.
+All connected MIDI devices will automatically be shown in columns. By expanding the left side panel, individual devices can be shown or hidden. Holding the `alt` or `option` key while clicking on a device to change its visibility, will change the visibility of all the devices. 
+
+When an incoming message first appears on a MIDI channel, that channel will appear at the top of the MIDI device column. For as long as a channel is displayed, it will keep its order in the device column. When a channel is auto-hidden through inactivity, the next time activity happens, the channel will be displayed at the top of the MIDI device column again.
+
+To pause the MIDI data stream, press the `spacebar`, to un-pause, press it again.
+
+The data can either be visualized as horizontal lines or as scrolling graphs. Toggling the visualization icon allows you to switch this is realtime, pressing the `v` key allows you to do that from the keyboard.
+
+To quickly clear the displayed data, press the reset button or the `delete`/`backspace` key on your keyboard. 
 
 The plugin versions can be used in any DAW that supports MIDI effect plugins. Some plugin formats, like VST3, might filter out certain MIDI messages and not present a fully accurate view.
 
@@ -72,7 +102,7 @@ ShowMIDI was created by Geert Bevin: https://uwyn.com
 
 The UI design was done by Stephen Petoniak: https://spetoniak.com
 
-## Building on Linux
+## Building From Source on Linux
 
 ShowMIDI relies on Git submodules for compilation of external dependencies.
 
