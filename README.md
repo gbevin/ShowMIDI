@@ -1,3 +1,6 @@
+## [Please consider voting for ShowMIDI!](https://midi.org/innovation-awards)
+<a href="https://midi.org/innovation-awards"><img src="https://uwyn.com/images/midi-innovation-2024.png" width="640" /></a>
+
 # ShowMIDI
 
 ShowMIDI is a multi-platform GUI application to effortlessly visualize MIDI activity.
