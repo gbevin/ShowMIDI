@@ -21,6 +21,13 @@
 
 namespace showmidi
 {
+    enum ParamType
+    {
+        PARAM_HRCC,
+        PARAM_RPN,
+        PARAM_NRPN
+    };
+    
     struct MidiDeviceComponent::Pimpl : public MidiInputCallback
     {
         Pimpl(MidiDeviceComponent* owner, SettingsManager* manager, const String& name) :
@@ -104,7 +111,11 @@ namespace showmidi
             channel1.controlChanges_.controlChange_[39].current_.time_ = t;
             channel1.rpns_.time_ = t;
             channel1.rpns_.param_[0].current_.time_ = t;
-            channel1.rpns_.param_[0].current_.value_ = 5000;
+            channel1.rpns_.param_[0].current_.value_ = (96 << 7) + 50;
+            channel1.rpns_.param_[1].current_.time_ = t;
+            channel1.rpns_.param_[1].current_.value_ = (127 << 7) + 127;
+            channel1.rpns_.param_[2].current_.time_ = t;
+            channel1.rpns_.param_[2].current_.value_ = (127 << 7) + 127;
             channel1.rpns_.param_[6].current_.time_ = t;
             channel1.rpns_.param_[6].current_.value_ = 10;
             channel1.hrccs_.time_ = t;
@@ -612,9 +623,9 @@ namespace showmidi
                 
                 paintProgramChange(g, state, channel_messages);
                 state.offset_ = paintPitchBend(g, state, channel_messages);
-                state.offset_ = paintParameters(g, state, "HRCC", channel_messages.hrccs_);
-                state.offset_ = paintParameters(g, state, "RPN", channel_messages.rpns_);
-                state.offset_ = paintParameters(g, state, "NRPN", channel_messages.nrpns_);
+                state.offset_ = paintParameters(g, state, PARAM_HRCC, channel_messages.hrccs_);
+                state.offset_ = paintParameters(g, state, PARAM_RPN, channel_messages.rpns_);
+                state.offset_ = paintParameters(g, state, PARAM_NRPN, channel_messages.nrpns_);
                 int notes_bottom = paintNotes(g, state, channel_messages);
                 int control_changes_bottom = paintControlChanges(g, state, channel_messages);
                 
@@ -913,7 +924,7 @@ namespace showmidi
             return y_offset;
         }
         
-        int paintParameters(Graphics& g, ChannelPaintState& state, const String& name, Parameters& parameters)
+        int paintParameters(Graphics& g, ChannelPaintState& state, ParamType type, Parameters& parameters)
         {
             int y_offset = state.offset_;
 
@@ -927,22 +938,81 @@ namespace showmidi
                     {
                         y_offset += Y_PARAM;
                         
-                        Colour param_color = theme_.colorController;
-                        
                         int param_width = getStandardWidth() - X_PARAM - X_PARAM_DATA;
                         
                         // draw the parameter text
                         
-                        g.setColour(param_color);
+                        g.setColour(theme_.colorController);
                         g.setFont(theme_.fontLabel());
+                        String name;
+                        switch (type)
+                        {
+                            case PARAM_HRCC: name = "HRCC"; break;
+                            case PARAM_RPN: name = "RPN"; break;
+                            case PARAM_NRPN: name = "NRPN"; break;
+                        }
                         g.drawText(name + String(" ") + output14Bit(number),
                                    X_PARAM, y_offset,
                                    param_width, theme_.labelHeight(),
                                    Justification::centredLeft);
+
+                        // draw the parameter value
                         
                         g.setColour(theme_.colorData);
                         g.setFont(theme_.fontData());
-                        g.drawText(output14Bit(param.current_.value_),
+                        auto colourPositive = theme_.colorController;
+                        auto colourNegative = theme_.colorController;
+                        auto bidirectional = false;
+                        auto param_text = output14Bit(param.current_.value_);
+                        // handle standard RPN numbers and provide meaningful output for them
+                        if (type == PARAM_RPN)
+                        {
+                            if (number == 0)
+                            {
+                                auto param_cents = String();
+                                auto cents = param.current_.value_ & 0x7f;
+                                if (cents > 0)
+                                {
+                                    param_cents = String(" ") + String(param.current_.value_ & 0x7F);
+                                }
+                                param_text = String("PB SNS ") + String((param.current_.value_ >> 7) & 0x7F) + param_cents;
+                            }
+                            else if (number == 1)
+                            {
+                                param_text = String("FTUN ") + String(((param.current_.value_ - 8192) * 100.0) / 8192.0, 2);
+                                bidirectional = true;
+                                colourPositive = theme_.colorPositive;
+                                colourNegative = theme_.colorNegative;
+                            }
+                            else if (number == 2)
+                            {
+                                param_text = String("CTUN ") + String(((param.current_.value_ >> 7) & 0x7F) - 64);
+                                bidirectional = true;
+                                colourPositive = theme_.colorPositive;
+                                colourNegative = theme_.colorNegative;
+                            }
+                            else if (number == 3)
+                            {
+                                param_text = String("TUN PC ") + String((param.current_.value_ >> 7) & 0x7F);
+                            }
+                            else if (number == 4)
+                            {
+                                param_text = String("TUN BS ") + String((param.current_.value_ >> 7) & 0x7F);
+                            }
+                            else if (number == 6 && param.current_.value_ <= 0xF)
+                            {
+                                if (param.current_.value_ == 0)
+                                {
+                                    param_text = String("MPE OFF");
+                                }
+                                else
+                                {
+                                    param_text = String("MPE RANGE ") + String(param.current_.value_);
+                                }
+                            }
+                        }
+
+                        g.drawText(param_text,
                                    X_PARAM, y_offset,
                                    param_width, theme_.dataHeight(),
                                    Justification::centredRight);
@@ -952,7 +1022,7 @@ namespace showmidi
                         // draw value indicator
 
                         paintVisualization(g, state, y_offset, param, 0x2000, 0x3FFF,
-                                           false, param_color, param_color,
+                                           bidirectional, colourPositive, colourNegative,
                                            X_PARAM, y_offset,
                                            param_width, HEIGHT_INDICATOR + (Y_PARAM + theme_.labelHeight() + HEIGHT_INDICATOR) * std::max(2, settingsManager_->getSettings().getControlGraphHeight()));
                     }
