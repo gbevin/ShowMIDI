@@ -257,8 +257,6 @@ namespace showmidi
         int lastRpnLsb_ { 127 };
         int lastNrpnMsb_ { 127 };
         int lastNrpnLsb_ { 127 };
-        int lastDataMsb_ { 0 };
-        int lastDataLsb_ { 0 };
         
         void reset()
         {
@@ -278,8 +276,6 @@ namespace showmidi
             lastRpnLsb_ = 127;
             lastNrpnMsb_ = 127;
             lastNrpnLsb_ = 127;
-            lastDataMsb_ = 0;
-            lastDataLsb_ = 0;
         }
     };
     

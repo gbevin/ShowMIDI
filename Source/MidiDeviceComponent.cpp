@@ -286,52 +286,6 @@ namespace showmidi
                 
                 switch (number)
                 {
-                    case 6:
-                        // if an NRPN or RPN parameter was selected, start constituting the data
-                        if ((channel.lastRpnMsb_ != 127 || channel.lastRpnLsb_ != 127) ||
-                            (channel.lastNrpnMsb_ != 127 || channel.lastNrpnLsb_ != 127))
-                        {
-                            channel.lastDataMsb_ = value;
-                        }
-                        break;
-                    case 38:
-                        if (channel.lastRpnMsb_ != 127 || channel.lastRpnLsb_ != 127)
-                        {
-                            const std::lock_guard<std::mutex> lock(paramsLock_);
-                            
-                            channel.lastDataLsb_ = value;
-                            
-                            int rpn_number = (channel.lastRpnMsb_ << 7) + channel.lastRpnLsb_;
-                            int rpn_value = (channel.lastDataMsb_ << 7) + channel.lastDataLsb_;
-                            auto& rpns = channel.rpns_;
-                            collectHistory(&rpns.param_[rpn_number]);
-                            
-                            rpns.time_ = t;
-                            rpns.param_[rpn_number].current_.time_ = t;
-                            rpns.param_[rpn_number].current_.value_ = rpn_value;
-                            
-                            // handle MPE activation message
-                            if (rpn_number == 6 && channel.lastDataMsb_ <= 0xf)
-                            {
-                                channels_.handleMpeActivation(t, channel, channel.lastDataMsb_);
-                            }
-                        }
-                        else if (channel.lastNrpnMsb_ != 127 || channel.lastNrpnLsb_ != 127)
-                        {
-                            const std::lock_guard<std::mutex> lock(paramsLock_);
-                            
-                            channel.lastDataLsb_ = value;
-                            
-                            int nrpn_number = (channel.lastNrpnMsb_ << 7) + channel.lastNrpnLsb_;
-                            int nrpn_value = (channel.lastDataMsb_ << 7) + channel.lastDataLsb_;
-                            auto& nrpns = channel.nrpns_;
-                            collectHistory(&nrpns.param_[nrpn_number]);
-                            
-                            nrpns.time_ = t;
-                            nrpns.param_[nrpn_number].current_.time_ = t;
-                            nrpns.param_[nrpn_number].current_.value_ = nrpn_value;
-                        }
-                        break;
                     case 98:
                         channel.lastNrpnLsb_ = value;
                         break;
@@ -360,45 +314,47 @@ namespace showmidi
                         // 5. for bullet 3: if previous MSB value was lower, then LSB is 0, otherwise LSB is 127
                         if (number >= 0 && number < 32)
                         {
-                            auto lsb = number + 32;
+                            auto msb_number = number;
+                            auto lsb_number = msb_number + 32;
+                            auto& msb_tv = control_changes.controlChange_[msb_number].current_;
+                            auto& lsb_tv = control_changes.controlChange_[lsb_number].current_;
                             // see bullet 1 above
-                            if (control_changes.controlChange_[number].current_.time_.toMilliseconds() > 0 &&
-                                control_changes.controlChange_[lsb].current_.time_.toMilliseconds() > 0 &&
-                                // see bullet 4 above
-                                control_changes.controlChange_[number].current_.value_ != value)
+                            if (msb_tv.time_.toMilliseconds() > 0 &&
+                                lsb_tv.time_.toMilliseconds() > 0)
                             {
-                                const std::lock_guard<std::mutex> lock(paramsLock_);
-                                
-                                auto& hrcc = channel.hrccs_;
-                                collectHistory(&hrcc.param_[number]);
-                                
-                                hrcc.time_ = t;
-                                hrcc.param_[number].current_.time_ = t;
-                                // see bullet 5 above
-                                auto lsb_value = 0;
-                                if (control_changes.controlChange_[number].current_.value_ > value)
+                                // see bullet 4 above
+                                if (msb_tv.value_ != value)
                                 {
-                                    lsb_value = 127;
+                                    auto msb_value = value;
+                                    // see bullet 5 above
+                                    auto lsb_value = 0;
+                                    if (msb_tv.value_ > msb_value)
+                                    {
+                                        lsb_value = 127;
+                                    }
+                                    
+                                    // see bullets 3, 4, 5 above
+                                    handle14BitControlChangeValue(t, channel, msb_number, msb_value, lsb_value);
                                 }
-                                // see bullets 3, 4, 5 above
-                                hrcc.param_[number].current_.value_ = (value << 7) + lsb_value;
+                            }
+                            // we also handle the data entry control change for NRPN and RPN here
+                            // since it can potentially be used only as MSB data entry only
+                            else if (number == 6)
+                            {
+                                handleDataEntryControlChange(t, channel, value, 0);
                             }
                         }
                         else if (number >= 32 && number < 64)
                         {
-                            auto msb = number - 32;
+                            auto msb_number = number - 32;
+                            auto& msb_tv = control_changes.controlChange_[msb_number].current_;
                             // see bullet 1 above
-                            if (control_changes.controlChange_[msb].current_.time_.toMilliseconds() > 0)
+                            if (msb_tv.time_.toMilliseconds() > 0)
                             {
-                                const std::lock_guard<std::mutex> lock(paramsLock_);
-                                
-                                auto& hrcc = channel.hrccs_;
-                                collectHistory(&hrcc.param_[number]);
-                                
-                                hrcc.time_ = t;
-                                hrcc.param_[msb].current_.time_ = t;
                                 // see bullet 2 above
-                                hrcc.param_[msb].current_.value_ = (control_changes.controlChange_[msb].current_.value_ << 7) + value;
+                                auto msb_value = msb_tv.value_;
+                                auto lsb_value = value;
+                                handle14BitControlChangeValue(t, channel, msb_number, msb_value, lsb_value);
                             }
                         }
                         break;
@@ -433,7 +389,72 @@ namespace showmidi
                 dirty_ = true;
             }
         }
+
+        void handle14BitControlChangeValue(const Time& t, ActiveChannel& channel, int number, int msbValue, int lsbValue)
+        {
+            auto was_rpn_or_nrpn = false;
+            // handle RPN or NRPN
+            if (number == 6)
+            {
+                was_rpn_or_nrpn = handleDataEntryControlChange(t, channel, msbValue, lsbValue);
+            }
+            
+            // handle Hi-Res Control Change
+            if (!was_rpn_or_nrpn)
+            {
+                const std::lock_guard<std::mutex> lock(paramsLock_);
+                
+                auto& hrcc = channel.hrccs_;
+                collectHistory(&hrcc.param_[number]);
+                
+                hrcc.time_ = t;
+                hrcc.param_[number].current_.time_ = t;
+                // see bullet 2 above
+                hrcc.param_[number].current_.value_ = (msbValue << 7) + lsbValue;
+            }
+        }
         
+        bool handleDataEntryControlChange(const Time& t, ActiveChannel& channel, int msbValue, int lsbValue)
+        {
+            const std::lock_guard<std::mutex> lock(paramsLock_);
+            
+            if (channel.lastRpnMsb_ != 127 || channel.lastRpnLsb_ != 127)
+            {
+                auto rpn_number = (channel.lastRpnMsb_ << 7) + channel.lastRpnLsb_;
+                auto rpn_value = (msbValue << 7) + lsbValue;
+                auto& rpns = channel.rpns_;
+                collectHistory(&rpns.param_[rpn_number]);
+                
+                rpns.time_ = t;
+                rpns.param_[rpn_number].current_.time_ = t;
+                rpns.param_[rpn_number].current_.value_ = rpn_value;
+                
+                // handle MPE activation message
+                if (rpn_number == 6 && msbValue <= 0xf)
+                {
+                    channels_.handleMpeActivation(t, channel, msbValue);
+                }
+                
+                return true;
+            }
+            // handle NRPN
+            else if (channel.lastNrpnMsb_ != 127 || channel.lastNrpnLsb_ != 127)
+            {
+                auto nrpn_number = (channel.lastNrpnMsb_ << 7) + channel.lastNrpnLsb_;
+                auto nrpn_value = (msbValue << 7) + lsbValue;
+                auto& nrpns = channel.nrpns_;
+                collectHistory(&nrpns.param_[nrpn_number]);
+                
+                nrpns.time_ = t;
+                nrpns.param_[nrpn_number].current_.time_ = t;
+                nrpns.param_[nrpn_number].current_.value_ = nrpn_value;
+                
+                return true;
+            }
+            
+            return false;
+        }
+
         void collectHistory(ChannelMessage* message)
         {
             if (message->current_.time_.toMilliseconds() > 0)
