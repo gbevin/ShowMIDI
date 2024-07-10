@@ -967,6 +967,7 @@ namespace showmidi
                         // handle standard RPN numbers and provide meaningful output for them
                         if (type == PARAM_RPN)
                         {
+                            auto msb_only = (param.current_.value_ >> 7) & 0x7F;
                             if (number == 0)
                             {
                                 auto param_cents = String();
@@ -975,7 +976,7 @@ namespace showmidi
                                 {
                                     param_cents = String(" ") + String(param.current_.value_ & 0x7F);
                                 }
-                                param_text = String("PB SNS ") + String((param.current_.value_ >> 7) & 0x7F) + param_cents;
+                                param_text = String("PB SNS ") + String(msb_only) + param_cents;
                             }
                             else if (number == 1)
                             {
@@ -986,20 +987,20 @@ namespace showmidi
                             }
                             else if (number == 2)
                             {
-                                param_text = String("CTUN ") + String(((param.current_.value_ >> 7) & 0x7F) - 64);
+                                param_text = String("CTUN ") + String(msb_only - 64);
                                 bidirectional = true;
                                 colourPositive = theme_.colorPositive;
                                 colourNegative = theme_.colorNegative;
                             }
                             else if (number == 3)
                             {
-                                param_text = String("TUN PC ") + String((param.current_.value_ >> 7) & 0x7F);
+                                param_text = String("TUN PC ") + String(msb_only);
                             }
                             else if (number == 4)
                             {
-                                param_text = String("TUN BS ") + String((param.current_.value_ >> 7) & 0x7F);
+                                param_text = String("TUN BS ") + String(msb_only);
                             }
-                            else if (number == 6 && param.current_.value_ <= 0xF)
+                            else if (number == 6 && msb_only <= 0xF)
                             {
                                 if (param.current_.value_ == 0)
                                 {
@@ -1007,7 +1008,7 @@ namespace showmidi
                                 }
                                 else
                                 {
-                                    param_text = String("MPE RANGE ") + String(param.current_.value_);
+                                    param_text = String("MPE RANGE ") + String(msb_only);
                                 }
                             }
                         }
