@@ -1,12 +1,14 @@
 # ShowMIDI
 
+<p><img align="right" src="https://github.com/user-attachments/assets/ad3e7647-c768-4817-a8bf-6fa65707389f" width="160px" /><br /></p>
+
 ShowMIDI is a multi-platform GUI application to effortlessly visualize MIDI activity.
 
 All the heavy lifting is done by the wonderful JUCE library.
 
 The project website is https://github.com/gbevin/ShowMIDI
 
-<p><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-1.0.0-line.png" style="width: 640px" /></p>
+<p style="clear: both;"><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-1.0.0-line.png" style="width: 640px" /></p>
 <p><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-1.0.0-graph.png" style="width: 640px" /></p>
 
 ## Community
