@@ -11,12 +11,6 @@ The project website is https://github.com/gbevin/ShowMIDI
 <p style="clear: both;"><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-1.0.0-line.png" style="width: 640px" /></p>
 <p><img src="https://raw.githubusercontent.com/gbevin/ShowMIDI/main/Design/showmidi-1.0.0-graph.png" style="width: 640px" /></p>
 
-## Community
-
-Join the Forums: https://forum.uwyn.com
-
-Chat on Discord: https://discord.gg/TgsCnwqWTf
-
 ## Purpose
 
 This application fills a void in the available MIDI monitoring solutions.
