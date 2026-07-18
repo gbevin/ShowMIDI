@@ -70,7 +70,7 @@ namespace showmidi
             memcpy(sysex.data_, data, Sysex::MAX_SYSEX_DATA);
 
             auto& clock = channels_.clock_;
-            clock.bpm_ = 111.1;
+            clock.bpm_ = 111.0;
             clock.timeBpm_ = t;
             clock.timeStart_ = t;
             clock.timeContinue_ = t;
@@ -180,48 +180,115 @@ namespace showmidi
                     midiTimeStamps_.pop_back();
                 }
                 
-                // calculate the average across all the queued timestamps
-                // this will be used to filter out outliers
-                auto avg_ts = 0.0;
-                for (auto i = 0; i < midiTimeStamps_.size(); i++)
+                // calculate the average across the intervals between the queued timestamps
+                // this will be used to filter out outliers, since stalled and
+                // burst-delivered ticks show up as outlier intervals that would
+                // otherwise swing the tempo around wildly
+                std::vector<double> intervals;
+                for (auto i = 0; i + 1 < midiTimeStamps_.size(); i++)
                 {
-                    avg_ts += midiTimeStamps_[i];
+                    intervals.push_back(fabs(midiTimeStamps_[i] - midiTimeStamps_[i + 1]));
                 }
-                avg_ts /= midiTimeStamps_.size();
-                
-                // only keep timestamps that are within 1% deviation of the average
-                std::vector<double> keep;
-                for (auto i = 0; i < midiTimeStamps_.size(); i++)
+
+                auto avg_interval = 0.0;
+                for (auto i = 0; i < intervals.size(); i++)
                 {
-                    if (fabs(avg_ts - midiTimeStamps_[i]) < avg_ts * 0.01)
+                    avg_interval += intervals[i];
+                }
+                if (intervals.size() > 0)
+                {
+                    avg_interval /= intervals.size();
+                }
+
+                // only keep intervals that are within 15% deviation of the average,
+                // which passes the millisecond quantization of senders but drops
+                // the stalls and the bursts of late-delivered ticks
+                std::vector<double> keep;
+                for (auto i = 0; i < intervals.size(); i++)
+                {
+                    if (fabs(avg_interval - intervals[i]) < avg_interval * 0.15)
                     {
-                        keep.push_back(midiTimeStamps_[i]);
+                        keep.push_back(intervals[i]);
                     }
                 }
-                
-                // if we have at least four valid timestamps, calculate the bpm
+
+                // if we have at least four valid intervals, calculate the bpm
                 if (keep.size() > 4)
                 {
                     auto sum = 0.0;
-                    auto size = (int) keep.size() - 1;
-                    for (auto i = 0; i < size; i++)
+                    for (auto i = 0; i < keep.size(); i++)
                     {
-                        sum += fabs(keep[i] - keep[i + 1]);
+                        sum += keep[i];
                     }
-                    sum /= size;
+                    sum /= keep.size();
                     
                     auto bpm = int((600.0 / sum / 24.0) + 0.5) / 10.0;
                     bpm = std::min(std::max(bpm, BPM_MIN), BPM_MAX);
-                    
-                    if (keep.size() > TIMESTAMP_QUEUE_SIZE / 2)
+
+                    // wait for a mostly full window: fewer intervals give a
+                    // rough reading, while requiring even more starves the
+                    // display at high tempos, where ticks are closer together
+                    // and more of them get dropped above
+                    if (keep.size() >= TIMESTAMP_QUEUE_SIZE * 3 / 4)
                     {
                         auto& clock = channels_.clock_;
+
+                        // single readings wobble, so a running average smooths
+                        // them; after a tempo jump the average starts from a
+                        // single reading that may round to the wrong number,
+                        // and while it disagrees with the display it catches
+                        // up faster, calming down again once they match
+                        auto avg_dt = ts_secs - midiClockAvgTime_;
+                        if (midiClockAvgTime_ <= 0.0 || avg_dt > 2.0)
+                        {
+                            midiClockAvgBpm_ = bpm;
+                        }
+                        else
+                        {
+                            auto correcting = ts_secs - midiClockJumpTime_ < 1.5
+                                              && fabs(midiClockAvgBpm_ - clock.bpm_) >= 0.35;
+                            midiClockAvgBpm_ += std::min(1.0, avg_dt / (correcting ? 0.35 : 1.0)) * (bpm - midiClockAvgBpm_);
+                        }
+                        midiClockAvgTime_ = ts_secs;
+
+                        // only a big change counts as a tempo jump, since the
+                        // wobble at high tempos can span a few BPM; small real
+                        // changes reach the display through the average anyway
+                        if (fabs(bpm - clock.bpm_) >= std::max(4.0, bpm * 0.03))
+                        {
+                            midiClockAvgBpm_ = bpm;
+                            midiClockJumpTime_ = ts_secs;
+                        }
+
+                        // keep the readout alive while the clock is running
                         if ((t - clock.timeBpm_).inSeconds() > 0.5)
                         {
                             clock.timeBpm_ = t;
-                            if (fabs(clock.bpm_ - bpm) >= 0.1)
+                        }
+
+                        // the tempo is shown as a whole BPM: clocks are set in
+                        // whole values and a steady display beats chasing
+                        // decimal wobble. The average has to clearly cross over
+                        // to another value before the display follows, and a
+                        // step to the next number has to stick around for a
+                        // moment first, while a move of several BPM shows
+                        // immediately
+                        if (fabs(midiClockAvgBpm_ - clock.bpm_) < 0.75)
+                        {
+                            midiClockCrossingSince_ = 0.0;
+                        }
+                        else
+                        {
+                            auto target = double(int(midiClockAvgBpm_ + 0.5));
+                            auto neighbour = fabs(target - clock.bpm_) < 2.0;
+                            if (neighbour && midiClockCrossingSince_ <= 0.0)
                             {
-                                clock.bpm_ = bpm;
+                                midiClockCrossingSince_ = ts_secs;
+                            }
+                            else if (!neighbour || ts_secs - midiClockCrossingSince_ >= 0.6)
+                            {
+                                midiClockCrossingSince_ = 0.0;
+                                clock.bpm_ = target;
                                 dirty_ = true;
                             }
                         }
@@ -233,18 +300,21 @@ namespace showmidi
             {
                 channels_.clock_.timeStart_ = t;
                 midiTimeStamps_.clear();
+                midiClockAvgTime_ = 0.0;
                 return;
             }
             else if (msg.isMidiContinue())
             {
                 channels_.clock_.timeContinue_ = t;
                 midiTimeStamps_.clear();
+                midiClockAvgTime_ = 0.0;
                 return;
             }
             else if (msg.isMidiStop())
             {
                 channels_.clock_.timeStop_ = t;
                 midiTimeStamps_.clear();
+                midiClockAvgTime_ = 0.0;
                 return;
             }
 
@@ -1446,7 +1516,8 @@ namespace showmidi
         
         String outputBpm(double bpm)
         {
-            return String(bpm, 1);
+            // the tempo readout is a whole BPM
+            return String(int(bpm + 0.5));
         }
 
         void resized()
@@ -1514,6 +1585,10 @@ namespace showmidi
         
         ActiveChannels channels_;
         std::deque<double> midiTimeStamps_;
+        double midiClockAvgBpm_ { 0.0 };
+        double midiClockAvgTime_ { 0.0 };
+        double midiClockJumpTime_ { 0.0 };
+        double midiClockCrossingSince_ { 0.0 };
         std::mutex paramsLock_;
         std::mutex historyLock_;
         
