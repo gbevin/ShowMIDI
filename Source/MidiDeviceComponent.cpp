@@ -806,7 +806,7 @@ namespace showmidi
 
                 g.setColour(theme_.colorData);
                 g.setFont(theme_.fontData());
-                g.drawText(output14Bit(clock.spp_),
+                g.drawText(outputSongPosition(clock.spp_),
                            X_PARAM, state.offset_,
                            clock_width, theme_.dataHeight(),
                            Justification::centredRight);
@@ -1551,6 +1551,18 @@ namespace showmidi
         {
             // the tempo readout is a whole BPM
             return String(int(bpm + 0.5));
+        }
+
+        String outputSongPosition(int spp)
+        {
+            // the Song Position Pointer counts sixteenth notes from the start;
+            // show it the way sequencers do, as bar.beat.sixteenth counting
+            // from 1. There's no time signature in the message, so bars assume
+            // the usual 4/4 (16 sixteenths per bar, 4 per beat)
+            int bar = spp / 16 + 1;
+            int beat = (spp % 16) / 4 + 1;
+            int sixteenth = spp % 4 + 1;
+            return String(bar) + "." + String(beat) + "." + String(sixteenth);
         }
 
         void resized()
