@@ -41,6 +41,7 @@ namespace showmidi
         void resetChannelData();
 
         void handleIncomingMidiMessage(const MidiMessage&);
+        Time getLastActivityTime() const;
         
         bool isInterestedInFileDrag(const StringArray&) override;
         void filesDropped(const StringArray&, int, int) override;

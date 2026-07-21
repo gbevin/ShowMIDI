@@ -73,7 +73,7 @@ namespace showmidi
             
             {
                 ScopedLock guard(midiDevicesLock_);
-                if (midiDevices_.size() == 0)
+                if (shownDevices_.isEmpty())
                 {
                     g.setColour(theme.colorBackground);
                     g.fillRect(Rectangle<int>(Theme::MIDI_DEVICE_SPACING, 0, MidiDeviceComponent::getStandardWidth(), owner_->getHeight()));
@@ -81,8 +81,14 @@ namespace showmidi
                     g.setFont(theme.fontLabel());
                     g.setColour(theme.colorData);
                     
-                    g.drawMultiLineText("No MIDI devices are visible.\n\n"
-                                        "Either no devices are connected, or all connected devices are hidden in the settings.", Theme::MIDI_DEVICE_SPACING + 23, 24, MidiDeviceComponent::getStandardWidth() - 46);
+                    String message("No MIDI devices are visible.\n\n"
+                                   "Either no devices are connected, or all connected devices are hidden in the settings.");
+                    if (SMApp.getSettings().isAutoHideInactiveDevices() && midiDevices_.size() > 0)
+                    {
+                        message = "No MIDI devices are active.\n\n"
+                                  "Devices without recent MIDI activity are hidden automatically, they reappear as soon as MIDI arrives.";
+                    }
+                    g.drawMultiLineText(message, Theme::MIDI_DEVICE_SPACING + 23, 24, MidiDeviceComponent::getStandardWidth() - 46);
                 }
             }
         }
@@ -150,27 +156,96 @@ namespace showmidi
         {
             ScopedLock g(midiDevicesLock_);
 
-            auto height = owner_->getParentHeight();
-            for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
+            // activity can change which devices are shown, so the layout is
+            // reconciled whenever that set changes
+            if (computeShownDevices() != shownDevices_)
             {
-                auto c = i.getValue();
+                layoutDevices();
+            }
+
+            auto height = owner_->getParentHeight();
+            for (auto&& identifier : shownDevices_)
+            {
+                auto c = midiDevices_[identifier];
+                if (c == nullptr) continue;
                 c->render();
                 height = std::max(height, c->getVisibleHeight());
             }
             
-            auto width = std::max(owner_->getParentWidth(), midiDevices_.size() * (MidiDeviceComponent::getStandardWidth() + Theme::MIDI_DEVICE_SPACING) - Theme::MIDI_DEVICE_SPACING);
+            auto width = std::max(owner_->getParentWidth(), shownDevices_.size() * (MidiDeviceComponent::getStandardWidth() + Theme::MIDI_DEVICE_SPACING) - Theme::MIDI_DEVICE_SPACING);
             owner_->setSize(width, height);
 
-            for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
+            for (auto&& identifier : shownDevices_)
             {
-                i.getValue()->setSize(MidiDeviceComponent::getStandardWidth(), height);
+                auto c = midiDevices_[identifier];
+                if (c != nullptr)
+                {
+                    c->setSize(MidiDeviceComponent::getStandardWidth(), height);
+                }
             }
+        }
+        
+        // a device column is shown when the user hasn't hidden it, and, if
+        // idle devices hide automatically, when it's pinned or had activity
+        // recently (twice the message timeout, so a column lingers a bit
+        // after its last message faded)
+        bool isDeviceShown(const String& identifier, MidiDeviceComponent* component)
+        {
+            auto& settings = SMApp.getSettings();
+            if (!settings.isMidiDeviceVisible(identifier))
+            {
+                return false;
+            }
+            if (!settings.isAutoHideInactiveDevices() || settings.isMidiDevicePinned(identifier))
+            {
+                return true;
+            }
+            auto timeout = settings.getTimeoutDelay();
+            if (timeout == 0)
+            {
+                return true;
+            }
+            return (Time::getCurrentTime() - component->getLastActivityTime()).inSeconds() <= timeout * 2;
+        }
+        
+        StringArray computeShownDevices()
+        {
+            StringArray shown;
+            MidiDeviceInfoComparator comparator;
+            auto devices = knownDevices_;
+            devices.sort(comparator);
+            for (auto&& info : devices)
+            {
+                auto component = midiDevices_[info.identifier];
+                if (component != nullptr && isDeviceShown(info.identifier, component))
+                {
+                    shown.add(info.identifier);
+                }
+            }
+            return shown;
+        }
+        
+        void layoutDevices()
+        {
+            shownDevices_ = computeShownDevices();
+            
+            owner_->removeAllChildren();
+            int position = 0;
+            for (auto&& identifier : shownDevices_)
+            {
+                auto component = midiDevices_[identifier];
+                if (component == nullptr) continue;
+                component->setBounds(Theme::MIDI_DEVICE_SPACING + position++ * (MidiDeviceComponent::getStandardWidth() + Theme::MIDI_DEVICE_SPACING), 0,
+                                     component->getStandardWidth(), owner_->getParentHeight());
+                owner_->addAndMakeVisible(component);
+            }
+            
+            owner_->repaint();
+            updateWindowSize();
         }
         
         void refreshMidiDevices() override
         {
-            auto& settings = SMApp.getSettings();
-
             ScopedLock g(midiDevicesLock_);
             
             auto devices = MidiInput::getAvailableDevices();
@@ -178,7 +253,12 @@ namespace showmidi
             MidiDeviceInfoComparator comparator;
             devices.sort(comparator);
             
-            // detect the previous devices that have now disappeared
+            // every connected device gets a component, hidden ones included:
+            // they keep listening so the sidebar activity indicators work and
+            // auto-hidden devices can reappear on activity; visibility only
+            // decides which components are laid out
+            
+            // remove the devices that disappeared from the system
             Array<String> devices_to_remove;
             for (HashMap<const String, MidiDeviceComponent*>::Iterator it(midiDevices_); it.next();)
             {
@@ -186,7 +266,7 @@ namespace showmidi
                 bool found = false;
                 for (int i = 0; i < devices.size(); ++i)
                 {
-                    if (devices[i].identifier == identifier && settings.isMidiDeviceVisible(identifier))
+                    if (devices[i].identifier == identifier)
                     {
                         found = true;
                         break;
@@ -199,71 +279,70 @@ namespace showmidi
                 }
             }
             
-            // check if all the devices are already present
-            bool new_devices_preset = false;
+            for (int i = 0; i < devices_to_remove.size(); ++i)
+            {
+                auto identifier = devices_to_remove[i];
+                auto component = midiDevices_[identifier];
+                owner_->removeChildComponent(component);
+                delete component;
+                
+                midiDevices_.remove(identifier);
+            }
+            
+            // create components for the devices that appeared
             for (int i = 0; i < devices.size(); ++i)
             {
-                auto identifier = devices[i].identifier;
-                if (!midiDevices_.contains(identifier) && settings.isMidiDeviceVisible(identifier))
+                auto info = devices[i];
+                if (!midiDevices_.contains(info.identifier))
                 {
-                    new_devices_preset = true;
-                    break;
+                    auto component = new MidiDeviceComponent(&SMApp, info);
+                    component->setPaused(paused_);
+                    midiDevices_.set(info.identifier, component);
                 }
             }
             
-            if (devices_to_remove.size() > 0 || new_devices_preset)
-            {
-                owner_->removeAllChildren();
-                
-                // remove the devices that disappeared
-                for (int i = 0; i < devices_to_remove.size(); ++i)
-                {
-                    auto identifier = devices_to_remove[i];
-                    auto component = midiDevices_.getReference(identifier);
-                    delete component;
-                    
-                    midiDevices_.remove(identifier);
-                }
-                
-                // create the new devices and reuse the existing ones
-                // lay them out in alpabetical order
-                int position = 0;
-                for (int i = 0; i < devices.size(); ++i)
-                {
-                    auto info = devices[i];
-                    if (!devices_to_remove.contains(info.identifier) && settings.isMidiDeviceVisible(info.identifier))
-                    {
-                        MidiDeviceComponent* component = midiDevices_.getReference(info.identifier);
-                        if (component == nullptr)
-                        {
-                            component = new MidiDeviceComponent(&SMApp, info);
-                            component->setPaused(paused_);
-                            midiDevices_.set(info.identifier, component);
-                        }
-                        
-                        component->setBounds(Theme::MIDI_DEVICE_SPACING + position++ * (MidiDeviceComponent::getStandardWidth() + Theme::MIDI_DEVICE_SPACING), 0,
-                                             component->getStandardWidth(), owner_->getParentHeight());
-                        
-                        owner_->addAndMakeVisible(component);
-                    }
-                }
-                
-                updateWindowSize();
-            }
+            knownDevices_ = devices;
+            
+            layoutDevices();
         }
         
         void updateWindowSize()
         {
             MessageManager::callAsync([this] () {
                 // resize the window in order to display the MIDI devices
-                auto devices_width = (MidiDeviceComponent::getStandardWidth() + Theme::MIDI_DEVICE_SPACING) * std::max(MIN_MIDI_DEVICES_AUTO_SHOWN, std::min(MAX_MIDI_DEVICES_AUTO_SHOWN, midiDevices_.size())) + Theme::MIDI_DEVICE_SPACING;
+                auto devices_width = (MidiDeviceComponent::getStandardWidth() + Theme::MIDI_DEVICE_SPACING) * std::max(MIN_MIDI_DEVICES_AUTO_SHOWN, std::min(MAX_MIDI_DEVICES_AUTO_SHOWN, shownDevices_.size())) + Theme::MIDI_DEVICE_SPACING;
                 SMApp.setWindowWidthForMainLayout(devices_width + Theme::SCROLLBAR_THICKNESS);
             });
         }
 
         StandaloneDevicesComponent* const owner_;
         
+        Time getLastMidiActivity()
+        {
+            ScopedLock g(midiDevicesLock_);
+            Time last;
+            for (HashMap<const String, MidiDeviceComponent*>::Iterator i(midiDevices_); i.next();)
+            {
+                if (i.getValue() != nullptr)
+                {
+                    last = std::max(last, i.getValue()->getLastActivityTime());
+                }
+            }
+            return last;
+        }
+        
+        Time getLastMidiActivity(const String& identifier)
+        {
+            ScopedLock g(midiDevicesLock_);
+            // plain lookup: getReference would insert a null entry for a
+            // device that has no component yet
+            auto component = midiDevices_[identifier];
+            return component != nullptr ? component->getLastActivityTime() : Time();
+        }
+
         HashMap<const String, MidiDeviceComponent*> midiDevices_;
+        Array<MidiDeviceInfo> knownDevices_;
+        StringArray shownDevices_;
         CriticalSection midiDevicesLock_;
         
         bool paused_ { false };
@@ -280,4 +359,6 @@ namespace showmidi
     void StandaloneDevicesComponent::togglePaused()                     { pimpl_->togglePaused(); }
     DeviceListeners& StandaloneDevicesComponent::getDeviceListeners()   { return pimpl_->getDeviceListeners(); }
     void StandaloneDevicesComponent::resetChannelData()                 { pimpl_->resetChannelData(); }
+    Time StandaloneDevicesComponent::getLastMidiActivity()              { return pimpl_->getLastMidiActivity(); }
+    Time StandaloneDevicesComponent::getLastMidiActivity(const String& deviceIdentifier) { return pimpl_->getLastMidiActivity(deviceIdentifier); }
 }

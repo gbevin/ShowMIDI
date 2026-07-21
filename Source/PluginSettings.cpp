@@ -126,6 +126,38 @@ namespace showmidi
     {
         // no-op
     }
+    
+    bool PluginSettings::isMidiDevicePinned(const String&)
+    {
+        return false;
+    }
+    
+    void PluginSettings::setMidiDevicePinned(const String&, bool)
+    {
+        // no-op
+    }
+    
+    bool PluginSettings::isSidebarExpanded()
+    {
+        // the plugin sidebar is fixed and always narrow
+        return false;
+    }
+    
+    void PluginSettings::setSidebarExpanded(bool)
+    {
+        // no-op
+    }
+    
+    bool PluginSettings::isAutoHideInactiveDevices()
+    {
+        // the plugin shows a single device fed by the host
+        return false;
+    }
+    
+    void PluginSettings::setAutoHideInactiveDevices(bool)
+    {
+        // no-op
+    }
 
     ValueTree& PluginSettings::getValueTree()
     {

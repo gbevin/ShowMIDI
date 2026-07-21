@@ -88,6 +88,16 @@ namespace showmidi
             deviceListeners_.broadcastPauseChange(paused_);
         }
         
+        Time getLastMidiActivity() override
+        {
+            return midiDevice_->getLastActivityTime();
+        }
+        
+        Time getLastMidiActivity(const String&) override
+        {
+            return midiDevice_->getLastActivityTime();
+        }
+        
         void resetChannelData() override
         {
             midiDevice_->resetChannelData();

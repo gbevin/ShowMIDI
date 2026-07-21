@@ -55,6 +55,15 @@ namespace showmidi
         
         bool isMidiDeviceVisible(const String&);
         void setMidiDeviceVisible(const String&, bool);
+        
+        bool isMidiDevicePinned(const String&);
+        void setMidiDevicePinned(const String&, bool);
+        
+        bool isSidebarExpanded();
+        void setSidebarExpanded(bool);
+        
+        bool isAutoHideInactiveDevices();
+        void setAutoHideInactiveDevices(bool);
 
         ValueTree& getValueTree();
         void copyValueTree(ValueTree&);

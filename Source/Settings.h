@@ -87,5 +87,14 @@ namespace showmidi
         
         virtual bool isMidiDeviceVisible(const String&) = 0;
         virtual void setMidiDeviceVisible(const String&, bool) = 0;
+        
+        virtual bool isMidiDevicePinned(const String&) = 0;
+        virtual void setMidiDevicePinned(const String&, bool) = 0;
+        
+        virtual bool isSidebarExpanded() = 0;
+        virtual void setSidebarExpanded(bool) = 0;
+        
+        virtual bool isAutoHideInactiveDevices() = 0;
+        virtual void setAutoHideInactiveDevices(bool) = 0;
     };
 }

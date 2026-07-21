@@ -34,6 +34,9 @@ namespace showmidi
         static const String WINDOW_POSITION;
         static const String CONTROL_GRAPH_HEIGHT;
         static const String MIDI_DEVICE_VISIBLE_PREFIX;
+        static const String MIDI_DEVICE_PINNED_PREFIX;
+        static const String SIDEBAR_EXPANDED;
+        static const String AUTO_HIDE_INACTIVE_DEVICES;
         static const String THEME;
         
         PropertiesSettings();
@@ -65,6 +68,15 @@ namespace showmidi
         
         bool isMidiDeviceVisible(const String&);
         void setMidiDeviceVisible(const String&, bool);
+        
+        bool isMidiDevicePinned(const String&);
+        void setMidiDevicePinned(const String&, bool);
+        
+        bool isSidebarExpanded();
+        void setSidebarExpanded(bool);
+        
+        bool isAutoHideInactiveDevices();
+        void setAutoHideInactiveDevices(bool);
 
         void flush();
         

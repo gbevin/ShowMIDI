@@ -42,6 +42,8 @@ namespace showmidi
             timeoutNeverButton_ = std::make_unique<PaintedButton>("never");
             windowRegularButton_ = std::make_unique<PaintedButton>("regular");
             windowAlwaysOnTopButton_ = std::make_unique<PaintedButton>("always on top");
+            devicesKeepButton_ = std::make_unique<PaintedButton>("keep");
+            devicesAutoHideButton_ = std::make_unique<PaintedButton>("auto-hide");
             loadThemeButton_ = std::make_unique<PaintedButton>("load");
             saveThemeButton_ = std::make_unique<PaintedButton>("save");
             graphHeight1Button_ = std::make_unique<PaintedButton>("compact");
@@ -73,6 +75,8 @@ namespace showmidi
             timeoutNeverButton_->addListener(this);
             windowRegularButton_->addListener(this);
             windowAlwaysOnTopButton_->addListener(this);
+            devicesKeepButton_->addListener(this);
+            devicesAutoHideButton_->addListener(this);
             graphHeight1Button_->addListener(this);
             graphHeight2Button_->addListener(this);
             graphHeight3Button_->addListener(this);
@@ -116,6 +120,11 @@ namespace showmidi
             {
                 owner_->addAndMakeVisible(windowRegularButton_.get());
                 owner_->addAndMakeVisible(windowAlwaysOnTopButton_.get());
+            }
+            if (!manager_->isPlugin())
+            {
+                owner_->addAndMakeVisible(devicesKeepButton_.get());
+                owner_->addAndMakeVisible(devicesAutoHideButton_.get());
             }
             owner_->addAndMakeVisible(graphHeight1Button_.get());
             owner_->addAndMakeVisible(graphHeight2Button_.get());
@@ -163,13 +172,17 @@ namespace showmidi
             auto& theme = manager_->getSettings().getTheme();
 
             int height;
-            if (manager_->isPlugin() || SystemStats::getOperatingSystemType() == SystemStats::iOS)
+            if (manager_->isPlugin())
+            {
+                height = theme.linePosition(20.0);
+            }
+            else if (SystemStats::getOperatingSystemType() == SystemStats::iOS)
             {
                 height = theme.linePosition(22.5);
             }
             else
             {
-                height = theme.linePosition(25.5);
+                height = theme.linePosition(25.0);
             }
             owner_->setSize(MidiDeviceComponent::getStandardWidth() - SidebarComponent::X_SETTINGS * 2, height);
         }
@@ -183,6 +196,9 @@ namespace showmidi
             auto button_spacing = 73;
             auto button_spacing4 = 45;
             auto y_offset = theme.linePosition(2);
+            // sections advance by this; a touch tighter than 3 lines so the
+            // panel fits the window height without scrolling by default
+            const auto row_spacing = theme.linePosition(2.5);
             
             // middle c
             
@@ -195,7 +211,7 @@ namespace showmidi
             
             // note format
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             notesNameButton_->setBoundsForTouch(left_margin, y_offset,
                                                getWidth(), theme.labelHeight());
@@ -204,7 +220,7 @@ namespace showmidi
             
             // number format
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             numbersDecButton_->setBoundsForTouch(left_margin, y_offset,
                                                 getWidth(), theme.labelHeight());
@@ -213,7 +229,7 @@ namespace showmidi
             
             // timeout delay
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             timeout2SecButton_->setBoundsForTouch(left_margin, y_offset,
                                                  getWidth(), theme.labelHeight());
@@ -228,7 +244,7 @@ namespace showmidi
             {
                 // window position
                 
-                y_offset += theme.linePosition(3);
+                y_offset += row_spacing;
                 
                 windowRegularButton_->setBoundsForTouch(left_margin, y_offset,
                                                  getWidth(), theme.labelHeight());
@@ -236,9 +252,21 @@ namespace showmidi
                                                      getWidth(), theme.labelHeight());
             }
             
+            if (!manager_->isPlugin())
+            {
+                // idle devices
+                
+                y_offset += row_spacing;
+                
+                devicesKeepButton_->setBoundsForTouch(left_margin, y_offset,
+                                                      getWidth(), theme.labelHeight());
+                devicesAutoHideButton_->setBoundsForTouch(left_margin + button_spacing, y_offset,
+                                                          getWidth(), theme.labelHeight());
+            }
+            
             // control graph height
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             graphHeight1Button_->setBoundsForTouch(left_margin, y_offset,
                                                    getWidth(), theme.labelHeight());
@@ -249,7 +277,7 @@ namespace showmidi
 
             // active theme
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             loadThemeButton_->setBoundsForTouch(left_margin, y_offset,
                                                getWidth(), theme.labelHeight());
@@ -307,6 +335,7 @@ namespace showmidi
             g.drawRect(Rectangle<int>{0, 0, getWidth(), getHeight()});
             
             auto y_offset = theme.linePosition(1);
+            const auto row_spacing = theme.linePosition(2.5);
 
             // middle c
             
@@ -327,7 +356,7 @@ namespace showmidi
             
             // note format
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
@@ -344,7 +373,7 @@ namespace showmidi
             
             // number format
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
@@ -361,7 +390,7 @@ namespace showmidi
             
             // timeout delay
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
@@ -384,7 +413,7 @@ namespace showmidi
             {
                 // window position
                 
-                y_offset += theme.linePosition(3);
+                y_offset += row_spacing;
                 
                 g.setColour(theme.colorData);
                 g.setFont(theme.fontLabel());
@@ -400,9 +429,29 @@ namespace showmidi
                 windowAlwaysOnTopButton_->drawName(g, Justification::centredLeft);
             }
             
+            if (!manager_->isPlugin())
+            {
+                // idle devices
+                
+                y_offset += row_spacing;
+                
+                g.setColour(theme.colorData);
+                g.setFont(theme.fontLabel());
+                g.drawText("Idle Devices",
+                           23, y_offset,
+                           getWidth(), theme.labelHeight(),
+                           Justification::centredLeft, true);
+                
+                g.setColour(theme.colorData.withAlpha(0.7f));
+                setSettingOptionFont(g, [&settings] () { return !settings.isAutoHideInactiveDevices(); });
+                devicesKeepButton_->drawName(g, Justification::centredLeft);
+                setSettingOptionFont(g, [&settings] () { return settings.isAutoHideInactiveDevices(); });
+                devicesAutoHideButton_->drawName(g, Justification::centredLeft);
+            }
+            
             // control graph height
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
@@ -421,7 +470,7 @@ namespace showmidi
 
             // active theme
             
-            y_offset += theme.linePosition(3);
+            y_offset += row_spacing;
             
             g.setColour(theme.colorData);
             g.setFont(theme.fontLabel());
@@ -568,6 +617,16 @@ namespace showmidi
             else if (buttonThatWasClicked == windowAlwaysOnTopButton_.get())
             {
                 settings.setWindowPosition(WindowPosition::windowAlwaysOnTop);
+                repaint();
+            }
+            else if (buttonThatWasClicked == devicesKeepButton_.get())
+            {
+                settings.setAutoHideInactiveDevices(false);
+                repaint();
+            }
+            else if (buttonThatWasClicked == devicesAutoHideButton_.get())
+            {
+                settings.setAutoHideInactiveDevices(true);
                 repaint();
             }
             else if (buttonThatWasClicked == graphHeight1Button_.get())
@@ -746,6 +805,8 @@ namespace showmidi
         std::unique_ptr<PaintedButton> timeoutNeverButton_;
         std::unique_ptr<PaintedButton> windowRegularButton_;
         std::unique_ptr<PaintedButton> windowAlwaysOnTopButton_;
+        std::unique_ptr<PaintedButton> devicesKeepButton_;
+        std::unique_ptr<PaintedButton> devicesAutoHideButton_;
         std::unique_ptr<PaintedButton> graphHeight1Button_;
         std::unique_ptr<PaintedButton> graphHeight2Button_;
         std::unique_ptr<PaintedButton> graphHeight3Button_;

@@ -19,6 +19,7 @@
 
 #include <JuceHeader.h>
 
+#include "DeviceManager.h"
 #include "SettingsManager.h"
 
 namespace showmidi
@@ -26,7 +27,7 @@ namespace showmidi
     class PortListComponent : public Component
     {
     public:        
-        PortListComponent(SettingsManager*);
+        PortListComponent(SettingsManager*, DeviceManager*);
         ~PortListComponent() override;
         
         int getVisibleHeight() const;

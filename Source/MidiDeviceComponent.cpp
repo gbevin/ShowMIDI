@@ -157,6 +157,7 @@ namespace showmidi
         void handleIncomingMidiMessage(MidiInput*, const MidiMessage& msg)
         {
             const auto t = Time::getCurrentTime();
+            lastActivityMillis_ = t.toMilliseconds();
             
             if (msg.isSysEx())
             {
@@ -266,11 +267,12 @@ namespace showmidi
                             clock.timeBpm_ = t;
                         }
 
-                        // the tempo is shown as a whole BPM: clocks are set in
-                        // whole values and a steady display beats chasing
-                        // decimal wobble. The average has to clearly cross over
-                        // to another value before the display follows, and a
-                        // step to the next number has to stick around for a
+                        // the tempo is shown as a whole BPM: MIDI clock only
+                        // carries 24 pulses per beat and the receive timing
+                        // jitters, so the reading isn't trustworthy below about
+                        // a whole BPM anyway. The average has to clearly cross
+                        // over to another value before the display follows, and
+                        // a step to the next number has to stick around for a
                         // moment first, while a move of several BPM shows
                         // immediately
                         if (fabs(midiClockAvgBpm_ - clock.bpm_) < 0.75)
@@ -1581,6 +1583,8 @@ namespace showmidi
         std::unique_ptr<MidiInput> midiIn_;
         std::atomic_bool dirty_ { true };
         Time lastRender_;
+        // written by the MIDI thread, read by the message thread
+        std::atomic<int64> lastActivityMillis_ { Time::currentTimeMillis() };
         bool paused_ { false };
         
         ActiveChannels channels_;
@@ -1614,6 +1618,7 @@ namespace showmidi
     void MidiDeviceComponent::resetChannelData()  { pimpl_->resetChannelData(); }
 
     void MidiDeviceComponent::handleIncomingMidiMessage(const MidiMessage& m)   { pimpl_->handleIncomingMidiMessage(nullptr, m); };
+    Time MidiDeviceComponent::getLastActivityTime() const                       { return Time(pimpl_->lastActivityMillis_.load()); };
     bool MidiDeviceComponent::isInterestedInFileDrag(const StringArray& f)      { return pimpl_->isInterestedInFileDrag(f); }
     void MidiDeviceComponent::filesDropped(const StringArray& f, int x, int y)  { pimpl_->filesDropped(f, x, y); }
 }

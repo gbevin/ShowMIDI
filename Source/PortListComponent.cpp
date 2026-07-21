@@ -25,20 +25,33 @@
 
 namespace showmidi
 {
-    struct PortListComponent::Pimpl : public MouseListener, public MidiDevicesListener
+    struct PortListComponent::Pimpl : public MouseListener, public MidiDevicesListener, public Timer
     {
-        Pimpl(PortListComponent* owner, SettingsManager* manager) :
+        Pimpl(PortListComponent* owner, SettingsManager* manager, DeviceManager* deviceManager) :
             owner_(owner),
-            manager_(manager)
+            manager_(manager),
+            deviceManager_(deviceManager)
         {
             owner_->addMouseListener(this, false);
             manager_->getMidiDevicesListeners().add(this);
+            
+            // keeps the activity indicators moving
+            startTimer(1000 / 10);
         }
         
         ~Pimpl()
         {
+            stopTimer();
             manager_->getMidiDevicesListeners().remove(this);
             owner_->removeMouseListener(this);
+        }
+        
+        void timerCallback() override
+        {
+            if (owner_->isShowing())
+            {
+                owner_->repaint();
+            }
         }
         
         static constexpr int X_VISIBILITY = 10;
@@ -46,6 +59,9 @@ namespace showmidi
         static constexpr int X_PORT = 34;
         static constexpr int PORT_RIGHT_MARGIN = 8;
         static constexpr int PORT_Y_SPACING = 29;
+        static constexpr int ACTIVITY_DOT_SIZE = 6;
+        static constexpr int PIN_WIDTH = 14;
+        static constexpr int ACTIVITY_LIT_MILLIS = 300;
         
         void paint(Graphics& g)
         {
@@ -64,14 +80,34 @@ namespace showmidi
             
             MidiDeviceInfoComparator comparator;
             devices.sort(comparator);
+            
+            // pinned devices come first, each group stays alphabetical
+            Array<MidiDeviceInfo> ordered;
+            for (auto&& info : devices)
+            {
+                if (settings.isMidiDevicePinned(info.identifier))
+                {
+                    ordered.add(info);
+                }
+            }
+            for (auto&& info : devices)
+            {
+                if (!settings.isMidiDevicePinned(info.identifier))
+                {
+                    ordered.add(info);
+                }
+            }
             {
                 ScopedLock guard(midiDevicesLock_);
-                midiDevices_ = devices;
+                midiDevices_ = ordered;
             }
             
-            for (int i = 0; i < devices.size(); ++i)
+            const auto now = Time::getCurrentTime();
+            
+            for (int i = 0; i < ordered.size(); ++i)
             {
-                auto info = devices[i];
+                auto info = ordered[i];
+                auto pinned = settings.isMidiDevicePinned(info.identifier);
                 if (settings.isMidiDeviceVisible(info.identifier))
                 {
                     g.setColour(theme.colorData);
@@ -82,10 +118,30 @@ namespace showmidi
                     g.setColour(theme.colorLabel);
                     hidden_svg->drawAt(g, X_VISIBILITY, (float)y_offset + Y_VISIBILITY, 1.0);
                 }
+                auto reserved = PORT_RIGHT_MARGIN + ACTIVITY_DOT_SIZE + 4 + (pinned ? PIN_WIDTH : 0);
                 g.drawText(info.name,
                            X_PORT, y_offset,
-                           owner_->getWidth() - X_PORT - PORT_RIGHT_MARGIN, theme.labelHeight(),
+                           owner_->getWidth() - X_PORT - reserved, theme.labelHeight(),
                            Justification::centredLeft, true);
+                
+                // activity indicator at the right edge, also alive for
+                // hidden devices; lit in the neutral data colour, dim on the
+                // track colour when idle
+                auto active = (now - deviceManager_->getLastMidiActivity(info.identifier)).inMilliseconds() < ACTIVITY_LIT_MILLIS;
+                g.setColour(active ? theme.colorData : theme.colorTrack);
+                g.fillEllipse((float)(owner_->getWidth() - PORT_RIGHT_MARGIN - ACTIVITY_DOT_SIZE),
+                              (float)y_offset + (theme.labelHeight() - ACTIVITY_DOT_SIZE) / 2.0f,
+                              (float)ACTIVITY_DOT_SIZE, (float)ACTIVITY_DOT_SIZE);
+                
+                // a marker for pinned devices, left of the indicator
+                if (pinned)
+                {
+                    auto pin_x = (float)(owner_->getWidth() - PORT_RIGHT_MARGIN - ACTIVITY_DOT_SIZE - PIN_WIDTH);
+                    auto pin_y = (float)y_offset + 3.0f;
+                    g.setColour(theme.colorData);
+                    g.fillEllipse(pin_x, pin_y, 7.0f, 7.0f);
+                    g.fillRect(pin_x + 3.0f, pin_y + 7.0f, 1.5f, 5.0f);
+                }
                 
                 y_offset += PORT_Y_SPACING;
             }
@@ -117,17 +173,26 @@ namespace showmidi
             {
                 auto port_info = midiDevices_[port];
                 auto& settings = manager_->getSettings();
-                auto visible = !settings.isMidiDeviceVisible(port_info.identifier);
-                if (event.mods.isAltDown())
+                if (event.mods.isRightButtonDown() || event.mods.isCommandDown() || event.mods.isCtrlDown())
                 {
-                    for (auto device : midiDevices_)
-                    {
-                        settings.setMidiDeviceVisible(device.identifier, visible);
-                    }
+                    // right or cmd/ctrl click pins a device: it sorts first
+                    // and is exempt from auto-hiding
+                    settings.setMidiDevicePinned(port_info.identifier, !settings.isMidiDevicePinned(port_info.identifier));
                 }
                 else
                 {
-                    settings.setMidiDeviceVisible(port_info.identifier, visible);
+                    auto visible = !settings.isMidiDeviceVisible(port_info.identifier);
+                    if (event.mods.isAltDown())
+                    {
+                        for (auto device : midiDevices_)
+                        {
+                            settings.setMidiDeviceVisible(device.identifier, visible);
+                        }
+                    }
+                    else
+                    {
+                        settings.setMidiDeviceVisible(port_info.identifier, visible);
+                    }
                 }
                 owner_->repaint();
             }
@@ -140,6 +205,7 @@ namespace showmidi
 
         PortListComponent* const owner_;
         SettingsManager* const manager_;
+        DeviceManager* const deviceManager_;
         
         Array<MidiDeviceInfo> midiDevices_;
         CriticalSection midiDevicesLock_;
@@ -152,7 +218,7 @@ namespace showmidi
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)
     };
     
-    PortListComponent::PortListComponent(SettingsManager* m) : pimpl_(new Pimpl(this, m)) {}
+    PortListComponent::PortListComponent(SettingsManager* m, DeviceManager* d) : pimpl_(new Pimpl(this, m, d)) {}
     PortListComponent::~PortListComponent() = default;
     
     int PortListComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }

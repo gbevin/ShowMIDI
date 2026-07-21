@@ -36,6 +36,8 @@ namespace showmidi
         void togglePaused() override;
         DeviceListeners& getDeviceListeners() override;
         void resetChannelData() override;
+        Time getLastMidiActivity() override;
+        Time getLastMidiActivity(const String& deviceIdentifier) override;
 
         struct Pimpl;
     private:

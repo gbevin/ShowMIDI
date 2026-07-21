@@ -32,5 +32,10 @@ namespace showmidi
         virtual void togglePaused() = 0;
         virtual DeviceListeners& getDeviceListeners() = 0;
         virtual void resetChannelData() = 0;
+        
+        // the moment MIDI last arrived, across all devices or for one device,
+        // driving the activity indicators
+        virtual Time getLastMidiActivity() = 0;
+        virtual Time getLastMidiActivity(const String& deviceIdentifier) = 0;
     };
 }

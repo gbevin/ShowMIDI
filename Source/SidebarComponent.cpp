@@ -28,11 +28,14 @@ namespace showmidi
     SidebarListener::SidebarListener() {}
     SidebarListener::~SidebarListener() {}
 
-    struct SidebarComponent::Pimpl : public Button::Listener, public DeviceListener
+    struct SidebarComponent::Pimpl : public Button::Listener, public DeviceListener, public Timer, public ComponentListener
     {
         static constexpr int COLLAPSED_WIDTH = 36;
         static constexpr int Y_PORTLIST = 48;
         static constexpr int PORTLIST_BOTTOM_MARGIN = 36;
+        static constexpr int ACTIVITY_DOT_SIZE = 8;
+        static constexpr int Y_ACTIVITY_COLLAPSED = 116;
+        static constexpr int ACTIVITY_LIT_MILLIS = 300;
 
         Pimpl(SidebarComponent* owner, SettingsManager* settings, DeviceManager* deviceManager, SidebarType type, SidebarListener* listener) :
             owner_(owner),
@@ -65,6 +68,15 @@ namespace showmidi
             
             settings_ = std::make_unique<SettingsComponent>(settingsManager_);
             about_ = std::make_unique<AboutComponent>(settingsManager_->getSettings().getTheme());
+            
+            // the settings panel scrolls when it's taller than the window
+            settingsViewport_ = std::make_unique<Viewport>();
+            settingsViewport_->setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
+            settingsViewport_->setScrollBarsShown(true, false);
+            settingsViewport_->setScrollBarThickness(Theme::SCROLLBAR_THICKNESS);
+            settingsViewport_->setViewedComponent(settings_.get(), false);
+            // the panel shows and hides itself, the viewport follows along
+            settings_->addComponentListener(this);
 
             collapsedButton_->addListener(this);
             expandedButton_->addListener(this);
@@ -92,7 +104,7 @@ namespace showmidi
             {
                 collapsedButton_->setVisible(true);
                 
-                portList_ = std::make_unique<PortListComponent>(settingsManager_);
+                portList_ = std::make_unique<PortListComponent>(settingsManager_, deviceManager_);
                 
                 portViewport_ = std::make_unique<Viewport>();
                 portViewport_->setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
@@ -105,17 +117,51 @@ namespace showmidi
             {
                 settingsButton_->setVisible(true);
             }
+            
+            // restore the sidebar the way it was left
+            if (sidebarType_ == SidebarType::sidebarExpandable && settingsManager_->getSettings().isSidebarExpanded())
+            {
+                expanded_ = true;
+                collapsedButton_->setVisible(false);
+                expandedButton_->setVisible(true);
+                settingsButton_->setVisible(true);
+                if (portViewport_.get())
+                {
+                    portViewport_->setVisible(true);
+                }
+            }
+            
+            // keeps the global activity indicator moving while collapsed
+            startTimer(1000 / 10);
         }
         
         ~Pimpl()
         {
+            stopTimer();
+            settings_->removeComponentListener(this);
             deviceManager_->getDeviceListeners().remove(this);
+        }
+        
+        void componentVisibilityChanged(Component& component) override
+        {
+            if (&component == settings_.get())
+            {
+                settingsViewport_->setVisible(settings_->isVisible());
+            }
+        }
+        
+        void timerCallback() override
+        {
+            if (sidebarType_ == SidebarType::sidebarExpandable && !expanded_ && owner_->isShowing())
+            {
+                owner_->repaint(0, Y_ACTIVITY_COLLAPSED, COLLAPSED_WIDTH, ACTIVITY_DOT_SIZE * 2);
+            }
         }
 
         void setup()
         {
             owner_->getParentComponent()->addChildComponent(about_.get());
-            owner_->getParentComponent()->addChildComponent(settings_.get());
+            owner_->getParentComponent()->addChildComponent(settingsViewport_.get());
         }
         
         void updateSettings()
@@ -155,6 +201,8 @@ namespace showmidi
                 settings_->setVisible(false);
                 about_->setVisible(false);
                 
+                settingsManager_->getSettings().setSidebarExpanded(true);
+                
                 listener_->sidebarChangedWidth();
             }
             else if (button == expandedButton_.get())
@@ -170,6 +218,8 @@ namespace showmidi
                 
                 settings_->setVisible(false);
                 about_->setVisible(false);
+                
+                settingsManager_->getSettings().setSidebarExpanded(false);
                 
                 listener_->sidebarChangedWidth();
             }
@@ -258,6 +308,16 @@ namespace showmidi
                 resetButton_->drawDrawable(g, *reset_svg);
             }
 
+            if (sidebarType_ == SidebarType::sidebarExpandable && !expanded_)
+            {
+                // a single indicator stands in for all devices while the
+                // port list is out of sight, matching the per-port dots
+                auto active = (Time::getCurrentTime() - deviceManager_->getLastMidiActivity()).inMilliseconds() < ACTIVITY_LIT_MILLIS;
+                g.setColour(active ? theme.colorData : theme.colorTrack);
+                g.fillEllipse((float)((COLLAPSED_WIDTH - ACTIVITY_DOT_SIZE) / 2), (float)Y_ACTIVITY_COLLAPSED,
+                              (float)ACTIVITY_DOT_SIZE, (float)ACTIVITY_DOT_SIZE);
+            }
+            
             auto help_svg = helpSvg_->createCopy();
             help_svg->replaceColour(Colours::black, theme.colorData);
             helpButton_->drawDrawable(g, *help_svg);
@@ -329,7 +389,11 @@ namespace showmidi
             about_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_->getHeight());
 
             settings_->updateDimensions();
-            settings_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, Y_SETTINGS);
+            auto settings_height = std::min(settings_->getHeight(), owner_->getHeight() - Y_SETTINGS * 2);
+            // the extra pixel leaves a gap between the panel's right edge and
+            // the scrollbar, which only shows when the panel doesn't fit
+            settingsViewport_->setBounds(owner_->getWidth() + X_SETTINGS, Y_SETTINGS,
+                                         settings_->getWidth() + 1 + Theme::SCROLLBAR_THICKNESS, settings_height);
         }
         
         int getActiveWidth()
@@ -374,6 +438,7 @@ namespace showmidi
         std::unique_ptr<Viewport> portViewport_;
         std::unique_ptr<PortListComponent> portList_;
         std::unique_ptr<SettingsComponent> settings_;
+        std::unique_ptr<Viewport> settingsViewport_;
         std::unique_ptr<AboutComponent> about_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)

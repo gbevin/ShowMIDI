@@ -27,6 +27,9 @@ namespace showmidi
     const String PropertiesSettings::WINDOW_POSITION = { "windowPosition" };
     const String PropertiesSettings::CONTROL_GRAPH_HEIGHT = { "controlGraphHeight" };
     const String PropertiesSettings::MIDI_DEVICE_VISIBLE_PREFIX = { "midiDevice:visible:" };
+    const String PropertiesSettings::MIDI_DEVICE_PINNED_PREFIX = { "midiDevice:pinned:" };
+    const String PropertiesSettings::SIDEBAR_EXPANDED = { "sidebarExpanded" };
+    const String PropertiesSettings::AUTO_HIDE_INACTIVE_DEVICES = { "autoHideInactiveDevices" };
     const String PropertiesSettings::THEME = { "theme" };
 
     PropertiesSettings::PropertiesSettings()
@@ -134,6 +137,39 @@ namespace showmidi
     void PropertiesSettings::setMidiDeviceVisible(const String& identifier, bool visible)
     {
         getGlobalProperties().setValue(MIDI_DEVICE_VISIBLE_PREFIX + identifier, visible);
+        flush();
+    }
+    
+    bool PropertiesSettings::isMidiDevicePinned(const String& identifier)
+    {
+        return getGlobalProperties().getBoolValue(MIDI_DEVICE_PINNED_PREFIX + identifier, false);
+    }
+    
+    void PropertiesSettings::setMidiDevicePinned(const String& identifier, bool pinned)
+    {
+        getGlobalProperties().setValue(MIDI_DEVICE_PINNED_PREFIX + identifier, pinned);
+        flush();
+    }
+    
+    bool PropertiesSettings::isSidebarExpanded()
+    {
+        return getGlobalProperties().getBoolValue(SIDEBAR_EXPANDED, false);
+    }
+    
+    void PropertiesSettings::setSidebarExpanded(bool expanded)
+    {
+        getGlobalProperties().setValue(SIDEBAR_EXPANDED, expanded);
+        flush();
+    }
+    
+    bool PropertiesSettings::isAutoHideInactiveDevices()
+    {
+        return getGlobalProperties().getBoolValue(AUTO_HIDE_INACTIVE_DEVICES, false);
+    }
+    
+    void PropertiesSettings::setAutoHideInactiveDevices(bool autoHide)
+    {
+        getGlobalProperties().setValue(AUTO_HIDE_INACTIVE_DEVICES, autoHide);
         flush();
     }
 
