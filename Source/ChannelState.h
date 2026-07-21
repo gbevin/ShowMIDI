@@ -338,8 +338,10 @@ namespace showmidi
         Time timeStart_;
         Time timeContinue_;
         Time timeStop_;
+        Time timeSpp_;
         
         double bpm_ { 0.0 };
+        int spp_ { 0 };
         
         void deepCopy(const Clock& other)
         {
@@ -347,7 +349,9 @@ namespace showmidi
             timeStart_ = other.timeStart_;
             timeContinue_ = other.timeContinue_;
             timeStop_ = other.timeStop_;
+            timeSpp_ = other.timeSpp_;
             bpm_ = other.bpm_;
+            spp_ = other.spp_;
         }
         
         void reset()
@@ -356,8 +360,10 @@ namespace showmidi
             timeStart_ = Time();
             timeContinue_ = Time();
             timeStop_ = Time();
+            timeSpp_ = Time();
             
             bpm_ = 0.0;
+            spp_ = 0;
         }
     };
     

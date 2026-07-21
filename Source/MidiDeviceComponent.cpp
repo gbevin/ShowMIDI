@@ -72,6 +72,8 @@ namespace showmidi
             auto& clock = channels_.clock_;
             clock.bpm_ = 111.0;
             clock.timeBpm_ = t;
+            clock.spp_ = 4242;
+            clock.timeSpp_ = t;
             clock.timeStart_ = t;
             clock.timeContinue_ = t;
             clock.timeStop_ = t;
@@ -317,6 +319,13 @@ namespace showmidi
                 channels_.clock_.timeStop_ = t;
                 midiTimeStamps_.clear();
                 midiClockAvgTime_ = 0.0;
+                return;
+            }
+            else if (msg.isSongPositionPointer())
+            {
+                channels_.clock_.timeSpp_ = t;
+                channels_.clock_.spp_ = msg.getSongPositionPointerMidiBeat();
+                dirty_ = true;
                 return;
             }
 
@@ -740,11 +749,12 @@ namespace showmidi
         void paintClock(Graphics& g, ChannelPaintState& state, Clock& clock)
         {
             auto show_bpm = !isExpired(state.time_, clock.timeBpm_);
+            auto show_spp = !isExpired(state.time_, clock.timeSpp_);
             auto show_start = !isExpired(state.time_, clock.timeStart_);
             auto show_continue = !isExpired(state.time_, clock.timeContinue_);
             auto show_stop = !isExpired(state.time_, clock.timeStop_);
             auto show_transport = show_start || show_continue || show_stop;
-            auto show_clock = show_bpm || show_transport;
+            auto show_clock = show_bpm || show_spp || show_transport;
             if (!show_clock)
             {
                 return;
@@ -780,6 +790,27 @@ namespace showmidi
                            clock_width, theme_.dataHeight(),
                            Justification::centredRight);
                 
+                state.offset_ += theme_.labelHeight();
+            }
+
+            // draw song position
+
+            if (show_spp)
+            {
+                g.setColour(theme_.colorController);
+                g.setFont(theme_.fontLabel());
+                g.drawText("SPP",
+                           X_PARAM, state.offset_,
+                           clock_width, theme_.labelHeight(),
+                           Justification::centredLeft);
+
+                g.setColour(theme_.colorData);
+                g.setFont(theme_.fontData());
+                g.drawText(output14Bit(clock.spp_),
+                           X_PARAM, state.offset_,
+                           clock_width, theme_.dataHeight(),
+                           Justification::centredRight);
+
                 state.offset_ += theme_.labelHeight();
             }
 
