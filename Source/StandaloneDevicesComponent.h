@@ -1,6 +1,6 @@
 /*
  * This file is part of ShowMIDI.
- * Copyright (command) 2023 Uwyn LLC.  https://www.uwyn.com
+ * Copyright (c) 2023 Uwyn LLC.  https://www.uwyn.com
  *
  * ShowMIDI is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
