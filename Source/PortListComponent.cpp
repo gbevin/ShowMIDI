@@ -197,6 +197,29 @@ namespace showmidi
             return lastHeight_;
         }
 
+        String getTooltip()
+        {
+            ScopedLock g(midiDevicesLock_);
+
+            auto pos = owner_->getMouseXYRelative();
+            int port = pos.getY() / PORT_Y_SPACING;
+            if (port < 0 || port >= midiDevices_.size())
+            {
+                return {};
+            }
+
+            // only offer the full name when it doesn't fit the row
+            auto& settings = manager_->getSettings();
+            auto& theme = settings.getTheme();
+            auto name = midiDevices_[port].name;
+            auto available = owner_->getWidth() - X_PORT - PORT_RIGHT_MARGIN - ACTIVITY_DOT_SIZE - 4;
+            if (theme.fontLabel().getStringWidth(name) <= available)
+            {
+                return {};
+            }
+            return name;
+        }
+
         PortListComponent* const owner_;
         SettingsManager* const manager_;
         DeviceManager* const deviceManager_;
@@ -218,4 +241,5 @@ namespace showmidi
     int PortListComponent::getVisibleHeight() const   { return pimpl_->getVisibleHeight(); }
 
     void PortListComponent::paint(Graphics& g) { pimpl_->paint(g); }
+    String PortListComponent::getTooltip() { return pimpl_->getTooltip(); }
 }

@@ -578,6 +578,7 @@ namespace showmidi
         static constexpr int X_MID = 151;
         
         static constexpr int X_PORT = 48;
+        static constexpr int X_PORT_RIGHT_MARGIN = 24;
         static constexpr int Y_PORT = 12;
         
         static constexpr int X_CLOCK = 23;
@@ -661,7 +662,7 @@ namespace showmidi
             g.setColour(theme_.colorData);
             g.drawText(port_name,
                        X_PORT, Y_PORT,
-                       owner_->getWidth(), theme_.labelHeight(),
+                       owner_->getWidth() - X_PORT - X_PORT_RIGHT_MARGIN, theme_.labelHeight(),
                        Justification::centredLeft);
             
             state.offset_ = Y_PORT + theme_.labelHeight();

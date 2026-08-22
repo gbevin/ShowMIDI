@@ -24,15 +24,16 @@
 
 namespace showmidi
 {
-    class PortListComponent : public Component
+    class PortListComponent : public Component, public TooltipClient
     {
-    public:        
+    public:
         PortListComponent(SettingsManager*, DeviceManager*);
         ~PortListComponent() override;
-        
+
         int getVisibleHeight() const;
 
         void paint(Graphics&) override;
+        String getTooltip() override;
         
         struct Pimpl;
     private:
