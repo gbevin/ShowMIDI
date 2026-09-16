@@ -1,0 +1,139 @@
+name: CI
+
+# Builds ShowMIDI on macOS, Linux and Windows in every plugin format that can
+# be built from a clean checkout: Standalone, VST3, LV2, CLAP, and AU on
+# macOS. The VST2 format is excluded because its SDK (libs/vst2) is
+# proprietary and not part of the repository. JUCE and clap-juce-extensions
+# are git submodules, so the checkout is recursive, and the CLAP plugin is
+# built with CMake after the native build, mirroring the release scripts in
+# Scripts/.
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-latest,   name: macOS }
+          - { os: ubuntu-latest,  name: Linux }
+          - { os: windows-latest, name: Windows }
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+
+      # ---------------------------------------------------------------- macOS
+      - name: Build (macOS)
+        if: runner.os == 'macOS'
+        # the runners have no signing identity, so the generated signing step
+        # signs ad hoc; release builds are signed by the release scripts
+        run: |
+          for target in "ShowMIDI - Standalone Plugin" "ShowMIDI - AU" \
+                        "ShowMIDI - VST3" "ShowMIDI - LV2 Plugin"; do
+            xcodebuild -project Builds/MacOSX/showmidi.xcodeproj \
+              -target "$target" -configuration Release SYMROOT=build \
+              CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+              build
+          done
+
+      - name: Build CLAP (macOS)
+        if: runner.os == 'macOS'
+        # the deployment target has to reach the nested juceaide build through
+        # the environment, or newer SDKs reject an obsoleted API it uses
+        env:
+          PATH_TO_JUCE: ${{ github.workspace }}/JUCE
+          MACOSX_DEPLOYMENT_TARGET: "11.7"
+        run: |
+          cmake -BBuilds/MacOSX/build/clap -DCMAKE_BUILD_TYPE=Release
+          cmake --build Builds/MacOSX/build/clap --config Release
+
+      - name: Check artifacts (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          test -e Builds/MacOSX/build/Release/ShowMIDI.app/Contents/MacOS/ShowMIDI
+          test -e Builds/MacOSX/build/Release/ShowMIDI.component
+          test -e Builds/MacOSX/build/Release/ShowMIDI.vst3
+          test -e Builds/MacOSX/build/Release/ShowMIDI.lv2
+          test -e Builds/MacOSX/build/clap/ShowMIDI_artefacts/Release/ShowMIDI.clap
+
+      # ---------------------------------------------------------------- Linux
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libfreetype6-dev libfontconfig1-dev \
+            libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev \
+            libxrandr-dev libxrender-dev
+
+      - name: Patch the JUCE submodule (Linux)
+        if: runner.os == 'Linux'
+        # JUCE is a submodule, so its patches are applied to the checkout
+        run: ./Scripts/apply-juce-patches.sh
+
+      - name: Build (Linux)
+        if: runner.os == 'Linux'
+        # the format goals are built explicitly to leave out the VST2 target
+        run: |
+          make -C Builds/LinuxMakefile CONFIG=Release -j"$(nproc)" \
+            Standalone VST3 LV2 LV2_MANIFEST_HELPER VST3_MANIFEST_HELPER
+
+      - name: Build CLAP (Linux)
+        if: runner.os == 'Linux'
+        env:
+          PATH_TO_JUCE: ${{ github.workspace }}/JUCE
+        run: |
+          cmake -BBuilds/LinuxMakefile/build/clap -DCMAKE_BUILD_TYPE=Release
+          cmake --build Builds/LinuxMakefile/build/clap --config Release
+
+      - name: Check artifacts (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          file Builds/LinuxMakefile/build/ShowMIDI | grep -q "ELF 64-bit"
+          test -e Builds/LinuxMakefile/build/ShowMIDI.vst3
+          test -e Builds/LinuxMakefile/build/ShowMIDI.lv2
+          test -e Builds/LinuxMakefile/build/clap/ShowMIDI_artefacts/Release/ShowMIDI.clap
+
+      # -------------------------------------------------------------- Windows
+      - name: Add MSBuild to PATH
+        if: runner.os == 'Windows'
+        uses: microsoft/setup-msbuild@v3
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        # the projects are built individually to leave out the VST2 target;
+        # project references pull in the shared code and manifest helpers
+        run: |
+          msbuild Builds/VisualStudio2022/ShowMIDI_StandalonePlugin.vcxproj /m /p:Configuration=Release /p:Platform=x64
+          msbuild Builds/VisualStudio2022/ShowMIDI_VST3.vcxproj /m /p:Configuration=Release /p:Platform=x64
+          msbuild Builds/VisualStudio2022/ShowMIDI_LV2Plugin.vcxproj /m /p:Configuration=Release /p:Platform=x64
+
+      - name: Build CLAP (Windows)
+        if: runner.os == 'Windows'
+        env:
+          PATH_TO_JUCE: ${{ github.workspace }}\JUCE
+        run: |
+          cmake -B"Builds\VisualStudio2022\x64\clap" -DCMAKE_BUILD_TYPE=Release
+          cmake --build "Builds\VisualStudio2022\x64\clap" --config Release
+
+      - name: Check artifacts (Windows)
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          test -e "Builds/VisualStudio2022/x64/Release/Standalone Plugin/ShowMIDI.exe"
+          test -e "Builds/VisualStudio2022/x64/Release/VST3/ShowMIDI.vst3"
+          test -e "Builds/VisualStudio2022/x64/Release/LV2 Plugin/ShowMIDI.lv2"
+          test -e "Builds/VisualStudio2022/x64/clap/ShowMIDI_artefacts/Release/ShowMIDI.clap"
