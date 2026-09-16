@@ -112,6 +112,10 @@ jobs:
       - name: Add MSBuild to PATH
         if: runner.os == 'Windows'
         uses: microsoft/setup-msbuild@v3
+        # the 64-bit MSBuild, because the LV2 post-build step refuses to run
+        # when PROCESSOR_ARCHITECTURE is x86
+        with:
+          msbuild-architecture: x64
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
