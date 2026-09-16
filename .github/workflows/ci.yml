@@ -77,7 +77,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libasound2-dev libfreetype6-dev libfontconfig1-dev \
             libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev \
-            libxrandr-dev libxrender-dev
+            libxi-dev libxrandr-dev libxrender-dev libcurl4-openssl-dev \
+            libjack-jackd2-dev ladspa-sdk
 
       - name: Patch the JUCE submodule (Linux)
         if: runner.os == 'Linux'
@@ -114,12 +115,16 @@ jobs:
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
-        # the projects are built individually to leave out the VST2 target;
-        # project references pull in the shared code and manifest helpers
+        # the projects are built one by one to leave out the VST2 target, whose
+        # SDK is proprietary; the shared code and the manifest helpers come
+        # first, since building a project on its own does not build them, and
+        # the 64-bit toolchain is required because the LV2 helper has to run
+        shell: pwsh
         run: |
-          msbuild Builds/VisualStudio2022/ShowMIDI_StandalonePlugin.vcxproj /m /p:Configuration=Release /p:Platform=x64
-          msbuild Builds/VisualStudio2022/ShowMIDI_VST3.vcxproj /m /p:Configuration=Release /p:Platform=x64
-          msbuild Builds/VisualStudio2022/ShowMIDI_LV2Plugin.vcxproj /m /p:Configuration=Release /p:Platform=x64
+          foreach ($project in "SharedCode", "StandalonePlugin", "VST3ManifestHelper", "VST3", "LV2ManifestHelper", "LV2Plugin") {
+            msbuild "Builds\VisualStudio2022\ShowMIDI_$project.vcxproj" /m /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x64
+            if ($LASTEXITCODE -ne 0) { throw "$project did not build" }
+          }
 
       - name: Build CLAP (Windows)
         if: runner.os == 'Windows'
