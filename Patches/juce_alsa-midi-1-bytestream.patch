@@ -1,0 +1,37 @@
+--- a/modules/juce_audio_devices/native/juce_Midi_linux.cpp
++++ b/modules/juce_audio_devices/native/juce_Midi_linux.cpp
+@@ -543,8 +543,11 @@
+             snd_seq_nonblock (handle, SND_SEQ_NONBLOCK);
+             snd_seq_set_client_name (handle, getAlsaMidiName().toRawUTF8());
+ 
++            // stay a MIDI 1.0 client: as a MIDI 2.0 one the sequencer delivers UMP
++            // events, and an RPN or NRPN arrives as a single MIDI 2.0 message that
++            // decodes to nothing, so those messages are lost
+             if (snd_seq_set_client_midi_version != nullptr)
+-                snd_seq_set_client_midi_version (handle, SND_SEQ_CLIENT_UMP_MIDI_2_0);
++                snd_seq_set_client_midi_version (handle, SND_SEQ_CLIENT_LEGACY_MIDI);
+ 
+             return rawToUniquePtr (new Client (l, handle));
+         }
+@@ -1046,16 +1049,11 @@
+ 
+         bool send (ump::Iterator b, ump::Iterator e) override
+         {
+-            if (snd_seq_ump_event_output_direct != nullptr && port->getMidiVersion() != SND_SEQ_CLIENT_LEGACY_MIDI)
+-            {
+-                for (const auto& v : makeRange (b, e))
+-                    sendUmp (v);
+-            }
+-            else
+-            {
+-                for (const auto& v : makeRange (b, e))
+-                    sendBytestream (v);
+-            }
++            // always send a bytestream: the UMP path combines the controllers of
++            // an RPN or NRPN into a single MIDI 2.0 message, which a MIDI 1.0
++            // receiver cannot decode, so those messages are lost
++            for (const auto& v : makeRange (b, e))
++                sendBytestream (v);
+ 
+             return true;
+         }

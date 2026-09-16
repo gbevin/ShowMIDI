@@ -10,6 +10,9 @@ PROJECT_DIR=$PWD
 export RELEASE_VERSION="$1"
 export PATH_TO_JUCE="$PROJECT_DIR/JUCE"
 
+# the submodule cannot carry them, so the JUCE patches go on before building
+"$PROJECT_DIR/Scripts/apply-juce-patches.sh"
+
 rm -rfv Builds/LinuxMakefile/build/
 
 pushd Builds/LinuxMakefile
