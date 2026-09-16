@@ -8,7 +8,7 @@
     <key>CFBundleExecutable</key>
     <string>${EXECUTABLE_NAME}</string>
     <key>CFBundleIconFile</key>
-    <string>Icon.icns</string>
+    <string>AppIcon.icns</string>
     <key>CFBundleIdentifier</key>
     <string>com.uwyn.showmidi.showmidiAUv3</string>
     <key>CFBundleName</key>
@@ -37,6 +37,8 @@
       <string>com.apple.AudioUnit-UI</string>
       <key>NSExtensionAttributes</key>
       <dict>
+        <key>AudioComponentBundle</key>
+        <string></string>
         <key>AudioComponents</key>
         <array>
           <dict>

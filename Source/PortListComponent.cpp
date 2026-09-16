@@ -213,7 +213,7 @@ namespace showmidi
             auto& theme = settings.getTheme();
             auto name = midiDevices_[port].name;
             auto available = owner_->getWidth() - X_PORT - PORT_RIGHT_MARGIN - ACTIVITY_DOT_SIZE - 4;
-            if (theme.fontLabel().getStringWidth(name) <= available)
+            if (GlyphArrangement::getStringWidthInt(theme.fontLabel(), name) <= available)
             {
                 return {};
             }

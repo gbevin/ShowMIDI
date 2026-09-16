@@ -26,6 +26,8 @@
 	<dict>
 		<key>NSExtensionAttributes</key>
 		<dict>
+			<key>AudioComponentBundle</key>
+			<string></string>
 			<key>AudioComponents</key>
 			<array>
 				<dict>
@@ -63,6 +65,13 @@
 	<true/>
 	<key>NSHumanReadableCopyright</key>
 	<string>©2023 Uwyn LLC</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict/>
+	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UISupportsDocumentBrowser</key>

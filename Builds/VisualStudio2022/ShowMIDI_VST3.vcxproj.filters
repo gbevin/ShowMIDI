@@ -19,9 +19,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_audio_plugin_client\VST3\juce_VST3ManifestHelper.cpp">
       <Filter>JUCE Modules\juce_audio_plugin_client\VST3</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_plugin_client\VST3\juce_VST3ManifestHelper.mm">
-      <Filter>JUCE Modules\juce_audio_plugin_client\VST3</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_audio_plugin_client\juce_audio_plugin_client_VST3.cpp">
       <Filter>JUCE Modules\juce_audio_plugin_client</Filter>
     </ClCompile>
@@ -32,7 +29,11 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup/>
+  <ItemGroup>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_plugin_client\VST3\juce_VST3ModuleInfo.h">
+      <Filter>JUCE Modules\juce_audio_plugin_client\VST3</Filter>
+    </ClInclude>
+  </ItemGroup>
   <ItemGroup>
     <None Include=".\icon.ico">
       <Filter>JUCE Library Code</Filter>

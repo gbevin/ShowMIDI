@@ -91,6 +91,9 @@
 #ifndef  JucePlugin_VSTCategory
  #define JucePlugin_VSTCategory            kPlugCategEffect
 #endif
+#ifndef  JucePlugin_LV2PluginClass
+ #define JucePlugin_LV2PluginClass         Plugin
+#endif
 #ifndef  JucePlugin_Vst3Category
  #define JucePlugin_Vst3Category           "Fx"
 #endif
@@ -122,7 +125,7 @@
  #define JucePlugin_AAXProductId           JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AAXCategory
- #define JucePlugin_AAXCategory            0
+ #define JucePlugin_AAXCategory            65536
 #endif
 #ifndef  JucePlugin_AAXDisableBypass
  #define JucePlugin_AAXDisableBypass       0
