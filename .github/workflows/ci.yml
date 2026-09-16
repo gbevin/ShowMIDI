@@ -116,14 +116,23 @@ jobs:
       - name: Build (Windows)
         if: runner.os == 'Windows'
         # the projects are built one by one to leave out the VST2 target, whose
-        # SDK is proprietary; the shared code and the manifest helpers come
-        # first, since building a project on its own does not build them, and
-        # the 64-bit toolchain is required because the LV2 helper has to run
+        # SDK is proprietary. The generated projects carry no references, so the
+        # shared code and the manifest helpers have to come first, the VST3
+        # helper is a 32-bit tool, and the LV2 helper only runs when the 64-bit
+        # toolchain is selected
         shell: pwsh
         run: |
-          foreach ($project in "SharedCode", "StandalonePlugin", "VST3ManifestHelper", "VST3", "LV2ManifestHelper", "LV2Plugin") {
-            msbuild "Builds\VisualStudio2022\ShowMIDI_$project.vcxproj" /m /p:Configuration=Release /p:Platform=x64 /p:PreferredToolArchitecture=x64
-            if ($LASTEXITCODE -ne 0) { throw "$project did not build" }
+          $projects = @(
+            @{ name = "SharedCode";         platform = "x64"   },
+            @{ name = "StandalonePlugin";   platform = "x64"   },
+            @{ name = "VST3ManifestHelper"; platform = "Win32" },
+            @{ name = "VST3";               platform = "x64"   },
+            @{ name = "LV2ManifestHelper";  platform = "x64"   },
+            @{ name = "LV2Plugin";          platform = "x64"   }
+          )
+          foreach ($project in $projects) {
+            msbuild "Builds\VisualStudio2022\ShowMIDI_$($project.name).vcxproj" /m /p:Configuration=Release /p:Platform=$($project.platform) /p:PreferredToolArchitecture=x64
+            if ($LASTEXITCODE -ne 0) { throw "$($project.name) did not build" }
           }
 
       - name: Build CLAP (Windows)
