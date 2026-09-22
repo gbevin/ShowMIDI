@@ -151,9 +151,9 @@
                vstLegacyFolder="libs/vst2" appSandboxOptions="com.apple.security.files.user-selected.read-only,com.apple.security.files.user-selected.read-write">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="ShowMIDI" enablePluginBinaryCopyStep="0"
-                       macOSDeploymentTarget="11.7" osxCompatibility="11.7 SDK" fastMath="1"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="ShowMIDI" macOSDeploymentTarget="11.7"
-                       osxCompatibility="11.7 SDK" fastMath="1"/>
+                       macOSDeploymentTarget="12.0" osxCompatibility="12.0 SDK" fastMath="1"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="ShowMIDI" macOSDeploymentTarget="12.0"
+                       osxCompatibility="12.0 SDK" fastMath="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
