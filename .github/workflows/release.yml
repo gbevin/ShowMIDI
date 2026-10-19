@@ -232,11 +232,15 @@ jobs:
           security set-keychain-settings -lut 21600 "$KEYCHAIN"
           security unlock-keychain -p "$KEYCHAIN_PWD" "$KEYCHAIN"
           security default-keychain -s "$KEYCHAIN"
-          security import "$RUNNER_TEMP/certs.p12" -k "$KEYCHAIN" -P "$MACOS_CERTIFICATE_PWD" \
+          # -A lets any tool use the keys: packagesbuild is third party, so the
+          # Apple-only partition list would lock it out of the installer identity
+          security import "$RUNNER_TEMP/certs.p12" -k "$KEYCHAIN" -P "$MACOS_CERTIFICATE_PWD" -A \
             -T /usr/bin/codesign -T /usr/bin/pkgbuild -T /usr/bin/productbuild -T /usr/local/bin/packagesbuild
-          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PWD" "$KEYCHAIN" >/dev/null
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -k "$KEYCHAIN_PWD" "$KEYCHAIN" >/dev/null
           security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | sed s/\"//g)
           rm "$RUNNER_TEMP/certs.p12"
+          echo "identities available to the build:"
+          security find-identity -v | sed -n 's/.*"\(Developer ID [^"]*\)".*/  \1/p'
 
       - name: Store notarization credentials
         env:
