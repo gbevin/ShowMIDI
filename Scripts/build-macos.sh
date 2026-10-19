@@ -41,8 +41,17 @@ codesign -f -s "$SIGN_ID" Builds/MacOSX/build/clap/ShowMIDI_artefacts/Release/Sh
 # update packager file with version number and generate it in the build
 # directory, updating relevant paths
 echo "Generating installer packages project"
+# the project names the installer certificate's keychain by absolute path, which
+# only resolves on the machine the project was saved on; set SIGN_KEYCHAIN to
+# sign from somewhere else, as CI does with the keychain it creates
+if [ -n "$SIGN_KEYCHAIN" ]; then
+    KEYCHAIN_FILTER=(sed -E "s|<string>[^<]*/Library/Keychains/[^<]*</string>|<string>$SIGN_KEYCHAIN</string>|")
+else
+    KEYCHAIN_FILTER=(cat)
+fi
 sed "s/REPLACE_VERSION/$RELEASE_VERSION/g" Installers/ShowMIDI.pkgproj | \
-    sed "s/Builds\/MacOSX/..\/..\/Builds\/MacOSX/g" > $BUILD_DIR/ShowMIDI_versioned.pkgproj
+    sed "s/Builds\/MacOSX/..\/..\/Builds\/MacOSX/g" | \
+    "${KEYCHAIN_FILTER[@]}" > $BUILD_DIR/ShowMIDI_versioned.pkgproj
 # copy other files that are needed by the installer to the new location
 cp Installers/uninstall.sh $BUILD_DIR
 cp Installers/gpl-3.0.txt $BUILD_DIR

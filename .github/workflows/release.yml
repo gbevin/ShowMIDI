@@ -241,6 +241,8 @@ jobs:
           rm "$RUNNER_TEMP/certs.p12"
           echo "identities available to the build:"
           security find-identity -v | sed -n 's/.*"\(Developer ID [^"]*\)".*/  \1/p'
+          # the installer project names a keychain by absolute path; point it here
+          echo "SIGN_KEYCHAIN=$KEYCHAIN" >> "$GITHUB_ENV"
 
       - name: Store notarization credentials
         env:
