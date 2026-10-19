@@ -34,7 +34,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          submodules: recursive
+          # libs/vst2 is private and deliberately left out: CI skips the VST2
+          # target, and fetching it would need a secret that pull requests from
+          # forks don't have
+          submodules: false
+
+      - name: Check out the public submodules
+        run: git submodule update --init --recursive JUCE libs/clap-juce-extensions
 
       # ---------------------------------------------------------------- macOS
       - name: Build (macOS)
