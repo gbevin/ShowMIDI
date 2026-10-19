@@ -214,7 +214,9 @@ jobs:
         run: |
           curl -fsSL -o "$RUNNER_TEMP/Packages.dmg" http://s.sudre.free.fr/Software/files/Packages.dmg
           hdiutil attach -quiet -nobrowse -mountpoint "$RUNNER_TEMP/packages" "$RUNNER_TEMP/Packages.dmg"
-          sudo installer -pkg "$RUNNER_TEMP/packages/packages/Packages.pkg" -target /
+          pkg=$(find "$RUNNER_TEMP/packages" -maxdepth 1 -name "*.pkg" | head -1)
+          test -n "$pkg"
+          sudo installer -pkg "$pkg" -target /
           hdiutil detach -quiet "$RUNNER_TEMP/packages"
           test -x /usr/local/bin/packagesbuild
 
