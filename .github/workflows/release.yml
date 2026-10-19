@@ -1,28 +1,40 @@
-name: Release (Windows)
+name: Release
 
-# Builds, signs and packages the Windows release. Signing goes through SignPath
-# rather than a local signtool, so it happens in two round trips: the plugin
-# binaries are signed first, then the installer that is built from them.
+# Builds the release artifacts for all three platforms. Windows binaries and
+# its installer are signed through SignPath, in two round trips because the
+# installer is built from the signed binaries. macOS is signed and notarized by
+# Scripts/build-macos.sh with Apple's own tooling. Linux is unsigned.
 #
-# Needs two repository secrets:
-#   SIGNPATH_API_TOKEN  a SignPath CI user that is a submitter on the policy
-#   VST2_SDK_TOKEN      read access to the private VST2 SDK submodule
+# Repository secrets:
+#   VST2_SDK_TOKEN         read access to the private VST2 SDK submodule
+#   SIGNPATH_API_TOKEN     a SignPath CI user that submits to the policy
+#   MACOS_CERTIFICATE      base64 .p12 with the Developer ID Application and
+#                          Installer identities
+#   MACOS_CERTIFICATE_PWD  that .p12's export password
+#   NOTARY_KEY             base64 App Store Connect API key (.p8)
+#   NOTARY_KEY_ID          that key's Key ID
+#   NOTARY_ISSUER_ID       the App Store Connect Issuer ID
 #
-# Run it by hand until macOS and Linux are automated too; it uploads artifacts
-# and drafts no release.
+# Manually triggered for now: it uploads artifacts and drafts no release.
 
 on:
   workflow_dispatch:
     inputs:
       version:
-        description: Release version, for example 1.0.4
+        description: Release version, for example 1.0.2
         required: true
       signing-policy:
-        description: SignPath signing policy
+        description: SignPath signing policy for the Windows artifacts
         required: true
         default: test-signing
         type: choice
         options: [ test-signing, release-signing ]
+      platforms:
+        description: Which platforms to build
+        required: true
+        default: all
+        type: choice
+        options: [ all, windows, macos, linux ]
 
 permissions:
   contents: read
@@ -32,12 +44,14 @@ permissions:
 env:
   SIGNPATH_ORGANIZATION_ID: ae635b39-b945-488a-b9d1-4836c69b8b7e
   SIGNPATH_PROJECT_SLUG: ShowMIDI
-  BUILD_DIR: Builds\VisualStudio2022\x64
 
 jobs:
   windows:
     name: Windows package
+    if: inputs.platforms == 'all' || inputs.platforms == 'windows'
     runs-on: windows-latest
+    env:
+      BUILD_DIR: Builds\VisualStudio2022\x64
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -86,7 +100,6 @@ jobs:
           cmake -B"${{ env.BUILD_DIR }}\clap" -DCMAKE_BUILD_TYPE=Release
           cmake --build "${{ env.BUILD_DIR }}\clap" --config Release
 
-      # --------------------------------------------------------------- signing
       # the staged paths are relative to BUILD_DIR and match the paths in the
       # windows-binaries artifact configuration, so the signed files extract
       # straight back over the originals
@@ -133,7 +146,6 @@ jobs:
         shell: pwsh
         run: Copy-Item -Path "signed\binaries\*" -Destination "${{ env.BUILD_DIR }}" -Recurse -Force
 
-      # ------------------------------------------------------------- installer
       - name: Build installer
         shell: pwsh
         run: |
@@ -177,3 +189,115 @@ jobs:
           path: |
             signed\installer\ShowMIDI-Windows-*.exe
             signed\installer\ShowMIDI-Windows-*.exe.sha256
+
+  macos:
+    name: macOS package
+    if: inputs.platforms == 'all' || inputs.platforms == 'macos'
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          submodules: false
+          persist-credentials: false
+
+      - name: Check out submodules
+        env:
+          VST2_SDK_TOKEN: ${{ secrets.VST2_SDK_TOKEN }}
+        run: |
+          git config --global url."https://x-access-token:${VST2_SDK_TOKEN}@github.com/".insteadOf "https://github.com/"
+          git submodule update --init --recursive
+
+      - name: Install Packages
+        # the installer is built from a .pkgproj, which needs this third-party
+        # tool; it is not part of the runner image
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/Packages.dmg" http://s.sudre.free.fr/Software/files/Packages.dmg
+          hdiutil attach -quiet -nobrowse -mountpoint "$RUNNER_TEMP/packages" "$RUNNER_TEMP/Packages.dmg"
+          sudo installer -pkg "$RUNNER_TEMP/packages/packages/Packages.pkg" -target /
+          hdiutil detach -quiet "$RUNNER_TEMP/packages"
+          test -x /usr/local/bin/packagesbuild
+
+      - name: Import Developer ID certificates
+        env:
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+          MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+        run: |
+          KEYCHAIN="$RUNNER_TEMP/signing.keychain-db"
+          KEYCHAIN_PWD="$(openssl rand -base64 24)"
+          echo "$MACOS_CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/certs.p12"
+          security create-keychain -p "$KEYCHAIN_PWD" "$KEYCHAIN"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN"
+          security unlock-keychain -p "$KEYCHAIN_PWD" "$KEYCHAIN"
+          security default-keychain -s "$KEYCHAIN"
+          security import "$RUNNER_TEMP/certs.p12" -k "$KEYCHAIN" -P "$MACOS_CERTIFICATE_PWD" \
+            -T /usr/bin/codesign -T /usr/bin/pkgbuild -T /usr/bin/productbuild -T /usr/local/bin/packagesbuild
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PWD" "$KEYCHAIN" >/dev/null
+          security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | sed s/\"//g)
+          rm "$RUNNER_TEMP/certs.p12"
+
+      - name: Store notarization credentials
+        env:
+          NOTARY_KEY: ${{ secrets.NOTARY_KEY }}
+          NOTARY_KEY_ID: ${{ secrets.NOTARY_KEY_ID }}
+          NOTARY_ISSUER_ID: ${{ secrets.NOTARY_ISSUER_ID }}
+        run: |
+          echo "$NOTARY_KEY" | base64 --decode > "$RUNNER_TEMP/notary.p8"
+          xcrun notarytool store-credentials "notary-uwyn.com" \
+            --key "$RUNNER_TEMP/notary.p8" --key-id "$NOTARY_KEY_ID" --issuer "$NOTARY_ISSUER_ID"
+          rm "$RUNNER_TEMP/notary.p8"
+
+      - name: Build, sign, notarize and package
+        run: bash -e ./Scripts/build-macos.sh "${{ inputs.version }}"
+
+      - name: Checksum
+        run: |
+          cd Installers
+          zip=$(ls ShowMIDI-macOS-*.zip)
+          shasum -a 256 "$zip" > "$zip.sha256"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos
+          path: Installers/ShowMIDI-macOS-*.zip*
+
+  linux:
+    name: Linux package
+    if: inputs.platforms == 'all' || inputs.platforms == 'linux'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          submodules: false
+          persist-credentials: false
+
+      - name: Check out submodules
+        env:
+          VST2_SDK_TOKEN: ${{ secrets.VST2_SDK_TOKEN }}
+        run: |
+          git config --global url."https://x-access-token:${VST2_SDK_TOKEN}@github.com/".insteadOf "https://github.com/"
+          git submodule update --init --recursive
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libfreetype6-dev libfontconfig1-dev \
+            libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev \
+            libxi-dev libxrandr-dev libxrender-dev libcurl4-openssl-dev \
+            libjack-jackd2-dev ladspa-sdk
+
+      # the script applies the JUCE patches itself before building
+      - name: Build and package
+        run: bash -e ./Scripts/build-linux.sh "${{ inputs.version }}"
+
+      - name: Checksum
+        run: |
+          cd Installers
+          archive=$(ls ShowMIDI-Linux-*.tar.bz2)
+          sha256sum "$archive" > "$archive.sha256"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux
+          path: Installers/ShowMIDI-Linux-*.tar.bz2*
