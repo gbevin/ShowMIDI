@@ -17,7 +17,11 @@ rm -rfv $BUILD_DIR
 
 # build release artifacts
 echo "Building all ProJucer artifacts"
-xcodebuild -project ./Builds/MacOSX/showmidi.xcodeproj -destination "generic/platform=macOS,name=Any Mac" -config Release SYMROOT=build -scheme "ShowMIDI - All"
+# signing happens below with the Developer ID identities, so the build itself
+# signs ad hoc; a machine without a Mac Development certificate, such as a CI
+# runner, fails here otherwise
+xcodebuild -project ./Builds/MacOSX/showmidi.xcodeproj -destination "generic/platform=macOS,name=Any Mac" -config Release SYMROOT=build -scheme "ShowMIDI - All" \
+    CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
 echo "Building CLAP plugin"
 cmake -BBuilds/MacOSX/build/clap -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
