@@ -4,3 +4,6 @@
 [submodule "JUCE"]
 	path = JUCE
 	url = https://github.com/juce-framework/JUCE.git
+[submodule "libs/vst2"]
+	path = libs/vst2
+	url = https://github.com/gbevin/vst2-sdk.git
