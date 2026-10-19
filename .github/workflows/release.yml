@@ -1,6 +1,7 @@
 name: Release
 
-# Builds the release artifacts for all three platforms. Windows binaries and
+# Runs when a version tag (e.g. 1.0.2) is pushed, and drafts a GitHub release
+# from the artifacts of all three platforms. Windows binaries and
 # its installer are signed through SignPath, in two round trips because the
 # installer is built from the signed binaries. macOS is signed and notarized by
 # Scripts/build-macos.sh with Apple's own tooling. Linux is unsigned.
@@ -15,9 +16,16 @@ name: Release
 #   NOTARY_KEY_ID          that key's Key ID
 #   NOTARY_ISSUER_ID       the App Store Connect Issuer ID
 #
-# Manually triggered for now: it uploads artifacts and drafts no release.
+# A tag push signs with release-signing, so the Windows job waits for the
+# signing request to be approved in SignPath. The tag must match the version in
+# showmidi.jucer.
+#
+# It can also be triggered manually for a test run of any platform and signing
+# policy: that only uploads the artifacts and drafts no release.
 
 on:
+  push:
+    tags: [ '[0-9]+.[0-9]+.[0-9]+' ]
   workflow_dispatch:
     inputs:
       version:
@@ -42,13 +50,34 @@ permissions:
   actions: read
 
 env:
+  VERSION: ${{ inputs.version || github.ref_name }}
+  SIGNPATH_SIGNING_POLICY: ${{ inputs.signing-policy || 'release-signing' }}
   SIGNPATH_ORGANIZATION_ID: ae635b39-b945-488a-b9d1-4836c69b8b7e
   SIGNPATH_PROJECT_SLUG: ShowMIDI
 
 jobs:
+  version:
+    name: Check version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      # a mismatch would otherwise only show after a signing approval, in
+      # binaries that report the wrong version
+      - name: Compare with showmidi.jucer
+        if: github.event_name == 'push'
+        run: |
+          jucer=$(sed -n 's/^[[:space:]]*version="\([0-9.]*\)".*/\1/p' showmidi.jucer)
+          if [ "$jucer" != "$VERSION" ]; then
+            echo "::error::release version $VERSION does not match $jucer in showmidi.jucer"
+            exit 1
+          fi
+
   windows:
     name: Windows package
-    if: inputs.platforms == 'all' || inputs.platforms == 'windows'
+    needs: version
+    if: github.event_name == 'push' || inputs.platforms == 'all' || inputs.platforms == 'windows'
     runs-on: windows-latest
     env:
       BUILD_DIR: Builds\VisualStudio2022\x64
@@ -134,7 +163,7 @@ jobs:
           api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
           organization-id: ${{ env.SIGNPATH_ORGANIZATION_ID }}
           project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
-          signing-policy-slug: ${{ inputs.signing-policy }}
+          signing-policy-slug: ${{ env.SIGNPATH_SIGNING_POLICY }}
           artifact-configuration-slug: windows-binaries
           github-artifact-id: ${{ steps.unsigned-binaries.outputs.artifact-id }}
           wait-for-completion: true
@@ -153,7 +182,7 @@ jobs:
           $iscc = (Get-Command iscc -ErrorAction SilentlyContinue)?.Source
           if (!$iscc) { $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" }
           if (!(Test-Path $iscc)) { throw "Inno Setup was not found" }
-          & $iscc /DPWD="${{ github.workspace }}" /DPATH=./ /DVERSION="${{ inputs.version }}" Installers\ShowMIDI.iss
+          & $iscc /DPWD="${{ github.workspace }}" /DPATH=./ /DVERSION="${{ env.VERSION }}" Installers\ShowMIDI.iss
           if ($LASTEXITCODE -ne 0) { throw "the installer did not build" }
 
       - name: Upload unsigned installer
@@ -161,7 +190,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: unsigned-installer
-          path: Installers\ShowMIDI-Windows-${{ inputs.version }}.exe
+          path: Installers\ShowMIDI-Windows-${{ env.VERSION }}.exe
 
       - name: Sign installer
         uses: signpath/github-action-submit-signing-request@v3
@@ -169,7 +198,7 @@ jobs:
           api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
           organization-id: ${{ env.SIGNPATH_ORGANIZATION_ID }}
           project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
-          signing-policy-slug: ${{ inputs.signing-policy }}
+          signing-policy-slug: ${{ env.SIGNPATH_SIGNING_POLICY }}
           artifact-configuration-slug: windows-installer
           github-artifact-id: ${{ steps.unsigned-installer.outputs.artifact-id }}
           wait-for-completion: true
@@ -192,7 +221,8 @@ jobs:
 
   macos:
     name: macOS package
-    if: inputs.platforms == 'all' || inputs.platforms == 'macos'
+    needs: version
+    if: github.event_name == 'push' || inputs.platforms == 'all' || inputs.platforms == 'macos'
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -256,7 +286,7 @@ jobs:
           rm "$RUNNER_TEMP/notary.p8"
 
       - name: Build, sign, notarize and package
-        run: bash -e ./Scripts/build-macos.sh "${{ inputs.version }}"
+        run: bash -e ./Scripts/build-macos.sh "$VERSION"
 
       - name: Checksum
         run: |
@@ -271,7 +301,8 @@ jobs:
 
   linux:
     name: Linux package
-    if: inputs.platforms == 'all' || inputs.platforms == 'linux'
+    needs: version
+    if: github.event_name == 'push' || inputs.platforms == 'all' || inputs.platforms == 'linux'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -297,7 +328,7 @@ jobs:
 
       # the script applies the JUCE patches itself before building
       - name: Build and package
-        run: bash -e ./Scripts/build-linux.sh "${{ inputs.version }}"
+        run: bash -e ./Scripts/build-linux.sh "$VERSION"
 
       - name: Checksum
         run: |
@@ -309,3 +340,28 @@ jobs:
         with:
           name: linux
           path: Installers/ShowMIDI-Linux-*.tar.bz2*
+
+  release:
+    name: Draft release
+    if: github.event_name == 'push'
+    needs: [ windows, macos, linux ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      # only the packaged platforms: the run also holds the unsigned
+      # intermediates that went through SignPath
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Collect release files
+        run: |
+          mkdir dist
+          cp artifacts/windows/* artifacts/macos/* artifacts/linux/* dist/
+          ls -l dist
+      - name: Draft GitHub release
+        uses: softprops/action-gh-release@v3
+        with:
+          draft: true
+          generate_release_notes: true
+          files: dist/*
