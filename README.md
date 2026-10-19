@@ -98,6 +98,16 @@ ShowMIDI was created by Geert Bevin: https://uwyn.com
 
 The UI design was done by Stephen Petoniak: https://spetoniak.com
 
+## Code signing policy
+
+Free code signing on Windows is provided by [SignPath.io](https://signpath.io), with a certificate by the [SignPath Foundation](https://signpath.org).
+
+The macOS releases are signed and notarized with Apple Developer ID certificates held by Uwyn, LLC.
+
+Committer, reviewer and approver for this project is Geert Bevin, who maintains the repository. Releases are built on GitHub Actions from the sources in this repository, and every signing request is approved manually before a release is signed.
+
+SignPath receives the identity of the person approving a signing request and the metadata of the artifacts being signed. No data about users of ShowMIDI is collected or shared.
+
 ## Building from Source on Linux
 
 ShowMIDI relies on Git submodules for compilation of external dependencies.
