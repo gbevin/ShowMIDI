@@ -1,0 +1,179 @@
+name: Release (Windows)
+
+# Builds, signs and packages the Windows release. Signing goes through SignPath
+# rather than a local signtool, so it happens in two round trips: the plugin
+# binaries are signed first, then the installer that is built from them.
+#
+# Needs two repository secrets:
+#   SIGNPATH_API_TOKEN  a SignPath CI user that is a submitter on the policy
+#   VST2_SDK_TOKEN      read access to the private VST2 SDK submodule
+#
+# Run it by hand until macOS and Linux are automated too; it uploads artifacts
+# and drafts no release.
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release version, for example 1.0.4
+        required: true
+      signing-policy:
+        description: SignPath signing policy
+        required: true
+        default: test-signing
+        type: choice
+        options: [ test-signing, release-signing ]
+
+permissions:
+  contents: read
+  # the SignPath action reads the uploaded artifact back out of the run
+  actions: read
+
+env:
+  SIGNPATH_ORGANIZATION_ID: ae635b39-b945-488a-b9d1-4836c69b8b7e
+  SIGNPATH_PROJECT_SLUG: ShowMIDI
+  BUILD_DIR: Builds\VisualStudio2022\x64
+
+jobs:
+  windows:
+    name: Windows package
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          # the submodules are fetched separately below, so that the token for
+          # the private VST2 SDK never needs access to this repository too
+          submodules: false
+          persist-credentials: false
+
+      - name: Check out submodules
+        shell: bash
+        env:
+          VST2_SDK_TOKEN: ${{ secrets.VST2_SDK_TOKEN }}
+        run: |
+          git config --global url."https://x-access-token:${VST2_SDK_TOKEN}@github.com/".insteadOf "https://github.com/"
+          git submodule update --init --recursive
+
+      - uses: microsoft/setup-msbuild@v2
+        with:
+          # the LV2 manifest helper only runs under the 64-bit toolchain
+          msbuild-architecture: x64
+
+      - name: Build
+        # the generated projects carry no references, so the shared code and the
+        # manifest helpers have to come first, and the VST3 helper is 32-bit
+        shell: pwsh
+        run: |
+          $projects = @(
+            @{ name = "SharedCode";         platform = "x64"   },
+            @{ name = "StandalonePlugin";   platform = "x64"   },
+            @{ name = "VST";                platform = "x64"   },
+            @{ name = "VST3ManifestHelper"; platform = "Win32" },
+            @{ name = "VST3";               platform = "x64"   },
+            @{ name = "LV2ManifestHelper";  platform = "x64"   },
+            @{ name = "LV2Plugin";          platform = "x64"   }
+          )
+          foreach ($project in $projects) {
+            msbuild "Builds\VisualStudio2022\ShowMIDI_$($project.name).vcxproj" /m /p:Configuration=Release /p:Platform=$($project.platform) /p:PreferredToolArchitecture=x64
+            if ($LASTEXITCODE -ne 0) { throw "$($project.name) did not build" }
+          }
+
+      - name: Build CLAP
+        env:
+          PATH_TO_JUCE: ${{ github.workspace }}\JUCE
+        run: |
+          cmake -B"${{ env.BUILD_DIR }}\clap" -DCMAKE_BUILD_TYPE=Release
+          cmake --build "${{ env.BUILD_DIR }}\clap" --config Release
+
+      # --------------------------------------------------------------- signing
+      # the staged paths are relative to BUILD_DIR and match the paths in the
+      # windows-binaries artifact configuration, so the signed files extract
+      # straight back over the originals
+      - name: Stage binaries for signing
+        shell: pwsh
+        run: |
+          $files = @(
+            "Release\Standalone Plugin\ShowMIDI.exe",
+            "Release\VST\ShowMIDI.dll",
+            "Release\VST3\ShowMIDI.vst3\Contents\x86_64-win\ShowMIDI.vst3",
+            "Release\LV2 Plugin\ShowMIDI.lv2\ShowMIDI.dll",
+            "clap\ShowMIDI_artefacts\Release\ShowMIDI.clap"
+          )
+          foreach ($file in $files) {
+            $source = Join-Path "${{ env.BUILD_DIR }}" $file
+            if (!(Test-Path $source)) { throw "$file was not built" }
+            $target = Join-Path "staging\binaries" $file
+            New-Item -ItemType Directory -Force -Path (Split-Path $target) | Out-Null
+            Copy-Item $source $target
+          }
+
+      - name: Upload unsigned binaries
+        id: unsigned-binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-binaries
+          path: staging\binaries
+
+      - name: Sign binaries
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ env.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ inputs.signing-policy }}
+          artifact-configuration-slug: windows-binaries
+          github-artifact-id: ${{ steps.unsigned-binaries.outputs.artifact-id }}
+          wait-for-completion: true
+          # release-signing needs a human approval, so give it room
+          wait-for-completion-timeout-in-seconds: 3600
+          output-artifact-directory: signed\binaries
+
+      - name: Put the signed binaries back
+        shell: pwsh
+        run: Copy-Item -Path "signed\binaries\*" -Destination "${{ env.BUILD_DIR }}" -Recurse -Force
+
+      # ------------------------------------------------------------- installer
+      - name: Build installer
+        shell: pwsh
+        run: |
+          # the runner image ships Inno Setup but documents no path for it
+          $iscc = (Get-Command iscc -ErrorAction SilentlyContinue)?.Source
+          if (!$iscc) { $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" }
+          if (!(Test-Path $iscc)) { throw "Inno Setup was not found" }
+          & $iscc /DPWD="${{ github.workspace }}" /DPATH=./ /DVERSION="${{ inputs.version }}" Installers\ShowMIDI.iss
+          if ($LASTEXITCODE -ne 0) { throw "the installer did not build" }
+
+      - name: Upload unsigned installer
+        id: unsigned-installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: unsigned-installer
+          path: Installers\ShowMIDI-Windows-${{ inputs.version }}.exe
+
+      - name: Sign installer
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ env.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ env.SIGNPATH_PROJECT_SLUG }}
+          signing-policy-slug: ${{ inputs.signing-policy }}
+          artifact-configuration-slug: windows-installer
+          github-artifact-id: ${{ steps.unsigned-installer.outputs.artifact-id }}
+          wait-for-completion: true
+          wait-for-completion-timeout-in-seconds: 3600
+          output-artifact-directory: signed\installer
+
+      - name: Checksum
+        shell: bash
+        run: |
+          cd signed/installer
+          installer=$(ls ShowMIDI-Windows-*.exe)
+          sha256sum "$installer" > "$installer.sha256"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: |
+            signed\installer\ShowMIDI-Windows-*.exe
+            signed\installer\ShowMIDI-Windows-*.exe.sha256
