@@ -18,7 +18,7 @@ set(PATH_TO_CLAP_EXTENSIONS libs/clap-juce-extensions)
 set(CMAKE_CXX_STANDARD 17)
 
 # Make sure to set the same MacOS deployment target as you have set in the Projucer
-set(CMAKE_OSX_DEPLOYMENT_TARGET "11.7" CACHE STRING "Minimum OS X deployment target")
+set(CMAKE_OSX_DEPLOYMENT_TARGET "12.0" CACHE STRING "Minimum OS X deployment target")
 
 # If the Projucer is using "static runtime" for Visual Studio:
 #set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STRING "Runtime")
