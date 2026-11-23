@@ -224,7 +224,7 @@
                   UIFileSharingEnabled="1" UISupportsDocumentBrowser="1" iosAppGroups="1"
                   iosAppGroupsId="group.com.uwyn.showmidi" iCloudPermissions="1"
                   customLaunchStoryboard="Interface/Base.lproj/LaunchScreen.storyboard"
-                  customXcodeResourceFolders="Interface/Base.lproj/launch-screen-logo@2x.png">
+                  customXcodeResourceFolders="Interface/Base.lproj/launch-screen-logo@2x.png&#10;Interface/PrivacyInfo.xcprivacy">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" targetName="ShowMIDI" enablePluginBinaryCopyStep="0"
                        fastMath="1" iosCompatibility="15.0" iosDeploymentTarget="15.0"/>
