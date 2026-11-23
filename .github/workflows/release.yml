@@ -16,9 +16,10 @@ name: Release
 #   NOTARY_KEY_ID          that key's Key ID
 #   NOTARY_ISSUER_ID       the App Store Connect Issuer ID
 #
-# A tag push signs with release-signing, so the Windows job waits for the
-# signing request to be approved in SignPath. The tag must match the version in
-# showmidi.jucer.
+# A tag push builds Windows unsigned until SignPath puts its certificate on the
+# release-signing policy; then set the tag default below to release-signing,
+# and the Windows job will wait for each signing request to be approved. The
+# tag must match the version in showmidi.jucer.
 #
 # It can also be triggered manually for a test run of any platform and signing
 # policy: that only uploads the artifacts and drafts no release.
@@ -36,7 +37,7 @@ on:
         required: true
         default: test-signing
         type: choice
-        options: [ test-signing, release-signing ]
+        options: [ test-signing, release-signing, unsigned ]
       platforms:
         description: Which platforms to build
         required: true
@@ -51,7 +52,7 @@ permissions:
 
 env:
   VERSION: ${{ inputs.version || github.ref_name }}
-  SIGNPATH_SIGNING_POLICY: ${{ inputs.signing-policy || 'release-signing' }}
+  SIGNPATH_SIGNING_POLICY: ${{ inputs.signing-policy || 'unsigned' }}
   SIGNPATH_ORGANIZATION_ID: ae635b39-b945-488a-b9d1-4836c69b8b7e
   SIGNPATH_PROJECT_SLUG: ShowMIDI
 
@@ -125,6 +126,7 @@ jobs:
       - name: Build CLAP
         env:
           PATH_TO_JUCE: ${{ github.workspace }}\JUCE
+          RELEASE_VERSION: ${{ env.VERSION }}
         run: |
           cmake -B"${{ env.BUILD_DIR }}\clap" -DCMAKE_BUILD_TYPE=Release
           cmake --build "${{ env.BUILD_DIR }}\clap" --config Release
@@ -152,12 +154,14 @@ jobs:
 
       - name: Upload unsigned binaries
         id: unsigned-binaries
+        if: env.SIGNPATH_SIGNING_POLICY != 'unsigned'
         uses: actions/upload-artifact@v4
         with:
           name: unsigned-binaries
           path: staging\binaries
 
       - name: Sign binaries
+        if: env.SIGNPATH_SIGNING_POLICY != 'unsigned'
         uses: signpath/github-action-submit-signing-request@v3
         with:
           api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
@@ -172,6 +176,7 @@ jobs:
           output-artifact-directory: signed\binaries
 
       - name: Put the signed binaries back
+        if: env.SIGNPATH_SIGNING_POLICY != 'unsigned'
         shell: pwsh
         run: Copy-Item -Path "signed\binaries\*" -Destination "${{ env.BUILD_DIR }}" -Recurse -Force
 
@@ -187,12 +192,14 @@ jobs:
 
       - name: Upload unsigned installer
         id: unsigned-installer
+        if: env.SIGNPATH_SIGNING_POLICY != 'unsigned'
         uses: actions/upload-artifact@v4
         with:
           name: unsigned-installer
           path: Installers\ShowMIDI-Windows-${{ env.VERSION }}.exe
 
       - name: Sign installer
+        if: env.SIGNPATH_SIGNING_POLICY != 'unsigned'
         uses: signpath/github-action-submit-signing-request@v3
         with:
           api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
@@ -203,12 +210,19 @@ jobs:
           github-artifact-id: ${{ steps.unsigned-installer.outputs.artifact-id }}
           wait-for-completion: true
           wait-for-completion-timeout-in-seconds: 3600
-          output-artifact-directory: signed\installer
+          output-artifact-directory: dist
+
+      - name: Keep the installer unsigned
+        if: env.SIGNPATH_SIGNING_POLICY == 'unsigned'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist | Out-Null
+          Copy-Item "Installers\ShowMIDI-Windows-${{ env.VERSION }}.exe" dist
 
       - name: Checksum
         shell: bash
         run: |
-          cd signed/installer
+          cd dist
           installer=$(ls ShowMIDI-Windows-*.exe)
           sha256sum "$installer" > "$installer.sha256"
 
@@ -216,8 +230,8 @@ jobs:
         with:
           name: windows
           path: |
-            signed\installer\ShowMIDI-Windows-*.exe
-            signed\installer\ShowMIDI-Windows-*.exe.sha256
+            dist\ShowMIDI-Windows-*.exe
+            dist\ShowMIDI-Windows-*.exe.sha256
 
   macos:
     name: macOS package
