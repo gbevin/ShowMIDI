@@ -13,10 +13,10 @@
  
              return rawToUniquePtr (new Client (l, handle));
          }
-@@ -1046,16 +1049,11 @@
- 
-         bool send (ump::Iterator b, ump::Iterator e) override
+@@ -1054,16 +1057,11 @@
          {
+             const auto lock = port->lock();
+ 
 -            if (snd_seq_ump_event_output_direct != nullptr && port->getMidiVersion() != SND_SEQ_CLIENT_LEGACY_MIDI)
 -            {
 -                for (const auto& v : makeRange (b, e))

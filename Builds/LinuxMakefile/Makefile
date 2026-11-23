@@ -39,7 +39,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.1" "-DJUCE_APP_VERSION_HEX=0x10001" $(shell $(PKG_CONFIG) --cflags alsa freetype2 fontconfig) -pthread -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors_headless/format_types/VST3_SDK -I../../libs/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.2" "-DJUCE_APP_VERSION_HEX=0x10002" $(shell $(PKG_CONFIG) --cflags alsa freetype2 fontconfig) -pthread -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors_headless/format_types/VST3_SDK -I../../libs/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
 
   JUCE_CPPFLAGS_VST :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_CFLAGS_VST := -fPIC -fvisibility=hidden
@@ -91,7 +91,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := 
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.1" "-DJUCE_APP_VERSION_HEX=0x10001" $(shell $(PKG_CONFIG) --cflags alsa freetype2 fontconfig) -pthread -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors_headless/format_types/VST3_SDK -I../../libs/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCE_USE_CUSTOM_PLUGIN_STANDALONE_APP=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.0.2" "-DJUCE_APP_VERSION_HEX=0x10002" $(shell $(PKG_CONFIG) --cflags alsa freetype2 fontconfig) -pthread -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv/src -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lilv -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sratom -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord/src -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/sord -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/serd -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK/lv2 -I../../JUCE/modules/juce_audio_processors_headless/format_types/LV2_SDK -I../../JUCE/modules/juce_audio_processors_headless/format_types/VST3_SDK -I../../libs/vst2 -I../../JuceLibraryCode -I../../JUCE/modules $(CPPFLAGS)
 
   JUCE_CPPFLAGS_VST :=  "-DJucePlugin_Build_VST=1" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_CFLAGS_VST := -fPIC -fvisibility=hidden
@@ -174,6 +174,9 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/include_juce_audio_formats_15f82001.o \
   $(JUCE_OBJDIR)/include_juce_audio_formats_flac_1_32fae422.o \
   $(JUCE_OBJDIR)/include_juce_audio_formats_flac_2_32fae7e3.o \
+  $(JUCE_OBJDIR)/include_juce_audio_formats_ogg_ccb28111.o \
+  $(JUCE_OBJDIR)/include_juce_audio_formats_opus_ca23cec7.o \
+  $(JUCE_OBJDIR)/include_juce_audio_formats_opusfile_c2979c43.o \
   $(JUCE_OBJDIR)/include_juce_audio_plugin_client_ARA_31a052ed.o \
   $(JUCE_OBJDIR)/include_juce_audio_processors_10c03666.o \
   $(JUCE_OBJDIR)/include_juce_audio_processors_headless_1902bafc.o \
@@ -191,6 +194,16 @@ OBJECTS_SHARED_CODE := \
   $(JUCE_OBJDIR)/include_juce_graphics_libjpg_2_ce62d8f1.o \
   $(JUCE_OBJDIR)/include_juce_graphics_libjpg_3_ce62dcb2.o \
   $(JUCE_OBJDIR)/include_juce_graphics_libpng_6e070086.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_dec_356f296c.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_dec_df80faee.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_dec_avx2_258a73aa.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_dec_sse41_3dcad1b1.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_enc_df9329c6.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_enc_avx2_503bcbd2.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_enc_sse41_69447e89.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_enc_35815844.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_sharpyuv_ee7d37d0.o \
+  $(JUCE_OBJDIR)/include_juce_graphics_libwebp_utils_339e1d1b.o \
   $(JUCE_OBJDIR)/include_juce_graphics_lunasvg_92e75770.o \
   $(JUCE_OBJDIR)/include_juce_graphics_Sheenbidi_c310974d.o \
   $(JUCE_OBJDIR)/include_juce_gui_basics_e3f79785.o \
@@ -440,6 +453,21 @@ $(JUCE_OBJDIR)/include_juce_audio_formats_flac_2_32fae7e3.o: ../../JuceLibraryCo
 	@echo "Compiling include_juce_audio_formats_flac_2.c"
 	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/include_juce_audio_formats_ogg_ccb28111.o: ../../JuceLibraryCode/include_juce_audio_formats_ogg.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_audio_formats_ogg.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_audio_formats_opus_ca23cec7.o: ../../JuceLibraryCode/include_juce_audio_formats_opus.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_audio_formats_opus.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_audio_formats_opusfile_c2979c43.o: ../../JuceLibraryCode/include_juce_audio_formats_opusfile.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_audio_formats_opusfile.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/include_juce_audio_plugin_client_ARA_31a052ed.o: ../../JuceLibraryCode/include_juce_audio_plugin_client_ARA.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling include_juce_audio_plugin_client_ARA.cpp"
@@ -523,6 +551,56 @@ $(JUCE_OBJDIR)/include_juce_graphics_libjpg_3_ce62dcb2.o: ../../JuceLibraryCode/
 $(JUCE_OBJDIR)/include_juce_graphics_libpng_6e070086.o: ../../JuceLibraryCode/include_juce_graphics_libpng.c
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling include_juce_graphics_libpng.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_dec_356f296c.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_dec.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_dec.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_dec_df80faee.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_dsp_dec.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_dsp_dec.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_dec_avx2_258a73aa.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_dsp_dec_avx2.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_dsp_dec_avx2.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_dec_sse41_3dcad1b1.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_dsp_dec_sse41.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_dsp_dec_sse41.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_enc_df9329c6.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_dsp_enc.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_dsp_enc.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_enc_avx2_503bcbd2.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_dsp_enc_avx2.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_dsp_enc_avx2.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_dsp_enc_sse41_69447e89.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_dsp_enc_sse41.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_dsp_enc_sse41.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_enc_35815844.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_enc.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_enc.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_sharpyuv_ee7d37d0.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_sharpyuv.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_sharpyuv.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_graphics_libwebp_utils_339e1d1b.o: ../../JuceLibraryCode/include_juce_graphics_libwebp_utils.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_graphics_libwebp_utils.c"
 	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_SHARED_CODE) $(JUCE_CFLAGS_SHARED_CODE) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/include_juce_graphics_lunasvg_92e75770.o: ../../JuceLibraryCode/include_juce_graphics_lunasvg.c

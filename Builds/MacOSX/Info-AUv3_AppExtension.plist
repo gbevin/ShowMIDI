@@ -20,9 +20,9 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.0.1</string>
+    <string>1.0.2</string>
     <key>CFBundleVersion</key>
-    <string>22</string>
+    <string>23</string>
     <key>NSHumanReadableCopyright</key>
     <string>&#169;2023 Uwyn LLC</string>
     <key>NSHighResolutionCapable</key>
@@ -37,8 +37,6 @@
       <string>com.apple.AudioUnit-UI</string>
       <key>NSExtensionAttributes</key>
       <dict>
-        <key>AudioComponentBundle</key>
-        <string></string>
         <key>AudioComponents</key>
         <array>
           <dict>
@@ -55,7 +53,7 @@
             <key>subtype</key>
             <string>shmi</string>
             <key>version</key>
-            <integer>65537</integer>
+            <integer>65538</integer>
             <key>sandboxSafe</key>
             <true/>
             <key>tags</key>
