@@ -112,24 +112,28 @@ SignPath receives the identity of the person approving a signing request and the
 
 ShowMIDI relies on Git submodules for compilation of external dependencies.
 
-After cloning the repository, make sure to update and initialize all the Git submodules:
+After cloning the repository, initialize the JUCE and CLAP submodules:
 
 ```
-git submodule update --init --recursive
+git submodule update --init --recursive JUCE libs/clap-juce-extensions
 ```
 
-To build ShowMIDI on Linux you need a minimal set of packages installed beforehand, on Ubuntu this can be done with:
+The third submodule, `libs/vst2`, holds the VST2 SDK. Steinberg doesn't allow it to be distributed, so that repository is private and can't be cloned. Leave it out, as above, and build every format except VST2.
+
+JUCE needs a patch for MIDI on Linux, which you apply from the root of the repository with:
+
+```
+./Scripts/apply-juce-patches.sh
+```
+
+To build ShowMIDI on Linux you need a set of packages installed beforehand, on Ubuntu this can be done with:
 
 ```
 sudo apt install build-essential pkg-config libasound2-dev \
-  libfreetype6-dev libx11-dev libxrandr-dev \
-  libxinerama-dev libxcursor-dev
+  libfreetype6-dev libfontconfig1-dev libx11-dev libxcomposite-dev \
+  libxcursor-dev libxext-dev libxinerama-dev libxi-dev libxrandr-dev \
+  libxrender-dev libcurl4-openssl-dev libjack-jackd2-dev ladspa-sdk
 ```
-
-You'll also need to find a version of the VST2 SDK and put it in a location that the compiler can find.
-Searching online for `vst2.x/aeffect.h` should give you some options for download.
-Sadly it's not allowed to distribute this SDK, so it has not been included.
-The folder of the VST2 SDK should be placed at `libs/vst2` in the source repository.
 
 After that, go to the `LinuxMakefile` directory
 
@@ -137,11 +141,13 @@ After that, go to the `LinuxMakefile` directory
 cd Builds/LinuxMakefile
 ```
 
-and build the binary by typing `make`
+and build the standalone application and the VST3 and LV2 plugins with `make`
 
 ```
-make CONFIG=Release
+make CONFIG=Release Standalone VST3 LV2 LV2_MANIFEST_HELPER VST3_MANIFEST_HELPER
 ```
+
+If you have your own copy of the VST2 SDK, place its folder at `libs/vst2` and type `make CONFIG=Release` to build the VST2 plugin as well.
 
 The resulting binary will be in the `Builds/LinuxMakefile/build` directory and can be moved anywhere appropriate on your system, for instance into `/usr/local/bin`:
 
