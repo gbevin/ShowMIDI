@@ -37,6 +37,7 @@ namespace showmidi
         virtual ~SidebarListener();
         
         virtual void sidebarChangedWidth() = 0;
+        virtual void toggleSettings() = 0;
     };
     
     class SidebarComponent : public Component

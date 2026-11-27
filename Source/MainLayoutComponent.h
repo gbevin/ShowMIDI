@@ -39,9 +39,11 @@ namespace showmidi
         bool isInterestedInFileDrag(const StringArray&);
         void filesDropped(const StringArray&, int, int);
         
+        void paint(Graphics&) override;
         void resized();
         
         int getSidebarWidth();
+        int getDevicesX();
 
         struct Pimpl;
     private:

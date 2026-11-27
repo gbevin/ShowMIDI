@@ -104,5 +104,5 @@ namespace showmidi
     };
     
     void StandaloneWindow::closeButtonPressed() { pimpl_->closeButtonPressed(); }
-    int StandaloneWindow::getSidebarWidth()     { return pimpl_->layout_->getSidebarWidth(); }
+    int StandaloneWindow::getDevicesX()         { return pimpl_->layout_->getDevicesX(); }
 }

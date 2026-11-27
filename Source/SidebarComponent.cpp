@@ -21,14 +21,13 @@
 #include "PaintedButton.h"
 #include "DeviceListener.h"
 #include "PortListComponent.h"
-#include "SettingsComponent.h"
 
 namespace showmidi
 {
     SidebarListener::SidebarListener() {}
     SidebarListener::~SidebarListener() {}
 
-    struct SidebarComponent::Pimpl : public Button::Listener, public DeviceListener, public Timer, public ComponentListener
+    struct SidebarComponent::Pimpl : public Button::Listener, public DeviceListener, public Timer
     {
         static constexpr int COLLAPSED_WIDTH = 36;
         static constexpr int Y_PORTLIST = 48;
@@ -66,17 +65,7 @@ namespace showmidi
             graphButton_->setTooltip("Visualize Control Data as Line or Graph [shortcut: v]");
             resetButton_->setTooltip("Clears All Data [shortcut: backspace]");
             
-            settings_ = std::make_unique<SettingsComponent>(settingsManager_);
             about_ = std::make_unique<AboutComponent>(settingsManager_->getSettings().getTheme());
-            
-            // the settings panel scrolls when it's taller than the window
-            settingsViewport_ = std::make_unique<Viewport>();
-            settingsViewport_->setScrollOnDragMode(Viewport::ScrollOnDragMode::all);
-            settingsViewport_->setScrollBarsShown(true, false);
-            settingsViewport_->setScrollBarThickness(Theme::SCROLLBAR_THICKNESS);
-            settingsViewport_->setViewedComponent(settings_.get(), false);
-            // the panel shows and hides itself, the viewport follows along
-            settings_->addComponentListener(this);
 
             collapsedButton_->addListener(this);
             expandedButton_->addListener(this);
@@ -133,16 +122,7 @@ namespace showmidi
         ~Pimpl()
         {
             stopTimer();
-            settings_->removeComponentListener(this);
             deviceManager_->getDeviceListeners().remove(this);
-        }
-        
-        void componentVisibilityChanged(Component& component) override
-        {
-            if (&component == settings_.get())
-            {
-                settingsViewport_->setVisible(settings_->isVisible());
-            }
         }
         
         void timerCallback() override
@@ -156,7 +136,6 @@ namespace showmidi
         void setup()
         {
             owner_->getParentComponent()->addChildComponent(about_.get());
-            owner_->getParentComponent()->addChildComponent(settingsViewport_.get());
         }
         
         void updateSettings()
@@ -192,7 +171,6 @@ namespace showmidi
                     portViewport_->setVisible(true);
                 }
                 
-                settings_->setVisible(false);
                 about_->setVisible(false);
                 
                 settingsManager_->getSettings().setSidebarExpanded(true);
@@ -209,7 +187,6 @@ namespace showmidi
                     portViewport_->setVisible(false);
                 }
                 
-                settings_->setVisible(false);
                 about_->setVisible(false);
                 
                 settingsManager_->getSettings().setSidebarExpanded(false);
@@ -237,12 +214,11 @@ namespace showmidi
             else if (button == helpButton_.get())
             {
                 about_->setVisible(!about_->isVisible());
-                settings_->setVisible(false);
             }
             else if (button == settingsButton_.get())
             {
-                settings_->setVisible(!settings_->isVisible());
                 about_->setVisible(false);
+                listener_->toggleSettings();
             }
         }
 
@@ -385,13 +361,6 @@ namespace showmidi
             
             about_->updateDimensions();
             about_->setTopLeftPosition(owner_->getWidth() + X_SETTINGS, owner_->getHeight() - Y_SETTINGS - about_->getHeight());
-
-            settings_->updateDimensions();
-            auto settings_height = std::min(settings_->getHeight(), owner_->getHeight() - Y_SETTINGS * 2);
-            // the extra pixel leaves a gap between the panel's right edge and
-            // the scrollbar, which only shows when the panel doesn't fit
-            settingsViewport_->setBounds(owner_->getWidth() + X_SETTINGS, Y_SETTINGS,
-                                         settings_->getWidth() + 1 + Theme::SCROLLBAR_THICKNESS, settings_height);
         }
         
         int getActiveWidth()
@@ -435,8 +404,6 @@ namespace showmidi
         std::unique_ptr<PaintedButton> resetButton_;
         std::unique_ptr<Viewport> portViewport_;
         std::unique_ptr<PortListComponent> portList_;
-        std::unique_ptr<SettingsComponent> settings_;
-        std::unique_ptr<Viewport> settingsViewport_;
         std::unique_ptr<AboutComponent> about_;
 
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Pimpl)

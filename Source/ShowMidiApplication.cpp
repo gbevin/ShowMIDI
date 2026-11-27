@@ -54,8 +54,14 @@ namespace showmidi
 #if JUCE_IOS
                 mainWindow_->updatePosition();
 #else
-                width += mainWindow_->getSidebarWidth();
+                width += mainWindow_->getDevicesX();
                 mainWindow_->setSize(width, mainWindow_->getHeight());
+                // the window frame changes now but JUCE only redraws on the next vblank,
+                // which shows a frame of stretched old contents
+                if (auto peer = mainWindow_->getPeer())
+                {
+                    peer->performAnyPendingRepaintsNow();
+                }
 #endif
             }
         }

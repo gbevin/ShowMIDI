@@ -32,7 +32,7 @@ namespace showmidi
         void resized() override;
         void closeButtonPressed() override;
         
-        int getSidebarWidth();
+        int getDevicesX();
         
         struct Pimpl;
     private:
