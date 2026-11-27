@@ -786,6 +786,7 @@ namespace showmidi
                 theme.colorController = Colour::fromString(value.toString());
             }
             
+            manager_->storeSettings();
             manager_->applySettings();
         }
         
