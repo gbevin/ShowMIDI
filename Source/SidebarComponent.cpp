@@ -376,7 +376,7 @@ namespace showmidi
             helpButton_->setBoundsForTouch(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
                                           helpSvg_->getWidth(), helpSvg_->getHeight());
             
-            settingsButton_->setBoundsForTouch(owner_->getWidth() - expandedSvg_->getWidth() - X_SETTINGS, Y_SETTINGS,
+            settingsButton_->setBoundsForTouch(owner_->getWidth() - settingsSvg_->getWidth() - X_SETTINGS, Y_SETTINGS,
                                               settingsSvg_->getWidth(), settingsSvg_->getHeight());
 
             if (portViewport_.get())

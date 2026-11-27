@@ -22,6 +22,7 @@
 #include "MidiDevicesListener.h"
 #include "PaintedButton.h"
 #include "SettingsComponent.h"
+#include "SidebarComponent.h"
 
 namespace showmidi
 {
@@ -57,7 +58,8 @@ namespace showmidi
         static constexpr int X_VISIBILITY = 10;
         static constexpr int Y_VISIBILITY = -2;
         static constexpr int X_PORT = 34;
-        static constexpr int PORT_RIGHT_MARGIN = 8;
+        // lines the activity dots up with the right edge of the settings button
+        static constexpr int PORT_RIGHT_MARGIN = SidebarComponent::X_SETTINGS - Theme::SCROLLBAR_THICKNESS;
         static constexpr int PORT_Y_SPACING = 29;
         static constexpr int ACTIVITY_DOT_SIZE = 6;
         static constexpr int ACTIVITY_LIT_MILLIS = 300;
