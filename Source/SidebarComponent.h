@@ -50,6 +50,7 @@ namespace showmidi
 
         static constexpr int X_SETTINGS = 11;
         static constexpr int Y_SETTINGS = 11;
+        static constexpr int Y_SETTINGS_COLLAPSED = 112;
 
         static constexpr int X_PLAY_COLLAPSED = 12;
         static constexpr int Y_PLAY_COLLAPSED = 44;

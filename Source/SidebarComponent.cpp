@@ -34,7 +34,7 @@ namespace showmidi
         static constexpr int Y_PORTLIST = 48;
         static constexpr int PORTLIST_BOTTOM_MARGIN = 36;
         static constexpr int ACTIVITY_DOT_SIZE = 8;
-        static constexpr int Y_ACTIVITY_COLLAPSED = 116;
+        static constexpr int Y_ACTIVITY_COLLAPSED = 150;
         static constexpr int ACTIVITY_LIT_MILLIS = 300;
 
         Pimpl(SidebarComponent* owner, SettingsManager* settings, DeviceManager* deviceManager, SidebarType type, SidebarListener* listener) :
@@ -91,7 +91,7 @@ namespace showmidi
             owner_->addChildComponent(collapsedButton_.get());
             owner_->addChildComponent(expandedButton_.get());
             owner_->addAndMakeVisible(helpButton_.get());
-            owner_->addChildComponent(settingsButton_.get());
+            owner_->addAndMakeVisible(settingsButton_.get());
             owner_->addAndMakeVisible(playButton_.get());
             owner_->addChildComponent(pauseButton_.get());
             owner_->addChildComponent(barButton_.get());
@@ -113,10 +113,6 @@ namespace showmidi
                 portViewport_->setViewedComponent(portList_.get(), false);
                 owner_->addChildComponent(portViewport_.get());
             }
-            else
-            {
-                settingsButton_->setVisible(true);
-            }
             
             // restore the sidebar the way it was left
             if (sidebarType_ == SidebarType::sidebarExpandable && settingsManager_->getSettings().isSidebarExpanded())
@@ -124,7 +120,6 @@ namespace showmidi
                 expanded_ = true;
                 collapsedButton_->setVisible(false);
                 expandedButton_->setVisible(true);
-                settingsButton_->setVisible(true);
                 if (portViewport_.get())
                 {
                     portViewport_->setVisible(true);
@@ -192,7 +187,6 @@ namespace showmidi
                 expanded_ = true;
                 collapsedButton_->setVisible(false);
                 expandedButton_->setVisible(true);
-                settingsButton_->setVisible(true);
                 if (portViewport_.get())
                 {
                     portViewport_->setVisible(true);
@@ -210,7 +204,6 @@ namespace showmidi
                 expanded_ = false;
                 collapsedButton_->setVisible(true);
                 expandedButton_->setVisible(false);
-                settingsButton_->setVisible(false);
                 if (portViewport_.get())
                 {
                     portViewport_->setVisible(false);
@@ -338,6 +331,9 @@ namespace showmidi
             expandedButton_->setBoundsForTouch(X_EXPANDED, Y_EXPANDED,
                                               expandedSvg_->getWidth(), expandedSvg_->getHeight());
 
+            // the plugins have no expand button, so their buttons move up into its slot
+            auto top_shift = sidebarType_ == SidebarType::sidebarFixed ? Y_PLAY_COLLAPSED - Y_SETTINGS : 0;
+
             if (expanded_)
             {
                 playButton_->setBoundsForTouch(X_PLAY_EXPANDED, Y_PLAY_EXPANDED,
@@ -357,16 +353,16 @@ namespace showmidi
             }
             else
             {
-                playButton_->setBoundsForTouch(X_PLAY_COLLAPSED, Y_PLAY_COLLAPSED,
+                playButton_->setBoundsForTouch(X_PLAY_COLLAPSED, Y_PLAY_COLLAPSED - top_shift,
                                                playSvg_->getWidth(), playSvg_->getHeight());
                 
-                pauseButton_->setBoundsForTouch(X_PLAY_COLLAPSED, Y_PLAY_COLLAPSED,
+                pauseButton_->setBoundsForTouch(X_PLAY_COLLAPSED, Y_PLAY_COLLAPSED - top_shift,
                                                 pauseSvg_->getWidth(), pauseSvg_->getHeight());
                 
-                barButton_->setBoundsForTouch(X_VISUALIZATION_COLLAPSED, Y_VISUALIZATION_COLLAPSED,
+                barButton_->setBoundsForTouch(X_VISUALIZATION_COLLAPSED, Y_VISUALIZATION_COLLAPSED - top_shift,
                                                barSvg_->getWidth(), barSvg_->getHeight());
                 
-                graphButton_->setBoundsForTouch(X_VISUALIZATION_COLLAPSED, Y_VISUALIZATION_COLLAPSED,
+                graphButton_->setBoundsForTouch(X_VISUALIZATION_COLLAPSED, Y_VISUALIZATION_COLLAPSED - top_shift,
                                                 graphSvg_->getWidth(), graphSvg_->getHeight());
                 
                 resetButton_->setBoundsForTouch(X_RESET_COLLAPSED, owner_->getHeight() - resetSvg_->getHeight() - Y_RESET_COLLAPSED,
@@ -376,7 +372,9 @@ namespace showmidi
             helpButton_->setBoundsForTouch(X_HELP, owner_->getHeight() - helpSvg_->getHeight() - Y_HELP,
                                           helpSvg_->getWidth(), helpSvg_->getHeight());
             
-            settingsButton_->setBoundsForTouch(owner_->getWidth() - settingsSvg_->getWidth() - X_SETTINGS, Y_SETTINGS,
+            // settings follows the visualization toggle in the narrow sidebars
+            auto settings_y = expanded_ ? Y_SETTINGS : Y_SETTINGS_COLLAPSED - top_shift;
+            settingsButton_->setBoundsForTouch(owner_->getWidth() - settingsSvg_->getWidth() - X_SETTINGS, settings_y,
                                               settingsSvg_->getWidth(), settingsSvg_->getHeight());
 
             if (portViewport_.get())
